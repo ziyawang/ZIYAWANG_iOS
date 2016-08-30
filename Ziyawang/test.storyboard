@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6QD-02-Tf8">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="UwW-Wc-7Gy">
+            <objects>
+                <navigationController id="6QD-02-Tf8" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FQm-tP-j9Q">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="bfC-hY-Bqb" kind="relationship" relationship="rootViewController" id="TWa-jk-f4C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gi6-Xs-Ttu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1157" y="621"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ag2-hn-KXK">
+            <objects>
+                <viewController id="bfC-hY-Bqb" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oMu-lu-Bwz"/>
+                        <viewControllerLayoutGuide type="bottom" id="nn9-Fz-zBy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g8O-d9-haa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="imO-dV-Wax">
+                                <rect key="frame" x="89" y="137" width="105" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Apm-rr-D5b">
+                                <rect key="frame" x="89" y="201" width="105" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMY-J6-7he">
+                                <rect key="frame" x="126" y="280" width="30" height="30"/>
+                                <state key="normal" title="登录"/>
+                                <connections>
+                                    <action selector="loginButtonClick:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="7qk-Ht-rAf"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bwj-cn-P3T">
+                                <rect key="frame" x="89" y="336" width="105" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JEB-Ta-ypQ">
+                                <rect key="frame" x="202" y="385" width="105" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XV4-PN-LDy">
+                                <rect key="frame" x="217" y="336" width="75" height="30"/>
+                                <state key="normal" title="获取验证码"/>
+                                <connections>
+                                    <action selector="getsmsButtonDidClick:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="c2o-fD-Yfx"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ITP-ZW-Ozu">
+                                <rect key="frame" x="89" y="385" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SzV-cd-CjX">
+                                <rect key="frame" x="249" y="137" width="103" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kf3-g1-YuN">
+                                <rect key="frame" x="249" y="201" width="103" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D03-X1-6ky">
+                                <rect key="frame" x="285" y="280" width="30" height="30"/>
+                                <state key="normal" title="登录"/>
+                                <connections>
+                                    <action selector="smsLoginButton:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="rZo-zN-9NR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwD-tS-33d">
+                                <rect key="frame" x="263" y="239" width="75" height="30"/>
+                                <state key="normal" title="获取验证码"/>
+                                <connections>
+                                    <action selector="smsLoginGetsms:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="yfQ-cq-sDy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8xo-Dn-ZN6">
+                                <rect key="frame" x="180" y="428" width="30" height="30"/>
+                                <state key="normal" title="注册"/>
+                                <connections>
+                                    <action selector="registButtonClick:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="ARz-5Q-UpI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHs-Jl-Wye">
+                                <rect key="frame" x="118" y="437" width="30" height="30"/>
+                                <state key="normal" title="跳转"/>
+                                <connections>
+                                    <action selector="tiaozhuan:" destination="bfC-hY-Bqb" eventType="touchUpInside" id="d9A-ug-mzv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JrG-jv-8vE"/>
+                    <connections>
+                        <outlet property="getSmscodeButton" destination="XV4-PN-LDy" id="RYu-KE-yK3"/>
+                        <outlet property="loginButton" destination="XMY-J6-7he" id="kEk-IY-AX7"/>
+                        <outlet property="loginNumberTextField" destination="imO-dV-Wax" id="87k-Na-yqB"/>
+                        <outlet property="loginpasswordTextField" destination="Apm-rr-D5b" id="fOy-jr-WQh"/>
+                        <outlet property="loginsmscodeTextField" destination="Kf3-g1-YuN" id="Gpd-Ye-rGA"/>
+                        <outlet property="registButton" destination="8xo-Dn-ZN6" id="27P-Pw-eGI"/>
+                        <outlet property="registNumberTextField" destination="bwj-cn-P3T" id="qWd-b6-niu"/>
+                        <outlet property="registPasswordTextField" destination="ITP-ZW-Ozu" id="WgT-eR-YjP"/>
+                        <outlet property="smsCodeTextField" destination="JEB-Ta-ypQ" id="qVT-E6-lDi"/>
+                        <outlet property="smsLoginButton" destination="D03-X1-6ky" id="gGo-KI-1jv"/>
+                        <outlet property="smsLoginGetsmsButton" destination="cwD-tS-33d" id="6J5-X1-nKH"/>
+                        <outlet property="smsloginNumTextField" destination="SzV-cd-CjX" id="PaV-Xs-KLt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hMc-Id-vav" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-330" y="534"/>
+        </scene>
+    </scenes>
+</document>

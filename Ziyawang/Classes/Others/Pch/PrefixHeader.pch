@@ -1,0 +1,40 @@
+//
+//  PrefixHeader.pch
+//  Ziyawang
+//
+//  Created by Mr.Xu on 16/8/13.
+//  Copyright © 2016年 Mr.Xu. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#import "Header.h"
+
+
+
+#define loginURL @"http://api.ziyawang.com/v1/auth/login"//登录
+#define getsmscodeURL @"http://api.ziyawang.com/v1/auth/getsmscode"//获取验证码
+#define registURL @"http://api.ziyawang.com/v1/auth/register"//注册
+#define changePaswordURL @"http://api.ziyawang.com/v1/auth/resetpwd"//修改密码
+#define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
+#define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
+
+#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
+#define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
+#define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
+
+
+
+#define getImageURL @"http://images.ziyawang.com"//获取图片
+
+
+// public static final String FileIP =  "http://images.ziyawang.com"
+#define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
+
+#define videoPlayerURL @"http://videos.ziyawang.com"
+#define FindVideoURL @"";
+#define CommentAdviceURL @"http://api.ziyawang.com/v1/app/advice"
+#define AllURL @"http://api.ziyawang.com/v1"
+
+
+#endif /* PrefixHeader_pch */
