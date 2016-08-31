@@ -349,6 +349,9 @@
         
         [self.pushDic setObject:zhekou forKey:@"TransferMoney"];
         [self.pushDic setObject:self.pushDataArray[0] forKey:@"AssetType"];
+        
+        
+        
         [self.pushDic setObject:ProArea forKey:@"ProArea"];
         [self.pushDic setObject:self.TypeID forKey:@"TypeID"];
         [self.pushDic setObject:self.contentTextView.text forKey:@"WordDes"];
@@ -1190,7 +1193,12 @@
     self.contentTextView.textColor = [UIColor lightGrayColor];
     NSArray *array1 = @[@"资产包类型",@"来源",@"总金额",@"转让价",@"地区"];
     NSArray *array2 = @[@"类型",@"总金额",@"转让价",@"地区"];
+    
+    
     NSArray *array3 = @[@"类型",@"转让价",@"地区"];
+    
+    
+    
     NSArray *array4 = @[@"买方性质",@"合同金额",@"地区"];
     NSArray *array5 = @[@"类型",@"金额",@"地区"];
     NSArray *array6 = @[@"方式",@"金额",@"回报率",@"地区"];

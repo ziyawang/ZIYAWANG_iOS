@@ -88,29 +88,24 @@
  */
 - (void)rightBarButtonClickAction {
     NSString *string = [NSString string];
+//    if (self.selectArray.count > 5) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }
     
-    
-    
-    if (self.selectArray.count > 5) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    
-    else
-    {
+//    else
+//    {
     
     for (NSString *title in self.selectArray) {
-        if ([title isEqualToString:@"全国"]) {
-            string = @" 全国";
-        }
-      else
-      {
+//        if ([title isEqualToString:@"全国"]) {
+//            string = @" 全国";
+//        }
+//      else
+//      {
         string = [string stringByAppendingFormat:@" %@", title];
-      }
-        
+//      }
     }
-        
-        
+    
         
     string = [string substringFromIndex:1];
     NSLog(@"!!!!!!!!!!!!!%@",string);
@@ -124,12 +119,35 @@
     [defaults setObject:string forKey:@"服务地区"];
     [self.navigationController popViewControllerAnimated:YES];
     }
-    }
+//    }
 }
 
 - (void)cityButtonClickAction:(UIButton *)sender {
-    sender.selected = !sender.selected;
     
+    
+    /**
+     *  设置点击地区全国之后只剩全国，没选全国其他都显示
+     */
+    if (sender.tag == 0&&sender.selected==NO) {
+        for (UIButton *button in self.view.subviews) {
+            if (button.tag !=0) {
+                [button setHidden:YES];
+            }
+        }
+    }
+    
+    if(sender.tag == 0 &&sender.selected==YES)
+    {
+        for (UIButton *button in self.view.subviews) {
+            if (button.tag !=0) {
+                [button setHidden:NO];
+            }
+        }
+    
+    }
+    sender.selected = !sender.selected;
+
+  
     if (sender.selected) {
         [self.selectArray addObject:sender.titleLabel.text];
     } else {
@@ -185,9 +203,8 @@
         button.layer.borderColor = [UIColor colorWithRed:200.0 / 255.0 green:200.0 / 255.0 blue:200.0 / 255.0 alpha:1.0].CGColor;
         [button setTitle:self.cityArray[index] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        
         [button setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
-
+        
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 90 * kWidthScale, 0, 0);
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 30 * kWidthScale);
         
