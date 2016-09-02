@@ -404,7 +404,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="ekc-Jf-03q">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请再次输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="ekc-Jf-03q">
                                 <rect key="frame" x="55" y="446.5" width="304" height="45.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -418,7 +418,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="dYp-Be-PMa">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入验证码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="dYp-Be-PMa">
                                 <rect key="frame" x="55" y="331" width="304" height="46.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -447,7 +447,7 @@
                                     <action selector="didClickYesButton:" destination="8yz-XL-DlQ" eventType="touchUpInside" id="SsO-g4-JPa"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="oHj-i6-PQH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  手机号码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="oHj-i6-PQH">
                                 <rect key="frame" x="55" y="278" width="304" height="45.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -493,7 +493,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="juG-oa-v5Z">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="juG-oa-v5Z">
                                 <rect key="frame" x="55" y="393" width="304" height="45.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -601,7 +601,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="60H-0p-xHd">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请再次输入密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="60H-0p-xHd">
                                 <rect key="frame" x="55" y="445.5" width="304" height="45.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -615,13 +615,13 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="DBl-ZL-CVw">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入验证码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="DBl-ZL-CVw">
                                 <rect key="frame" x="55" y="334" width="304" height="45.5"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入新密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="hkI-yQ-txK">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入新密码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="hkI-yQ-txK">
                                 <rect key="frame" x="55" y="389.5" width="304" height="46"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -641,7 +641,7 @@
                                     <constraint firstAttribute="width" secondItem="UFb-0a-qq7" secondAttribute="height" multiplier="9:5" id="Oyf-0V-XEY"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="yJl-cb-XtH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  手机号码" textAlignment="natural" minimumFontSize="17" background="denglukuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="yJl-cb-XtH">
                                 <rect key="frame" x="55" y="278" width="304" height="46"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

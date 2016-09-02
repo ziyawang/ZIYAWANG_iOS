@@ -27,6 +27,9 @@
 @property (nonatomic,strong) NSString *searchURL;
 @property (nonatomic,assign) NSInteger statrpage;
 @property (nonatomic,assign) NSInteger startpage2;
+
+@property (nonatomic,strong) NSString *searchType;
+
 @end
 
 @implementation SearchController
@@ -54,12 +57,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
-
     [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74, 0);
     
     [self setSearchBar];
-    
     NSString *headURL = @"http://api.ziyawang.com/v1";
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
@@ -67,12 +68,29 @@
     [paraDic setObject:@"token" forKey:@"access_token"];
     [paraDic setObject:self.searchBar.text forKey:@"content"];
     self.searchURL = URL;
+    
+    
+    
     self.dataDic = [NSMutableDictionary dictionaryWithDictionary:paraDic];
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        [self loadMoreDataWithURL:URL Dic:self.dataDic];
+//    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self loadMoreDataWithURL:URL Dic:self.dataDic];
-    }];
     
+    
+    
+      self.searchType = self.findType;
+    NSLog(@"----------%@",self.searchType);
+        if ([self.findType isEqualToString:@"找信息"]) {
+        
+        [self getInfoData];
+
+    }
+    else
+    {
+        [self getServiceData];
+    }
 //    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
 //    [button setTitle:@"返回" forState:(UIControlStateNormal)];
 //    
@@ -81,6 +99,30 @@
 //                                
 //    [button addTarget:self action:@selector(buttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
 //    [self.view addSubview:button];
+}
+- (void)getServiceData
+{
+    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *footURL = @"/search";
+    NSString *URL = [headURL stringByAppendingString:footURL];
+    NSMutableDictionary *paraDic = [NSMutableDictionary new];
+    [paraDic setObject:@"token" forKey:@"access_token"];
+    [paraDic setObject:self.searchBar.text forKey:@"content"];
+    [paraDic setObject:@"4" forKey:@"type"];
+    [self getDataWithURL:URL paraDic:paraDic];
+
+}
+
+- (void)getInfoData
+{
+    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *footURL = @"/search";
+    NSString *URL = [headURL stringByAppendingString:footURL];
+    NSMutableDictionary *paraDic = [NSMutableDictionary new];
+    [paraDic setObject:@"token" forKey:@"access_token"];
+    [paraDic setObject:self.searchBar.text forKey:@"content"];
+        [paraDic setObject:@"1" forKey:@"type"];
+        [self getDataWithURL:URL paraDic:paraDic];
 }
 
 - (void)buttonAction:(UIButton*)button
@@ -136,9 +178,6 @@
     [self.view addSubview:self.searchBar];
    }
 
-
-
-
 - (void)rightButtonAction:(UIButton*)button
 {
     [self.searchBar resignFirstResponder];
@@ -149,20 +188,35 @@
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
     [paraDic setObject:@"token" forKey:@"access_token"];
     [paraDic setObject:self.searchBar.text forKey:@"content"];
-
-    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"])
+    if ([self.searchType isEqualToString:@"找信息"])
     {
         [paraDic setObject:@"1" forKey:@"type"];
         self.dataDic = [NSMutableDictionary dictionaryWithDictionary:paraDic];
         [self getDataWithURL:URL paraDic:paraDic];
+        
     }
     else
     {
         [paraDic setObject:@"4" forKey:@"type"];
         self.dataDic = [NSMutableDictionary dictionaryWithDictionary:paraDic];
         [self getDataWithURL:URL paraDic:paraDic];
-        
     }
+
+//    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"])
+//    {
+//        [paraDic setObject:@"1" forKey:@"type"];
+//        self.dataDic = [NSMutableDictionary dictionaryWithDictionary:paraDic];
+//        [self getDataWithURL:URL paraDic:paraDic];
+//        
+//    }
+//    else
+//    {
+//        [paraDic setObject:@"4" forKey:@"type"];
+//        self.dataDic = [NSMutableDictionary dictionaryWithDictionary:paraDic];
+//        [self getDataWithURL:URL paraDic:paraDic];
+//        
+//    }
+    
 }
 
 - (void)searchBarbuttonAction:(UIButton *)button
@@ -172,20 +226,41 @@
      NSMutableDictionary *paraDic = [NSMutableDictionary new];
     [paraDic setObject:@"token" forKey:@"access_token"];
     [paraDic setObject:self.searchBar.text forKey:@"content"];
-    if ([button.titleLabel.text isEqualToString:@"找服务"]) {
+    
+    
+    if ([self.searchType isEqualToString:@"找服务"]) {
+        self.searchType = @"找信息";
         [button setTitle:@"找信息" forState:(UIControlStateNormal)];
         [paraDic setObject:@"1" forKey:@"type"];
         [self getDataWithURL:URL paraDic:paraDic];
     }
-    if ([button.titleLabel.text isEqualToString:@"找信息"]) {
+   else if ([self.searchType isEqualToString:@"找信息"]) {
+        self.searchType = @"找服务";
         [button setTitle:@"找服务" forState:(UIControlStateNormal)];
         [paraDic setObject:@"4" forKey:@"type"];
         [self getDataWithURL:URL paraDic:paraDic];
-    }}
+        
+    }
+    
+//    if ([button.titleLabel.text isEqualToString:@"找服务"]) {
+//        [button setTitle:@"找信息" forState:(UIControlStateNormal)];
+//        [paraDic setObject:@"1" forKey:@"type"];
+//        [self getDataWithURL:URL paraDic:paraDic];
+//    }
+//    if ([button.titleLabel.text isEqualToString:@"找信息"]) {
+//        [button setTitle:@"找服务" forState:(UIControlStateNormal)];
+//        [paraDic setObject:@"4" forKey:@"type"];
+//        [self getDataWithURL:URL paraDic:paraDic];
+//    }
+
+}
 
 
 - (void)getDataWithURL:(NSString*)url paraDic:(NSMutableDictionary *)dic
 {
+    self.statrpage = 1;
+    self.startpage2 = 1;
+    
     [self.sourceArray removeAllObjects];
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -202,32 +277,47 @@
          NSArray *array = dic[@"data"];
          for (NSDictionary *dic in array)
          {
-             if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+             
+             if ([self.searchType isEqualToString:@"找信息"]) {
                  PublishModel *model = [[PublishModel alloc]init];
                  [model setValuesForKeysWithDictionary:dic];
                  [self.sourceArray addObject:model];
                  
              }
-             else
+             
+             else if([self.searchType isEqualToString:@"找服务"])
              {
+                 
                  FindServiceModel *model = [[FindServiceModel alloc]init];
                  [model setValuesForKeysWithDictionary:dic];
                  [self.sourceArray addObject:model];
              }
-             if (self.sourceArray.count == 0) {
-                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有您想要搜索的信息，请尝试更换关键词" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                 [alert show];
-             }
-             else
-                 
-             {
-             [self.tableView reloadData];
-                 [self.tableView.mj_footer endRefreshing];
-             [self.HUD removeFromSuperViewOnHide];
-             [self.HUD hideAnimated:YES];
-             }
+             
+             
+//             if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+//                 PublishModel *model = [[PublishModel alloc]init];
+//                 [model setValuesForKeysWithDictionary:dic];
+//                 [self.sourceArray addObject:model];
+//                 
+//             }
+//             else
+//             {
+//                 FindServiceModel *model = [[FindServiceModel alloc]init];
+//                 [model setValuesForKeysWithDictionary:dic];
+//                 [self.sourceArray addObject:model];
+//             }
+           
 //             [self MBProgressWithString:@"搜索完毕" timer:1 mode:MBProgressHUDModeText];
          }
+         if (self.sourceArray.count == 0) {
+             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有您想要搜索的信息，请尝试更换关键词" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             [alert show];
+         }
+          [self.tableView reloadData];
+             [self.tableView.mj_footer endRefreshing];
+             [self.HUD removeFromSuperViewOnHide];
+             [self.HUD hideAnimated:YES];
+        
          
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
@@ -242,19 +332,161 @@
     
 }
 
+
+- (void)loadMoreData
+{
+    
+    
+    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *footURL = @"/search";
+    NSString *URL = [headURL stringByAppendingString:footURL];
+//    NSMutableDictionary *paraDic = [NSMutableDictionary new];
+//    [paraDic setObject:@"token" forKey:@"access_token"];
+//    [paraDic setObject:self.searchBar.text forKey:@"content"];
+    self.searchURL = URL;
+    NSMutableDictionary *dic = self.dataDic;
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:self.searchBar.text forKey:@"content"];
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    
+    NSLog(@"-------%@",dic);
+    if ([self.searchType isEqualToString:@"找信息"]) {
+        [dic setObject:[NSString stringWithFormat:@"%ld",self.statrpage] forKey:@"startpage"];
+        [dic setObject:@"1" forKey:@"type"];
+    }
+    else if([self.searchType isEqualToString:@"找服务"])
+    {
+        [dic setObject:[NSString stringWithFormat:@"%ld",self.startpage2] forKey:@"startpage"];
+        [dic setObject:@"4" forKey:@"type"];
+        
+    }
+    //    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+    //        [dic setObject:[NSString stringWithFormat:@"%ld",self.statrpage] forKey:@"startpage"];
+    //    }
+    //    else
+    //    {
+    //        [dic setObject:[NSString stringWithFormat:@"%ld",self.startpage2] forKey:@"startpage"];
+    //    }
+    
+    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         
+         NSLog(@"请求成功");
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+         NSArray *array = dic[@"data"];
+         NSMutableArray *addArray = [NSMutableArray new];
+         if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+             for (NSDictionary *dic in array) {
+                 PublishModel *model = [[PublishModel alloc]init];
+                 [model setValuesForKeysWithDictionary:dic];
+                 [addArray addObject:model];
+             }
+             self.statrpage ++;
+             
+             if (addArray.count == 0) {
+                 UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+             }
+             
+             [self.sourceArray addObjectsFromArray:addArray];
+             [self.tableView reloadData];
+             [self.HUD removeFromSuperViewOnHide];
+             [self.tableView.mj_footer endRefreshing];
+
+             [self.HUD hideAnimated:YES];
+         }
+         
+         else
+         {
+             
+             for (NSDictionary *dic in array) {
+                 FindServiceModel *model = [[FindServiceModel alloc]init];
+                 [model setValuesForKeysWithDictionary:dic];
+                 [addArray addObject:model];
+             }
+             if (addArray.count == 0) {
+                 UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+             }
+             self.startpage2 ++;
+             
+             [self.sourceArray addObjectsFromArray:addArray];
+             [self.tableView reloadData];
+             [self.tableView.mj_footer endRefreshing];
+             [self.HUD removeFromSuperViewOnHide];
+             [self.HUD hideAnimated:YES];
+             
+         }
+         
+         
+         
+         //         [self.tableView reloadData];
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
+         
+         //         for (NSDictionary *dic in array)
+         //         {
+         //             if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"])
+         //             {
+         //                PublishModel *model = [[PublishModel alloc]init];
+         //                 [model setValuesForKeysWithDictionary:dic];
+         //                 [self.sourceArray addObject:model];
+         //
+         //             }
+         //             else
+         //             {
+         //                 FindServiceModel *model = [[FindServiceModel alloc]init];
+         //                 [model setValuesForKeysWithDictionary:dic];
+         //                 [self.sourceArray addObject:model];
+         //             }
+         
+         //             [self MBProgressWithString:@"搜索完毕" timer:1 mode:MBProgressHUDModeText];
+         //         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
+         //        [self MBProgressWithString:@"搜索失败" timer:1 mode:MBProgressHUDModeText];
+         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"搜索失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         
+         
+     }];
+    
+
+    
+
+}
 - (void)loadMoreDataWithURL:(NSString*)url Dic:(NSMutableDictionary *)dic
 {
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     
-    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+    NSLog(@"-------%@",dic);
+    if ([self.searchType isEqualToString:@"找信息"]) {
         [dic setObject:[NSString stringWithFormat:@"%ld",self.statrpage] forKey:@"startpage"];
+        [dic setObject:@"1" forKey:@"type"];
     }
-    else
+    else if([self.searchType isEqualToString:@"找服务"])
     {
         [dic setObject:[NSString stringWithFormat:@"%ld",self.startpage2] forKey:@"startpage"];
+        [dic setObject:@"4" forKey:@"type"];
+
     }
+//    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+//        [dic setObject:[NSString stringWithFormat:@"%ld",self.statrpage] forKey:@"startpage"];
+//    }
+//    else
+//    {
+//        [dic setObject:[NSString stringWithFormat:@"%ld",self.startpage2] forKey:@"startpage"];
+//    }
     
     [self.manager POST:url parameters:dic progress:^(NSProgress * _Nonnull uploadProgress)
      {
@@ -272,14 +504,17 @@
                  [model setValuesForKeysWithDictionary:dic];
                  [addArray addObject:model];
              }
+             self.statrpage ++;
+             
              if (addArray.count == 0) {
-                 
-                 
-                 UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                    UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                  [alert show];
              }
              
              [self.sourceArray addObjectsFromArray:addArray];
+             [self.tableView reloadData];
+             [self.HUD removeFromSuperViewOnHide];
+             [self.HUD hideAnimated:YES];
          }
          
          else
@@ -290,14 +525,22 @@
                  [model setValuesForKeysWithDictionary:dic];
                  [addArray addObject:model];
              }
+             if (addArray.count == 0) {
+                 UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+             }
+             self.startpage2 ++;
+             
              [self.sourceArray addObjectsFromArray:addArray];
+             [self.tableView reloadData];
+             [self.HUD removeFromSuperViewOnHide];
+             [self.HUD hideAnimated:YES];
+             
          }
-         if (addArray.count == 0) {
-             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-         }
+     
          
          
-         [self.tableView reloadData];
+//         [self.tableView reloadData];
          [self.HUD removeFromSuperViewOnHide];
          [self.HUD hideAnimated:YES];
          
@@ -339,22 +582,19 @@
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
-        
-        return 120;
+        return 100;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 135;
+        return 100;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 155;
-        
+        return 110;
     }
-    
     return 150;
-
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -366,30 +606,49 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
-      PublishCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+    if ([self.searchType isEqualToString:@"找信息"]) {
+        PublishCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
         cell.model = self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-
         return cell;
-      }
+    }
     else
     {
-       FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
+        FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
         cell.model =self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
         
         return cell;
     }
+
+    
+//    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+//      PublishCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+//        cell.model = self.sourceArray[indexPath.row];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//
+//        return cell;
+//      }
+//    else
+//    {
+//       FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
+//        cell.model =self.sourceArray[indexPath.row];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//        
+//        return cell;
+//    }
 
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"])
+    
+    
+    if ([self.searchType isEqualToString:@"找信息"])
     {
         InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
         
@@ -400,7 +659,7 @@
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
-     
+        
     }
     else
     {
@@ -414,8 +673,37 @@
         
         
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
-      
+        
     }
+
+    
+//    if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"])
+//    {
+//        InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+//        
+//        PublishModel *model = [[PublishModel alloc]init];
+//        model = self.sourceArray[indexPath.row];
+//        infoDetailsVC.ProjectID = model.ProjectID;
+//        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+//        NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
+//        infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+//        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+//     
+//    }
+//    else
+//    {
+//        
+//        FindServiceModel *model = [[FindServiceModel alloc]init];
+//        model = self.sourceArray[indexPath.row];
+//        NSLog(@"!!!!!!!!!!%@",model.ServiceID);
+//        ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
+//        ServiceDetailVC.ServiceID = model.ServiceID;
+//        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+//        
+//        
+//        [self.navigationController pushViewController:ServiceDetailVC animated:YES];
+//      
+//    }
 }
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{

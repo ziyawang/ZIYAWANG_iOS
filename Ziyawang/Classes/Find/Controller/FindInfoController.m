@@ -130,8 +130,6 @@
     self.tableView.dataSource =self;
     [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
 
-    
-
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     self.tableView.contentInset = UIEdgeInsetsMake(0,0,104,0);
@@ -187,10 +185,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     
     NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05"];
-    
-    
-
-    
     
     
     
@@ -1188,7 +1182,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
 {
-    self.startpage = 1;
+    self.startpage = 0;
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
@@ -1198,17 +1192,22 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         [self.sourceArray removeAllObjects];
     }
     
-    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+//    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+//    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
+//    getdic = self.dataDic;
+//    
+//    NSString *access_token = @"token";
+//    
+//    [getdic setObject:access_token forKey:@"access_token"];
+//    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
+    NSString *getURL = @"http://api.ziyawang.com/v1/project/list";
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
-    getdic = self.dataDic;
-    
     NSString *access_token = @"token";
-    
+    NSString *startPage = [NSString stringWithFormat:@"%ld",self.startpage];
+    [getdic setObject:startPage forKey:@"startpage"];
     [getdic setObject:access_token forKey:@"access_token"];
-    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
-    
-    [getdic setObject:starPage forKey:@"startpage"];
-    [getdic setObject:@"5" forKey:@"pagecount"];
+    [getdic setObject:startPage forKey:@"startpage"];
+//    [getdic setObject:@"5" forKey:@"pagecount"];
     
     
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -1217,7 +1216,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        self.startpage ++;
+   
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         
@@ -1230,7 +1229,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             
             self.model = [[PublishModel alloc]init];
             [self.model setValuesForKeysWithDictionary:dic];
-            self.model.ProArea = [self.model.ProArea substringToIndex:2];
             [self.sourceArray addObject:self.model];
             }
         //判断count=0告诉用户没有相关信息

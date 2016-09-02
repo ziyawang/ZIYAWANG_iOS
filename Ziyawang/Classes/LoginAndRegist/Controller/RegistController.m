@@ -110,15 +110,17 @@
     if(self.passwordTextField.text.length<6||self.passwordTextField.text.length>16)
     {
         [self showAlertViewWithString:@"密码格式不正确"];
+        return;
+        
     }
     
     //判断同意条款
-    if (self.agree == YES) {
+//    if (self.agree == YES) {
 //        [self.registButton setUserInteractionEnabled:YES];
         [self RegistFromDomin];
         [self dismissViewControllerAnimated:YES completion:nil];
         
-    }
+//    }
 //    else
 //    {
 //        [self.registButton setUserInteractionEnabled:NO];
@@ -133,13 +135,13 @@
 //    {
 //    self.YesButton.selected = NO;
 //    }
-    if(self.YesButton.selected == NO)
-    {
-    self.YesButton.selected = YES;
-        self.agree = YES;
-        self.tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureAction:)];
-        [self.YesButton addGestureRecognizer:self.tapgesture];
-    }
+//    if(self.YesButton.selected == NO)
+//    {
+//    self.YesButton.selected = YES;
+//        self.agree = YES;
+//        self.tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureAction:)];
+//        [self.YesButton addGestureRecognizer:self.tapgesture];
+//    }
     
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -167,14 +169,14 @@
     
 }
 // 给同意按钮添加手势方法
-- (void)tapGestureAction:(UITapGestureRecognizer *)tapGesture
-{
-    
-    self.YesButton.selected = NO;
-    self.agree = NO;
-    [self.YesButton removeGestureRecognizer:self.tapgesture];
-
-}
+//- (void)tapGestureAction:(UITapGestureRecognizer *)tapGesture
+//{
+//    
+//    self.YesButton.selected = NO;
+//    self.agree = NO;
+//    [self.YesButton removeGestureRecognizer:self.tapgesture];
+//
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -197,11 +199,12 @@ self.title = @"aaa";
       }
 - (void)setAgreeButtonState
 {
-    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaoli"] forState:UIControlStateNormal];
-    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateHighlighted];
-    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected];
-    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected | UIControlStateHighlighted];
-    self.YesButton.selected = NO;
+    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateNormal];
+//    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateHighlighted];
+//    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected];
+//    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected | UIControlStateHighlighted];
+//    self.YesButton.selected = NO;
+  
     
 }
 

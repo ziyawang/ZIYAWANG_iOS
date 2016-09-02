@@ -189,7 +189,9 @@
     }
   else
   {
-      self.lable = [[UILabel alloc]initWithFrame:CGRectMake(self.bounds.size.width - 100, 10, 70, 20)];
+      self.lable = [[UILabel alloc]initWithFrame:CGRectMake(self.bounds.size.width - 200, 10, 140, 20)];
+      self.lable.textAlignment = UITextAlignmentRight;
+      
     self.lable.font = [UIFont systemFontOfSize:14];
       [self.contentView addSubview:self.lable];
     
@@ -197,9 +199,6 @@
   }
   
     
-    
-
-
 }
 - (void)setLable
 {

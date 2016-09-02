@@ -235,7 +235,6 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
                 //                    [weakSelf findServiceswithDic:self.dataDic];
                 //
                 //                });
-                
             }
         }
         for (NSString *sstr in infonmationType) {
@@ -351,11 +350,12 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
     model = self.sourceArray[indexPath.row];
     NSLog(@"!!!!!!!!!!%@",model.ServiceID);
     self.ServiceID = model.ServiceID;
+    
     ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
     ServiceDetailVC.ServiceID = model.ServiceID;
-    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+//    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
     
-    
+    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     
     

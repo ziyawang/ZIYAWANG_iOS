@@ -74,7 +74,6 @@
     
     if (!model.VideoLink) {
         zvideo.playUrl = [videoPlayerURL stringByAppendingString:model.VideoLink2];
-
     }
     else
     {

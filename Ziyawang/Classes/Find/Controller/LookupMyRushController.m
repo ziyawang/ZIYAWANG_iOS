@@ -16,6 +16,7 @@
 @interface LookupMyRushController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
+@property (nonatomic,assign) NSInteger startpage;
 
 @end
 
@@ -48,20 +49,28 @@
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
  self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"LookUpMyRushCell" bundle:nil] forCellReuseIdentifier:@"LookUpMyRushCell"];
 
     self.tableView.separatorStyle = NO;
     
+    
+    
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     self.sourceArray  = [NSMutableArray new];
+    
+     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
     [self getMyRushList];
     
 }
 
 - (void)getMyRushList
 {
+    [self.sourceArray removeAllObjects];
+    
+    self.startpage = 1;
+    
     NSLog(@"进入抢我的单列表");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
@@ -84,6 +93,7 @@
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
         }
+        self.startpage ++;
         [self.tableView reloadData];
         NSLog(@"请求自己抢的单子成功");
         NSLog(@"自己的单子%@",dic);
@@ -92,6 +102,44 @@
     }];
 
 }
+- (void)loadMoreData
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *footurl = @"/project/myrush";
+    NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSMutableDictionary *paraDic = [NSMutableDictionary new];
+    NSString *accesstoken = @"token";
+    //    [paraDic setObject:token forKey:@"token"];
+    [paraDic setObject:accesstoken forKey:@"access_token"];
+    [self.manager GET:URL parameters:paraDic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"data"];
+        NSMutableArray *addArray = [NSMutableArray new];
+        
+        for (NSDictionary *dic in array) {
+            PublishModel *model = [[PublishModel alloc]init];
+            [model setValuesForKeysWithDictionary:dic];
+            [addArray addObject:model];
+            
+//            [self.sourceArray addObject:model];
+        }
+        [self.sourceArray addObject:addArray];
+        
+        self.startpage ++;
+        [self.tableView reloadData];
+        NSLog(@"请求自己抢的单子成功");
+        NSLog(@"自己的单子%@",dic);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"申请请求失败！%@",error);
+    }];
+    
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

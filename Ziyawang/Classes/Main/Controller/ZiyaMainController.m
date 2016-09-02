@@ -1017,7 +1017,7 @@ NSString *accesstoken = @"token";
         lable.textAlignment = NSTextAlignmentCenter;
         lable.font = [UIFont FontForBigLabel];
         if (i==2) {
-            lable = [[UILabel alloc]initWithFrame:CGRectMake(-5, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
+            lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
         }
         //        imageView.backgroundColor = [UIColor whiteColor];
         lable.font = [UIFont FontForBigLabel];

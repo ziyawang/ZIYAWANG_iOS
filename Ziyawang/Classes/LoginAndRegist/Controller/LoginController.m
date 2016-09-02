@@ -381,17 +381,11 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"请求成功");
-
       #warning 这个地方有问题，不需要解析就出现了结果，生成字典内容 加上上面的话就好了
 //     NSDictionary *dic = responseObject;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"字典信息----%@",dic);
-        
-        NSString *code = dic[@"status_code"];
-      
-        
-        if ([code isEqualToString:@"200"]) {
+         NSString *code = dic[@"status_code"];
+           if ([code isEqualToString:@"200"]) {
             
             NSString *token = dic[@"token"];
             NSString *role = [NSString stringWithFormat:@"%@",dic[@"role"]];
@@ -414,6 +408,8 @@
             //缓存名字
             //缓存userpicture
             //初始化融云
+//               [RCIM sharedRCIM].userInfoDataSource = self;
+               
             [self getRongCloudToken];
             [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -456,6 +452,101 @@
     }
 }
 
+
+#pragma mark----融云数据源提供者
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion
+{
+    //        [[RCIM sharedRCIM]clearUserInfoCache];
+    NSLog(@"当前用户的userID：：：%@",userId);
+    if (userId == nil || [userId length] == 0 )
+        
+    {
+        completion(nil);
+        return ;
+    }
+    else if([userId isEqualToString:[RCIM sharedRCIM].currentUserInfo.userId])
+    {
+        
+        //        NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+        NSLog(@"!!!!!%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"]);
+        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
+        NSString *protrait = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserPicture"];
+        
+        
+        //        RCUserInfo *currentUser = [[RCUserInfo alloc]initWithUserId:userID name:userName portrait:[getImageURL stringByAppendingString:protrait]];
+        //        completion(currentUser);
+        
+        RCUserInfo *currentUser = [[RCUserInfo alloc]init];
+        currentUser.userId = userId;
+        currentUser.name = userName;
+        if(userName == nil)
+        {
+            currentUser.name = @"资芽用户";
+        }
+        if ([protrait isEqualToString:@""]==NO) {
+            currentUser.portraitUri = [getImageURL stringByAppendingString:protrait];
+        }
+        completion(currentUser);
+    }
+    
+    
+    else{
+        //    else if([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]!=nil)
+        //    {
+        //        [self getUserInfoWithUserId:userId];
+        //        completion(self.otherUserinfo);
+        self.manager = [AFHTTPSessionManager manager];
+        self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+        NSMutableDictionary *dic = [NSMutableDictionary new];
+        //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
+        [dic setObject:userId forKey:@"UserID"];
+        
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *userInfoDic = dic[@"data"];
+            
+            NSLog(@"获取他人的信息成功");
+            NSLog(@"------------%@",dic);
+            RCUserInfo *otherUserInfo = [[RCUserInfo alloc]init];
+            
+            NSLog(@"别人的userID为：%@",userId);
+            otherUserInfo.userId = userId;
+            otherUserInfo.name = userInfoDic[@"UserName"];
+            if(userInfoDic[@"UserName"] == nil)
+                
+            {
+                otherUserInfo.name = @"资芽用户";
+            }
+            if (![userInfoDic[@"UserPicture"] isKindOfClass:[NSNull class]])
+            {
+                otherUserInfo.portraitUri = [getImageURL stringByAppendingString:userInfoDic[@"UserPicture"]];
+                
+            }
+            
+            //            RCUserInfo *otherUserInfo = [[RCUserInfo alloc]initWithUserId:userID name:userInfoDic[@"UserName"] portrait:[getImageURL stringByAppendingString:userInfoDic[@"UserPicture"]]];
+            
+            completion(otherUserInfo);
+            //                self.otherUserinfo = otherUserInfo;
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"获取他人的信息失败");
+            //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            //            [alert show];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                //                [alert show];
+            });
+            
+        }];
+    }
+}
+
+
+
+
 - (void)getRongCloudToken
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -495,6 +586,13 @@
         NSString *userPortrait = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserPicture"];
         NSLog(@"----------%@",userPortrait);
         [self setCurrentUserWithUserID:userId Name:userName Portrait:[getImageURL stringByAppendingString:userPortrait]];
+            
+            
+        
+            
+            
+            
+            
                    dispatch_async(dispatch_get_main_queue(), ^{
             [self.HUD removeFromSuperViewOnHide];
             [self.HUD hideAnimated:YES];

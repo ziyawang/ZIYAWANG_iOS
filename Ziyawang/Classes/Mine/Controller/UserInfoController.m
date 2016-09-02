@@ -82,7 +82,6 @@
     else
     {
 [self setSubViews];
-        
     }
  }
 - (void)setSubViews

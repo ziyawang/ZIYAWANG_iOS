@@ -75,13 +75,12 @@
 }
 
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = [UIColor whiteColor];
     //更新版本
-     [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0" forKey:@"Version"];
+     [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.1" forKey:@"Version"];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [self ifNeedUpdate];
@@ -114,6 +113,7 @@
         UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
+
     
     //rcToken判断
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"rcToken"] == nil) {
@@ -160,6 +160,9 @@
 #pragma mark---更新用户信息
 - (void)getUserInfoFromDomin
 {
+    
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
     NSString *URL = @"aa";
@@ -168,21 +171,27 @@
        
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
+        
+        
+        
     [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
-        NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
+        NSString *code = dic[@"status_code"];
+//        if ([code isEqualToString:@"200"]) {
         
         NSLog(@"%@",dic[@"role"]);
         
         NSString *role =dic[@"role"];
+            
         [[NSUserDefaults standardUserDefaults]setObject:role forKey:@"role"];
-        
-     
+       
         NSLog(@"获取用户信息成功");
+            
+//        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -191,18 +200,12 @@
         //        NSString *userName = [[NSUserDefaults
     }];
     }
-    
     else
     {
         [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"role"];
         
     }
 }
-
-
-
-
-
 
 
 #pragma mark----检查更新
@@ -215,12 +218,14 @@
     
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        
         NSDictionary *dic = Array.lastObject;
         NSString *newVersion = dic[@"UpdateTitle"];
         NSLog(@"-------newVersion:%@",newVersion);
         if ([version isEqualToString:newVersion] == NO) {
           
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽新版本已上线，请前往更新" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             
         }
@@ -245,16 +250,15 @@
     NSString *version = dic[@"Version"];
     NSString *lastVersion =  [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
     if (![version isEqualToString:lastVersion]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本可供下载，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+        
     }
-    
 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     
-}];
     
-
-}
+}];
+ }
 
 - (void)UmobClick {
     // 开启debug模式  正式上线时删除
@@ -333,6 +337,7 @@
         NSMutableDictionary *dic = [NSMutableDictionary new];
         //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
         [dic setObject:userId forKey:@"UserID"];
+        
         [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -341,10 +346,12 @@
                 NSLog(@"获取他人的信息成功");
                 NSLog(@"------------%@",dic);
                 RCUserInfo *otherUserInfo = [[RCUserInfo alloc]init];
-            NSLog(@"别人的userID为：%@",userId);
+            
+                NSLog(@"别人的userID为：%@",userId);
                 otherUserInfo.userId = userId;
                 otherUserInfo.name = userInfoDic[@"UserName"];
                 if(userInfoDic[@"UserName"] == nil)
+                    
                 {
                 otherUserInfo.name = @"资芽用户";
                 }
@@ -535,7 +542,7 @@
     
     messageVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dxiaoxi"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [messageVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];
-    mineVC.tabBarItem.title = @"我的";
+    mineVC.tabBarItem.title = @"个人中心";
     mineVC.tabBarItem.image = [UIImage imageNamed:@"wode"];
     mineVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dwode"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [mineVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];

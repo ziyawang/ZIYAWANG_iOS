@@ -136,8 +136,6 @@
 //        [self.agreeButton setTitle:@"取消中" forState:(UIControlStateNormal)];
         
     }
-  
-    
 }
 
 

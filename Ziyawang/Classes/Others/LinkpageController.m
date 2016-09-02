@@ -89,7 +89,7 @@
     //1、创建UIPageControl
     self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(20, 620, 335, 47)];
     
-    CGPoint point = CGPointMake(self.view.center.x, self.view.bounds.size.height - 100);
+    CGPoint point = CGPointMake(self.view.center.x, self.view.bounds.size.height - 20);
     
     [self.pageControl setCenter:point];
     

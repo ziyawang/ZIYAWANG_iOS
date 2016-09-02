@@ -451,6 +451,7 @@
     talkButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width, 50);
     [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
 //    [talkButton setBackgroundImage:[UIImage imageNamed:@"siliao2"] forState:(UIControlStateNormal)];
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SomeOneView.bounds.size.width/2-45, 15, 25, 25)];
@@ -512,19 +513,15 @@
     {
         talkViewController *talkVc = [[talkViewController alloc]init];
         talkVc.title = self.model.ServiceName;
-        talkVc.targetId = [NSString stringWithFormat:@"%@",self.userID];
+        
+        talkVc.targetId = [NSString stringWithFormat:@"%@",self.userid];
         talkVc.conversationType = ConversationType_PRIVATE;
         [self.navigationController pushViewController:talkVc animated:YES];
-        
     }
-    
 }
 - (void)lookbuttonAction:(UIButton *)button
 {
-    
-    
-    
-    
+   
 }
 /*
 #pragma mark - Navigation

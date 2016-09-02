@@ -119,7 +119,7 @@
     }
     
     [self setController];
-  
+    
 }
 
 
@@ -129,7 +129,7 @@
     /**
      *  初始化视图
      */
-     self.navigationItem.title = @"信息详情";
+    self.navigationItem.title = @"信息详情";
     [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
     self.isPlaying = NO;
     self.playModel = [[PublishModel alloc]init];
@@ -271,10 +271,10 @@
     }
     else
     {
-    NSString *playURL = [url stringByAppendingString:self.VideoDes];
-    self.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:playURL]];
+        NSString *playURL = [url stringByAppendingString:self.VideoDes];
+        self.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:playURL]];
         [self.player play];
-
+        
         /**
          *  判断是否正在播放，点击暂停
          *
@@ -283,28 +283,28 @@
          *  @return NO
          */
         
-//    if (self.isPlaying == NO) {
-//        [self.player play];
-//        self.isPlaying =YES;
-//    }
-//    if (self.isPlaying == YES) {
-//        [self.player pause];
-//        self.isPlaying = NO;
-//    }
-//
-//        NSURL *url = [[NSURL alloc]initWithString:playURL];
-//        NSData * audioData = [NSData dataWithContentsOfURL:url];
-//        
-//        //将数据保存到本地指定位置
-//        NSString *docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//        NSString *filePath = [NSString stringWithFormat:@"%@/%@.amr", docDirPath , @"temp"];
-//        [audioData writeToFile:filePath atomically:YES];
-//        //播放本地音乐
-//        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-//      AVAudioPlayer  *player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
-//        [player play];
+        //    if (self.isPlaying == NO) {
+        //        [self.player play];
+        //        self.isPlaying =YES;
+        //    }
+        //    if (self.isPlaying == YES) {
+        //        [self.player pause];
+        //        self.isPlaying = NO;
+        //    }
+        //
+        //        NSURL *url = [[NSURL alloc]initWithString:playURL];
+        //        NSData * audioData = [NSData dataWithContentsOfURL:url];
+        //
+        //        //将数据保存到本地指定位置
+        //        NSString *docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        //        NSString *filePath = [NSString stringWithFormat:@"%@/%@.amr", docDirPath , @"temp"];
+        //        [audioData writeToFile:filePath atomically:YES];
+        //        //播放本地音乐
+        //        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        //      AVAudioPlayer  *player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+        //        [player play];
         
-     }
+    }
     
 }
 
@@ -635,8 +635,8 @@
  */
 - (void)layoutBottomViewWithUserType:(NSString *)role UserID:(NSString *)UserID
 {
-//    NSString *role = [NSString stringWithFormat:@"%@",Role];
- 
+    //    NSString *role = [NSString stringWithFormat:@"%@",Role];
+    
     self.userID = [NSString stringWithFormat:@"%@",self.userID];
     
     if([self.userID isEqualToString:UserID])
@@ -650,9 +650,9 @@
         //认证过的服务方和游客
         [self layoutView1];
     }
-     if([role isEqualToString:@"0"])
+    if([role isEqualToString:@"0"])
     {
-    //没认证过的
+        //没认证过的
         NSLog(@"登录但是没认证过的");
     }
 }
@@ -667,8 +667,14 @@
      */
     UIView *SomeOneView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     SomeOneView.backgroundColor = [UIColor whiteColor];
+    
+    //    UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    //    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
+    //    [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
+    
     UIButton *applyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];     applyButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
+    [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    applyButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
     UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(applyButton.bounds.size.width/2-50, 17, 20, 20)];
     imageview1.image = [UIImage imageNamed:@"shenqing"];
     [applyButton setBackgroundColor:[UIColor colorWithHexString:@"#ea6155"]];
@@ -680,18 +686,18 @@
     }
     else
     {
-    [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
+        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
         [applyButton setEnabled:YES];
-    
+        
     }
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     talkButton.frame = CGRectMake(applyButton.bounds.size.width, 0, applyButton.bounds.size.width, 50);
     
     [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-
+    
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
-
+    
     
     UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20 )];
     imageview2.image = [UIImage imageNamed:@"siliao3"];
@@ -701,7 +707,7 @@
     [SomeOneView addSubview:applyButton];
     [SomeOneView addSubview:talkButton];
     //给按钮添加点击事件
-//    [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    //    [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [applyButton addTarget:self action:@selector(applyButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     self.applyButton = applyButton;
@@ -716,7 +722,7 @@
 {
     UIView *selfView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     selfView.backgroundColor = [UIColor whiteColor];
-//    selfView.backgroundColor = [UIColor grayColor];
+    //    selfView.backgroundColor = [UIColor grayColor];
     UIButton *lookButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     lookButton.frame = CGRectMake(0, 0, selfView.bounds.size.width, 50);
     [lookButton setTitle:@"查看抢单人" forState:(UIControlStateNormal)];
@@ -750,7 +756,7 @@
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
         NSLog(@"认证过的服务方，调用打电话");
     }
-
+    
 }
 
 /**
@@ -776,7 +782,7 @@
         NSString *token = [defaults objectForKey:@"token"];
         NSString *headurl = @"http://api.ziyawang.com/v1";
         NSString *footurl = @"/project/rush";
-            NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
         NSMutableDictionary *paraDic = [NSMutableDictionary new];
         NSString *accesstoken = @"token";
         NSString *ProjectID = self.ProjectID;
@@ -788,16 +794,16 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-           NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             if ([dic[@"status_code"] isEqualToString:@"200"]) {
                 NSLog(@"请求抢单成功");
                 [self MBProgressWithString:@"抢单成功！" timer:1 mode:MBProgressHUDModeText];
                 //抢单成功之后改变申请抢单按钮的状态
                 [self.applyButton setTitle:@"已抢单" forState:(UIControlStateNormal)];
-//                [self.applyButton setBackgroundColor:[UIColor redColor]];
+                //                [self.applyButton setBackgroundColor:[UIColor redColor]];
                 
                 [self.applyButton setEnabled:NO];
-                                }
+            }
             NSLog(@"申请接单返回的数据%@",dic);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"申请请求失败！%@",error);
@@ -806,7 +812,7 @@
             [alert show];
         }];
     }
-    }
+}
 
 
 
@@ -832,10 +838,10 @@
     else if([self.role isEqualToString:@"1"])
     {
         
-//        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-//        userInfo[@"targetID"] = self.targetID;
-//        userInfo[@"title"] = self.userid;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"PushTotalkControllerNotification" object:nil userInfo:userInfo];
+        //        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        //        userInfo[@"targetID"] = self.targetID;
+        //        userInfo[@"title"] = self.userid;
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"PushTotalkControllerNotification" object:nil userInfo:userInfo];
         
         
         talkViewController *talkVC = [[talkViewController alloc]init];
@@ -862,8 +868,8 @@
     lookVC.ProjectID = self.ProjectID;
     self.model.PublishState = [NSString stringWithFormat:@"%@",self.model.PublishState];
     lookVC.PublishState = self.model.PublishState;
-     [self.navigationController pushViewController:lookVC animated:YES];
-  }
+    [self.navigationController pushViewController:lookVC animated:YES];
+}
 
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
@@ -882,12 +888,12 @@
  *  @param sender 收藏按钮
  */
 - (IBAction)saveButtonAction:(id)sender {
-
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     if (token == nil) {
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-           [self presentViewController:loginVC animated:YES completion:nil];
+        [self presentViewController:loginVC animated:YES completion:nil];
     }
     else
     {
@@ -912,7 +918,7 @@
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  NSLog(@"收藏成功");
                  [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
-//                 收藏按钮状态改变
+                 //                 收藏按钮状态改变
                  [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang"] forState:(UIControlStateNormal)];
                  
                  self.isCollected = YES;
@@ -920,7 +926,7 @@
                  NSLog(@"%@",error);
                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                  [alert show];
-//                 [self MBProgressWithString:@"收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 //                 [self MBProgressWithString:@"收藏失败" timer:1 mode:MBProgressHUDModeText];
                  
                  NSLog(@"收藏失败");
              }];
@@ -932,7 +938,7 @@
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  NSLog(@"取消收藏成功");
                  [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
-
+                 
                  [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
                  
                  //收藏按钮状态改变
@@ -941,7 +947,7 @@
              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                  [alert show];
-//                 [self MBProgressWithString:@"取消收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 //                 [self MBProgressWithString:@"取消收藏失败" timer:1 mode:MBProgressHUDModeText];
                  NSLog(@"取消收藏失败");
              }];
         }
@@ -956,11 +962,11 @@
 
 - (IBAction)shareButtonAction:(id)sender {
     //1、创建分享参数
-//    NSArray* imageArray = @[[UIImage imageNamed:@"shareImg.png"]];
-//    （注意：图片必须要在Xcode左边目录里面，名称必须要传正确，如果要分享网络图片，可以这样传iamge参数 images:@[@"http://mob.com/Assets/images/logo.png?v=20150320"]）
+    //    NSArray* imageArray = @[[UIImage imageNamed:@"shareImg.png"]];
+    //    （注意：图片必须要在Xcode左边目录里面，名称必须要传正确，如果要分享网络图片，可以这样传iamge参数 images:@[@"http://mob.com/Assets/images/logo.png?v=20150320"]）
     
     
-//    NSString *url = @"http://ziyawang.com/project/";
+    //    NSString *url = @"http://ziyawang.com/project/";
     NSString *url = @"http://api.ziyawang.com/v1/";
     self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
     NSString *URL = [url stringByAppendingString:self.model.ProjectID];
@@ -969,60 +975,60 @@
     
     NSArray *imageArray = @[image];
     
-        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     
-//    [shareParams SSDKSetupWeChatParamsByText:@"aaaaa"
-//                                       title:@"wefwvw"
-//                                         url:[NSURL URLWithString:@"http://www.baidu.com"]
-//                                  thumbImage:imageArray//传一张小于32k 的图
-//                                       image:[NSURL URLWithString:@"http://www.baidu.com"]
-//                                musicFileURL:nil
-//                                     extInfo:@"dwefwef"
-//                                    fileData:nil
-//                                emoticonData:nil
-//                                        type:SSDKContentTypeAuto
-//                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
-//    http://ziyawang.com/project/
+    //    [shareParams SSDKSetupWeChatParamsByText:@"aaaaa"
+    //                                       title:@"wefwvw"
+    //                                         url:[NSURL URLWithString:@"http://www.baidu.com"]
+    //                                  thumbImage:imageArray//传一张小于32k 的图
+    //                                       image:[NSURL URLWithString:@"http://www.baidu.com"]
+    //                                musicFileURL:nil
+    //                                     extInfo:@"dwefwef"
+    //                                    fileData:nil
+    //                                emoticonData:nil
+    //                                        type:SSDKContentTypeAuto
+    //                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+    //    http://ziyawang.com/project/
     NSString *shareURL1 = @"http://ziyawang.com/project/";
     NSString *shareURL = [shareURL1 stringByAppendingString:self.model.ProjectID];
-        [shareParams SSDKSetupShareParamsByText:@"资芽信息"
-                                         images:imageArray
-                                            url:[NSURL URLWithString:shareURL]
-                                          title:@"资芽"
-                                           type:SSDKContentTypeAuto];
-//        //2、分享（可以弹出我们的分享菜单和编辑界面）
-        [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
-                                 items:@[@(SSDKPlatformTypeWechat),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeSinaWeibo)]
-                           shareParams:shareParams
-                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                       
-                       switch (state)
+    [shareParams SSDKSetupShareParamsByText:@"资芽信息"
+                                     images:imageArray
+                                        url:[NSURL URLWithString:shareURL]
+                                      title:@"资芽"
+                                       type:SSDKContentTypeAuto];
+    //        //2、分享（可以弹出我们的分享菜单和编辑界面）
+    [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+                             items:@[@(SSDKPlatformTypeWechat),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeSinaWeibo)]
+                       shareParams:shareParams
+               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                   
+                   switch (state)
+                   {
+                       case SSDKResponseStateSuccess:
                        {
-                           case SSDKResponseStateSuccess:
-                           {
-                               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
-                                                                                   message:nil
-                                                                                  delegate:nil
-                                                                         cancelButtonTitle:@"确定"
-                                                                         otherButtonTitles:nil];
-                               [alertView show];
-                               break;
-                           }
-                           case SSDKResponseStateFail:
-                           {
-                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                               message:[NSString stringWithFormat:@"%@",error]
+                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                               message:nil
                                                                               delegate:nil
-                                                                     cancelButtonTitle:@"OK"
-                                                                     otherButtonTitles:nil, nil];
-                               [alert show];
-                               break;
-                           }
-                           default:
-                               break;
+                                                                     cancelButtonTitle:@"确定"
+                                                                     otherButtonTitles:nil];
+                           [alertView show];
+                           break;
                        }
-                   }];
-         }
+                       case SSDKResponseStateFail:
+                       {
+                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                           message:[NSString stringWithFormat:@"%@",error]
+                                                                          delegate:nil
+                                                                 cancelButtonTitle:@"OK"
+                                                                 otherButtonTitles:nil, nil];
+                           [alert show];
+                           break;
+                       }
+                       default:
+                           break;
+                   }
+               }];
+}
 
 
 
@@ -1036,23 +1042,23 @@
     self.backView = [[UIView alloc]initWithFrame:self.view.bounds];
     self.backView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.backView];
-
+    
     UIImageView *bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, self.view.bounds.size.height/2)];
     //////////////////////////////////////////////
     UIImageView *imageView = (UIImageView *)gesture.view;
     bigImageView.image = imageView.image;
-        [self.backView addSubview:bigImageView];
+    [self.backView addSubview:bigImageView];
     bigImageView.userInteractionEnabled = YES;
     [self.backView addSubview:bigImageView];
     UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeBackView:)];
     [bigImageView addGestureRecognizer:tapgesture];
-
+    
 }
 - (void)closeBackView:(UITapGestureRecognizer *)tapgesture
 {
     [self.backView removeFromSuperview];
-
-
+    
+    
 }
 
 - (void)tapgesture1:(UITapGestureRecognizer *)gesture1
@@ -1064,9 +1070,9 @@
     {
         [self tapImagViewWithGesture:gesture1];
         
-    
+        
     }
-
+    
 }
 - (void)tapgesture2:(UITapGestureRecognizer *)gesture2
 {
@@ -1097,13 +1103,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

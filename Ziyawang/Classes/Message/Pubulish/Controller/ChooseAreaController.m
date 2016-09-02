@@ -87,11 +87,36 @@
     menuView.selectedIndex = ^(NSString *string)
     {
         self.chooseArea = string;
-        NSString *str1 = [string substringToIndex:2];
-        NSString *str2 = [string substringFromIndex:2];
-        self.chooseArea = [[str1 stringByAppendingString:@"-"]stringByAppendingString:str2];
-        NSLog(@"%@",str1);
-        NSLog(@"%@",str2);
+        NSString *str = nil;
+        NSString *str2 = nil;
+        NSArray *stringArray = [NSArray array];
+        for (int i = 0;i<[self.chooseArea length]-1;i++) {
+            str = [self.chooseArea substringWithRange:NSMakeRange(i, 1)];
+            if ([str isEqualToString:@"省"]) {
+                str2=@"省";
+            }
+            else if([str isEqualToString:@"市"])
+            {
+                str2 = @"市";
+            }
+        }
+        if ([str2 isEqualToString:@"省"]) {
+            stringArray = [self.chooseArea componentsSeparatedByString:str2];
+            self.chooseArea = [[[stringArray[0] stringByAppendingString:str2]stringByAppendingString:@"-"]stringByAppendingString:stringArray[1]];
+            
+            NSLog(@"%@",self.chooseArea);
+        }
+        else if ([str2 isEqualToString:@"市"]) {
+            stringArray = [self.chooseArea componentsSeparatedByString:str2];
+            self.chooseArea = [[[stringArray[0] stringByAppendingString:str2]stringByAppendingString:@"-"]stringByAppendingString:stringArray[1]];
+        }
+        else
+        {
+            NSString *str1 = [string substringToIndex:2];
+            NSString *str2 = [string substringFromIndex:2];
+            self.chooseArea = [[str1 stringByAppendingString:@"-"]stringByAppendingString:str2];
+        }
+
         NSLog(@"选择的地区为：%@",self.chooseArea);
 //        PushStartController *pushStartVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

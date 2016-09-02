@@ -11,6 +11,14 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 @implementation VideosViewCell
+- (IBAction)didClickPlayButton:(id)sender {
+    NSLog(@"%@",self.Mydelegate);
+    [self.Mydelegate pushToControllerWithZXVideo:self.zvideo model:self.model];
+
+    
+//    if (self.Mydelegate != nil && [self.Mydelegate respondsToSelector:@selector(pushToControllerWithZXVideo:)]) {
+//    }
+}
 
 - (void)setModel:(VideosModel *)model
 {
@@ -19,6 +27,15 @@
         _model = model;
         [self setModelData];
     }
+}
+- (void)setZvideo:(ZXVideo *)zvideo
+{
+    if (_zvideo != zvideo) {
+        _zvideo = nil;
+        _zvideo = zvideo;
+        
+    }
+
 }
 
 - (void)setModelData

@@ -21,6 +21,9 @@
                             <constraint firstAttribute="height" constant="50" id="uhf-Br-PLb"/>
                         </constraints>
                         <state key="normal" backgroundImage="bofang.png"/>
+                        <connections>
+                            <action selector="didClickPlayButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Mya-tu-P4i"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJt-2K-yiF">
                         <rect key="frame" x="376" y="207.5" width="31" height="15"/>
@@ -28,7 +31,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAl-Md-Rws">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAl-Md-Rws">
                         <rect key="frame" x="8" y="209" width="150" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="XB5-ee-yiV"/>

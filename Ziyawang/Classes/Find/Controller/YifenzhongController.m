@@ -12,7 +12,7 @@
 #import "VideosModel.h"
 #import "ZXVideo.h"
 #import "VideoPlayViewController.h"
-@interface YifenzhongController ()<UITableViewDelegate,UITableViewDataSource>
+@interface YifenzhongController ()<UITableViewDelegate,UITableViewDataSource,playDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -24,6 +24,35 @@
 @end
 
 @implementation YifenzhongController
+
+- (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
+{
+    
+    
+    
+    //    model = self.sourceArray[indexPath.row];
+    //    NSString *headURL = @"http://videos.ziyawang.com";
+    
+    //    self.zvideo.title = model.VideoTitle;
+    //    self.zvideo.playUrl = [headURL stringByAppendingString:model.VideoLink];
+    //    VideoPlayViewController *videoPlayVC = [[VideoPlayViewController alloc]init];
+    //    videoPlayVC.videoTitle = model.VideoTitle;
+    //    videoPlayVC.videoDes = model.VideoDes;
+    //    videoPlayVC.viewCount = [NSString stringWithFormat:@"%@",model.ViewCount];
+    //        videoPlayVC.commentTime = model.PublishTime;
+    //    videoPlayVC.videoID = [NSString stringWithFormat:@"%@",model.VideoID];
+    //
+    //    videoPlayVC.video = self.zvideo;
+    //    NSLog(@"222222%@",self.navigationController);
+    
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    
+    userInfo[@"zvideoModel"] = zvideo;
+    userInfo[@"model"] = model;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PushToMovieDentailControllerNotification" object:nil userInfo:userInfo];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.sourceArray = [NSMutableArray new];
@@ -164,13 +193,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        
+        return 230;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    {
+        return 250;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    {
+        return 270;
+        
+    }
     return 238;
-    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VideosViewCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
-
+    cell.zvideo = self.zvideo;
+    cell.Mydelegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -196,12 +239,7 @@
     
     userInfo[@"zvideoModel"] = _zvideo;
     userInfo[@"model"] = model;
-    
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PushToMovieDentailControllerNotification" object:nil userInfo:userInfo];
-    
-    
-    
     //    [self.navigationController pushViewController:videoPlayVC animated:YES];
     //    [self presentViewController:videoPlayVC animated:YES completion:nil];
     
@@ -209,7 +247,5 @@
     
     //    [self presentViewController:videoPlayVC animated:YES completion:nil];
 }
-
-
 
 @end

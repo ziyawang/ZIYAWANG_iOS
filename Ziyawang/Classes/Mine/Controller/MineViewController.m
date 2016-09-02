@@ -132,14 +132,7 @@
     self.role2 = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
     //    NSString *role = self.role;
     
-    if ([self.role2 isEqualToString:@"1"]) {
-        self.tableViewHigh.constant = 176;
-    }
-    else
-    {
-        self.tableViewHigh.constant = 132;
-        
-    }
+
     
 //    self.navigationItem.titleTextAttributes = dict;
     
@@ -152,6 +145,8 @@
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     if (token==nil)
     {
+        self.tableViewHigh.constant = 132;
+        
         [self.userIconImageview setHidden:YES];
         [self.AreaLabel setHidden:YES];
         [self.userNameLabel setHidden:YES];
@@ -178,11 +173,19 @@
 
 //       NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
         NSString *role = self.role;
+        if ([self.role isEqualToString:@"1"]) {
+            self.tableViewHigh.constant = 176;
+            
+        }
+        else
+        {
+            self.tableViewHigh.constant = 132;
+        }
         
         NSLog(@"已登录");
         
         
-        if ([role isEqualToString:@"0"]||[role isEqualToString:@"2"]) {
+        if ([role isEqualToString:@"0"]) {
             [self.userIconImageview setHidden:YES];
             [self.AreaLabel setHidden:YES];
             [self.userNameLabel setHidden:YES];
@@ -203,9 +206,8 @@
             [self.comanyName setHidden:NO];
             [self.normalUserLabel setHidden:YES];
             [self.normalUserImageView setHidden:YES];
-            self.UserViewheight.constant = 80;
-        
-            
+            self.UserViewheight.constant = 90;
+              
         }
     
 //        self.userNameLabel.hidden =NO;
@@ -230,7 +232,7 @@
         NSString *role = self.role;
         
         
-        if ([role isEqualToString:@"0"]||[role isEqualToString:@"2"])
+        if ([role isEqualToString:@"0"])
         {
             NSData *imageData = UIImagePNGRepresentation(self.normalUserImageView.image);
             
@@ -280,13 +282,13 @@
         
         [[NSUserDefaults standardUserDefaults]setObject:role forKey:@"role"];
         
-        if ([role isEqualToString:@"0"]||[role isEqualToString:@"2"])
+        if ([role isEqualToString:@"0"])
         {
             NSLog(@"第一种视图");
             [self layoutViewNormalUsersView];
             [self.tableView reloadData];
         }
-        else if([role isEqualToString:@"1"])
+        else if([role isEqualToString:@"1"]||[role isEqualToString:@"2"])
         {
             NSLog(@"第二种视图");
             [self layoutViewServiceUsersView];
@@ -336,6 +338,10 @@
     
     [self.userIconImageview setHidden:YES];
     [self.normalUserImageView setHidden:NO];
+    [self.comanyName setHidden:YES];
+    [self.userNameLabel setHidden:YES];
+    [self.AreaLabel setHidden:YES];
+    
     
     
     if (!self.model.UserPicture) {
@@ -385,6 +391,7 @@
     [self.AreaLabel setHidden:NO];
     [self.userNameLabel setHidden:NO];
     [self.comanyName setHidden:NO];
+    [self.userIconImageview setHidden:NO];
     [self.normalUserLabel setHidden:YES];
     [self.normalUserImageView setHidden:YES];
 //    self.UserViewheight.constant = 80;
@@ -424,7 +431,7 @@
     
     
     [self setViewGesture];
-self.navigationItem.title = @"我的";
+self.navigationItem.title = @"个人中心";
 
     self.userNameLabel.font = [UIFont FontForLabel];
     self.AreaLabel.font = [UIFont FontForLabel];
@@ -447,6 +454,88 @@ self.navigationItem.title = @"我的";
     
     UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userInfoViewgesture:)];
     [self.userInfoView addGestureRecognizer:tapgesture];
+    
+    
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    self.sourceArray  = [NSMutableArray new];
+    self.model = [[UserInfoModel alloc]init];
+    self.normalUserLabel.font = [UIFont FontForLabel];
+    
+    
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    if (token==nil)
+    {
+        [self.userIconImageview setHidden:YES];
+        [self.AreaLabel setHidden:YES];
+        [self.userNameLabel setHidden:YES];
+        [self.comanyName setHidden:YES];
+        
+        [self.normalUserLabel setHidden:NO];
+        [self.normalUserImageView setHidden:NO];
+        self.normalUserLabel.textColor = [UIColor lightGrayColor];
+        self.normalUserLabel.font = [UIFont FontForBigLabel];
+        self.normalUserLabel.text = @"未登录";
+        self.normalUserImageView.image = [UIImage imageNamed:@"morentouxiang"];
+        NSLog(@"未登录");
+        self.normalUserImageView.layer.masksToBounds = YES;
+        self.normalUserImageView.layer.cornerRadius = self.normalUserImageView.bounds.size.height/2;
+        
+        //        self.AreaLabel.text = @"未登录";
+        //        self.AreaLabel.textColor = [UIColor grayColor];
+        //        self.userNameLabel.hidden =YES;
+        //        self.comanyName.hidden = YES;
+    }
+    else
+    {
+        [self getUserInfoFromDomin];
+        
+        //       NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+        NSString *role = self.role;
+        if ([self.role isEqualToString:@"1"]) {
+            self.tableViewHigh.constant = 176;
+            
+        }
+        else
+        {
+            self.tableViewHigh.constant = 132;
+            
+        }
+        
+        NSLog(@"已登录");
+        
+        
+        if ([role isEqualToString:@"0"]) {
+            [self.userIconImageview setHidden:YES];
+            [self.AreaLabel setHidden:YES];
+            [self.userNameLabel setHidden:YES];
+            [self.comanyName setHidden:YES];
+            [self.normalUserLabel setHidden:NO];
+            [self.normalUserImageView setHidden:NO];
+            self.normalUserImageView.layer.masksToBounds = YES;
+            self.normalUserImageView.layer.cornerRadius = self.normalUserImageView.bounds.size.height/2;
+            self.normalUserImageView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(normalImageTapGestureAction:)];
+            [self.normalUserImageView addGestureRecognizer:gesture];
+        }
+        else
+        {
+            [self.userIconImageview setHidden:NO];
+            [self.AreaLabel setHidden:NO];
+            [self.userNameLabel setHidden:NO];
+            [self.comanyName setHidden:NO];
+            [self.normalUserLabel setHidden:YES];
+            [self.normalUserImageView setHidden:YES];
+            self.UserViewheight.constant = 90;
+            
+            
+        }
+        
+        //        self.userNameLabel.hidden =NO;
+        //        self.comanyName.hidden = NO;
+        //        self.AreaLabel.textColor = [UIColor blackColor];
+    }
     
 }
 - (BOOL)ifNeedLogin
@@ -473,7 +562,7 @@ self.navigationItem.title = @"我的";
     else
     {
         NSString *role = self.role;
-        if ([role isEqualToString:@"0"]||[role isEqualToString:@"2"])
+        if ([role isEqualToString:@"0"])
         {
             NSData *imageData = UIImagePNGRepresentation(self.normalUserImageView.image);
             
@@ -690,7 +779,6 @@ self.navigationItem.title = @"我的";
         cell = [[UITableViewCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     return cell;
     
 }

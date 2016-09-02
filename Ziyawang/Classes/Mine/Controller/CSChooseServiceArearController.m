@@ -88,25 +88,25 @@
  */
 - (void)rightBarButtonClickAction {
     NSString *string = [NSString string];
-//    if (self.selectArray.count > 5) {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }
+    //    if (self.selectArray.count > 5) {
+    //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    //        [alert show];
+    //    }
     
-//    else
-//    {
+    //    else
+    //    {
     
     for (NSString *title in self.selectArray) {
-//        if ([title isEqualToString:@"全国"]) {
-//            string = @" 全国";
-//        }
-//      else
-//      {
+        //        if ([title isEqualToString:@"全国"]) {
+        //            string = @" 全国";
+        //        }
+        //      else
+        //      {
         string = [string stringByAppendingFormat:@" %@", title];
-//      }
+        //      }
     }
     
-        
+    
     string = [string substringFromIndex:1];
     NSLog(@"!!!!!!!!!!!!!%@",string);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -116,10 +116,10 @@
     }
     else
     {
-    [defaults setObject:string forKey:@"服务地区"];
-    [self.navigationController popViewControllerAnimated:YES];
+        [defaults setObject:string forKey:@"服务地区"];
+        [self.navigationController popViewControllerAnimated:YES];
     }
-//    }
+    //    }
 }
 
 - (void)cityButtonClickAction:(UIButton *)sender {
@@ -143,11 +143,11 @@
                 [button setHidden:NO];
             }
         }
-    
+        
     }
     sender.selected = !sender.selected;
-
-  
+    
+    
     if (sender.selected) {
         [self.selectArray addObject:sender.titleLabel.text];
     } else {
@@ -171,7 +171,7 @@
     title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
     
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
+    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
     //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
@@ -188,7 +188,7 @@
     for (int index = 0; index < self.cityArray.count; index++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = index;
-//        button.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:1.0];
+        //        button.backgroundColor = [UIColor colorWithRed:arc4random() % 256 / 255.0 green:arc4random() % 256 / 255.0 blue:arc4random() % 256 / 255.0 alpha:1.0];
         
         int row = index / kTotalColumns;
         int col = index % kTotalColumns;

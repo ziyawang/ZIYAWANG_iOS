@@ -46,6 +46,7 @@
     
 //    [[RCIM sharedRCIM]clearUserInfoCache];
     [RCIM sharedRCIM].receiveMessageDelegate = self;
+        [RCIM sharedRCIM].userInfoDataSource = self;
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]==nil) {
         self.conversationListTableView.separatorStyle =NO;
@@ -130,6 +131,8 @@
     [super viewWillDisappear:animated];
     [self.view1 removeFromSuperview];
     [self.view2 removeFromSuperview];
+    
+    
 //    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 -(void)notificationAction:(NSNotification *)sender
@@ -286,6 +289,97 @@
     }];
 }
 
+#pragma mark----融云数据源提供者
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion
+{
+    //        [[RCIM sharedRCIM]clearUserInfoCache];
+    NSLog(@"当前用户的userID：：：%@",userId);
+    if (userId == nil || [userId length] == 0 )
+        
+    {
+        completion(nil);
+        return ;
+    }
+    else if([userId isEqualToString:[RCIM sharedRCIM].currentUserInfo.userId])
+    {
+        
+        //        NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+        NSLog(@"!!!!!%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"]);
+        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
+        NSString *protrait = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserPicture"];
+        
+        
+        //        RCUserInfo *currentUser = [[RCUserInfo alloc]initWithUserId:userID name:userName portrait:[getImageURL stringByAppendingString:protrait]];
+        //        completion(currentUser);
+        
+        RCUserInfo *currentUser = [[RCUserInfo alloc]init];
+        currentUser.userId = userId;
+        currentUser.name = userName;
+        if(userName == nil)
+        {
+            currentUser.name = @"资芽用户";
+        }
+        if ([protrait isEqualToString:@""]==NO) {
+            currentUser.portraitUri = [getImageURL stringByAppendingString:protrait];
+        }
+        completion(currentUser);
+    }
+    
+    
+    else{
+        //    else if([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]!=nil)
+        //    {
+        //        [self getUserInfoWithUserId:userId];
+        //        completion(self.otherUserinfo);
+        self.manager = [AFHTTPSessionManager manager];
+        self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+        NSMutableDictionary *dic = [NSMutableDictionary new];
+        //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
+        [dic setObject:userId forKey:@"UserID"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *userInfoDic = dic[@"data"];
+            
+            NSLog(@"获取他人的信息成功");
+            NSLog(@"------------%@",dic);
+            RCUserInfo *otherUserInfo = [[RCUserInfo alloc]init];
+            
+            NSLog(@"别人的userID为：%@",userId);
+            otherUserInfo.userId = userId;
+            otherUserInfo.name = userInfoDic[@"UserName"];
+            if(userInfoDic[@"UserName"] == nil)
+                
+            {
+                otherUserInfo.name = @"资芽用户";
+            }
+            if (![userInfoDic[@"UserPicture"] isKindOfClass:[NSNull class]])
+            {
+                otherUserInfo.portraitUri = [getImageURL stringByAppendingString:userInfoDic[@"UserPicture"]];
+                
+            }
+            
+            //            RCUserInfo *otherUserInfo = [[RCUserInfo alloc]initWithUserId:userID name:userInfoDic[@"UserName"] portrait:[getImageURL stringByAppendingString:userInfoDic[@"UserPicture"]]];
+            
+            completion(otherUserInfo);
+            //                self.otherUserinfo = otherUserInfo;
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"获取他人的信息失败");
+            //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            //            [alert show];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                //                [alert show];
+            });
+            
+        }];
+    }
+}
+
+
 
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath
 {
@@ -301,6 +395,8 @@
     self.talkVC.targetId = model.targetId;//可以根据iD获取昵称的方法
     NSLog(@"!!!!!%@",model.targetId);
     self.talkVC.title = model.conversationTitle;
+    NSLog(@"%@",model.conversationTitle);
+    
     
     [self.navigationController pushViewController:self.talkVC animated:YES];
  }
@@ -326,6 +422,10 @@
           
         [RCIM sharedRCIM].globalConversationAvatarStyle = RC_USER_AVATAR_CYCLE;
     [RCIM sharedRCIM].globalMessageAvatarStyle = RC_USER_AVATAR_CYCLE;
+    [RCIM sharedRCIM].userInfoDataSource = self;
+
+
+
     
 }
 

@@ -148,6 +148,9 @@
     
     NSArray *array = [self.model.ProArea componentsSeparatedByString:@"-"];
     self.model.ProArea = array[0];
+    NSLog(@"%@",self.model.ProArea);
+    
+    
     
     self.TypeNameLabel.text = self.model.TypeName;
     self.ProAreaLabel.text = self.model.ProArea;
