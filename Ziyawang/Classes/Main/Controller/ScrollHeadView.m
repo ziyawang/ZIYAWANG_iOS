@@ -54,6 +54,8 @@
     
     _scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.bounds)*(_arraySource.count), CGRectGetHeight(self.bounds));
     
+    
+ 
     for (int i = 0 ; i<_arraySource.count; i++) {
         UIImageView * imageV = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.bounds)*i, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
         imageV.tag = 100*i;
@@ -71,6 +73,7 @@
          */
         //本地图片加载的方法
 //        imageV.image = [UIImage imageNamed:_arraySource[i]];
+    
         
          [imageV sd_setImageWithURL:[NSURL URLWithString:_arraySource[i]]];
         
@@ -79,7 +82,7 @@
     }
 //    [_scrollView make3Dscrollview];
     
-    _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(self.center.x-100, CGRectGetHeight(self.bounds) - 40, 200, 30)];
+    _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(self.center.x-100, CGRectGetHeight(self.bounds) - 30, 200, 30)];
     _pageControl.numberOfPages = _arraySource.count-2;
     _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     _pageControl.pageIndicatorTintColor = [UIColor grayColor];

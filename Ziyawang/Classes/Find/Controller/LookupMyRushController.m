@@ -60,7 +60,7 @@
     
     self.sourceArray  = [NSMutableArray new];
     
-     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
+     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [self getMyRushList];
     
 }
@@ -87,11 +87,18 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"----%@",dic);
         NSArray *array = dic[@"data"];
         for (NSDictionary *dic in array) {
             PublishModel *model = [[PublishModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
+        }
+        NSString *count = [NSString stringWithFormat:@"%@",dic[@"counts"]];
+        if ([count isEqualToString:@"0"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"暂时没有抢单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            return;
         }
         self.startpage ++;
         [self.tableView reloadData];
@@ -99,8 +106,9 @@
         NSLog(@"自己的单子%@",dic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"申请请求失败！%@",error);
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
     }];
-
 }
 - (void)loadMoreData
 {
@@ -114,9 +122,9 @@
     //    [paraDic setObject:token forKey:@"token"];
     [paraDic setObject:accesstoken forKey:@"access_token"];
     [self.manager GET:URL parameters:paraDic progress:^(NSProgress * _Nonnull downloadProgress) {
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"----%@",dic);
         NSArray *array = dic[@"data"];
         NSMutableArray *addArray = [NSMutableArray new];
         
@@ -124,17 +132,25 @@
             PublishModel *model = [[PublishModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [addArray addObject:model];
-            
 //            [self.sourceArray addObject:model];
         }
+        if(addArray.count == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return;
+        }
+        [self.tableView.mj_footer endRefreshing];
         [self.sourceArray addObject:addArray];
-        
         self.startpage ++;
         [self.tableView reloadData];
         NSLog(@"请求自己抢的单子成功");
         NSLog(@"自己的单子%@",dic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"申请请求失败！%@",error);
+        [self.tableView.mj_footer endRefreshing];
+
     }];
     
 }

@@ -20,5 +20,7 @@
 #import "UIColor+StringToColor.h"
 #import <RongIMKit/RongIMKit.h>
 #import "UIAlertViewShow.h"
+#import "UIView+Extension.h"
+
 #endif /* Header_h */
 

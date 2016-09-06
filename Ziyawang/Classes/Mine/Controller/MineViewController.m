@@ -55,8 +55,6 @@
 - (void)setViewGesture
 {
     
- ;
-    
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction1:)];
     
     [self.myPushView addGestureRecognizer:gesture1];
@@ -816,7 +814,6 @@ self.navigationItem.title = @"个人中心";
 //                @property (nonatomic,strong) NSString *ServiceLocation;
 //                @property (nonatomic,strong) NSString *UserPicture;
 //                @property (nonatomic,strong) NSString *ConnectPhone;
-
                 
                 identifiVC.ConnectPhone = self.model.ConnectPhone;
                 identifiVC.ServiceName = self.model.ServiceName;
@@ -897,10 +894,8 @@ self.navigationItem.title = @"个人中心";
                     identifiVC.ServiceIntroduction = self.model.ServiceIntroduction;
                     identifiVC.ConnectPerson = self.model.ConnectPerson;
                     identifiVC.ServiceArea = self.model.ServiceArea;
-                    
                     identifiVC.ConfirmationP1 = self.model.ConfirmationP1;
                     identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
-                    
                     identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
                     identifiVC.ViewType = @"服务";
                     identifiVC.role = self.role;

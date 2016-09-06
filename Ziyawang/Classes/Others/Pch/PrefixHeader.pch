@@ -10,6 +10,18 @@
 #define PrefixHeader_pch
 #import "Header.h"
 
+#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器的所有数据的域
+//#define loginURL getDataURL@"/auth/login"//登录
+//#define getsmscodeURL getDataURL@"/auth/getsmscode"//获取验证码
+//#define registURL getDataURL@"/auth/register"//注册
+//#define changePaswordURL getDataURL@"/auth/resetpwd"//忘记密码
+//#define FindInformationURL getDataURL@"/project/list/"//找信息
+//#define FindServiceURL getDataURL@"/service/list"//找服务
+//#define SentCommentContentURL\getDataURL\@"/comment/create"//提交视频评论
+//#define getUserInfoURL getDataURL@"/auth/me"//获取用户信
+//#define getRongCloudTokenURL getDataURL@"/rctoken"//获取融云TOken
+
+
 
 
 #define loginURL @"http://api.ziyawang.com/v1/auth/login"//登录
@@ -18,7 +30,7 @@
 #define changePaswordURL @"http://api.ziyawang.com/v1/auth/resetpwd"//修改密码
 #define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
 #define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
-
+//
 #define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
 #define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
 #define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
@@ -26,8 +38,6 @@
 
 
 #define getImageURL @"http://images.ziyawang.com"//获取图片
-
-
 // public static final String FileIP =  "http://images.ziyawang.com"
 #define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
 

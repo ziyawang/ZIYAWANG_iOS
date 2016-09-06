@@ -5,7 +5,6 @@
 //  Created by Mr.Xu on 16/8/5.
 //  Copyright © 2016年 Mr.Xu. All rights reserved.
 //
-
 #import "FindInfoController.h"
 
 #import "InfoDetailsController.h"
@@ -180,11 +179,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         [self.allshiArray addObject:self.shiArray];
     }
     
-    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
+    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保",@"投资需求"];
    
     
-    
-    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05"];
+    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05",@"15"];
     
     
     
@@ -201,8 +199,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSArray *typearray9 = @[@"类型",@"被调查方"];
     NSArray *typearray10 = @[@"类型",@"佣金比例",@"状态"];
     NSArray *typearray11 = @[@"类型"];
-    
-    
+    //投资需求
+    NSArray *typearray12 = @[@"投资需求",@"投资方式",@"投资期限"];
     
     //资产包转让
     NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类"];
@@ -269,6 +267,16 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSMutableArray *diandang = [NSMutableArray new];
     [diandang addObject:Stypearray17];
     
+    //投资需求
+    NSArray *Stypearray18 = @[@"个人",@"企业",@"机构",@"其他"];
+    NSArray *Stypearray19 = @[@"债权",@"股权",@"其他"];
+    NSArray *Stypearray20 = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSMutableArray *touzi = [NSMutableArray new];
+    [touzi addObject:Stypearray18];
+    [touzi addObject:Stypearray19];
+    [touzi addObject:Stypearray20];
+    
+    
     NSMutableArray *allTypeArray = [NSMutableArray new];
     [allTypeArray addObject:zichan];
     [allTypeArray addObject:zhaiquan];
@@ -281,6 +289,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [allTypeArray addObject:jinzhi];
     [allTypeArray addObject:weiwai];
     [allTypeArray addObject:diandang];
+    
+    [allTypeArray addObject:touzi];
+    
+    
      self.menuView.indexsOneFist = infonmationType;
     self.menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
@@ -652,6 +664,18 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                     self.menuView.indexsThirSecond = diandang;
                     self.lastChoose = informationTypeID[10];
                 }
+                else if([sstr isEqualToString:infonmationType[11]])
+                {
+                    self.dataDic = [NSMutableDictionary new];
+                    [self.dataDic setObject:informationTypeID[11] forKey:@"TypeID"];
+                    [self findInfomationsWithDic:self.dataDic];
+                    NSArray *array = @[infonmationType[11],@"地区",@"更多"];
+                    [self createNewMoreMenuViewWithArray:array];
+                    [self.view addSubview:self.menuView];
+                    self.menuView.indexsThirFist = typearray12;
+                    self.menuView.indexsThirSecond = touzi;
+                    self.lastChoose = informationTypeID[11];
+                }
                 NSLog(@"得到的数据为%@",string);
                 //                [weakSelf findInfomationsWithDic:self.dataDic];
             }
@@ -773,6 +797,15 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSMutableArray *diandang = [NSMutableArray new];
     [diandang addObject:Stypearray17];
     
+    //投资需求
+    NSArray *Stypearray18 = @[@"个人",@"企业",@"机构",@"其他"];
+    NSArray *Stypearray19 = @[@"债权",@"股权",@"其他"];
+    NSArray *Stypearray20 = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSMutableArray *touzi = [NSMutableArray new];
+    [touzi addObject:Stypearray18];
+    [touzi addObject:Stypearray19];
+    [touzi addObject:Stypearray20];
+    
     NSMutableArray *allTypeArray = [NSMutableArray new];
     [allTypeArray addObject:zichan];
     [allTypeArray addObject:zhaiquan];
@@ -785,8 +818,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [allTypeArray addObject:jinzhi];
     [allTypeArray addObject:weiwai];
     [allTypeArray addObject:diandang];
-
-    
+     //投资需求
+    [allTypeArray addObject:touzi];
 //
 //
 //    menuView.indexsOneFist = infonmationType;
@@ -797,7 +830,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSArray *array = @[@"信息类型",@"地区",@"更多"];
     [self createNewMoreMenuViewWithArray:array];
         [self.view addSubview:self.menuView];
-    
     
     /*
     __weak typeof(self) weakSelf = self;

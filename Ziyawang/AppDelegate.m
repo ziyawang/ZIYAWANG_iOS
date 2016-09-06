@@ -9,13 +9,11 @@
 
 
 #import "AppDelegate.h"
-#import "ViewController.h"
-#import "InfoDetailsController.h"
-#import "LinkpageController.h"
-#import "ZiyaMainController.h"
 
-
+//友盟
 #import <UMMobClick/MobClick.h>
+
+//shareSDK
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 
@@ -28,75 +26,99 @@
 
 //新浪微博SDK头文件
 #import "WeiboSDK.h"
-
 #import <RongIMKit/RongIMKit.h>
-
 #import <AudioToolbox/AudioToolbox.h>
 
-
+//自定义
+#import "ViewController.h"
+#import "InfoDetailsController.h"
+#import "LinkpageController.h"
+#import "ZiyaMainController.h"
 #import "PushController.h"
 #import "PushViewController.h"
 #import "FindController.h"
-
 #import "talkViewController.h"
 #import "MessageListViewController.h"
 #import "MineViewController.h"
 #import "LBTabBarController.h"
 #import "LoginController.h"
 @interface AppDelegate ()<RCIMReceiveMessageDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate,UITabBarControllerDelegate>
-
+/**
+ *  网络请求单例
+ */
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+/**
+ *  其他人的融云信息
+ */
 @property (nonatomic,strong) RCUserInfo *otherUserinfo;
 @end
 
 @implementation AppDelegate
 
-
-//是否允许支持横竖屏
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    
-    //   NSLog(@"方向  =============   %ld", _allowRotate);
-    if (_allowRotate == 1) {
-        return UIInterfaceOrientationMaskAll;
-    }else{
-        return (UIInterfaceOrientationMaskPortrait);
-    }
-}
-
-
-// 返回是否支持设备自动旋转
-- (BOOL)shouldAutorotate
-{
-    if (_allowRotate == 1) {
-        return YES;
-    }
-    return NO;
-}
-
-
+/**
+ *  系统方法
+ *
+ *  @param application   application
+ *  @param launchOptions launchoptions
+ *
+ *  @return BOOL
+ */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    [self.window makeKeyAndVisible];
-    self.window.backgroundColor = [UIColor whiteColor];
-    //更新版本
-     [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.1" forKey:@"Version"];
-    self.manager = [AFHTTPSessionManager manager];
-    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [self ifNeedUpdate];
-    //初始化融云
-    [[RCIM sharedRCIM]initWithAppKey:@"25wehl3uww96w"];
-    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
-    [self getUserInfoFromDomin];
-    //初始化Tabbar
+    /**
+     初始化window和网络请求manager等
+     
+     - returns: NO
+     */
+    [self initWindowAndOthers];
+    /**
+     初始化TabBar
+     
+     - returns: NO
+     */
     [self initTabbar];
-    //初始化shareSDK
+    /**
+     *  设置当前版本
+     */
+    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.1" forKey:@"Version"];
+    /**
+     *  检查是否需要版本更新
+     */
+    [self ifNeedUpdate];
+       /**
+     *  初始化融云SDK
+     */
+    [self setRongCloud];
+    /**
+     *  链接融云
+     */
+    [self connectRongCloud];
+    /**
+     *  设置融云数据源代理
+     */
+    [RCIM sharedRCIM].userInfoDataSource = self;
+    /**
+     *  初始化ShareSDK
+     */
     [self setShareSDK];
-    
-    //状态栏
+    /**
+     *  友盟统计
+     */
+    [self UmobClick];
+    /**
+     *  更新当前用户的信息
+     */
+    [self getUserInfoFromDomin];
+    /**
+     *  设置状态栏
+     */
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-   
-    //推送通知
+    /**
+     *  推送通知
+     *
+     *  @param registerUserNotificationSettings: registerUserNotificationSettings: description
+     *
+     *  @return return value description
+     */
     if ([application
          respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         //注册推送, 用于iOS8以及iOS8之后的系统
@@ -113,8 +135,145 @@
         UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
-
+    /**
+     *  设置观察者
+     *
+     *  @param didReceiveMessageNotification: didReceiveMessageNotification: description
+     *
+     *  @return return value description
+     */
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didReceiveMessageNotification:)
+     name:RCKitDispatchMessageNotification
+     object:nil];
+    /**
+     *  远程推送的内容
+     */
+    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSLog(@">>>>>>>>>>>>>>>>>%@",remoteNotificationUserInfo);
     
+     return YES;
+}
+#pragma mark----初始化视图
+/**
+ *  初始化window与网络请求manager
+ */
+- (void)initWindowAndOthers
+{
+    /**
+     初始化window
+     */
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [self.window makeKeyAndVisible];
+    self.window.backgroundColor = [UIColor whiteColor];
+    /**
+     *  初始化网络请求manager
+     */
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+}
+/**
+ *  初始化TabBar
+ */
+- (void)initTabbar
+{
+    /**
+     初始化
+     */
+    LBTabBarController *tabBarVC = [[LBTabBarController alloc]init];
+    tabBarVC.delegate = self;
+    CATransition *amin = [[CATransition alloc]init];
+    amin.type = @"rippleEffect";
+    amin.duration = 1.0;
+    [self.window.layer addAnimation:amin forKey:nil];
+    /**
+     *  判断是否是第一次启动
+     */
+    NSString *key = @"CFBundleVersion";
+    NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
+    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
+    if ([currentVersion isEqualToString:lastVersion]==NO) {
+        NSLog(@"第一次启动");
+        [[NSUserDefaults standardUserDefaults]setObject:currentVersion forKey:key];
+        LinkpageController *linkVC = [[LinkpageController alloc]init];
+        linkVC.controller = tabBarVC;
+        self.window.rootViewController = linkVC;
+    }
+    else
+    {
+        self.window.rootViewController =tabBarVC;
+    }
+}
+#pragma mark----检查更新版本以及用户信息
+/**
+ *  检查更新应用版本
+ */
+- (void)ifNeedUpdate
+{
+    NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
+    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
+    [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSDictionary *dic = Array.lastObject;
+        NSLog(@"----%@",dic);
+        NSString *newVersion = dic[@"UpdateTitle"];
+        NSLog(@"-------newVersion:%@",newVersion);
+        if ([version isEqualToString:newVersion] == NO) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+}
+/**
+ *  更新用户信息
+ */
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    NSString *URL = @"aa";
+    if (token!=nil) {
+        URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"token" forKey:@"access_token"];
+    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSString *role =dic[@"role"];
+        [[NSUserDefaults standardUserDefaults]setObject:role forKey:@"role"];
+        NSLog(@"获取用户信息成功");
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        NSLog(@"获取用户信息失败");
+    }];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"role"];
+    }
+}
+
+#pragma mark----融云、友盟、shareSDK第三方
+/**
+ *  初始化融云SDK
+ */
+- (void)setRongCloud
+{
+    [[RCIM sharedRCIM]initWithAppKey:@"25wehl3uww96w"];
+    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
+}
+/**
+ *  链接融云
+ */
+- (void)connectRongCloud
+{
     //rcToken判断
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"rcToken"] == nil) {
         
@@ -132,164 +291,13 @@
         
     }
 
-    
-    //设置融云代理
-//    [RCIM sharedRCIM].receiveMessageDelegate=self;
-//    [RCIM sharedRCIM].enableReadReceipt = YES;
-    [RCIM sharedRCIM].userInfoDataSource = self;
-
-    
-    // 友盟统计
-    [self UmobClick];
-    
-    
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(didReceiveMessageNotification:)
-     name:RCKitDispatchMessageNotification
-     object:nil];
-//    
-//    [RCIM sharedRCIM].globalConversationAvatarStyle = RC_USER_AVATAR_CYCLE;
-//    [RCIM sharedRCIM].globalMessageAvatarStyle = RC_USER_AVATAR_CYCLE;
-    //远程推送的内容
-    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    NSLog(@">>>>>>>>>>>>>>>>>%@",remoteNotificationUserInfo);
-     return YES;
 }
-#pragma mark---更新用户信息
-- (void)getUserInfoFromDomin
-{
-    
-    self.manager = [AFHTTPSessionManager manager];
-    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-    NSString *URL = @"aa";
-    if (token!=nil) {
-        URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-       
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:@"token" forKey:@"access_token"];
-        
-        
-        
-    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        NSString *code = dic[@"status_code"];
-//        if ([code isEqualToString:@"200"]) {
-        
-        NSLog(@"%@",dic[@"role"]);
-        
-        NSString *role =dic[@"role"];
-            
-        [[NSUserDefaults standardUserDefaults]setObject:role forKey:@"role"];
-       
-        NSLog(@"获取用户信息成功");
-            
-//        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        NSLog(@"获取用户信息失败");
-        //        NSString *userName = [[NSUserDefaults
-    }];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"role"];
-        
-    }
-}
-
-
-#pragma mark----检查更新
-- (void)ifNeedUpdate
-{
-    NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
-    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
-    
-    [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-    
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        
-        NSDictionary *dic = Array.lastObject;
-        NSString *newVersion = dic[@"UpdateTitle"];
-        NSLog(@"-------newVersion:%@",newVersion);
-        if ([version isEqualToString:newVersion] == NO) {
-          
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-            
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        
-        NSLog(@"%@",error);
-        
-    }];
-  }
-
-- (void)updateVersion
-{
-    NSString *VerSionURL = @"";
-    
-[self.manager GET:VerSionURL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-    
-} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-    NSString *version = dic[@"Version"];
-    NSString *lastVersion =  [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
-    if (![version isEqualToString:lastVersion]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore搜索并下载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        
-    }
-} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-    
-    
-}];
- }
-
-- (void)UmobClick {
-    // 开启debug模式  正式上线时删除
-    [MobClick setLogEnabled:YES];
-    UMConfigInstance.appKey = @"57b7c912e0f55adc8b000c33";
-    UMConfigInstance.channelId = @"App Store";
-    //    UMConfigInstance.eSType = E_UM_GAME; //仅适用于游戏场景，应用统计不用设置
-    UMConfigInstance.ePolicy = BATCH;
-    
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    
-    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
-    
-    
-//     获取测试设备的oid
-//        Class cls = NSClassFromString(@"UMANUtil");
-//        SEL deviceIDSelector = @selector(openUDIDString);
-//        NSString *deviceID = nil;
-//        if(cls && [cls respondsToSelector:deviceIDSelector]){
-//            deviceID = [cls performSelector:deviceIDSelector];
-//        }
-//        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-//                                                           options:NSJSONWritingPrettyPrinted
-//                                                             error:nil];
-//    
-//        NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-}
-
-
-#pragma mark----融云数据源提供者
+/**
+ *  融云数据源提供者
+ *
+ *  @param userId     用户标识
+ *  @param completion block
+ */
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion
 {
 //        [[RCIM sharedRCIM]clearUserInfoCache];
@@ -379,8 +387,23 @@
         }];
     }
     }
+/**
+ *  融云收到消息后的方法
+ *
+ *  @param message 消息体
+ *  @param left    left
+ */
+- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+    
+    
+}
 
-
+/**
+ *  业务层获取用户信息的方法，暂时不调用
+ *
+ *  @param userID USERID
+ */
 - (void)getUserInfoWithUserId:(NSString *)userID
 {
     self.manager = [AFHTTPSessionManager manager];
@@ -417,19 +440,9 @@
 //        [alert show];
     }];
 }
-
-//收到消息代理方法
-- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
-{
-
-
-}
-
-
-- (void)setRongCloud
-{
-
-}
+/**
+ *  初始化ShareSDK
+ */
 
 - (void)setShareSDK
 {
@@ -489,99 +502,77 @@
          }
      }];
 }
-
-
-
-
-- (void)initTabbar
+/**
+ *  友盟
+ */
+- (void)UmobClick {
+    // 开启debug模式  正式上线时删除
+    [MobClick setLogEnabled:YES];
+    UMConfigInstance.appKey = @"57b7c912e0f55adc8b000c33";
+    UMConfigInstance.channelId = @"App Store";
+    //    UMConfigInstance.eSType = E_UM_GAME; //仅适用于游戏场景，应用统计不用设置
+    UMConfigInstance.ePolicy = BATCH;
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+    /*
+         //获取测试设备的oid
+            Class cls = NSClassFromString(@"UMANUtil");
+            SEL deviceIDSelector = @selector(openUDIDString);
+            NSString *deviceID = nil;
+            if(cls && [cls respondsToSelector:deviceIDSelector]){
+                deviceID = [cls performSelector:deviceIDSelector];
+            }
+            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+                                                               options:NSJSONWritingPrettyPrinted
+                                                                 error:nil];
+            NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+     */
+}
+#pragma mark----横竖屏设置
+/**
+ *  是否允许支持横屏
+ *
+ *  @param application application description
+ *  @param window      window description
+ *
+ *  @return return value description
+ */
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    
-    
-    
-//    UIViewController *mainVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-    
-//    UIViewController *findVC = [UIStoryboard storyboardWithName:@"Find" bundle:nil].instantiateInitialViewController;
-    FindController *findVC = [[FindController alloc]init];
-    
-//    UIViewController *messageVC = [UIStoryboard storyboardWithName:@"Message" bundle:nil].instantiateInitialViewController;
-    MessageListViewController *messageVC = [[MessageListViewController alloc]init];
-
-//    
-//    UIViewController *mineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
-    MineViewController *mineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
-    
-    UIViewController *publishVC = [UIStoryboard storyboardWithName:@"Publish" bundle:nil].instantiateInitialViewController;
-    
-//    UINavigationController *pushVC = [[UINavigationController alloc]initWithRootViewController:pushvc];
-    //    UIViewController *publishVC = [[UIStoryboard storyboardWithName:@"Mine" bundle:nil]instantiateViewControllerWithIdentifier:@"PublishController"];
-    
-    //    UIViewController *registVC = [[UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil]instantiateViewControllerWithIdentifier:@"Regist"];
-    
-    UIViewController *testVC = [UIStoryboard storyboardWithName:@"testData" bundle:nil].instantiateInitialViewController;
-    UIViewController *infoDetailVc = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
-    
-    
-//    UIViewController *ZiyaVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-    ZiyaMainController *ZiyaVC = [[ZiyaMainController alloc]init];
-    UITabBarController *tabVC = [[UITabBarController alloc]init];
-    //    NSLog(@"%@",loginAndRegistVC);
-    ZiyaVC.tabBarItem.title = @"首页";
-    ZiyaVC.tabBarItem.image = [[UIImage imageNamed:@"tabshouye"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    ZiyaVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dshouye"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [ZiyaVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];
-    
-//    [ZiyaVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"dshouye"]];
-    
-    findVC.tabBarItem.title = @"查询";
-    findVC.tabBarItem.image = [[UIImage imageNamed:@"sousuo"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    findVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dsousuo"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-  [findVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];
-    messageVC.tabBarItem.title = @"消息";
-    messageVC.tabBarItem.image = [UIImage imageNamed:@"tabxiaoxi"];
-    
-    messageVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dxiaoxi"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [messageVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];
-    mineVC.tabBarItem.title = @"个人中心";
-    mineVC.tabBarItem.image = [UIImage imageNamed:@"wode"];
-    mineVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"dwode"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [mineVC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateSelected];
-
-    LBTabBarController *tabBarVC = [[LBTabBarController alloc]init];
-    
-    tabBarVC.delegate = self;
-    
-    CATransition *amin = [[CATransition alloc]init];
-    amin.type = @"rippleEffect";
-    amin.duration = 1.0;
-    [self.window.layer addAnimation:amin forKey:nil];
-    
-    //————————————————————————————————————————引导图————————————————————————————————————————————————
-    NSString *key = @"CFBundleVersion";
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
-    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
-    
-    
-    if ([currentVersion isEqualToString:lastVersion]==NO) {
-        NSLog(@"第一次启动");
-        [[NSUserDefaults standardUserDefaults]setObject:currentVersion forKey:key];
-        LinkpageController *linkVC = [[LinkpageController alloc]init];
-        linkVC.controller = tabBarVC;
-        self.window.rootViewController = linkVC;
+    //   NSLog(@"方向  =============   %ld", _allowRotate);
+    if (_allowRotate == 1) {
+        return UIInterfaceOrientationMaskAll;
+    }else{
+        return (UIInterfaceOrientationMaskPortrait);
     }
-    else
-    {
-        self.window.rootViewController =tabBarVC;
-    
+}
+/**
+ *  是否支持设备自动旋转
+ *
+ *  @return BOOL
+ */
+- (BOOL)shouldAutorotate
+{
+    if (_allowRotate == 1) {
+        return YES;
     }
-   }
+    return NO;
+}
 
-//tabBar代理方法
+#pragma  mark----代理方法
+/**
+ *  tabBar代理方法，用来实现跳转回哪一个页面
+ *
+ *  @param tabBarController 具体的哪一个
+ *  @param viewController   viewController description
+ *
+ *  @return return value description
+ */
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
     if ([viewController.tabBarItem.title isEqualToString:@"消息"])
     {
-        
         NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
         if (token)
     {
@@ -595,19 +586,22 @@
             return NO;
         }
     }
- 
-
        return YES;
-        
 }
+
+#pragma mark----融云其他必要方法的实现
+/**
+ *  推送设置
+ *
+ *  @param application          application description
+ *  @param notificationSettings
+ */
 - (void)application:(UIApplication *)application
 didRegisterUserNotificationSettings:
 (UIUserNotificationSettings *)notificationSettings {
     // register to receive notifications
     [application registerForRemoteNotifications];
 }
-
-
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *token =
@@ -620,17 +614,18 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"!!!!!!!!!!!!!!!!!!%@",token);
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
 }
-
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"-----------------%@",userInfo);
     // userInfo为远程推送的内容
 }
 
-
-////////////////////////////////////////获取Token情况////////////////////////////////////////////////////////
-
-
+/**
+ *  获取deviceToken的情况
+ *
+ *  @param application application description
+ *  @param error       error description
+ */
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 #if TARGET_IPHONE_SIMULATOR
     // 模拟器不能使用远程推送
@@ -641,6 +636,11 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 #endif
 }
 
+/**
+ *  融云的设置
+ *
+ *  @param application application description
+ */
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate
     // timers, and store enough application state information to restore your
@@ -657,8 +657,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
     application.applicationIconBadgeNumber = unreadMsgCount;
 }
 
-////////////////////////////////////////获取本地通知后震动/////////////////////////////////////////////
-
+/**
+ *  获取到本地通知后系统方法，融云设置
+ *
+ *  @param application  application description
+ *  @param notification notification description
+ */
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
     /**
@@ -677,6 +681,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     //    }];
     
 }
+/**
+ *  收到消息后的本地通知方法，融云设置
+ *
+ *  @param message    message
+ *  @param senderName senderName description
+ *
+ *  @return return value description
+ */
 - (BOOL)onRCIMCustomLocalNotification:(RCMessage *)message withSenderName:(NSString *)senderName
 {
     return NO;
@@ -684,9 +696,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
 }
 
-
-///////////**********************************貌似是app的右上角＋1*＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
-
+/**
+ *  app的右上角角标，融云设置
+ *
+ *  @param notification notification description
+ */
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
     RCMessage *message = notification.object;
     if (message.messageDirection == MessageDirection_RECEIVE) {
@@ -696,6 +710,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
 }
 //**********************************    检测网络状态           ***************************************
+/**
+ *  融云监测网络状态的方法
+ *
+ *  @param status 网络状态
+ */
 - (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status {
     if (status == ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT) {
         UIAlertView *alert = [[UIAlertView alloc]
@@ -730,20 +749,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         //        });
     }
 }
-//*******************************************收到消息后的操作＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
 
-//-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
-//{
-//    if ([message.content isMemberOfClass:[RCInformationNotificationMessage class]]) {
-//        RCInformationNotificationMessage *msg=(RCInformationNotificationMessage *)message.content;
-//        //NSString *str = [NSString stringWithFormat:@"%@",msg.message];
-//        if ([msg.message rangeOfString:@"你已添加了"].location!=NSNotFound) {
-//            [RCDDataSource syncFriendList:^(NSMutableArray *friends) {
-//            }];
-//        }
-//    }
-//}
 
+/**
+ *  dealloc
+ */
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]
      removeObserver:self

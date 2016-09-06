@@ -63,7 +63,7 @@ self.navigationItem.title = @"发布";
     
     self.imageArray = [NSMutableArray array];
     
-        for (int i = 1; i < 13; i++)
+        for (int i = 1; i < 14; i++)
         {
             NSString *name = [NSString stringWithFormat:@"%d",i];
             
@@ -77,7 +77,7 @@ self.navigationItem.title = @"发布";
     
         }
 
-        NSArray *array = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"典当信息",@"融资需求",@"悬赏信息",@"尽职调查",@"委外催收",@"法律服务",@"资产求购",@"担保信息"];
+        NSArray *array = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"典当信息",@"融资需求",@"悬赏信息",@"尽职调查",@"委外催收",@"法律服务",@"资产求购",@"担保信息",@"投资需求"];
     self.nameArray = [NSMutableArray arrayWithArray:array];
     
     
@@ -124,7 +124,7 @@ self.navigationItem.title = @"发布";
 //每个分区的item数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 12;
+    return 13;
     
 }
 //返回cell
@@ -147,7 +147,7 @@ self.navigationItem.title = @"发布";
 //    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
 //    NSArray *level = @[@"VIP1"];
     
-    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"05",@"06",@"09",@"10",@"02",@"03",@"13",@"05"];
+    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"05",@"06",@"09",@"10",@"02",@"03",@"13",@"05",@"15"];
     switch (indexPath.row) {
         case 0:
             PusVc.typeName = @"资产包转让";
@@ -211,6 +211,10 @@ self.navigationItem.title = @"发布";
             PusVc.typeName = @"担保信息";
             PusVc.TypeID = TypeID[11];
             
+            break;
+        case 12:
+            PusVc.typeName = @"投资需求";
+            PusVc.TypeID = TypeID[12];
             break;
             
         default:

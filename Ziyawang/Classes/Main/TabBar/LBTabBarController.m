@@ -2,8 +2,8 @@
 //  LBTabBarController.m
 //  XianYu
 //
-//  Created by li  bo on 16/5/28.
-//  Copyright © 2016年 li  bo. All rights reserved.
+//  Created by Mr.Xuon 16/5/28.
+//  Copyright © 2016年 Mr.Xu. All rights reserved.
 //
 
 #import "LBTabBarController.h"
@@ -19,6 +19,7 @@
 #import "FindController.h"
 #import "MineViewController.h"
 #import "ZiyaMainController.h"
+#import "UserCenterController.h"
 
 #import "talkViewController.h"
 #import "MessageListViewController.h"
@@ -112,10 +113,14 @@
     MessageListViewController *MessageVC = [[MessageListViewController alloc]init];
 
     MineViewController *MineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
+    
+    UserCenterController *userCenterVC = [[UserCenterController alloc]init];
+    
     [self setUpOneChildVcWithVc:MainVC Image:@"shouye" selectedImage:@"shouye-xuanzhong" title:@"首页"];
     [self setUpOneChildVcWithVc:FindVC Image:@"chakan" selectedImage:@"chakan-xuanzhong" title:@"查看"];
     [self setUpOneChildVcWithVc:MessageVC Image:@"xiaoxi" selectedImage:@"xiaoxi-xuanzhong" title:@"消息"];
-    [self setUpOneChildVcWithVc:MineVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
+//    [self setUpOneChildVcWithVc:MineVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
+    [self setUpOneChildVcWithVc:userCenterVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
 
     
     //    LBHomeViewController *HomeVC = [[LBHomeViewController alloc] init];

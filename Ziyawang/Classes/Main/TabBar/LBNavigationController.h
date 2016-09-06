@@ -2,8 +2,8 @@
 //  LBNavigationController.h
 //  XianYu
 //
-//  Created by li  bo on 16/5/28.
-//  Copyright © 2016年 li  bo. All rights reserved.
+//  Created by Mr.Xu on 16/5/28.
+//  Copyright © 2016年 Mr.Xu. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

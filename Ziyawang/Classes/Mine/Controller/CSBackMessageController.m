@@ -135,9 +135,6 @@
 
 - (void)uplodMessage
 {
-    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.HUD.delegate = self;
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     
  
@@ -150,15 +147,14 @@
             
             
         }
-    
-        
+    else
+    {
+  
+        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.HUD.delegate = self;
+        self.HUD.mode = MBProgressHUDModeIndeterminate;
+
         NSString *url = [[CommentAdviceURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-
-
-    
-    
-    
-   
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.textView.text forKey:@"Content"];
@@ -168,9 +164,6 @@
     if (self.addImageView.image != nil) {
           [formData appendPartWithFileData:imageData name:@"Picture"fileName:@"adviceImage.png" mimeType:@"image/jpg/png/jpeg"];
     }
-  
-
-    
 } progress:^(NSProgress * _Nonnull uploadProgress) {
     
 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -191,7 +184,9 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"信息提交失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }];
+    }
 }
+
 
 #pragma mark - 实现代理方法
 //PickerImage完成后的代理方法
