@@ -55,7 +55,7 @@
 #define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
 #define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
 //
-//#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
+#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
 #define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
 #define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
 #define getImageURL @"http://images.ziyawang.com"//获取图片
