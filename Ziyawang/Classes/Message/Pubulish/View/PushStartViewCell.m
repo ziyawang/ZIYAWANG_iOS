@@ -87,7 +87,7 @@
     
     
     self.textLabel.text = self.textName;
-    if([self.textName isEqualToString:@"总金额"] || [self.textName isEqualToString:@"转让价"] || [self.textName isEqualToString:@"金额"] || [self.textName isEqualToString:@"合同金额"] || [self.textName isEqualToString:@"回报率"]||[self.textName isEqualToString:@"悬赏金额"])
+    if([self.textName isEqualToString:@"总金额"] || [self.textName isEqualToString:@"转让价"] || [self.textName isEqualToString:@"金额"] || [self.textName isEqualToString:@"合同金额"] || [self.textName isEqualToString:@"回报率"]||[self.textName isEqualToString:@"悬赏金额"]||[self.textName isEqualToString:@"预期回报率"])
     {
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [button setFrame:self.bounds];
@@ -154,6 +154,13 @@
         {
             lable.text = @"%";
         textField2.placeholder = @"可接受的月化信息";
+            [button addSubview:textField2];
+            [self addSubview:lable];
+        }
+        else if([self.textName isEqualToString:@"预期回报率"])
+        {
+        lable.text = @"%";
+            textField2.placeholder = @"请输入回报率";
             [button addSubview:textField2];
             [self addSubview:lable];
         }

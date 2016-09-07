@@ -160,9 +160,9 @@
   
     self.contentView = [[UIView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight, self.view.bounds.size.width, 120)];
     self.contentView.backgroundColor = [UIColor whiteColor];
-    
-    UILabel *videoTitle  = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, self.view.bounds.size.width - 70, 20)];
+    UILabel *videoTitle  = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, self.view.bounds.size.width - 120, 20)];
     videoTitle.text = self.model.VideoTitle;
+    videoTitle.font = [UIFont FontForBigLabel];
     UILabel *viewCount = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 150, 20)];
     NSString *str1 = @"已播放";
     NSString *str2 = @"次";

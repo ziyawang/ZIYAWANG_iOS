@@ -442,24 +442,28 @@
 - (void)layoutView1
 {
     UIView *SomeOneView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
-    SomeOneView.backgroundColor = [UIColor redColor];
+    SomeOneView.backgroundColor = [UIColor whiteColor];
     UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
     [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
-  
+    [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+    imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
+    [connectButton addSubview:imageview3];
+    
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    talkButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width, 50);
+    talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/2, 50);
     [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
 //    [talkButton setBackgroundImage:[UIImage imageNamed:@"siliao2"] forState:(UIControlStateNormal)];
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SomeOneView.bounds.size.width/2-45, 15, 25, 25)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
     imageView.image = [UIImage imageNamed:@"siliao3"];
     [talkButton addSubview:imageView];
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     [SomeOneView addSubview:talkButton];
-    
+    [SomeOneView addSubview:connectButton];
     //给按钮添加点击事件
     [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -490,13 +494,13 @@
     }
     else
     {
-        
         NSLog(@"调用打电话");
+
         UIWebView *webView = [[UIWebView alloc]init];
-        [self.backView addSubview:webView];
-        
-        NSURL *url = [NSURL URLWithString:self.phoneNumber];
+        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+        NSURL *url = [NSURL URLWithString:telString];
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self.backView addSubview:webView];
         
     }
     

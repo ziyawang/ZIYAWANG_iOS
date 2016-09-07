@@ -109,7 +109,6 @@
     NSString *access_token = @"token";
     NSString *phonenumber = self.registNumberTextField.text;
     NSString *act = @"register";
-
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
     [postDic setObject:access_token forKey:@"access_token"];

@@ -285,6 +285,10 @@
 		7825233F1D7EC87400F2C0A2 /* video_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 782523391D7EC87400F2C0A2 /* video_btn.png */; };
 		782523401D7EC87400F2C0A2 /* video_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7825233A1D7EC87400F2C0A2 /* video_btn@2x.png */; };
 		782523411D7EC87400F2C0A2 /* video_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7825233B1D7EC87400F2C0A2 /* video_btn@3x.png */; };
+		782523451D7FB6A100F2C0A2 /* lianxifangshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 782523421D7FB6A100F2C0A2 /* lianxifangshi.png */; };
+		782523461D7FB6A100F2C0A2 /* lianxifangshi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782523431D7FB6A100F2C0A2 /* lianxifangshi@2x.png */; };
+		782523471D7FB6A100F2C0A2 /* lianxifangshi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782523441D7FB6A100F2C0A2 /* lianxifangshi@3x.png */; };
+		7825234C1D7FBD6400F2C0A2 /* Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825234B1D7FBD6400F2C0A2 /* Network.m */; };
 		7836E7F21D5AF51800187E41 /* FlipTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7EE1D5AF51800187E41 /* FlipTableView.m */; };
 		7836E7F31D5AF51800187E41 /* SegmentTapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7F11D5AF51800187E41 /* SegmentTapView.m */; };
 		7836E7F61D5AF65B00187E41 /* VideosListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7F51D5AF65B00187E41 /* VideosListController.m */; };
@@ -900,6 +904,12 @@
 		782523391D7EC87400F2C0A2 /* video_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video_btn.png; sourceTree = "<group>"; };
 		7825233A1D7EC87400F2C0A2 /* video_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_btn@2x.png"; sourceTree = "<group>"; };
 		7825233B1D7EC87400F2C0A2 /* video_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_btn@3x.png"; sourceTree = "<group>"; };
+		782523421D7FB6A100F2C0A2 /* lianxifangshi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lianxifangshi.png; sourceTree = "<group>"; };
+		782523431D7FB6A100F2C0A2 /* lianxifangshi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lianxifangshi@2x.png"; sourceTree = "<group>"; };
+		782523441D7FB6A100F2C0A2 /* lianxifangshi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lianxifangshi@3x.png"; sourceTree = "<group>"; };
+		782523491D7FBC3C00F2C0A2 /* NetWorkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetWorkRequest.h; sourceTree = "<group>"; };
+		7825234A1D7FBD6400F2C0A2 /* Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Network.h; sourceTree = "<group>"; };
+		7825234B1D7FBD6400F2C0A2 /* Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Network.m; sourceTree = "<group>"; };
 		7836E7ED1D5AF51800187E41 /* FlipTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlipTableView.h; sourceTree = "<group>"; };
 		7836E7EE1D5AF51800187E41 /* FlipTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlipTableView.m; sourceTree = "<group>"; };
 		7836E7F01D5AF51800187E41 /* SegmentTapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTapView.h; sourceTree = "<group>"; };
@@ -1567,6 +1577,9 @@
 		782521D01D77DE5300F2C0A2 /* small */ = {
 			isa = PBXGroup;
 			children = (
+				782523421D7FB6A100F2C0A2 /* lianxifangshi.png */,
+				782523431D7FB6A100F2C0A2 /* lianxifangshi@2x.png */,
+				782523441D7FB6A100F2C0A2 /* lianxifangshi@3x.png */,
 				782522F21D7D634100F2C0A2 /* login-bg.png */,
 				782522F31D7D634100F2C0A2 /* login-bg@2x.png */,
 				782522F41D7D634100F2C0A2 /* login-bg@3x.png */,
@@ -1775,6 +1788,9 @@
 			children = (
 				7836E9F51D5EF7DB00187E41 /* PrefixHeader.pch */,
 				7836E9F61D5EFA3500187E41 /* Header.h */,
+				782523491D7FBC3C00F2C0A2 /* NetWorkRequest.h */,
+				7825234A1D7FBD6400F2C0A2 /* Network.h */,
+				7825234B1D7FBD6400F2C0A2 /* Network.m */,
 			);
 			path = Pch;
 			sourceTree = "<group>";
@@ -2970,6 +2986,7 @@
 				7825228C1D77DE5300F2C0A2 /* siliao-hong@3x.png in Resources */,
 				780E52081D73E1120083A3E1 /* mimaqueren@2x.png in Resources */,
 				780E52A91D73E1120083A3E1 /* shouye-xuanzhong.png in Resources */,
+				782523451D7FB6A100F2C0A2 /* lianxifangshi.png in Resources */,
 				7825228E1D77DE5300F2C0A2 /* siliao2@2x.png in Resources */,
 				782522C51D77DE5300F2C0A2 /* yuyinbofang@2x.png in Resources */,
 				780E520A1D73E1120083A3E1 /* shoujihao.png in Resources */,
@@ -3050,6 +3067,7 @@
 				780E51EF1D73E1120083A3E1 /* zhaofuwu@2x.png in Resources */,
 				78F3DD7B1D45ADB400C1E62E /* SuPhotoPreviewer.xib in Resources */,
 				78F3DDD21D461B2C00C1E62E /* zx-video-banner-back.png in Resources */,
+				782523471D7FB6A100F2C0A2 /* lianxifangshi@3x.png in Resources */,
 				782523301D7D72E500F2C0A2 /* user@3x.png in Resources */,
 				78EBB0791D4F1C9A008DDE9B /* image.xcassets in Resources */,
 				780E52151D73E1120083A3E1 /* yanzhengma@3x.png in Resources */,
@@ -3161,6 +3179,7 @@
 				7836E9C81D5E041200187E41 /* left.jpg in Resources */,
 				78746D5C1D68895A00AD60FF /* pic03@3x.png in Resources */,
 				78F3DDD11D461B2C00C1E62E /* kr-video-player-shrinkscreen@3x.png in Resources */,
+				782523461D7FB6A100F2C0A2 /* lianxifangshi@2x.png in Resources */,
 				78EE248C1D5F49EE00DB1A5D /* 9@3x.png in Resources */,
 				780E520F1D73E1120083A3E1 /* tiaoli@3x.png in Resources */,
 				782522B61D77DE5300F2C0A2 /* siliao3@2x.png in Resources */,
@@ -3331,6 +3350,7 @@
 				78730E5E1D42159500A9A7F2 /* FindwordController.m in Sources */,
 				78F3DDE61D461B2C00C1E62E /* ZXVideoPlayerControlView.m in Sources */,
 				78F3DDE21D461B2C00C1E62E /* ZXVideo.m in Sources */,
+				7825234C1D7FBD6400F2C0A2 /* Network.m in Sources */,
 				78F624311D59BC32002E21B3 /* MyidentifiController.m in Sources */,
 				78F3DDE71D461B2C00C1E62E /* ZXVideoPlayerTimeIndicatorView.m in Sources */,
 				78A398D91D4888120053FA7C /* MainHeadView.m in Sources */,

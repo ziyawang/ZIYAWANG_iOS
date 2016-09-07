@@ -122,8 +122,6 @@
     
 }
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     /**
@@ -668,13 +666,30 @@
     UIView *SomeOneView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     SomeOneView.backgroundColor = [UIColor whiteColor];
     
-    //    UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    //    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
-    //    [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
-    
+    /**
+     *  联系方式按钮
+     *
+     *  @param UIButtonTypeSystem UIButtonTypeSystem description
+     *
+     *  @return return value description
+     */
+        UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
+        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
+    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+    imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
+    [connectButton addSubview:imageview3];
+    /**
+     *  申请抢单按钮
+     *
+     *  @param UIButtonTypeSystem UIButtonTypeSystem description
+     *
+     *  @return return value description
+     */
     UIButton *applyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    applyButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
+    applyButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/3, 50);
     UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(applyButton.bounds.size.width/2-50, 17, 20, 20)];
     imageview1.image = [UIImage imageNamed:@"shenqing"];
     [applyButton setBackgroundColor:[UIColor colorWithHexString:@"#ea6155"]];
@@ -690,24 +705,37 @@
         [applyButton setEnabled:YES];
         
     }
+    /**
+     *  私聊按钮
+     *
+     *  @param UIButtonTypeSystem UIButtonTypeSystem description
+     *
+     *  @return return value description
+     */
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    talkButton.frame = CGRectMake(applyButton.bounds.size.width, 0, applyButton.bounds.size.width, 50);
-    
+    talkButton.frame = CGRectMake(applyButton.bounds.size.width*2, 0, applyButton.bounds.size.width, 50);
     [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
     
     
-    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20 )];
+    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
     imageview2.image = [UIImage imageNamed:@"siliao3"];
     
     [talkButton addSubview:imageview2];
     
+    [SomeOneView addSubview:connectButton];
     [SomeOneView addSubview:applyButton];
     [SomeOneView addSubview:talkButton];
-    //给按钮添加点击事件
-    //    [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    /**
+     *  添加按钮点击事件
+     *
+     *  @param connectButtonAction: 按钮点击事件
+     *
+     *  @return return value description
+     */
+    [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [applyButton addTarget:self action:@selector(applyButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     self.applyButton = applyButton;
@@ -752,8 +780,10 @@
     else if([self.role isEqualToString:@"1"])
     {
         UIWebView *webView = [[UIWebView alloc]init];
-        NSURL *url = [NSURL URLWithString:self.phoneNumber];
+        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+        NSURL *url = [NSURL URLWithString:telString];
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self.view addSubview:webView];
         NSLog(@"认证过的服务方，调用打电话");
     }
     
@@ -801,7 +831,6 @@
                 //抢单成功之后改变申请抢单按钮的状态
                 [self.applyButton setTitle:@"已抢单" forState:(UIControlStateNormal)];
                 //                [self.applyButton setBackgroundColor:[UIColor redColor]];
-                
                 [self.applyButton setEnabled:NO];
             }
             NSLog(@"申请接单返回的数据%@",dic);

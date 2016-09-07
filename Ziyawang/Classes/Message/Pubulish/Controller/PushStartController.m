@@ -165,7 +165,7 @@
     NSArray *array10 = @[@"类型",@"需求",@"地区"];
     NSArray *array11= @[@"类型",@"求购方",@"地区"];
     NSArray *array12 = @[@"类型",@"金额",@"地区"];
-    NSArray *array13 = @[@"投资类型",@"投资方式",@"投资期限",@"预期回报率"];
+    NSArray *array13 = @[@"投资类型",@"投资方式",@"预期回报率",@"投资期限",@"地区"];
                          
     NSArray *allTypearray = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"典当信息",@"融资需求",@"悬赏信息",@"尽职调查",@"委外催收",@"法律服务",@"资产求购",@"担保信息",@"投资需求"];
     NSString *type1 = allTypearray[0];
@@ -846,6 +846,25 @@
         }
         
     }
+    else if([self.typeName isEqualToString:@"投资需求"])
+    {
+        [self.pushDic setObject:zhekou forKey:@"Rate"];
+        [self.pushDic setObject:self.pushDataArray[0] forKey:@"AssetType"];
+        [self.pushDic setObject:self.pushDataArray[1] forKey:@"InvestType"];
+        [self.pushDic setObject:self.pushDataArray[3] forKey:@"Year"];
+        [self.pushDic setObject:ProArea forKey:@"ProArea"];
+        [self.pushDic setObject:self.TypeID forKey:@"TypeID"];
+        [self.pushDic setObject:self.contentTextView.text forKey:@"WordDes"];
+        [self.pushDic setObject:@"token" forKey:@"access_token"];
+        if ([self.pushDic[@"AssetType"]isEqualToString:@"请选择"]||[self.pushDic[@"InvestType"]isEqualToString:@"请选择"]||[self.pushDic[@"Year"]isEqualToString:@"请选择"]||[self.pushDic[@"Rate"]isEqualToString:@"请选择"]||[self.pushDic[@"ProArea"]isEqualToString:@"请选择"]||[self.pushDic[@"WordDes"]isEqualToString:@"请选择"]) {
+        [self MBProgressWithString:@"请完善信息资料" timer:1 mode:MBProgressHUDModeText];
+        }
+        else
+        {
+        [self pushDataWithDic:self.pushDic];
+        }
+
+    }
 }
 
 #pragma mark----设置录音机，添加录音事件
@@ -1458,8 +1477,6 @@
     NSArray *array11= @[@"土地",@"房产",@"汽车",@"其他"];
     NSArray *array12 = @[@"担保"];
     //投资需求
-    
-    
     
     NSArray *laiyuanArray = @[@"银行",@"非银行金融机构",@"企业"];
     NSArray *diaochaArray = @[@"企业",@"个人"];
