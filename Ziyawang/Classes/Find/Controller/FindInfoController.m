@@ -229,7 +229,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [qiugou addObject:Stypearray7];
     
     //融资借贷
-    NSArray *Stypearray8 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用"];
+    NSArray *Stypearray8 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用",@"担保",@"股权",@"其他"];
     NSMutableArray *rongzi = [NSMutableArray new];
     [rongzi addObject:Stypearray8];
     
@@ -269,7 +269,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //投资需求
     NSArray *Stypearray18 = @[@"个人",@"企业",@"机构",@"其他"];
     NSArray *Stypearray19 = @[@"债权",@"股权",@"其他"];
-    NSArray *Stypearray20 = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSArray *Stypearray20 = @[@"1年",@"2年",@"3年",@"4年",@"5年",@"6年",@"7年",@"8年",@"9年",@"10年"];
     NSMutableArray *touzi = [NSMutableArray new];
     [touzi addObject:Stypearray18];
     [touzi addObject:Stypearray19];
@@ -511,7 +511,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             }
             else if([Str isEqualToString:@"投资期限"])
             {
-                NSString *findValue = [string substringFromIndex:4];
+                NSString *findValue = [[string substringFromIndex:4]substringToIndex:1];
                 [self.dataDic setObject:findValue forKey:@"Year"];
                 [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic removeObjectForKey:@"investType"];
@@ -778,7 +778,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [qiugou addObject:Stypearray7];
     
     //融资借贷
-    NSArray *Stypearray8 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用"];
+    NSArray *Stypearray8 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用",@"担保",@"股权",@"其他"];
     NSMutableArray *rongzi = [NSMutableArray new];
     [rongzi addObject:Stypearray8];
     
@@ -818,7 +818,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //投资需求
     NSArray *Stypearray18 = @[@"个人",@"企业",@"机构",@"其他"];
     NSArray *Stypearray19 = @[@"债权",@"股权",@"其他"];
-    NSArray *Stypearray20 = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10"];
+    NSArray *Stypearray20 = @[@"1年",@"2年",@"3年",@"4年",@"5年",@"6年",@"7年",@"8年",@"9年",@"10年"];
+    
     NSMutableArray *touzi = [NSMutableArray new];
     [touzi addObject:Stypearray18];
     [touzi addObject:Stypearray19];
