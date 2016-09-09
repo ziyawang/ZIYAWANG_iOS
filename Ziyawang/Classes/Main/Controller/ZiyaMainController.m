@@ -29,6 +29,7 @@
 #import "SearchController.h"
 #import "VideosListController.h"
 #import "LunboModel.h"
+#import "VideosModel.h"
 @interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate>
 
 /**
@@ -105,6 +106,10 @@
  */
 @property (nonatomic,strong) UIView *rightView2;
 /**
+ *  视频红点
+ */
+@property (nonatomic,strong) UIButton *redbutton;
+/**
  *  类型数据源
  */
 @property (nonatomic,strong) NSArray *array1;
@@ -162,8 +167,49 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setNavigation];
     
+    [self setNavigation];
+    [self getVideoStatu];
+    
+}
+- (void)getVideoStatu
+{
+    NSString *URL =getVideoListURL;
+    NSString *accesstoken = @"token";
+    //    NSString *pagecount = @"10";
+    NSString *VideoLabel = @"tj";
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    [dic setObject:accesstoken forKey:@"access_token"];
+    
+    //    [dic setObject:pagecount forKey:@"pagecount"];
+    [dic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
+    [self.manager GET:URL parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"获取信息成功");
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        NSArray *dataArray = dic[@"data"];
+       NSString  *VideoID = dataArray.firstObject[@"VideoID"];
+        NSString *videoid = [[NSUserDefaults standardUserDefaults]objectForKey:@"videostatu"];
+        if ([VideoID isEqualToString:videoid]) {
+            [self.redbutton setHidden:YES];
+        }
+        NSLog(@"%@",VideoID);
+//        for (NSDictionary *dic in dataArray) {
+//            VideosModel *model = [[VideosModel alloc]init];
+//            [model setValuesForKeysWithDictionary:dic];
+//            [self.sourceArray addObject:model];
+//        }
+//        self.startPage ++;
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"获取信息失败");
+        NSLog(@"%@",error);
+        
+    }];
+
+
 }
 
 - (void)viewDidLoad {
@@ -254,7 +300,7 @@
 {
     self.view.userInteractionEnabled = YES;
     self.array1 = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理"];
-    self.array2 = @[@"典当信息",@"融资需求",@"悬赏信息",@"尽职调查"];
+    self.array2 = @[@"投资需求",@"融资需求",@"悬赏信息",@"尽职调查"];
     self.array3 = @[@"委外催收",@"法律服务",@"资产求购",@"担保信息"];
     self.array4 = @[@"资产包收购",@"债权收购",@"律师事务所",@"保理公司"];
     self.array5 = @[@"典当公司",@"投融资服务",@"尽职调查",@"资产收购"];
@@ -415,7 +461,8 @@
     UIButton *redButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [redButton setFrame:CGRectMake(VideoButton.bounds.size.width - 15, 0 , 7, 7)];
     [redButton setBackgroundImage:[UIImage imageNamed:@"red_point"] forState:(UIControlStateNormal)];
-    [VideoButton addSubview:redButton];
+    self.redbutton = redButton;
+    [VideoButton addSubview:self.redbutton];
     
     [self.searchBarBackView addSubview:VideoButton];
     
@@ -543,6 +590,9 @@
         //        imageView.backgroundColor = [UIColor whiteColor];
         
         imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+4]];
+        if (i==1) {
+            imageView.image = [UIImage imageNamed:@"13"];
+        }
         
         lable.text = self.array2[i-1];
         [button addSubview:imageView];
@@ -558,7 +608,7 @@
 - (void)setButtonWithrightView:(UIView *)view
 {
     CGFloat Buttonheight = (self.tableView.bounds.size.width - 100) / 4;
-    for(int i = 1;i< 5;i ++)
+    for(int i = 1;i< 4;i ++)
     {
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [button setFrame:
@@ -579,24 +629,24 @@
         [button addSubview:lable];
         [view addSubview:button];
         
-        for (int i = 1; i < 2; i ++) {
-            UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-            [button setFrame:
-             CGRectMake(20 *i + Buttonheight * (i-1), 10 + Buttonheight + 20,
-                        Buttonheight, Buttonheight)];
-            //        button.backgroundColor = [UIColor blackColor];
-            button.tag = 25;
-            [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
-            UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
-            lable.textAlignment = NSTextAlignmentCenter;
-            lable.font = [UIFont FontForBigLabel];
-            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",13]];
-            lable.text = self.array7[0];
-            [button addSubview:imageView];
-            [button addSubview:lable];
-            [view addSubview:button];
-        }
+//        for (int i = 1; i < 2; i ++) {
+//            UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//            [button setFrame:
+//             CGRectMake(20 *i + Buttonheight * (i-1), 10 + Buttonheight + 20,
+//                        Buttonheight, Buttonheight)];
+//            //        button.backgroundColor = [UIColor blackColor];
+//            button.tag = 25;
+//            [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
+//            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
+//            UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
+//            lable.textAlignment = NSTextAlignmentCenter;
+//            lable.font = [UIFont FontForBigLabel];
+//            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",13]];
+//            lable.text = self.array7[0];
+//            [button addSubview:imageView];
+//            [button addSubview:lable];
+//            [view addSubview:button];
+//        }
         
     }
     
@@ -781,7 +831,7 @@
     self.startPage = 0;
     
     
-    NSString *getURL = @"http://api.ziyawang.com/v1/project/list";
+    NSString *getURL = FindInformationURL;
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
@@ -813,13 +863,10 @@
         NSLog(@"请求失败");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
+        [self.tableView.mj_footer endRefreshing];
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-        });
+   
         
     }];
 }
@@ -839,7 +886,7 @@
     }
     self.startPage = 0;
     
-    NSString *getURL = @"http://api.ziyawang.com/v1/service/list";
+    NSString *getURL = FindServiceURL;
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
@@ -890,7 +937,7 @@
 - (void)loadMoreData
 {
     if ([self.findType isEqualToString:@"找信息"]) {
-        NSString *getURL = @"http://api.ziyawang.com/v1/project/list";
+        NSString *getURL = FindInformationURL;
         NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
         NSString *access_token = @"token";
         NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
@@ -909,13 +956,17 @@
                 [addArray addObject:self.model];
             }
             if (addArray.count==0) {
-                [self.tableView.mj_footer resetNoMoreData];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
                 
             }
+            else
+            {
             [self.sourceArray addObjectsFromArray:addArray];
             [self.tableView reloadData];
             [self.tableView.mj_footer endRefreshing];
-            
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
@@ -924,7 +975,7 @@
     }
     else
     {
-        NSString *getURL = @"http://api.ziyawang.com/v1/service/list";
+        NSString *getURL = FindServiceURL;
         NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
         NSString *access_token = @"token";
         
@@ -953,21 +1004,20 @@
                 //            [self.tableView.mj_footer resetNoMoreData];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
             }
-            
+            else
+            {
             [self.sourceArray addObjectsFromArray:addArray];
             [self.tableView reloadData];
             [self.tableView.mj_footer endRefreshing];
-            
-            
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             [self.tableView.mj_footer endRefreshing];
-            
-            
-            
-        }];
+           }];
     }
 }
 /**
@@ -981,7 +1031,7 @@
     NSString *accesstoken = @"token";
     NSMutableDictionary *dic = [NSMutableDictionary new];
     //    [dic setObject:accesstoken forKey:@"access_token"];
-    NSString *getbannerURL = @"http://api.ziyawang.com/v1/app/banner?access_token=token";
+    NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/banner?access_token=token"];
     
     //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //
@@ -1222,8 +1272,8 @@
         case 5:
             NSLog(@"5");
             searchVC.type = type;
-            searchVC.searchValue = @"05";
-            searchVC.navigationItem.title = @"典当信息";
+            searchVC.searchValue = @"15";
+            searchVC.navigationItem.title = @"投资需求";
             
             break;
         case 6:
@@ -1344,6 +1394,7 @@
             break;
         case 25:
             NSLog(@"25");
+            searchVC.type = type;
             searchVC.searchValue = @"15";
             searchVC.navigationItem.title = @"投资需求";
             break;
@@ -1370,15 +1421,15 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 110;
+        return 120;
         
     }
     
@@ -1428,7 +1479,7 @@
         }
         model = self.sourceArray[indexPath.row];
         infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
@@ -1440,10 +1491,8 @@
         NSLog(@"!!!!!!!!!!%@",model.ServiceID);
         ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
         ServiceDetailVC.ServiceID = model.ServiceID;
-        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ConnectPhone];
-        
+        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
-        
     }
 }
 

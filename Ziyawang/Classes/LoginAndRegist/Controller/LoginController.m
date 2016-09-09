@@ -384,6 +384,8 @@
       #warning 这个地方有问题，不需要解析就出现了结果，生成字典内容 加上上面的话就好了
 //     NSDictionary *dic = responseObject;
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSString *userid = [NSString stringWithFormat:@"%@",dic[@"UserID"]];
+        
          NSString *code = dic[@"status_code"];
            if ([code isEqualToString:@"200"]) {
             
@@ -392,7 +394,7 @@
             self.UserPictuerURl = dic[@"UserPicture"];
             [self.userDefault setObject:token forKey:@"token"];
             [self.userDefault setObject:@"已登录" forKey:@"登录状态"];
-            [self.userDefault setObject:UserID forKey:@"UserID"];
+            [self.userDefault setObject:userid forKey:@"UserID"];
             NSLog(@"#############USERID%@",UserID);
             [self.userDefault setObject:role forKey:@"role"];
             [self.userDefault setObject:self.UserPictuerURl forKey:@"UserPicture"];
@@ -497,7 +499,7 @@
         //        completion(self.otherUserinfo);
         self.manager = [AFHTTPSessionManager manager];
         self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+        NSString *URL =[getUserInfoWithUseridURL stringByAppendingString:@"?access_token=token"];
         NSMutableDictionary *dic = [NSMutableDictionary new];
         //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
         [dic setObject:userId forKey:@"UserID"];

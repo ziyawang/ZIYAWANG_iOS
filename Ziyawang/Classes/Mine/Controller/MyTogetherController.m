@@ -53,7 +53,7 @@
     [self.sourceArray removeAllObjects];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/project/coolist";
     NSString *accesstoken = @"token";
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -91,7 +91,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/project/coolist";
     NSString *accesstoken = @"token";
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -136,20 +136,19 @@
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
-        
-        return 145;
+        return 165;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 145;
+        return 165;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 150;
+        return 170;
         
     }
     
-    return 150;
+    return 165;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -183,7 +182,7 @@
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     infoDetailsVC.ProjectID = model.ProjectID;
-    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];

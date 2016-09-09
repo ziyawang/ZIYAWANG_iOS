@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIView *ContentView;
 @property (weak, nonatomic) IBOutlet UILabel *diquLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *wordDesLabel;
 //需要判断的控件
 @property (weak, nonatomic) IBOutlet UILabel *TotalMoney;
 @property (weak, nonatomic) IBOutlet UILabel *TransferMoney;
@@ -102,19 +103,15 @@
     {
         [self.VipImage setHidden:NO];
     }
-    
-    
     [self.wan1 setHidden:NO];
     [self.wan2 setHidden:NO];
-    
-    
-    
-    
-   
+    self.wan1.text = @"万";
     
     self.FromWhereWidth.constant = [self getwidth];
     self.asettyoeWidth.constant = [self getwidth];
     
+    self.wordDesLabel.font = [UIFont FontForLabel];
+    self.wordDesLabel.text = self.model.WordDes;
     self.TypeNameLabel.font = [UIFont FontForBigLabel];
      [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
     self.ProAreaLabel.font = [UIFont FontForLabel];
@@ -159,6 +156,8 @@
     self.projectNumberLabel.text = self.model.ProjectNumber;
     
     
+    
+    
 //    if ([self.model.TypeName isEqualToString:@"资产包转让"] || [self.model.TypeName isEqualToString:@"委外催收"] || [self.model.TypeName isEqualToString:@"商业保理"] || [self.model.TypeName isEqualToString:@"融资需求"]) {
 //        if ([self.model.TypeName isEqualToString:@"资产包转让"]) {
 //            self.TotalMoney.text = self.model.TotalMoney;
@@ -179,6 +178,8 @@
     self.diquLabel.text = @"地区：";
     }
     self.downLabel.text = @"类型：";
+    
+    
             if([self.model.TypeName isEqualToString:@"委外催收"])
         {
             [self.midLabel setHidden:NO];
@@ -230,7 +231,7 @@
     if ([self.model.TypeName isEqualToString:@"资产包转让"])
     {
         [self.midLabel setHidden:NO];
-
+        self.midLabel.text = @"来源：";
         self.TotalMoney.text = self.model.TotalMoney;
         self.TransferMoney.text = self.model.TransferMoney;
         self.rightChangeLabel.text = @"转让价";
@@ -259,7 +260,6 @@
         self.diquLabel.text = @"地区：";
         self.leftChangeLabel.text = @"需求";
 //        self.downLabel.text = @"类型";
-        
         
         [self.TransferMoney setHidden:YES];
         [self.rightChangeLabel setHidden:YES];
@@ -393,7 +393,27 @@
 
         
     }
-  
+  else if([self.model.TypeName isEqualToString:@"投资需求"])
+  {
+      [self.midLabel setHidden:NO];
+      self.ProAreaLabel.text = self.model.ProArea;
+      self.FromWhere.text = self.model.investType;
+      [self.TotalMoney setHidden:NO];
+      [self.TransferMoney setHidden:NO];
+      self.TotalMoney.text = self.model.Year;
+      
+      self.TransferMoney.text = [self.model.Rate stringByAppendingString:@"%"];
+      [self.wan1 setHidden:NO];
+      [self.wan2 setHidden:YES];
+      self.wan1.text = @"年";
+      [self.TotalMoneyImage setHidden:NO];
+      [self.TransferMoney setHidden:NO];
+      self.TotalMoneyImage.image = [UIImage imageNamed:@"year"];
+      self.TransMoneyImage.image = [UIImage imageNamed:@"huibaolv"];
+      self.midLabel.text = @"投资方式：";
+      self.diquLabel.text = @"投资地区：";
+      self.downLabel.text = @"投资类型：";
+  }
     
     
 }

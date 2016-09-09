@@ -61,7 +61,7 @@
         [self.sourceArray removeAllObjects];
     }
     self.startpage = 1;
-    NSString *url = [AllURL stringByAppendingString:@"/getmessage"];
+    NSString *url = [getDataURL stringByAppendingString:@"/getmessage"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -103,7 +103,7 @@
 
 - (void)loadMoreData
 {
-    NSString *url = [AllURL stringByAppendingString:@"/getmessage"];
+    NSString *url = [getDataURL stringByAppendingString:@"/getmessage"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -127,12 +127,17 @@
                 //            [self.tableView.mj_footer resetNoMoreData];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
             }
+            else
+            {
             [self.sourceArray addObjectsFromArray:addArray];
 
             [self.tableView reloadData];
             [self.tableView.mj_footer endRefreshing];
             self.startpage ++;
+            }
         }
         NSLog(@"------系统消息数据%@",dic);
         //    if(dic[@"statu"])
@@ -222,7 +227,7 @@
             model = self.sourceArray[indexPath.row];
             [self.sourceArray removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
-            NSString *url = [AllURL stringByAppendingString:@"/delmessage"];
+            NSString *url = [getDataURL stringByAppendingString:@"/delmessage"];
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:@"token" forKey:@"access_token"];
             NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];

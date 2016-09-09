@@ -16,7 +16,6 @@
 
 @interface SearchTypeController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,assign) NSInteger startpage;
-
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UITableView *tableView;
 
@@ -60,7 +59,6 @@
     }];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [self loadMoreDataWithType:self.type SearchValue:self.searchValue];
-        
     }];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftButtonAction:)];
   
@@ -91,9 +89,8 @@
     [getdic setObject:@"10" forKey:@"pagecount"];
     
     if ([type isEqualToString:@"找信息"]) {
-        
         [getdic setObject:searchvalue forKey:@"TypeID"];
-        getURL = @"http://api.ziyawang.com/v1/project/list";
+        getURL = FindInformationURL;
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -109,16 +106,16 @@
             self.startpage ++;
 
             if (addAddArray.count == 0) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }
-            [self.sourceArray addObjectsFromArray:addAddArray];
-            if (addAddArray.count == 0) {
-                //            [self.tableView.mj_footer resetNoMoreData];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }
+            else
+            {
+            [self.sourceArray addObjectsFromArray:addAddArray];
             [self.tableView reloadData];
             [self.tableView.mj_footer endRefreshing];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self.tableView.mj_footer endRefreshing];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -128,7 +125,7 @@
     }
     else
     {
-        getURL = @"http://api.ziyawang.com/v1/service/list";
+        getURL = FindServiceURL;
         [getdic setObject:searchvalue forKey:@"ServiceType"];
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -137,13 +134,23 @@
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSMutableArray *sourceArray = dic[@"data"];
+            NSMutableArray *addAddArray = [NSMutableArray new];
             for (NSDictionary *dic in sourceArray) {
                 FindServiceModel *model = [[FindServiceModel alloc]init];
                 [model setValuesForKeysWithDictionary:dic];
-                [self.sourceArray addObject:model];
+                [addAddArray addObject:model];
             }
-            [self.tableView reloadData];
-            [self.tableView.mj_footer endRefreshing];
+            if (addAddArray.count == 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            else
+            {
+                [self.sourceArray addObjectsFromArray:addAddArray];
+                [self.tableView reloadData];
+                [self.tableView.mj_footer endRefreshing];
+            }
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [self.tableView.mj_footer endRefreshing];
@@ -171,7 +178,7 @@
 
     if ([type isEqualToString:@"找信息"]) {
         [getdic setObject:searchvalue forKey:@"TypeID"];
-        getURL = @"http://api.ziyawang.com/v1/project/list";
+        getURL = FindInformationURL;
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             self.startpage ++;
@@ -196,7 +203,7 @@
     }
     else
     {
-      getURL = @"http://api.ziyawang.com/v1/service/list";
+      getURL = FindServiceURL;
         [getdic setObject:searchvalue forKey:@"ServiceType"];
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -248,15 +255,15 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 110;
+        return 120;
         
     }
     
@@ -306,7 +313,7 @@
         PublishModel *model = [[PublishModel alloc]init];
         model = self.sourceArray[indexPath.row];
         infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
@@ -319,7 +326,7 @@
 //        self.ServiceID = model.ServiceID;
         ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
         ServiceDetailVC.ServiceID = model.ServiceID;
-        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     }
     

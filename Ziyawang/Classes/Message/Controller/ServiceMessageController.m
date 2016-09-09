@@ -31,7 +31,7 @@
 
 - (void)PushSerViceData
 {
-    NSString *url = [AllURL stringByAppendingString:@"/readmessage"];
+    NSString *url = [getDataURL stringByAppendingString:@"/readmessage"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];

@@ -9,62 +9,72 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 #import "Header.h"
+/**
+ *  正式服API
+ *
+ *  @return
+ */
+//#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
+//#define getImageURL @"http://images.ziyawang.com"//获取图片
+//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+//#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
+/**
+ *  测试服API
+ *
+ *  @return
+ */
+#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
+#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
+#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
 
-#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器的所有数据的域
-//#define loginURL getDataURL@"/auth/login"//登录
-//#define getsmscodeURL getDataURL@"/auth/getsmscode"//获取验证码
-//#define registURL getDataURL@"/auth/register"//注册
-//#define changePaswordURL getDataURL@"/auth/resetpwd"//忘记密码
-//#define FindInformationURL getDataURL@"/project/list/"//找信息
-//#define FindServiceURL getDataURL@"/service/list"//找服务
-//#define SentCommentContentURL\getDataURL\@"/comment/create"//提交视频评论
-//#define getUserInfoURL getDataURL@"/auth/me"//获取用户信
-//#define getRongCloudTokenURL getDataURL@"/rctoken"//获取融云TOken
 
-//#define SentCommentContentURL [getDataURL stringByAppendingString:@"/video/comment/create"]
-//#define loginURL [getDataURL stringByAppendingString:@"/auth/login"]//登录
-//#define getsmscodeURL [getDataURL stringByAppendingString:@"/auth/getsmscode"]//获取验证码
-//#define registURL [getDataURL stringByAppendingString:@/auth/register"//注册
+#define SentCommentContentURL [getDataURL stringByAppendingString:@"/video/comment/create"]//评论
+#define loginURL [getDataURL stringByAppendingString:@"/auth/login"]//登录
+#define getsmscodeURL [getDataURL stringByAppendingString:@"/auth/getsmscode"]//获取验证码
+#define registURL [getDataURL stringByAppendingString:@"/auth/register"]//注册
+#define changePaswordURL [getDataURL stringByAppendingString:@"/auth/resetpwd"]//忘记密码
+
+#define FindInformationURL [getDataURL stringByAppendingString:@"/project/list"]//找信息
+#define InformationDetailURL [getDataURL stringByAppendingString:@"/project/list/"]//信息详情
+#define FindServiceURL [getDataURL stringByAppendingString:@"/service/list"]//找服务
+#define ServiceDetailURL [getDataURL stringByAppendingString:@"/service/list/"]//服务详情
+
+#define getUserInfoURL [getDataURL stringByAppendingString:@"/auth/me"]//获取用户信
+#define getUserInfoWithUseridURL [getDataURL stringByAppendingString:@"/app/uinfo"]//根据UserID获取用户信息
+#define getRongCloudTokenURL [getDataURL stringByAppendingString:@"/rctoken"]//获取融云TOken
+#define getMyPushURL [getDataURL stringByAppendingString:@"/project/mypro"]//我的发布列表
+#define CommentAdviceURL [getDataURL stringByAppendingString:@"/app/advice"]//反馈意见
+#define ifNeedUpdateURL [getDataURL stringByAppendingString:@"/app/iosupdate"]//版本升级
+#define changePaswordURL2 [getDataURL stringByAppendingString:@"/auth/chpwd"]//修改密码
+#define getVideoListURL [getDataURL stringByAppendingString:@"/video/list"]//视频列表
+
+
+
+
+
+
+
+
+
+
+//#define loginURL @"http://api.ziyawang.com/v1/auth/login"//登录
+//#define getsmscodeURL @"http://api.ziyawang.com/v1/auth/getsmscode"//获取验证码
+//#define registURL @"http://api.ziyawang.com/v1/auth/register"//注册
 //#define changePaswordURL @"http://api.ziyawang.com/v1/auth/resetpwd"//修改密码
 //#define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
 //#define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
+////
+//#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
 //#define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
 //#define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
 //#define getImageURL @"http://images.ziyawang.com"//获取图片
+//// public static final String FileIP =  "http://images.ziyawang.com"
 //#define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
 //#define videoPlayerURL @"http://videos.ziyawang.com"
 //#define FindVideoURL @"";
 //#define CommentAdviceURL @"http://api.ziyawang.com/v1/app/advice"
 //#define AllURL @"http://api.ziyawang.com/v1"
-
-
-
-
-
-
-
-
-
-
-
-
-#define loginURL @"http://api.ziyawang.com/v1/auth/login"//登录
-#define getsmscodeURL @"http://api.ziyawang.com/v1/auth/getsmscode"//获取验证码
-#define registURL @"http://api.ziyawang.com/v1/auth/register"//注册
-#define changePaswordURL @"http://api.ziyawang.com/v1/auth/resetpwd"//修改密码
-#define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
-#define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
-//
-#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
-#define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
-#define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
-#define getImageURL @"http://images.ziyawang.com"//获取图片
-// public static final String FileIP =  "http://images.ziyawang.com"
-#define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
-#define videoPlayerURL @"http://videos.ziyawang.com"
-#define FindVideoURL @"";
-#define CommentAdviceURL @"http://api.ziyawang.com/v1/app/advice"
-#define AllURL @"http://api.ziyawang.com/v1"
 
 
 #endif /* PrefixHeader_pch */

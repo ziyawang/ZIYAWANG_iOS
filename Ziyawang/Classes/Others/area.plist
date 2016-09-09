@@ -5,6 +5,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -120,6 +126,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -229,6 +241,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -338,6 +356,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -494,11 +518,6 @@
 				<key>city</key>
 				<string>长寿区</string>
 			</dict>
-		
-		
-		
-			
-		
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -560,6 +579,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -734,6 +759,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -1013,6 +1044,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -1217,6 +1254,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -1483,6 +1526,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -1638,6 +1687,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -1869,6 +1924,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -2204,6 +2265,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -2424,6 +2491,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -2680,6 +2753,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -2928,6 +3007,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -3156,6 +3241,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -3286,6 +3377,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -3491,6 +3588,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -3503,14 +3606,12 @@
 				<key>city</key>
 				<string>澄迈县</string>
 			</dict>
-		
 			<dict>
 				<key>areas</key>
 				<array/>
 				<key>city</key>
 				<string>陵水</string>
 			</dict>
-		
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -3600,7 +3701,6 @@
 				<key>city</key>
 				<string>定安县</string>
 			</dict>
-		
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -3614,6 +3714,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -3841,6 +3947,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4126,6 +4238,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4284,6 +4402,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4467,6 +4591,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4681,6 +4811,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4702,21 +4838,17 @@
 				<key>city</key>
 				<string>咸阳市</string>
 			</dict>
-            
-            <dict>
-                <key>areas</key>
-                <array>
-                    <string>印台区</string>
-                    <string>王益区</string>
-                    <string>宜君县</string>
-                    <string>耀州区</string>
-                </array>
-                <key>city</key>
-                <string>杨凌示范区</string>
-            </dict>
-            
-            
-            
+			<dict>
+				<key>areas</key>
+				<array>
+					<string>印台区</string>
+					<string>王益区</string>
+					<string>宜君县</string>
+					<string>耀州区</string>
+				</array>
+				<key>city</key>
+				<string>杨凌示范区</string>
+			</dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -4880,6 +5012,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5083,6 +5221,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5189,6 +5333,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5252,6 +5402,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5442,6 +5598,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5571,6 +5733,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5727,7 +5895,6 @@
 				<key>city</key>
 				<string>通辽市</string>
 			</dict>
-		
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5754,6 +5921,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5802,7 +5975,6 @@
 				<key>city</key>
 				<string>吐鲁番地区</string>
 			</dict>
-	
 			<dict>
 				<key>areas</key>
 				<array>
@@ -5955,6 +6127,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -6027,7 +6205,6 @@
 				<key>city</key>
 				<string>苗栗县</string>
 			</dict>
-		
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -6040,7 +6217,6 @@
 				<key>city</key>
 				<string>云林县</string>
 			</dict>
-			
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -6066,6 +6242,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>
@@ -6169,6 +6351,12 @@
 	<dict>
 		<key>cities</key>
 		<array>
+            <dict>
+                <key>areas</key>
+                <array/>
+                <key>city</key>
+                <string>不限</string>
+            </dict>
 			<dict>
 				<key>areas</key>
 				<array/>

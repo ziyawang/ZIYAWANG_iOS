@@ -116,7 +116,7 @@
     else if ([self.PublishState isEqualToString:@"1"])
     {
         if ([self.model.CooperateFlag isEqualToString:@"1"]) {
-            [self.agreeButton setHidden:NO];
+            [self.agreeButton setHidden:YES];
             [self.operateStateButton setText:@"合作中"];
         }
         else
@@ -128,7 +128,6 @@
         }
         
     }
-    
     else if([self.PublishState isEqualToString:@"2"])
     {
         [self.agreeButton setHidden:YES];
@@ -147,7 +146,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     NSString *Token = @"?token=";
-    NSString *url = @"http://api.ziyawang.com/v1";
+    NSString *url = getDataURL;
     NSString *url2 = @"/collect";
     NSString *access_token = @"token";
     
@@ -229,7 +228,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     NSString *footurl = @"/project/cooperate";
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -254,6 +253,8 @@
         NSDictionary *dic  = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"合作成功");
         [self MBProgressWithString:@"合作成功" timer:1 mode:MBProgressHUDModeText];
+        [self.agreeButton setHidden:YES];
+        [self.operateStateButton setText:@"合作中"];
         NSLog(@"%@",dic[@"status_code"]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -261,9 +262,7 @@
 //        [self MBProgressWithString:@"合作失败" timer:1 mode:MBProgressHUDModeText];
         NSLog(@"合作失败%@",error);
     }];
-
 }
-
 //通知事件响应跳转到私聊界面
 - (IBAction)talkButtonAction:(id)sender {
     

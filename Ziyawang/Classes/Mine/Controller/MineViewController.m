@@ -382,7 +382,7 @@
     
 //    [self.userIconImageview setHidden:NO];
 //    [self.normalUserImageView setHidden:YES];
-    NSString *headURL = @"http://images.ziyawang.com";
+    NSString *headURL = getImageURL;
     
     
     

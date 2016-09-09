@@ -221,8 +221,9 @@
             
             NSLog(@"%@",dic[@"role"]);
             self.role =dic[@"role"];
+            
             //        NSString *role = self.role;
-            //        [[NSUserDefaults standardUserDefaults]setObject:role forKey:@"role"];
+                    [[NSUserDefaults standardUserDefaults]setObject:self.role forKey:@"role"];
             if ([self.role isEqualToString:@"0"])
             {
                 NSLog(@"第一种视图");

@@ -57,7 +57,7 @@
     {
         [self.sourceArray removeAllObjects];
     }
-    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+    NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
 //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
     NSMutableDictionary *getdic = dataDic;
     NSLog(@"#############%@",getdic);

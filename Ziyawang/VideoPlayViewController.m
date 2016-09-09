@@ -112,7 +112,7 @@
     NSString *token = [defaults objectForKey:@"token"];
     
 
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     NSString *footurl = @"/video/list/";
     NSLog(@"^^^^^^^^^^^^^^^^%@",self.videoID);
 
@@ -331,7 +331,7 @@
     else
     {
 //        NSString *Token = @"?token=";
-        NSString *url = [@"http://api.ziyawang.com/v1" stringByAppendingString:@"/collect"];
+        NSString *url = [getDataURL stringByAppendingString:@"/collect"];
 //        NSString *url2 = @"/collect";
 //        NSString *access_token = @"token";
         
@@ -615,7 +615,7 @@
     [self.sourceArray removeAllObjects];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *url = @"http://api.ziyawang.com/v1/video/comment/list";
+    NSString *url = [getDataURL stringByAppendingString:@"/video/comment/list"];
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.videoID forKey:@"VideoID"];
@@ -645,7 +645,7 @@
 - (void)loadMoreContentData
 {
     
-    NSString *url = @"http://api.ziyawang.com/v1/video/comment/list";
+    NSString *url = [getDataURL stringByAppendingString:@"/video/comment/list"];
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.videoID forKey:@"VideoID"];
@@ -665,19 +665,20 @@
         }
         self.startpage ++;
         [self.sourceArray addObjectsFromArray:addArray];
-        if (addArray.count == 0) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
-            
-        }
+    
         if (addArray.count == 0) {
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         NSLog(@"!!!!!!!!!%@",self.sourceArray);
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
+        }
         NSLog(@"请求评论成功");
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求评论失败");

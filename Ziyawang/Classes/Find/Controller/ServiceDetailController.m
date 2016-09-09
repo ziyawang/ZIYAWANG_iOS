@@ -16,6 +16,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 
+#import "LookupMyRushController.h"
 @interface ServiceDetailController ()<MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIView *bringView;
 @property (strong, nonatomic) IBOutlet UIView *backGroundView;
@@ -66,7 +67,7 @@
     else
     {
       NSString *Token = @"?token=";
-    NSString *url = @"http://api.ziyawang.com/v1";
+    NSString *url =getDataURL;
     NSString *url2 = @"/collect";
     NSString *access_token = @"token";
     
@@ -217,7 +218,6 @@
     self.model = [[FindServiceModel alloc]init];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.role = [defaults objectForKey:@"role"];
-    [self layoutBottomViewWithUserType:self.role UserID:self.userid];
     [self findServicesDetail];
     
 }
@@ -239,7 +239,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *url = @"http://api.ziyawang.com/v1/service/list/";
+    NSString *url = ServiceDetailURL;
 //    NSString *str = @"&token=";
     
     NSString *getURL = [url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ServiceID]];
@@ -340,7 +340,10 @@
 }
 - (void)layoutView
 {
-    NSString *url = @"http://images.ziyawang.com";
+    
+    [self layoutBottomViewWithUserType:self.role UserID:self.model.UserID];
+
+    NSString *url = getImageURL;
     NSString *usericonurl = self.model.UserPicture;
     self.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
      //设置收藏按钮的状态
@@ -364,6 +367,7 @@
     {
     [self.usericon sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:usericonurl]]];
     }
+    
     
     self.phoneNumber = self.model.ConnectPhone;
     self.typeName.text = self.model.ServiceType;
@@ -426,11 +430,13 @@
 //        //没认证过的
 //        NSLog(@"登录但是没认证过的");
 //    }
+    self.userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+
+    
     if([self.userID isEqualToString:UserID])
     {
         NSLog(@"我自己");
         [self layoutView2];
-        
     }
     else
     {
@@ -474,11 +480,12 @@
 - (void)layoutView2
 {
     UIView *selfView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
-    selfView.backgroundColor = [UIColor grayColor];
+    selfView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     UIButton *lookButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     lookButton.frame = CGRectMake(0, 0, selfView.bounds.size.width, 50);
     [lookButton setTitle:@"我的抢单" forState:(UIControlStateNormal)];
     [lookButton addTarget:self action:@selector(lookbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [lookButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [selfView addSubview:lookButton];
     [self.bringView addSubview:selfView];
     [self.backGroundView bringSubviewToFront:self.bringView];
@@ -517,7 +524,6 @@
     {
         talkViewController *talkVc = [[talkViewController alloc]init];
         talkVc.title = self.model.ServiceName;
-        
         talkVc.targetId = [NSString stringWithFormat:@"%@",self.userid];
         talkVc.conversationType = ConversationType_PRIVATE;
         [self.navigationController pushViewController:talkVc animated:YES];
@@ -525,7 +531,8 @@
 }
 - (void)lookbuttonAction:(UIButton *)button
 {
-   
+    LookupMyRushController *myrushVC = [[LookupMyRushController alloc]init];
+    [self.navigationController pushViewController:myrushVC animated:YES];
 }
 /*
 #pragma mark - Navigation

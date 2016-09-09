@@ -73,7 +73,6 @@
             NSLog(@"点击了第%ld个btn",index+1);
              if (index  == 0) {
                  [self findInfomationsWithDic:self.dataDic];
-                 
              }
              else if(index == 1)
              {
@@ -146,7 +145,7 @@
    }
 - (void)loadNewData
 {
-    self.startpage = 0;
+    self.startpage = 1;
     [self findInfomationsWithDic:self.dataDic];
  }
 - (void)loadMoreData
@@ -179,10 +178,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         [self.allshiArray addObject:self.shiArray];
     }
     
-    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保",@"投资需求"];
+    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];
    
     
-    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05",@"15"];
+    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
     
     
     
@@ -200,7 +199,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSArray *typearray10 = @[@"类型",@"佣金比例",@"状态"];
     NSArray *typearray11 = @[@"类型"];
     //投资需求
-    NSArray *typearray12 = @[@"投资需求",@"投资方式",@"投资期限"];
+    NSArray *typearray12 = @[@"投资类型",@"投资方式",@"投资期限"];
     
     //资产包转让
     NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类"];
@@ -209,7 +208,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [zichan addObject:Stypearray1];
     [zichan addObject:Stypearray2];
     //债权转让
-    NSArray *Stypearray3 = @[@"个人",@"企业",@"其他"];
+    NSArray *Stypearray3 = @[@"个人债权",@"企业商账",@"其他"];
     NSMutableArray *zhaiquan = [NSMutableArray new];
     [zhaiquan addObject:Stypearray3];
     
@@ -218,7 +217,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     NSMutableArray *guchan = [NSMutableArray new];
     [guchan addObject:Stypearray4];
     //商业保理
-    NSArray *Stypearray5 = @[@"土地",@"房产",@"汽车",@"其他"];
+    NSArray *Stypearray5 = @[@"国企",@"民企",@"上市公司",@"其他"];
     NSMutableArray *shangye = [NSMutableArray new];
     [shangye addObject:Stypearray5];
     
@@ -289,7 +288,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [allTypeArray addObject:jinzhi];
     [allTypeArray addObject:weiwai];
     [allTypeArray addObject:diandang];
-    
     [allTypeArray addObject:touzi];
     
     
@@ -297,10 +295,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     self.menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
     self.menuView.indexsThirFist = level;
-    
-    
+//    self.dataDic = [NSMutableDictionary dictionary];
     __weak typeof(self) weakSelf = self;
-    
     self.menuView.selectedIndex = ^(NSString *string){
         for (NSString *str in weakSelf.shengArray) {
             if ([str isEqualToString:string]) {
@@ -325,17 +321,19 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",self.lastChoose);
         if ([self.lastChoose isEqualToString:informationTypeID[0]]) {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            [self findInfomationsWithDic:self.dataDic];
             NSString *substr = [string substringToIndex:2];
             if ([substr isEqualToString:@"类型"]) {
+                [self.dataDic removeObjectForKey:@"FromWhere"];
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
                 [self findInfomationsWithDic:self.dataDic];
             }
-            else if([substr isEqualToString:@"资产"]&&[string isEqualToString:@"资产包转让"]==NO)
+            else if([substr isEqualToString:@"来源"])
             {
-                NSString *findValue = [string substringFromIndex:5];
+                [self.dataDic removeObjectForKey:@"AssetType"];
+                NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"FromWhere"];
+                
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
@@ -343,8 +341,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[1]])
         {
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             NSString *substr = [string substringToIndex:2];
-            
             if ([substr isEqualToString:@"类型"]) {
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 NSString *findValue = [string substringFromIndex:2];
@@ -356,7 +354,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[2]])
         {              NSString *substr = [string substringToIndex:2];
-            
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+
             if ([substr isEqualToString:@"类型"]) {
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 NSString *findValue = [string substringFromIndex:2];
@@ -370,6 +369,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[3]])
         {
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+
             NSString *substr = [string substringToIndex:2];
             if ([substr isEqualToString:@"买方"])
             {
@@ -384,10 +385,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[4]])
         {
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             NSString *substr = [string substringToIndex:2];
             if ([substr isEqualToString:@"类型"]) {
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
+                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
                 [self findInfomationsWithDic:self.dataDic];
             }
@@ -397,18 +399,18 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         else if([self.lastChoose isEqualToString:informationTypeID[5]])
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            
             //类型 求购方
             NSString *Str = [string substringToIndex:2];
             if ([Str isEqualToString:@"类型"]) {
                 NSString *findValue = [string substringFromIndex:2];
+                [self.dataDic removeObjectForKey:@"Buyer"];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
                 [self findInfomationsWithDic:self.dataDic];
-                
             }
             else if([Str isEqualToString:@"求购"])
             {
                 NSString *findValue = [string substringFromIndex:3];
+                [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic setObject:findValue forKey:@"Buyer"];
                 [self findInfomationsWithDic:self.dataDic];
                 
@@ -419,6 +421,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[6]])
         {
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+
             NSString *Str = [string substringToIndex:2];
             if ([Str isEqualToString:@"方式"]) {
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
@@ -436,6 +440,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             NSString *Str = [string substringToIndex:2];
             if ([Str isEqualToString:@"类型"]) {
                 NSString *findValue = [string substringFromIndex:2];
+                [self.dataDic removeObjectForKey:@"Requirement"];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
                 [self findInfomationsWithDic:self.dataDic];
                 
@@ -443,6 +448,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             else if([Str isEqualToString:@"需求"])
             {
                 NSString *findValue = [string substringFromIndex:2];
+                [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic setObject:findValue forKey:@"Requirement"];
                 [self findInfomationsWithDic:self.dataDic];
                 
@@ -453,10 +459,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[8]])
         {
+            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+
             NSString *Str = [string substringToIndex:2];
             
             if ([Str isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
@@ -473,12 +480,15 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             if ([Str isEqualToString:@"类型"]) {
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
+                [self.dataDic removeObjectForKey:@"Informant"];
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
             else if([string isEqualToString:@"被调"])
             {
                 NSString *findValue = [string substringFromIndex:4];
+                [self.dataDic removeObjectForKey:@"AssetType"];
+
                 [self.dataDic setObject:findValue forKey:@"Informant"];
                 [self findInfomationsWithDic:self.dataDic];
                 
@@ -489,24 +499,31 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
+            NSString *Str = [string substringToIndex:4];
+            if ([Str isEqualToString:@"投资类型"]) {
+                NSString *findValue = [string substringFromIndex:4];
+                [self.dataDic removeObjectForKey:@"Year"];
+                [self.dataDic removeObjectForKey:@"investType"];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
+                
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
-            else if([Str isEqualToString:@"佣金"])
+            else if([Str isEqualToString:@"投资期限"])
             {
                 NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic setObject:findValue forKey:@"Rate"];
+                [self.dataDic setObject:findValue forKey:@"Year"];
+                [self.dataDic removeObjectForKey:@"AssetType"];
+                [self.dataDic removeObjectForKey:@"investType"];
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
-            else if([Str isEqualToString:@"状态"])
+            else if([Str isEqualToString:@"投资方式"])
             {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"Status"];
+                NSString *findValue = [string substringFromIndex:4];
+                [self.dataDic removeObjectForKey:@"AssetType"];
+                [self.dataDic removeObjectForKey:@"Year"];
+                [self.dataDic setObject:findValue forKey:@"investType"];
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
@@ -652,29 +669,30 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                     self.menuView.indexsThirSecond = weiwai;
                     self.lastChoose = informationTypeID[9];
                 }
+//                else if([sstr isEqualToString:infonmationType[10]])
+//                {
+//                    self.dataDic = [NSMutableDictionary new];
+//                    [self.dataDic setObject:informationTypeID[10] forKey:@"TypeID"];
+//                    [self findInfomationsWithDic:self.dataDic];
+//                    NSArray *array = @[infonmationType[10],@"地区",@"更多"];
+//                    [self createNewMoreMenuViewWithArray:array];
+//                    [self.view addSubview:self.menuView];
+//                    self.menuView.indexsThirFist = typearray11;
+//                    self.menuView.indexsThirSecond = diandang;
+//                    self.lastChoose = informationTypeID[10];
+//                }
                 else if([sstr isEqualToString:infonmationType[10]])
                 {
                     self.dataDic = [NSMutableDictionary new];
                     [self.dataDic setObject:informationTypeID[10] forKey:@"TypeID"];
+                    
                     [self findInfomationsWithDic:self.dataDic];
                     NSArray *array = @[infonmationType[10],@"地区",@"更多"];
                     [self createNewMoreMenuViewWithArray:array];
                     [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray11;
-                    self.menuView.indexsThirSecond = diandang;
-                    self.lastChoose = informationTypeID[10];
-                }
-                else if([sstr isEqualToString:infonmationType[11]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-                    [self.dataDic setObject:informationTypeID[11] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-                    NSArray *array = @[infonmationType[11],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
                     self.menuView.indexsThirFist = typearray12;
                     self.menuView.indexsThirSecond = touzi;
-                    self.lastChoose = informationTypeID[11];
+                    self.lastChoose = informationTypeID[10];
                 }
                 NSLog(@"得到的数据为%@",string);
                 //                [weakSelf findInfomationsWithDic:self.dataDic];
@@ -1214,11 +1232,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
 {
-    self.startpage = 0;
+    self.startpage = 1;
+    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    HUD.delegate = self;
+    HUD.mode = MBProgressHUDModeIndeterminate;
     
-    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.HUD.delegate = self;
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
+//    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    self.HUD.delegate = self;
+//    self.HUD.mode = MBProgressHUDModeIndeterminate;
     if (self.sourceArray != nil)
     {
         [self.sourceArray removeAllObjects];
@@ -1232,28 +1253,24 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 //    
 //    [getdic setObject:access_token forKey:@"access_token"];
 //    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
-    NSString *getURL = @"http://api.ziyawang.com/v1/project/list";
+    NSString *getURL = FindInformationURL;
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
+    getdic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
     NSString *access_token = @"token";
     NSString *startPage = [NSString stringWithFormat:@"%ld",self.startpage];
     [getdic setObject:startPage forKey:@"startpage"];
     [getdic setObject:access_token forKey:@"access_token"];
-    [getdic setObject:startPage forKey:@"startpage"];
+    NSLog(@"------getdic%@",getdic[@"AssetType"]);
+    NSLog(@"!!!!!!!!!%@",getdic);
 //    [getdic setObject:@"5" forKey:@"pagecount"];
-    
-    
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-   
-        
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"--------%@",dic);
+//        NSLog(@"--------%@",dic);
         
         
         NSMutableArray *sourceArray = dic[@"data"];
@@ -1263,21 +1280,27 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             [self.model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:self.model];
             }
+    
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
-        
-        
-        [self.tableView reloadData];
-        [self.HUD removeFromSuperViewOnHide];
-        [self.HUD hideAnimated:YES];
+         [self.tableView reloadData];
+//        [self.HUD removeFromSuperViewOnHide];
+//        [self.HUD hideAnimated:YES];
+             [HUD removeFromSuperViewOnHide];
+        [HUD hideAnimated:YES];
+
+//        [self.HUD removeFromSuperViewOnHide];
+//        [self.HUD hideAnimated:YES];
         [self.tableView.mj_header endRefreshing];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.tableView.mj_header endRefreshing];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        [self.HUD removeFromSuperViewOnHide];
-        [self.HUD hideAnimated:YES];
+        [HUD removeFromSuperViewOnHide];
+        [HUD hideAnimated:YES];
+//        [self.HUD removeFromSuperViewOnHide];
+//        [self.HUD hideAnimated:YES];
 
     }];
 }
@@ -1286,17 +1309,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 - (void)InfomationsWithDic:(NSMutableDictionary *)dataDic
 {
     
-    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+    NSString *getURL =[FindInformationURL stringByAppendingString:@"?access_token=token"];
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     getdic = self.dataDic;
-    
     NSString *access_token = @"token";
-    
     [getdic setObject:access_token forKey:@"access_token"];
     NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
-    
     [getdic setObject:starPage forKey:@"startpage"];
-    [getdic setObject:@"5" forKey:@"pagecount"];
+//    [getdic setObject:@"5" forKey:@"pagecount"];
     
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -1323,11 +1343,15 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
+      
+        else
+        {
         [self.sourceArray addObjectsFromArray:array];
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
-        
+        }
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.tableView.mj_footer endRefreshing];
@@ -1373,15 +1397,15 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 110;
+        return 120;
         
     }
     
@@ -1411,7 +1435,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     infoDetailsVC.ProjectID = model.ProjectID;
-    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;

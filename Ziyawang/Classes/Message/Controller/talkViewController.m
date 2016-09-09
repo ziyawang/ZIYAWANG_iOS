@@ -25,9 +25,9 @@
     //是否显示聊天者的名字
     self.displayUserNameInCell = YES;
 //     [RCIM sharedRCIM].userInfoDataSource = self;
-    
+    [self.pluginBoardView removeItemWithTag:PLUGIN_BOARD_ITEM_LOCATION_TAG];
     NSLog(@"%@", self.conversationDataRepository);
-    
+        
 }
 
 
@@ -60,6 +60,7 @@
     return YES;
 
 }
+
 
 
 @end

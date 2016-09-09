@@ -195,7 +195,9 @@
     NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
     if ([currentVersion isEqualToString:lastVersion]==NO) {
         NSLog(@"第一次启动");
+        
         [[NSUserDefaults standardUserDefaults]setObject:currentVersion forKey:key];
+        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"videostatu"];
         LinkpageController *linkVC = [[LinkpageController alloc]init];
         linkVC.controller = tabBarVC;
         self.window.rootViewController = linkVC;
@@ -212,7 +214,9 @@
 - (void)ifNeedUpdate
 {
     NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
-    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
+    NSString *URL = [ifNeedUpdateURL stringByAppendingString:@"?access_token=token"];
+    
+//    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
     [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -341,7 +345,8 @@
 //        completion(self.otherUserinfo);
         self.manager = [AFHTTPSessionManager manager];
         self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+        
+        NSString *URL = [getUserInfoWithUseridURL stringByAppendingString:@"?access_token=token"];
         NSMutableDictionary *dic = [NSMutableDictionary new];
         //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
         [dic setObject:userId forKey:@"UserID"];
@@ -408,7 +413,7 @@
 {
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+    NSString *URL = [getUserInfoWithUseridURL stringByAppendingString:@"?access_token=token"] ;
     NSMutableDictionary *dic = [NSMutableDictionary new];
 //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
     [dic setObject:userID forKey:@"UserID"];

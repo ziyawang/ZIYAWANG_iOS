@@ -126,15 +126,22 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
         NSLog(@"$$$$$$$$$$$$$$$$%@",self.sourceArray);
         self.starpage ++;
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+        [self.tableView.mj_footer endRefreshing];
+
         NSLog(@"请求我的发布列表失败");
         NSLog(@"%@",error);
     }];
@@ -148,15 +155,15 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 110;
+        return 120;
         
     }
     
@@ -193,7 +200,7 @@
     model = self.sourceArray[indexPath.row];
     infoDetailsVC.ProjectID = [NSString stringWithFormat:@"%@",model.ProjectID];
     NSLog(@"我的发布点击projectid%@",infoDetailsVC.ProjectID);
-    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"我的发布点击userid%@",infoDetailsVC.ProjectID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"我的发布点击puserid%@",infoDetailsVC.ProjectID);

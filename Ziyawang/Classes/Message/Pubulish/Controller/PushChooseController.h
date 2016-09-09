@@ -13,5 +13,6 @@
 @property (nonatomic,strong) NSArray *soucreArray;
 @property (nonatomic,strong) NSMutableDictionary *dictionary;
 @property (nonatomic,strong) NSString *selectCell;
+@property (nonatomic,strong) NSString *touqixian;
 
 @end

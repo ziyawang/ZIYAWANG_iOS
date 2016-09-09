@@ -143,8 +143,8 @@
 - (void)changeUserPictuer
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    NSString *url1= @"http://api.ziyawang.com/v1/";
-    NSString *url2 = @"upload";
+    NSString *url1= getDataURL;
+    NSString *url2 = @"/upload";
     NSString *URL = [[[[[url1 stringByAppendingString:url2]stringByAppendingString:@"?token="]stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
     NSLog(@"%@",URL);
     

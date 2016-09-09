@@ -32,11 +32,10 @@
     self.view.backgroundColor = [UIColor colorWithRed:248.0 / 255.0 green:248.0 / 255.0 blue:249.0 / 255.0 alpha:1.0];
     //    self.view.backgroundColor = [UIColor blueColor];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    title.textColor = [UIColor whiteColor];
     title.backgroundColor = [UIColor clearColor];
     title.textAlignment = NSTextAlignmentCenter;
     title.text = @"我的抢单";
-    title.textColor = [UIColor lightGrayColor];
+    title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
     
     //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
@@ -74,7 +73,7 @@
     NSLog(@"进入抢我的单列表");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     NSString *footurl = @"/project/myrush";
     NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
     
@@ -114,7 +113,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     NSString *footurl = @"/project/myrush";
     NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -139,14 +138,17 @@
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
         }
-        [self.tableView.mj_footer endRefreshing];
+        else
+        {
         [self.sourceArray addObject:addArray];
         self.startpage ++;
         [self.tableView reloadData];
+        [self.tableView.mj_footer endRefreshing];
+
         NSLog(@"请求自己抢的单子成功");
         NSLog(@"自己的单子%@",dic);
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"申请请求失败！%@",error);
         [self.tableView.mj_footer endRefreshing];
@@ -177,26 +179,25 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 140;
+        return 158;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 140;
+        return 160;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 145;
+        return 162;
         
     }
     
-    return 150;
+    return 162;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LookUpMyRushCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LookUpMyRushCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
 
     return cell;
 }
@@ -210,7 +211,7 @@
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     infoDetailsVC.ProjectID = model.ProjectID;
-    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     

@@ -61,7 +61,7 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 74, 0);
     
     [self setSearchBar];
-    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *headURL = getDataURL;
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -102,7 +102,7 @@
 }
 - (void)getServiceData
 {
-    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *headURL = getDataURL;
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -115,7 +115,7 @@
 
 - (void)getInfoData
 {
-    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *headURL = getDataURL;
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -182,7 +182,7 @@
 {
     [self.searchBar resignFirstResponder];
     
-    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *headURL = getDataURL;
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -220,7 +220,7 @@
 }
 
 - (void)searchBarbuttonAction:(UIButton *)button
-{    NSString *headURL = @"http://api.ziyawang.com/v1";
+{    NSString *headURL = getDataURL;
      NSString *footURL = @"/search";
      NSString *URL = [headURL stringByAppendingString:footURL];
      NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -337,7 +337,7 @@
 {
     
     
-    NSString *headURL = @"http://api.ziyawang.com/v1";
+    NSString *headURL = getDataURL;
     NSString *footURL = @"/search";
     NSString *URL = [headURL stringByAppendingString:footURL];
 //    NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -391,6 +391,8 @@
              if (addArray.count == 0) {
                  UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                  [alert show];
+                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
              }
              
              [self.sourceArray addObjectsFromArray:addArray];
@@ -412,6 +414,8 @@
              if (addArray.count == 0) {
                  UIAlertView  *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                  [alert show];
+                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
              }
              self.startpage2 ++;
              
@@ -452,6 +456,8 @@
      {
          [self.HUD removeFromSuperViewOnHide];
          [self.HUD hideAnimated:YES];
+         [self.tableView.mj_footer endRefreshing];
+
          //        [self MBProgressWithString:@"搜索失败" timer:1 mode:MBProgressHUDModeText];
          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"搜索失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
          [alert show];
@@ -582,15 +588,15 @@
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 100;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 110;
+        return 120;
     }
     return 150;
 }
@@ -655,7 +661,7 @@
         PublishModel *model = [[PublishModel alloc]init];
         model = self.sourceArray[indexPath.row];
         infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
@@ -669,7 +675,7 @@
         NSLog(@"!!!!!!!!!!%@",model.ServiceID);
         ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
         ServiceDetailVC.ServiceID = model.ServiceID;
-        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         
         
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];

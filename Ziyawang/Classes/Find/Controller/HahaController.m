@@ -79,15 +79,13 @@
 
 - (void)loadMoreData
 {
-    NSString *headurl = @"http://api.ziyawang.com/v1";
-    NSString *footurl = @"/video/list";
-    NSString *URL =[headurl stringByAppendingString:footurl];
+//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *footurl = @"/video/list";
+    NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
-    NSString *pagecount = @"10";
     NSString *VideoLabel = @"zyhhh";
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:accesstoken forKey:@"access_token"];
-    
     //    [dic setObject:pagecount forKey:@"pagecount"];
     [dic setObject:VideoLabel forKey:@"VideoLabel"];
     [dic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
@@ -113,17 +111,23 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
         NSLog(@"%@",self.sourceArray);
         [self.tableView reloadData];
         
         [self.tableView.mj_footer endRefreshing];
-        
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"获取信息失败");
         NSLog(@"%@",error);
+        [self.tableView.mj_footer endRefreshing];
+
         [self showAlertWithMessage:@"信息获取失败，请检查您的网络状态"];
         
     }];
@@ -142,11 +146,10 @@
     [self.sourceArray removeAllObjects];
     
     self.startPage = 1;
-    NSString *headurl = @"http://api.ziyawang.com/v1";
-    NSString *footurl = @"/video/list";
-    NSString *URL =[headurl stringByAppendingString:footurl];
+//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *footurl = @"/video/list";
+    NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
-    NSString *pagecount = @"10";
     NSString *VideoLabel = @"zyhhh";
     
     NSMutableDictionary *dic = [NSMutableDictionary new];

@@ -66,7 +66,7 @@
 - (void)getCollectionData
 {
     self.startpage = 1;
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/app/collect/list?token=";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
@@ -104,7 +104,7 @@
 
 - (void)loadMoreData
 {
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/app/collect/list?token=";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
@@ -134,17 +134,22 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
          self.startpage ++;
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
-        
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
+        [self.tableView.mj_footer endRefreshing];
+
     }];
 
 }
@@ -221,7 +226,7 @@
     if ([TypeID isEqualToString:@"1"]) {
         InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
         infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.PhoneNumber];
+        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
     }
@@ -230,7 +235,7 @@
         
         ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
         ServiceDetailVC.ServiceID = model.ServiceID;
-        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+        ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     }
     else
@@ -286,7 +291,7 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *token = [defaults objectForKey:@"token"];
             NSString *Token = @"?token=";
-            NSString *url = @"http://api.ziyawang.com/v1";
+            NSString *url = getDataURL;
             NSString *url2 = @"/collect";
             NSString *access_token = @"token";
             

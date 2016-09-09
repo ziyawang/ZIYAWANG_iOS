@@ -43,9 +43,9 @@
 }
 
 - (void)didClickRightButton:(UIBarButtonItem *)barbutton
-{    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-
-    NSString *url = @"http://api.ziyawang.com/v1/auth/chpwd";
+{   NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *url = changePaswordURL2;
+    
     NSString *URL = [[[[url stringByAppendingString:@"?token="]stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
     
     

@@ -222,7 +222,7 @@
     
     [self.sourceArray removeAllObjects];
     
-    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+    NSString *getURL = [FindInformationURL stringByAppendingString:@"?access_token=token"];
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     

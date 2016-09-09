@@ -59,6 +59,8 @@
 
 @property (nonatomic,strong) NSString *role;
 
+@property (nonatomic,strong) NSString *Year;
+@property (nonatomic,strong) NSString *investType;
 
 
 @end

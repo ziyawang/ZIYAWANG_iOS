@@ -98,7 +98,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-    self.navigationItem.title = @"设置";
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    title.textColor = [UIColor whiteColor];
+    title.backgroundColor = [UIColor clearColor];
+    title.textAlignment = NSTextAlignmentCenter;
+    title.text = @"设置";
+    title.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = title;
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ziyaGestureAction:)];
     [self.ziyagongyueView addGestureRecognizer:gesture1];
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(toFriendAction:)];
@@ -115,7 +121,8 @@
 - (void)ziyaGestureAction:(UITapGestureRecognizer *)gesture1
 {
     UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://files.ziyawang.com/law.html"]]];
+    NSString *URL = [AudioURL stringByAppendingString:@"/law.html"];
+    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];
     [self.view addSubview:webView];
     
 }

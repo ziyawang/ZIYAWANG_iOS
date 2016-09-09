@@ -92,6 +92,9 @@
 @property (nonatomic,assign) BOOL isPlaying;
 @property (nonatomic,strong) NSString *role;
 @property (nonatomic,strong) NSString *VideoDes;
+@property (nonatomic,strong) UIImageView *titleImageView;
+@property (nonatomic,assign) BOOL isZichan;
+
 /**
  *  清单下载View
  */
@@ -127,7 +130,17 @@
     /**
      *  初始化视图
      */
-    self.navigationItem.title = @"信息详情";
+//    self.navigationItem.title = self.typeName;
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2, 17, 30, 9.5)];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-80, 0, 100, 44)];
+    label.text = @"信息详情";
+    label.textColor = [UIColor blackColor];
+    self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
+    [titleView addSubview:self.titleImageView];
+    [titleView addSubview:label];
+    self.navigationItem.titleView = titleView;
     [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
     self.isPlaying = NO;
     self.playModel = [[PublishModel alloc]init];
@@ -181,7 +194,7 @@
 {
     //http://api.ziyawang.com/v1/project/list/5?&access_token=token
     
-    NSString *url = @"http://api.ziyawang.com/v1/project/list/";
+    NSString *url = InformationDetailURL;
     //    NSString *accesstoken = @"?&access_token=token";
     NSLog(@"!!!!!!!!!!!!!!!!%@",self.ProjectID);
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -259,12 +272,12 @@
 
 - (IBAction)videoButtonAction:(id)sender {
     
-    NSString *url = @"http://files.ziyawang.com";
+    NSString *url = AudioURL;
     NSLog(@"333######################%@",self.VideoDes);
     if ([self.VideoDes isEqualToString:@""])
     {
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"不存在音频文件" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"该条信息没有语音描述" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
     else
@@ -325,6 +338,10 @@
  */
 - (void)layoutSubview
 {
+    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
+    if ([self.model.Member isEqualToString:@"1"]==NO) {
+        [self.titleImageView setHidden:YES];
+    }
     [self layoutBottomViewWithUserType:self.role UserID:self.userid];
     
     self.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
@@ -346,7 +363,7 @@
         NSLog(@"收藏过");
         self.isCollected = YES;
     }
-    NSString *url = @"http://images.ziyawang.com";
+    NSString *url = getImageURL;
     UIImageView *usericonImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
     
     usericonImage.layer.masksToBounds = YES;
@@ -369,7 +386,6 @@
     
     NSString *imageURL1 = @"1";
     NSString *imageURL2 = @"2";
-    
     NSString *imageURL3 = @"3";
     
     self.phoneNumber = self.model.PhoneNumber;
@@ -619,6 +635,20 @@
         [self.label11 setHidden:YES];
         [self.label12 setHidden:YES];
     }
+    else if([self.typeName isEqualToString:@"投资需求"])
+    {
+    self.label1.text = @"回报率:";
+        self.label2.text = [self.model.Rate stringByAppendingString:@"%"];
+        self.label3.text = @"投资期限:";
+        self.label4.text = [self.model.Year stringByAppendingString:@"年"];
+        self.label7.text = @"投资方式:";
+        self.label8.text = self.model.investType;
+        self.label11.text = @"投资类型:";
+        self.label12.text = self.model.AssetType;
+        [self.label5 setHidden:YES];
+        [self.label6 setHidden:YES];
+        [self.label9 setHidden:YES];
+    }
     
 }
 
@@ -648,11 +678,12 @@
         //认证过的服务方和游客
         [self layoutView1];
     }
-    if([role isEqualToString:@"0"])
+   else if ([self.typeName isEqualToString:@"资产求购"]||[self.typeName isEqualToString:@"投资需求"])
     {
-        //没认证过的
-        NSLog(@"登录但是没认证过的");
+        self.isZichan = YES;
+        [self layoutView1];
     }
+    
 }
 
 /**
@@ -677,9 +708,9 @@
         [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
         [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
-    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
-    imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
-    [connectButton addSubview:imageview3];
+        UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+        imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
+        [connectButton addSubview:imageview3];
     /**
      *  申请抢单按钮
      *
@@ -716,14 +747,19 @@
     talkButton.frame = CGRectMake(applyButton.bounds.size.width*2, 0, applyButton.bounds.size.width, 50);
     [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
     
-    
-    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
+      UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
     imageview2.image = [UIImage imageNamed:@"siliao3"];
     
     [talkButton addSubview:imageview2];
+    
+    if (self.isZichan == YES) {
+        connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
+        [applyButton setHidden:YES];
+        talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
+    }
+    
     
     [SomeOneView addSubview:connectButton];
     [SomeOneView addSubview:applyButton];
@@ -786,6 +822,15 @@
         [self.view addSubview:webView];
         NSLog(@"认证过的服务方，调用打电话");
     }
+    else if(self.isZichan == YES)
+    {
+        UIWebView *webView = [[UIWebView alloc]init];
+        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+        NSURL *url = [NSURL URLWithString:telString];
+        [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self.view addSubview:webView];
+        NSLog(@"认证过的服务方，调用打电话");
+    }
     
 }
 
@@ -810,7 +855,7 @@
         NSLog(@"认证过的服务方，调用申请");
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *token = [defaults objectForKey:@"token"];
-        NSString *headurl = @"http://api.ziyawang.com/v1";
+        NSString *headurl = getDataURL;
         NSString *footurl = @"/project/rush";
         NSString *URL =[[[headurl stringByAppendingString:footurl]stringByAppendingString:@"?token="]stringByAppendingString:token];
         NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -882,6 +927,22 @@
         NSLog(@"认证过的服务方，调用私聊界面");
         
     }
+    else if(self.isZichan == YES)
+    {
+        
+        //        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        //        userInfo[@"targetID"] = self.targetID;
+        //        userInfo[@"title"] = self.userid;
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"PushTotalkControllerNotification" object:nil userInfo:userInfo];
+         talkViewController *talkVC = [[talkViewController alloc]init];
+        talkVC.targetId = self.targetID;
+        NSLog(@"~~~~~~~~~~~~~~~~~TargetID%@",self.targetID);
+        talkVC.title = @"对话";//self.userid;
+        talkVC.conversationType = ConversationType_PRIVATE;
+        [self.navigationController pushViewController:talkVC animated:YES];
+        NSLog(@"认证过的服务方，调用私聊界面");
+        
+    }
     
 }
 /**
@@ -927,7 +988,7 @@
     else
     {
         NSString *Token = @"?token=";
-        NSString *url = @"http://api.ziyawang.com/v1";
+        NSString *url = getDataURL;
         NSString *url2 = @"/collect";
         NSString *access_token = @"token";
         

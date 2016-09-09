@@ -21,6 +21,8 @@
 @interface VideosListController ()<SegmentTapViewDelegate,FlipTableViewDelegate>
 @property (nonatomic, strong)SegmentTapView *segment;
 @property (nonatomic, strong)FlipTableView *flipView;
+@property (nonatomic,strong) AFHTTPSessionManager *manager;
+
 @property (strong, nonatomic) NSMutableArray *controllsArray;
 @end
 
@@ -42,20 +44,57 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initSegment];
     [self initFlipTableView];
-    
+    [self getVideoStatu];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationAction:) name:@"PushToMovieDentailControllerNotification" object:nil];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+- (void)getVideoStatu
+{
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *URL =getVideoListURL;
+    NSString *accesstoken = @"token";
+    //    NSString *pagecount = @"10";
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    [dic setObject:accesstoken forKey:@"access_token"];
+    
+    //    [dic setObject:pagecount forKey:@"pagecount"];
+    [self.manager GET:URL parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"获取信息成功");
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        NSArray *dataArray = dic[@"data"];
+        NSString  *VideoID = dataArray.firstObject[@"VideoID"];
+        NSString *videoid = [[NSUserDefaults standardUserDefaults]objectForKey:@"videostatu"];
+        if ([VideoID isEqualToString:videoid]==NO) {
+            [[NSUserDefaults standardUserDefaults]setObject:VideoID forKey:@"videostatu"];
+        }
+        NSLog(@"%@",VideoID);
+        //        for (NSDictionary *dic in dataArray) {
+        //            VideosModel *model = [[VideosModel alloc]init];
+        //            [model setValuesForKeysWithDictionary:dic];
+        //            [self.sourceArray addObject:model];
+        //        }
+        //        self.startPage ++;
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"获取信息失败");
+        NSLog(@"%@",error);
+        
+    }];
+    
     
 }
 
@@ -116,9 +155,6 @@
     
     YifenzhongController *v4 = [[YifenzhongController alloc]init];
 //    UINavigationController *yifenzhongVC = [[UINavigationController alloc]initWithRootViewController:v4];
-
-    
-    
     [self.controllsArray addObject:v1];
     [self.controllsArray addObject:v2];
     [self.controllsArray addObject:v3];

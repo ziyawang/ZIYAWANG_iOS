@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *projectNumberLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *VipImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *asettyoeWidth;
+@property (weak, nonatomic) IBOutlet UILabel *wordDesLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *FromWhereWidth;
 
@@ -69,7 +70,7 @@
     //    [self.navigationController pushViewController:cancelVC animated:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/project/cancel";
     NSString *URL = [[[url1 stringByAppendingString:url2]stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -106,7 +107,7 @@
     //    [self.navigationController pushViewController:cancelVC animated:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    NSString *url1 = @"http://api.ziyawang.com/v1";
+    NSString *url1 = getDataURL;
     NSString *url2 = @"/project/cancel";
     NSString *URL = [[[url1 stringByAppendingString:url2]stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
@@ -197,11 +198,13 @@
     
     [self.wan1 setHidden:NO];
     [self.wan2 setHidden:NO];
-    
+    self.wan1.text = @"万";
     
     self.FromWhereWidth.constant = [self getwidth];
     self.asettyoeWidth.constant = [self getwidth];
     
+    self.wordDesLabel.font = [UIFont FontForLabel];
+    self.wordDesLabel.text = self.model.WordDes;
     self.TypeNameLabel.font = [UIFont FontForBigLabel];
     [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
     self.ProAreaLabel.font = [UIFont FontForLabel];
@@ -225,12 +228,17 @@
     self.wan2.font = [UIFont FontForSmallLabel];
     
     
-    NSArray *array = [self.model.ProArea componentsSeparatedByString:@"-"];
-    self.model.ProArea = array[0];
+    NSLog(@"-------------------%@",self.model.ProArea);
     
+    NSLog(@"%@",self.model.ProArea);
     
     //    self.TotalMoney.font = [UIFont FontForLabel];
     //    self.TransferMoney.font = [UIFont FontForLabel];
+    
+    
+    NSArray *array = [self.model.ProArea componentsSeparatedByString:@"-"];
+    self.model.ProArea = array[0];
+    NSLog(@"%@",self.model.ProArea);
     
     
     
@@ -239,6 +247,8 @@
     self.FromWhere.text = self.model.FromWhere;
     self.AssetTypeLabel.text = self.model.AssetType;
     self.projectNumberLabel.text = self.model.ProjectNumber;
+    
+    
     
     
     //    if ([self.model.TypeName isEqualToString:@"资产包转让"] || [self.model.TypeName isEqualToString:@"委外催收"] || [self.model.TypeName isEqualToString:@"商业保理"] || [self.model.TypeName isEqualToString:@"融资需求"]) {
@@ -255,13 +265,13 @@
     if([self.model.TypeName isEqualToString:@"委外催收"])
     {
         self.diquLabel.text = @"债务人所在地：";
-        
     }
     else
     {
         self.diquLabel.text = @"地区：";
-        
     }
+    self.downLabel.text = @"类型：";
+    
     
     if([self.model.TypeName isEqualToString:@"委外催收"])
     {
@@ -282,6 +292,9 @@
     {
         [self.midLabel setHidden:YES];
         self.TotalMoney.text = self.model.TotalMoney;
+        
+        [self.TransferMoney setHidden:YES];
+        self.
         self.downLabel.text = @"买方性质：";
         self.AssetTypeLabel.text = self.model.BuyerNature;
         [self.TransMoneyImage setHidden:YES];
@@ -311,7 +324,7 @@
     if ([self.model.TypeName isEqualToString:@"资产包转让"])
     {
         [self.midLabel setHidden:NO];
-        
+        self.midLabel.text = @"来源：";
         self.TotalMoney.text = self.model.TotalMoney;
         self.TransferMoney.text = self.model.TransferMoney;
         self.rightChangeLabel.text = @"转让价";
@@ -339,6 +352,8 @@
         self.TotalMoney.text = self.model.Requirement;
         self.diquLabel.text = @"地区：";
         self.leftChangeLabel.text = @"需求";
+        //        self.downLabel.text = @"类型";
+        
         [self.TransferMoney setHidden:YES];
         [self.rightChangeLabel setHidden:YES];
         [self.TransMoneyImage setHidden:YES];
@@ -393,7 +408,6 @@
         //        [self.midLabel setHidden:NO];
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:NO];
-        
     }
     else if ([self.model.TypeName isEqualToString:@"悬赏信息"])
     {
@@ -410,9 +424,6 @@
         [self.rightChangeLabel setHidden:YES];
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:YES];
-        
-        
-        
     }
     else if ([self.model.TypeName isEqualToString:@"尽职调查"])
     {
@@ -474,6 +485,27 @@
         [self.midLabel setHidden:YES];
         
         
+    }
+    else if([self.model.TypeName isEqualToString:@"投资需求"])
+    {
+        [self.midLabel setHidden:NO];
+        self.ProAreaLabel.text = self.model.ProArea;
+        self.FromWhere.text = self.model.investType;
+        [self.TotalMoney setHidden:NO];
+        [self.TransferMoney setHidden:NO];
+        self.TotalMoney.text = self.model.Year;
+        
+        self.TransferMoney.text = [self.model.Rate stringByAppendingString:@"%"];
+        [self.wan1 setHidden:NO];
+        [self.wan2 setHidden:YES];
+        self.wan1.text = @"年";
+        [self.TotalMoneyImage setHidden:NO];
+        [self.TransferMoney setHidden:NO];
+        self.TotalMoneyImage.image = [UIImage imageNamed:@"year"];
+        self.TransMoneyImage.image = [UIImage imageNamed:@"huibaolv"];
+        self.midLabel.text = @"投资方式：";
+        self.diquLabel.text = @"投资地区：";
+        self.downLabel.text = @"投资类型：";
     }
     
 }

@@ -71,7 +71,7 @@
 {
     
     
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     
     NSString *footurl = @"/project/rushlist/";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -233,7 +233,6 @@
 
 - (void)pushToControllerWithModel:(RushPeopleModel *)model
 {
-    
     talkViewController *talkVC = [[talkViewController alloc]init];
     model.UserID = [NSString stringWithFormat:@"%@",model.UserID];
     talkVC.targetId = model.UserID;
@@ -265,7 +264,7 @@
     NSLog(@"!!!!!!!!!!%@",model.ServiceID);
     ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
     ServiceDetailVC.ServiceID = model.ServiceID;
-    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
 [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     
     

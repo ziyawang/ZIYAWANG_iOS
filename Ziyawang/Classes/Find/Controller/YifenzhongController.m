@@ -79,9 +79,9 @@
 //
 - (void)loadMoreData
 {
-    NSString *headurl = @"http://api.ziyawang.com/v1";
-    NSString *footurl = @"/video/list";
-    NSString *URL =[headurl stringByAppendingString:footurl];
+//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *footurl = @"/video/list";
+    NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
     NSString *pagecount = @"10";
     NSString *VideoLabel = @"zyyfz";
@@ -113,17 +113,22 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
         NSLog(@"%@",self.sourceArray);
         [self.tableView reloadData];
-        
         [self.tableView.mj_footer endRefreshing];
-        
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"获取信息失败");
         NSLog(@"%@",error);
+        [self.tableView.mj_footer endRefreshing];
+
         [self showAlertWithMessage:@"信息获取失败，请检查您的网络状态"];
         
     }];
@@ -142,11 +147,10 @@
     [self.sourceArray removeAllObjects];
     
     self.startPage = 1;
-    NSString *headurl = @"http://api.ziyawang.com/v1";
-    NSString *footurl = @"/video/list";
-    NSString *URL =[headurl stringByAppendingString:footurl];
+//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *footurl = @"/video/list";
+    NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
-    NSString *pagecount = @"10";
     NSString *VideoLabel = @"zyyfz";
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
@@ -236,7 +240,6 @@
     //    NSLog(@"222222%@",self.navigationController);
     
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    
     userInfo[@"zvideoModel"] = _zvideo;
     userInfo[@"model"] = model;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PushToMovieDentailControllerNotification" object:nil userInfo:userInfo];

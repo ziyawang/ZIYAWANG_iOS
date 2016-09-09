@@ -88,7 +88,7 @@
     {
         [self.sourceArray removeAllObjects];
     }
-    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+    NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
     //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
     NSMutableDictionary *getdic = self.dataDic;
     NSLog(@"#############%@",getdic);
@@ -129,7 +129,7 @@
 
 - (void)loadMoreServiceData
 {
-    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+    NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
     //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
     NSMutableDictionary *getdic = self.dataDic;
     NSLog(@"#############%@",getdic);
@@ -159,13 +159,20 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
         [self.tableView.mj_footer endRefreshing];
     
         [self.tableView reloadData];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.tableView.mj_footer endRefreshing];
+
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
      

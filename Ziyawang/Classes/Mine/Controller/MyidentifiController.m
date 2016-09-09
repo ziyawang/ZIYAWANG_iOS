@@ -372,7 +372,6 @@
     [self.serviceView addGestureRecognizer:gesture3];
     
     NSString *role = self.role;
-    
         if ([role isEqualToString:@"1"]) {
             [self layOutViewForRole1];
         }
@@ -380,8 +379,6 @@
         {
             [self layOutViewForRole2];
         }
-
-    
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -445,7 +442,7 @@
     NSString *companyLocation = [defaults objectForKey:@"企业地区"];
     NSString *ServiceArea = [defaults objectForKey:@"服务地区"];
     NSString *ServiceType = [defaults objectForKey:@"服务类型"];
-    NSString *headurl = @"http://api.ziyawang.com/v1";
+    NSString *headurl = getDataURL;
     NSString *footurl = @"/app/service/confirm";
    //    NSString *str = @"http://api.ziyawang.com/v1app/service/confirm";
     NSString *token1 = [defaults objectForKey:@"token"];
@@ -566,7 +563,7 @@
 //        NSString *ServiceType = self.fuwuleixing.text;
             NSLog(@"-------------------%@",ServiceType);
             
-        NSString *headurl = @"http://api.ziyawang.com/v1";
+        NSString *headurl = getDataURL;
         NSString *footurl = @"/app/service/reconfirm";
         //    NSString *str = @"http://api.ziyawang.com/v1app/service/confirm";
         NSString *token1 = [defaults objectForKey:@"token"];

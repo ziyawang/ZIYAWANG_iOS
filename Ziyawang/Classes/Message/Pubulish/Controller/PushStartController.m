@@ -272,9 +272,8 @@
     tianjia.font = [UIFont systemFontOfSize:11];
     tianjia.textAlignment = NSTextAlignmentCenter;
     [self.addImageButton addSubview:tianjia];
-    
     [self.addImageView addSubview:self.addImageButton];
-    //    [self.addImageButton setTitle:@"添加" forState:(UIControlStateNormal)];
+    //[self.addImageButton setTitle:@"添加" forState:(UIControlStateNormal)];
     [self.addImageButton addTarget:self action:@selector(didClickChooseImage:) forControlEvents:(UIControlEventTouchUpInside)];
     
     //录音与播放按钮
@@ -298,15 +297,19 @@
     [self.audioView addSubview:self.playRecorderButton];
     [self.playRecorderButton setBackgroundImage:[UIImage imageNamed:@"yuyinbofang"] forState:(UIControlStateNormal)];
     self.rerecorderButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [self.rerecorderButton setTitle:@"重录" forState:(UIControlStateNormal)];
+    [self.rerecorderButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+    self.rerecorderButton.titleLabel.font = [UIFont systemFontOfSize:8];
+    
     //    [self.rerecorderButton setTitle:@"重录" forState:(UIControlStateNormal)];
-    [self.rerecorderButton setFrame:CGRectMake(85 + self.playRecorderButton.bounds.size.width, 13, 15, 15)];
+    [self.rerecorderButton setFrame:CGRectMake(85 + self.playRecorderButton.bounds.size.width, 5, 30, 30)];
     ;
-    [self.rerecorderButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];
+    [self.rerecorderButton setBackgroundImage:[UIImage imageNamed:@"rerecord"] forState:(UIControlStateNormal)];
+    
     [self.audioView addSubview:self.rerecorderButton];
     [self.rerecorderButton setHidden:YES];
     [self.playRecorderButton setHidden:YES];
      [self.playRecorderButton addTarget:self action:@selector(playRecorder) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.rerecorderButton addTarget:self action:@selector(didClickRerecorder:) forControlEvents:(UIControlEventTouchUpInside)];
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(self.audioView.bounds.size.width-70, 10, 70, 20)];
@@ -314,7 +317,6 @@
     label.text = @"(限30秒内)";
     label.font = [UIFont FontForLabel];
     [self.audioView addSubview:label];
-    
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     self.scrollView.delegate = self;
@@ -1089,7 +1091,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *url1= @"http://api.ziyawang.com/v1";
+    NSString *url1= getDataURL;
     NSString *url2 = @"/uploadfile?token=";
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [url stringByAppendingString:token];
@@ -1467,7 +1469,7 @@
     NSArray *array4 = @[@"国企",@"民企",@"上市公司",@"其他"];
     
     NSArray *array5 = @[@"典当"];
-    NSArray *array6 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用"];
+    NSArray *array6 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用",@"担保",@"股权",@"其他"];
     
     NSArray *array7 = @[@"找人",@"找财产"];
     NSArray *array8 = @[@"法律",@"财务",@"税务",@"商业",@"其他"];
@@ -1643,6 +1645,7 @@
             }
             else
             {
+                chooseVC.touqixian = @"投资期限";
                 chooseVC.soucreArray = touziqixianArray;
                 
             }
