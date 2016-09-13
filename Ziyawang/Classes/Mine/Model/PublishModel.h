@@ -61,6 +61,8 @@
 
 @property (nonatomic,strong) NSString *Year;
 @property (nonatomic,strong) NSString *investType;
+@property (nonatomic,strong) NSString *PublishTime;
+@property (nonatomic,strong) NSString *ViewCount;
 
 
 @end

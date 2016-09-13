@@ -49,7 +49,7 @@
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    NSString *url1= @"http://api.ziyawang.com/v1";
+    NSString *url1= getDataURL;
     NSString *url2 = @"/project/rushcancel?token=";
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [[[url stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];

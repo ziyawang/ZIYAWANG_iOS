@@ -392,9 +392,6 @@
 		78746D341D68481300AD60FF /* RCDCustomerServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D331D68481300AD60FF /* RCDCustomerServiceViewController.m */; };
 		78746D371D6850CB00AD60FF /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D361D6850CB00AD60FF /* CustomerViewController.m */; };
 		78746D3A1D6853DD00AD60FF /* ZiyaServiceControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D391D6853DD00AD60FF /* ZiyaServiceControllerViewController.m */; };
-		78746D3E1D68581400AD60FF /* ZiyaServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D3C1D68581400AD60FF /* ZiyaServiceCell.m */; };
-		78746D3F1D68581400AD60FF /* ZiyaServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78746D3D1D68581400AD60FF /* ZiyaServiceCell.xib */; };
-		78746D421D6859A000AD60FF /* ZiyaServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D411D6859A000AD60FF /* ZiyaServiceModel.m */; };
 		78746D461D68693E00AD60FF /* ServiceMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78746D441D68693E00AD60FF /* ServiceMessageController.m */; };
 		78746D471D68693E00AD60FF /* ServiceMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78746D451D68693E00AD60FF /* ServiceMessageController.xib */; };
 		78746D541D68895A00AD60FF /* pic01.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D481D68895A00AD60FF /* pic01.png */; };
@@ -418,6 +415,20 @@
 		787DD1C31D52E03D00132B3B /* talkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787DD1C11D52E03D00132B3B /* talkViewController.m */; };
 		7883E8FC1D65EF8400192C11 /* MySetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7883E8FA1D65EF8400192C11 /* MySetController.m */; };
 		7883E8FD1D65EF8400192C11 /* MySetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7883E8FB1D65EF8400192C11 /* MySetController.xib */; };
+		7889626A1D8680BE008DC681 /* KNActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 788962571D8680BE008DC681 /* KNActionSheet.bundle */; };
+		7889626B1D8680BE008DC681 /* KNActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962591D8680BE008DC681 /* KNActionSheet.m */; };
+		7889626C1D8680BE008DC681 /* KNPhotoBrower.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7889625B1D8680BE008DC681 /* KNPhotoBrower.bundle */; };
+		7889626D1D8680BE008DC681 /* KNPhotoBrower.m in Sources */ = {isa = PBXBuildFile; fileRef = 7889625D1D8680BE008DC681 /* KNPhotoBrower.m */; };
+		7889626E1D8680BE008DC681 /* KNPhotoBrowerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7889625F1D8680BE008DC681 /* KNPhotoBrowerCell.m */; };
+		7889626F1D8680BE008DC681 /* KNPhotoBrowerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962611D8680BE008DC681 /* KNPhotoBrowerImageView.m */; };
+		788962701D8680BE008DC681 /* KNPhotoBrowerNumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962631D8680BE008DC681 /* KNPhotoBrowerNumView.m */; };
+		788962711D8680BE008DC681 /* KNProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962651D8680BE008DC681 /* KNProgressHUD.m */; };
+		788962721D8680BE008DC681 /* KNToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962671D8680BE008DC681 /* KNToast.m */; };
+		788962731D8680BE008DC681 /* UIView+PBExtesion.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962691D8680BE008DC681 /* UIView+PBExtesion.m */; };
+		788962771D86D0CF008DC681 /* ZiyaServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 788962751D86D0CF008DC681 /* ZiyaServiceCell.m */; };
+		788962781D86D0CF008DC681 /* ZiyaServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 788962761D86D0CF008DC681 /* ZiyaServiceCell.xib */; };
+		7889627B1D86D0DA008DC681 /* ZiyaServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7889627A1D86D0DA008DC681 /* ZiyaServiceModel.m */; };
+		7889627E1D87D3B9008DC681 /* PassWordCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 7889627D1D87D3B9008DC681 /* PassWordCheck.m */; };
 		789371041D61E5D9000F6DD4 /* daohanglan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 789370FE1D61E5D9000F6DD4 /* daohanglan@2x.png */; };
 		789371051D61E5D9000F6DD4 /* daohanglan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 789370FF1D61E5D9000F6DD4 /* daohanglan@3x.png */; };
 		789371061D61E5D9000F6DD4 /* daohanglan.png in Resources */ = {isa = PBXBuildFile; fileRef = 789371001D61E5D9000F6DD4 /* daohanglan.png */; };
@@ -1084,11 +1095,6 @@
 		78746D361D6850CB00AD60FF /* CustomerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerViewController.m; sourceTree = "<group>"; };
 		78746D381D6853DD00AD60FF /* ZiyaServiceControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiyaServiceControllerViewController.h; sourceTree = "<group>"; };
 		78746D391D6853DD00AD60FF /* ZiyaServiceControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZiyaServiceControllerViewController.m; sourceTree = "<group>"; };
-		78746D3B1D68581400AD60FF /* ZiyaServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZiyaServiceCell.h; path = ../Controller/ZiyaServiceCell.h; sourceTree = "<group>"; };
-		78746D3C1D68581400AD60FF /* ZiyaServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZiyaServiceCell.m; path = ../Controller/ZiyaServiceCell.m; sourceTree = "<group>"; };
-		78746D3D1D68581400AD60FF /* ZiyaServiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ZiyaServiceCell.xib; path = ../Controller/ZiyaServiceCell.xib; sourceTree = "<group>"; };
-		78746D401D6859A000AD60FF /* ZiyaServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZiyaServiceModel.h; path = ../Controller/ZiyaServiceModel.h; sourceTree = "<group>"; };
-		78746D411D6859A000AD60FF /* ZiyaServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZiyaServiceModel.m; path = ../Controller/ZiyaServiceModel.m; sourceTree = "<group>"; };
 		78746D431D68693E00AD60FF /* ServiceMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceMessageController.h; sourceTree = "<group>"; };
 		78746D441D68693E00AD60FF /* ServiceMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceMessageController.m; sourceTree = "<group>"; };
 		78746D451D68693E00AD60FF /* ServiceMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceMessageController.xib; sourceTree = "<group>"; };
@@ -1118,6 +1124,32 @@
 		7883E8F91D65EF8400192C11 /* MySetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySetController.h; sourceTree = "<group>"; };
 		7883E8FA1D65EF8400192C11 /* MySetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySetController.m; sourceTree = "<group>"; };
 		7883E8FB1D65EF8400192C11 /* MySetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MySetController.xib; sourceTree = "<group>"; };
+		788962571D8680BE008DC681 /* KNActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KNActionSheet.bundle; sourceTree = "<group>"; };
+		788962581D8680BE008DC681 /* KNActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNActionSheet.h; sourceTree = "<group>"; };
+		788962591D8680BE008DC681 /* KNActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNActionSheet.m; sourceTree = "<group>"; };
+		7889625A1D8680BE008DC681 /* KNPch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPch.h; sourceTree = "<group>"; };
+		7889625B1D8680BE008DC681 /* KNPhotoBrower.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KNPhotoBrower.bundle; sourceTree = "<group>"; };
+		7889625C1D8680BE008DC681 /* KNPhotoBrower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrower.h; sourceTree = "<group>"; };
+		7889625D1D8680BE008DC681 /* KNPhotoBrower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrower.m; sourceTree = "<group>"; };
+		7889625E1D8680BE008DC681 /* KNPhotoBrowerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerCell.h; sourceTree = "<group>"; };
+		7889625F1D8680BE008DC681 /* KNPhotoBrowerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerCell.m; sourceTree = "<group>"; };
+		788962601D8680BE008DC681 /* KNPhotoBrowerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerImageView.h; sourceTree = "<group>"; };
+		788962611D8680BE008DC681 /* KNPhotoBrowerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerImageView.m; sourceTree = "<group>"; };
+		788962621D8680BE008DC681 /* KNPhotoBrowerNumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNPhotoBrowerNumView.h; sourceTree = "<group>"; };
+		788962631D8680BE008DC681 /* KNPhotoBrowerNumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNPhotoBrowerNumView.m; sourceTree = "<group>"; };
+		788962641D8680BE008DC681 /* KNProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNProgressHUD.h; sourceTree = "<group>"; };
+		788962651D8680BE008DC681 /* KNProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNProgressHUD.m; sourceTree = "<group>"; };
+		788962661D8680BE008DC681 /* KNToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNToast.h; sourceTree = "<group>"; };
+		788962671D8680BE008DC681 /* KNToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNToast.m; sourceTree = "<group>"; };
+		788962681D8680BE008DC681 /* UIView+PBExtesion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PBExtesion.h"; sourceTree = "<group>"; };
+		788962691D8680BE008DC681 /* UIView+PBExtesion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PBExtesion.m"; sourceTree = "<group>"; };
+		788962741D86D0CF008DC681 /* ZiyaServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiyaServiceCell.h; sourceTree = "<group>"; };
+		788962751D86D0CF008DC681 /* ZiyaServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZiyaServiceCell.m; sourceTree = "<group>"; };
+		788962761D86D0CF008DC681 /* ZiyaServiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZiyaServiceCell.xib; sourceTree = "<group>"; };
+		788962791D86D0DA008DC681 /* ZiyaServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiyaServiceModel.h; sourceTree = "<group>"; };
+		7889627A1D86D0DA008DC681 /* ZiyaServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZiyaServiceModel.m; sourceTree = "<group>"; };
+		7889627C1D87D3B9008DC681 /* PassWordCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassWordCheck.h; sourceTree = "<group>"; };
+		7889627D1D87D3B9008DC681 /* PassWordCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassWordCheck.m; sourceTree = "<group>"; };
 		789370FE1D61E5D9000F6DD4 /* daohanglan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daohanglan@2x.png"; sourceTree = "<group>"; };
 		789370FF1D61E5D9000F6DD4 /* daohanglan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daohanglan@3x.png"; sourceTree = "<group>"; };
 		789371001D61E5D9000F6DD4 /* daohanglan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daohanglan.png; sourceTree = "<group>"; };
@@ -1846,12 +1878,15 @@
 		7836E8701D5C67AD00187E41 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				788962551D8680BE008DC681 /* KNPhotoBrower */,
 				7836E8721D5C699D00187E41 /* UIColor+StringToColor.h */,
 				7836E8731D5C699D00187E41 /* UIColor+StringToColor.m */,
 				78EE24A91D6005F000DB1A5D /* UIFont+UILabel.h */,
 				78EE24AA1D6005F000DB1A5D /* UIFont+UILabel.m */,
 				783EB7231D6D8A5D00850523 /* MyUItextField.h */,
 				783EB7241D6D8A5D00850523 /* MyUItextField.m */,
+				7889627C1D87D3B9008DC681 /* PassWordCheck.h */,
+				7889627D1D87D3B9008DC681 /* PassWordCheck.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1953,6 +1988,40 @@
 				78730E6F1D43096700A9A7F2 /* SDiOSVersion.m */,
 			);
 			path = SDiOSVersion;
+			sourceTree = "<group>";
+		};
+		788962551D8680BE008DC681 /* KNPhotoBrower */ = {
+			isa = PBXGroup;
+			children = (
+				788962561D8680BE008DC681 /* KNActionSheet */,
+				7889625A1D8680BE008DC681 /* KNPch.h */,
+				7889625B1D8680BE008DC681 /* KNPhotoBrower.bundle */,
+				7889625C1D8680BE008DC681 /* KNPhotoBrower.h */,
+				7889625D1D8680BE008DC681 /* KNPhotoBrower.m */,
+				7889625E1D8680BE008DC681 /* KNPhotoBrowerCell.h */,
+				7889625F1D8680BE008DC681 /* KNPhotoBrowerCell.m */,
+				788962601D8680BE008DC681 /* KNPhotoBrowerImageView.h */,
+				788962611D8680BE008DC681 /* KNPhotoBrowerImageView.m */,
+				788962621D8680BE008DC681 /* KNPhotoBrowerNumView.h */,
+				788962631D8680BE008DC681 /* KNPhotoBrowerNumView.m */,
+				788962641D8680BE008DC681 /* KNProgressHUD.h */,
+				788962651D8680BE008DC681 /* KNProgressHUD.m */,
+				788962661D8680BE008DC681 /* KNToast.h */,
+				788962671D8680BE008DC681 /* KNToast.m */,
+				788962681D8680BE008DC681 /* UIView+PBExtesion.h */,
+				788962691D8680BE008DC681 /* UIView+PBExtesion.m */,
+			);
+			path = KNPhotoBrower;
+			sourceTree = "<group>";
+		};
+		788962561D8680BE008DC681 /* KNActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				788962571D8680BE008DC681 /* KNActionSheet.bundle */,
+				788962581D8680BE008DC681 /* KNActionSheet.h */,
+				788962591D8680BE008DC681 /* KNActionSheet.m */,
+			);
+			path = KNActionSheet;
 			sourceTree = "<group>";
 		};
 		78A3992A1D4995B00053FA7C /* 用户引导图片 */ = {
@@ -2212,8 +2281,8 @@
 		78CFFA821D3DAD76002A22C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				78746D401D6859A000AD60FF /* ZiyaServiceModel.h */,
-				78746D411D6859A000AD60FF /* ZiyaServiceModel.m */,
+				788962791D86D0DA008DC681 /* ZiyaServiceModel.h */,
+				7889627A1D86D0DA008DC681 /* ZiyaServiceModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2221,9 +2290,9 @@
 		78CFFA831D3DAD76002A22C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				78746D3B1D68581400AD60FF /* ZiyaServiceCell.h */,
-				78746D3C1D68581400AD60FF /* ZiyaServiceCell.m */,
-				78746D3D1D68581400AD60FF /* ZiyaServiceCell.xib */,
+				788962741D86D0CF008DC681 /* ZiyaServiceCell.h */,
+				788962751D86D0CF008DC681 /* ZiyaServiceCell.m */,
+				788962761D86D0CF008DC681 /* ZiyaServiceCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2903,7 +2972,6 @@
 				78F3DDCE1D461B2C00C1E62E /* kr-video-player-point@2x.png in Resources */,
 				7825226E1D77DE5300F2C0A2 /* jine@3x.png in Resources */,
 				782522851D77DE5300F2C0A2 /* shoucang-hui@2x.png in Resources */,
-				78746D3F1D68581400AD60FF /* ZiyaServiceCell.xib in Resources */,
 				780E51FF1D73E1120083A3E1 /* denglukuang.png in Resources */,
 				7836E90B1D5DFFC900187E41 /* 2@3x.png in Resources */,
 				782523201D7D72E500F2C0A2 /* help@2x.png in Resources */,
@@ -2932,6 +3000,7 @@
 				780E52101D73E1120083A3E1 /* tiaolixuanzhong.png in Resources */,
 				780E52B61D73E1120083A3E1 /* xiaoxi-xuanzhong@2x.png in Resources */,
 				782522AD1D77DE5300F2C0A2 /* chexiao@3x.png in Resources */,
+				7889626A1D8680BE008DC681 /* KNActionSheet.bundle in Resources */,
 				7825232E1D7D72E500F2C0A2 /* user.png in Resources */,
 				780E52BD1D73E1120083A3E1 /* xinfabu@3x.png in Resources */,
 				78F3DDD31D461B2C00C1E62E /* zx-video-banner-back@2x.png in Resources */,
@@ -3013,6 +3082,7 @@
 				782522C51D77DE5300F2C0A2 /* yuyinbofang@2x.png in Resources */,
 				780E520A1D73E1120083A3E1 /* shoujihao.png in Resources */,
 				78A3994E1D4995B00053FA7C /* v6_guide_6@2x.png in Resources */,
+				788962781D86D0CF008DC681 /* ZiyaServiceCell.xib in Resources */,
 				7825233E1D7EC87400F2C0A2 /* red_point@3x.png in Resources */,
 				78CFFAB51D3DADEE002A22C8 /* LoginAndRegist.storyboard in Resources */,
 				780E521D1D73E1120083A3E1 /* xuanzhong.png in Resources */,
@@ -3042,6 +3112,7 @@
 				782522A21D77DE5300F2C0A2 /* xiala.png in Resources */,
 				780E52A31D73E1120083A3E1 /* chakan-xuanzhong.png in Resources */,
 				782522691D77DE5300F2C0A2 /* jiantou.png in Resources */,
+				7889626C1D8680BE008DC681 /* KNPhotoBrower.bundle in Resources */,
 				7836E9171D5DFFC900187E41 /* 6@3x.png in Resources */,
 				78F623BB1D55989A002E21B3 /* MyTogetherCell.xib in Resources */,
 				782523181D7D72E500F2C0A2 /* collection@3x.png in Resources */,
@@ -3328,7 +3399,9 @@
 				7836E7F61D5AF65B00187E41 /* VideosListController.m in Sources */,
 				782523911D801A2400F2C0A2 /* CommentsCell.m in Sources */,
 				78F624561D5AC13E002E21B3 /* NSArray+MASAdditions.m in Sources */,
+				788962711D8680BE008DC681 /* KNProgressHUD.m in Sources */,
 				782523981D801A2400F2C0A2 /* LookUpRushPeopleCell.m in Sources */,
+				7889626B1D8680BE008DC681 /* KNActionSheet.m in Sources */,
 				78F5456D1D51BC460009E2F1 /* FindVideoController.m in Sources */,
 				78EBB07E1D5031C2008DDE9B /* PushChooseController.m in Sources */,
 				7836E8161D5B0A0C00187E41 /* CSChooseServiceArearController.m in Sources */,
@@ -3347,9 +3420,11 @@
 				78F624571D5AC13E002E21B3 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				78469B091D54699000F3DE4C /* ChooseAreaController.m in Sources */,
 				7836E7FC1D5AF74A00187E41 /* HangyeVideoController.m in Sources */,
+				788962721D8680BE008DC681 /* KNToast.m in Sources */,
 				7836E8D71D5D900400187E41 /* SearchTypeController.m in Sources */,
 				78F3DD861D45ADB400C1E62E /* SuPhotoAblumCell.m in Sources */,
 				787DD1C21D52E03D00132B3B /* MessageListViewController.m in Sources */,
+				7889626E1D8680BE008DC681 /* KNPhotoBrowerCell.m in Sources */,
 				78F3DD971D45BDD500C1E62E /* testDataController.m in Sources */,
 				7836E85E1D5C41BD00187E41 /* ScrollHeadView.m in Sources */,
 				7836E8021D5AF77200187E41 /* YifenzhongController.m in Sources */,
@@ -3357,12 +3432,14 @@
 				78F623D91D581A2F002E21B3 /* LookupRushPeopleController.m in Sources */,
 				78469B331D54B4E100F3DE4C /* MyrobListController.m in Sources */,
 				78F623D61D574FA4002E21B3 /* FindServicesController.m in Sources */,
+				788962771D86D0CF008DC681 /* ZiyaServiceCell.m in Sources */,
 				78A399261D491A3F0053FA7C /* SearchBar.m in Sources */,
 				7836E85F1D5C41BD00187E41 /* UIScrollView+_DScrollView.m in Sources */,
 				78730E701D43096700A9A7F2 /* SDiOSVersion.m in Sources */,
 				78730E7F1D4365F200A9A7F2 /* PublishModel.m in Sources */,
 				78469B271D54B40800F3DE4C /* MyServiceAreaController.m in Sources */,
 				78469B1E1D54B33200F3DE4C /* CancelTogetherController.m in Sources */,
+				7889627B1D86D0DA008DC681 /* ZiyaServiceModel.m in Sources */,
 				78F624501D5AC13E002E21B3 /* MASCompositeConstraint.m in Sources */,
 				78469B181D54B2A600F3DE4C /* MyPushController.m in Sources */,
 				7836E7F31D5AF51800187E41 /* SegmentTapView.m in Sources */,
@@ -3387,6 +3464,7 @@
 				7836E8251D5B0B3200187E41 /* CSChooseServiceTypeCell.m in Sources */,
 				789371291D62EEBB000F6DD4 /* LoginModel.m in Sources */,
 				782522E01D796C2A00F2C0A2 /* PushViewCell.m in Sources */,
+				788962701D8680BE008DC681 /* KNPhotoBrowerNumView.m in Sources */,
 				78F5454E1D5189790009E2F1 /* FindController.m in Sources */,
 				78EBB02C1D4EEEF1008DDE9B /* PushStartController.m in Sources */,
 				7836E84F1D5B491C00187E41 /* UIView+LBExtension.m in Sources */,
@@ -3406,7 +3484,6 @@
 				78EE24AB1D6005F000DB1A5D /* UIFont+UILabel.m in Sources */,
 				782522F01D7D599000F2C0A2 /* UserCenterController.m in Sources */,
 				78F3DD721D45ADB400C1E62E /* UIImage+SU.m in Sources */,
-				78746D3E1D68581400AD60FF /* ZiyaServiceCell.m in Sources */,
 				7836E8171D5B0A0C00187E41 /* CSChooseServiceTypeViewController.m in Sources */,
 				78F3DD701D45ADB400C1E62E /* NSString+SU.m in Sources */,
 				780E51001D6F459C0083A3E1 /* ServiceHadController.m in Sources */,
@@ -3417,6 +3494,7 @@
 				7836E8741D5C699D00187E41 /* UIColor+StringToColor.m in Sources */,
 				78F3DD741D45ADB400C1E62E /* UIView+SuAnimation.m in Sources */,
 				7836E8241D5B0B3200187E41 /* CSCancelOperationCell.m in Sources */,
+				7889626D1D8680BE008DC681 /* KNPhotoBrower.m in Sources */,
 				78746D3A1D6853DD00AD60FF /* ZiyaServiceControllerViewController.m in Sources */,
 				78F5457D1D51DBB10009E2F1 /* MoreMenuView.m in Sources */,
 				78CFFA2C1D3DAD0C002A22C8 /* ViewController.m in Sources */,
@@ -3428,6 +3506,7 @@
 				7825239C1D801A2400F2C0A2 /* VideosViewCell.m in Sources */,
 				78469B3C1D54BB4D00F3DE4C /* UserInfoController.m in Sources */,
 				78EE24D01D60E85C00DB1A5D /* SearchController.m in Sources */,
+				788962731D8680BE008DC681 /* UIView+PBExtesion.m in Sources */,
 				78A399231D48C8B50053FA7C /* MainController.m in Sources */,
 				78F3DD851D45ADB400C1E62E /* SuPhotoManager.m in Sources */,
 				780B5BB61D65B47A0005E123 /* CollectVideoViewCell.m in Sources */,
@@ -3435,6 +3514,7 @@
 				7836E8141D5B0A0C00187E41 /* CSBackMessageController.m in Sources */,
 				78F3DDE81D461B2C00C1E62E /* ZXVideoPlayerVolumeView.m in Sources */,
 				78F3DD881D45ADB400C1E62E /* SuPhotoBrowserCell.m in Sources */,
+				7889626F1D8680BE008DC681 /* KNPhotoBrowerImageView.m in Sources */,
 				7893710C1D61F205000F6DD4 /* UserInfoModel.m in Sources */,
 				783735D81D5321550045D27E /* FindModel.m in Sources */,
 				7843EF5A1D412E4800FA8823 /* LoginController.m in Sources */,
@@ -3449,6 +3529,7 @@
 				78F3DD821D45ADB400C1E62E /* SuPhotoPicker.m in Sources */,
 				782523941D801A2400F2C0A2 /* FindServiceViewCell.m in Sources */,
 				78F3DD781D45ADB400C1E62E /* SuPhotoBrowser.m in Sources */,
+				7889627E1D87D3B9008DC681 /* PassWordCheck.m in Sources */,
 				7836E7F21D5AF51800187E41 /* FlipTableView.m in Sources */,
 				7836E8151D5B0A0C00187E41 /* CSCancelOperationController.m in Sources */,
 				782522DD1D796C2A00F2C0A2 /* PushChooseViewCell.m in Sources */,
@@ -3466,7 +3547,6 @@
 				78CFFA261D3DAD0C002A22C8 /* main.m in Sources */,
 				782523921D801A2400F2C0A2 /* FindInfoCell.m in Sources */,
 				78F3DDE41D461B2C00C1E62E /* ZXVideoPlayerBrightnessView.m in Sources */,
-				78746D421D6859A000AD60FF /* ZiyaServiceModel.m in Sources */,
 				783735D11D530A540045D27E /* ServiceDetailController.m in Sources */,
 				7836E81C1D5B0B1100187E41 /* CSCancelOperationModel.m in Sources */,
 				78469B2A1D54B41A00F3DE4C /* MyServiceTypeController.m in Sources */,

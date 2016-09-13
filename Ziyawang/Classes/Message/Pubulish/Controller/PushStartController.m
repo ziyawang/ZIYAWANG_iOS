@@ -16,7 +16,7 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 
-@interface PushStartController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,AVAudioRecorderDelegate,MBProgressHUDDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
+@interface PushStartController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,AVAudioRecorderDelegate,MBProgressHUDDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate>
 {
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
@@ -267,7 +267,7 @@
     [self.addImageButton setFrame:CGRectMake(10, 0, 90, 90)];
     [self.addImageButton setBackgroundImage:[UIImage imageNamed:@"tianjia"] forState:(UIControlStateNormal)];
     UILabel *tianjia = [[UILabel alloc]initWithFrame:CGRectMake(0, 70, 90, 20)];
-    tianjia.text = @"添加图片";
+    tianjia.text = @"添加凭证";
     tianjia.textColor = [UIColor colorWithHexString:@"fdd000"];
     tianjia.font = [UIFont systemFontOfSize:11];
     tianjia.textAlignment = NSTextAlignmentCenter;
@@ -320,7 +320,6 @@
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     self.scrollView.delegate = self;
-
 }
 /**
  *  设置录音中动画提示
@@ -396,7 +395,6 @@
 - (void)popAction:(UIBarButtonItem *)barbutton
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 /**
  *  选择照片按钮
@@ -415,7 +413,7 @@
         //获取方法3，通过相册（呈现全部图片），UIImagePickerControllerSourceTypeSavedPhotosAlbum
         PickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         //允许编辑，即放大裁剪
-        PickerImage.allowsEditing = YES;
+        PickerImage.allowsEditing = NO;
         //自代理
         PickerImage.delegate = self;
         //页面跳转
@@ -429,7 +427,7 @@
         UIImagePickerController *PickerImage = [[UIImagePickerController alloc]init];
         //获取方式:通过相机
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
-        PickerImage.allowsEditing = YES;
+        PickerImage.allowsEditing = NO;
         PickerImage.delegate = self;
         [self presentViewController:PickerImage animated:YES completion:nil];
     }]];
@@ -446,9 +444,8 @@
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     //定义一个newPhoto，用来存放我们选择的图片。
-    UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     //    self.usericonImageView.image = newPhoto;
-    
     NSMutableArray *sentimage = [NSMutableArray new];
     [sentimage addObject:newPhoto];
     [self showSelectedPhotos:sentimage];
@@ -482,7 +479,7 @@
             
         }
         if (self.x != 3) {
-            [self.addImageButton setFrame:CGRectMake(90 * self.x + 10 * self.x, 0, 90, 90)];
+            [self.addImageButton setFrame:CGRectMake(90 * self.x + 10 * (self.x +1), 0, 90, 90)];
             
         }
     }
@@ -1032,21 +1029,37 @@
 - (void)playRecorder
 {
     
-    //    if ([self.audioPlayer isPlaying]) {
-    //        [self.audioPlayer stop];
-    //        return;
-    //
-    //    }
-    //    self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:self.aurl error:nil];
-    //    [self.audioPlayer play];
-    [self.avPlayer pause];
-    self.avPlayer = [[AVPlayer alloc]initWithURL:self.aurl];
-    [self.avPlayer play];
+    
+        if ([self.audioPlayer isPlaying]) {
+            [self.audioPlayer stop];
+            [self.playRecorderButton setTitle:@"播放" forState:(UIControlStateNormal)];
+            return;
+        }
+    else
+    {
+        self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:self.aurl error:nil];
+        self.audioPlayer.delegate = self;
+        [self.audioPlayer play];
+        [self.playRecorderButton setTitle:@"正在播放" forState:(UIControlStateNormal)];
+        
+    }
+//    [self.playRecorderButton setTitle:@"正在播放" forState:(UIControlStateNormal)];
+//    
+//    [self.avPlayer pause];
+//    self.avPlayer = [[AVPlayer alloc]initWithURL:self.aurl];
+//    [self.avPlayer play];
     
 }
-
-
-
+/**
+ *  AVaudioPlayer代理方法
+ *
+ *  @param player
+ *  @param flag
+ */
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.playRecorderButton setTitle:@"播放" forState:(UIControlStateNormal)];
+}
 
 
 #pragma mark---UIAlertViewController

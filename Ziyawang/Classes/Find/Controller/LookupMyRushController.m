@@ -60,6 +60,8 @@
     self.sourceArray  = [NSMutableArray new];
     
      self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     [self getMyRushList];
     
 }
@@ -214,7 +216,8 @@
     infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
-    
+    infoDetailsVC.typeName = model.TypeName;
+
     [self.navigationController pushViewController:infoDetailsVC animated:YES];
 }
 

@@ -10,6 +10,7 @@
 #import "FindwordController.h"
 #import "LoginController.h"
 #import "ChangeWordViewController.h"
+#import "PassWordCheck.h"
 @interface UserInfoController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *usericonImageView;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberLabel;
@@ -176,15 +177,16 @@
     //定义一个newPhoto，用来存放我们选择的图片。
     UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     self.usericonImageView.image = newPhoto;
+    
+    self.usericonImageView.image = [newPhoto imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
+    
     [self changeUserPictuer];
-
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 - (void)changePassword:(UITapGestureRecognizer *)gesture
 {
-    
     ChangeWordViewController *changeVC = [[ChangeWordViewController alloc]init];
 //    FindwordController *findPasswordVC = [[UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil]instantiateViewControllerWithIdentifier:@"Findword"];
     [self.navigationController pushViewController:changeVC animated:YES];

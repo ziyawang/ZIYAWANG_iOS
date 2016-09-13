@@ -159,6 +159,7 @@
 #pragma mark----系统方法视图周期
 - (void)viewWillDisappear:(BOOL)animated
 {
+    self.navigationController.navigationBar.hidden = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.hidden = NO;
     //    [self.navigationController.navigationBar setBackgroundColor:[UIColor yellowColor]];
@@ -248,6 +249,8 @@
      *  @return NO
      */
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
 }
 #pragma mark----初始化数据以及视图
 /**
@@ -300,8 +303,8 @@
 {
     self.view.userInteractionEnabled = YES;
     self.array1 = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理"];
-    self.array2 = @[@"投资需求",@"融资需求",@"悬赏信息",@"尽职调查"];
-    self.array3 = @[@"委外催收",@"法律服务",@"资产求购",@"担保信息"];
+    self.array2 = @[@"投资需求",@"融资需求",@"悬赏信息",@"委外催收"];
+    self.array3 = @[@"尽职调查",@"法律服务",@"资产求购",@"担保信息"];
     self.array4 = @[@"资产包收购",@"债权收购",@"律师事务所",@"保理公司"];
     self.array5 = @[@"典当公司",@"投融资服务",@"尽职调查",@"资产收购"];
     self.array6 = @[@"担保公司",@"催收机构"];
@@ -1148,7 +1151,6 @@
     if (scrollView.contentOffset.y > [self getImageViewHight]||scrollView.contentOffset.y == [self getImageViewHight]) {
         //        [self.view bringSubviewToFront:self.searchView];
         [self.searchBarBackView setFrame:CGRectMake(0, 20, self.searchBarBackView.bounds.size.width, self.searchBarBackView.bounds.size.height)];
-        
         //        [self.searchBar setFrame:CGRectMake(20, 20, self.searchBar.bounds.size.width, self.searchBar.bounds.size.height)];
         self.navigationController.navigationBar.hidden = YES;
         self.statuView.backgroundColor = [UIColor blackColor];
@@ -1159,7 +1161,7 @@
     }
     else
     {
-        self.navigationController.navigationBar.hidden = NO;
+//        self.navigationController.navigationBar.hidden = NO;
         
         //        [self.view sendSubviewToBack:self.searchView];
         //        [self.searchBar setFrame:CGRectMake(20, 10, self.searchBar.bounds.size.width, self.searchBar.bounds.size.height)];
@@ -1217,9 +1219,7 @@
     //    [self.scrollView setContentInset:CGPointMake(self.view.bounds.size.width*pageControl.currentPage,0) animated:YES)];
     
     [self.scrollView setContentOffset:CGPointMake(self.view.bounds.size.width * pageControl.currentPage, 0) animated:YES];
-    
-    
-}
+ }
 /**
  *  主页循环按钮点击事件
  *
@@ -1229,7 +1229,7 @@
 {
     SearchTypeController *searchVC = [[SearchTypeController alloc]init];
     
-    @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
+    @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"委外催收",@"尽职调查",@"典当担保"];
     NSArray *level = @[@"VIP1"];
     NSArray *informationTypeID =@[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05"];
     
@@ -1293,15 +1293,15 @@
         case 8:
             NSLog(@"8");
             searchVC.type = type;
-            searchVC.searchValue = @"10";
-            searchVC.navigationItem.title = @"尽职调查";
+            searchVC.searchValue = @"02";
+            searchVC.navigationItem.title = @"委外催收";
             
             break;
         case 9:
             NSLog(@"9");
             searchVC.type = type;
-            searchVC.searchValue = @"02";
-            searchVC.navigationItem.title = @"委外催收";
+            searchVC.searchValue = @"10";
+            searchVC.navigationItem.title = @"尽职调查";
             
             break;
         case 10:
@@ -1482,6 +1482,8 @@
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+        infoDetailsVC.typeName = model.TypeName;
+        
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
     }
     else

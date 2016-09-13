@@ -48,6 +48,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"CollectVideoViewCell" bundle:nil] forCellReuseIdentifier:@"CollectVideoViewCell"];
     self.tableView.separatorStyle = NO;
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
 
     [self.view addSubview:self.tableView];
     
@@ -228,6 +229,8 @@
         infoDetailsVC.ProjectID = model.ProjectID;
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+        infoDetailsVC.typeName = model.TypeName;
+
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
     }
     else if([TypeID isEqualToString:@"4"])

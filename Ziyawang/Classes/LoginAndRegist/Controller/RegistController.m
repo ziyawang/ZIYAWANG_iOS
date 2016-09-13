@@ -9,6 +9,7 @@
 #import "RegistController.h"
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
+#import "PassWordCheck.h"
 @interface RegistController ()<MBProgressHUDDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *smsCodeTextField;
@@ -103,7 +104,6 @@
     }
     if ([self.phoneNumTextfield.text isEqualToString:@""]||[self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
         [self showAlertViewWithString:@"请填写完整信息"];
-        
         NSLog(@"您输入的信息不完整");
         return;
     }
@@ -118,8 +118,7 @@
 //    if (self.agree == YES) {
 //        [self.registButton setUserInteractionEnabled:YES];
         [self RegistFromDomin];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
+    
 //    }
 //    else
 //    {
@@ -214,6 +213,8 @@ self.title = @"aaa";
     self.userDefault = [NSUserDefaults standardUserDefaults];
 }
 
+
+
 - (void)setColorForTextPlaceHoder
 {
     UIColor *placeHoderColor = [UIColor lightGrayColor];
@@ -228,6 +229,8 @@ self.title = @"aaa";
     
     
     self.phoneNumTextfield.keyboardType = UIKeyboardTypePhonePad;
+    self.smsCodeTextField.keyboardType = UIKeyboardTypePhonePad;
+    
     self.passwordTextField.keyboardType = UIKeyboardTypeDefault;
     self.repasswordTextField.keyboardType = UIKeyboardTypeDefault;
 
@@ -284,8 +287,6 @@ self.title = @"aaa";
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    
-    
 }
 //显示菊花
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
@@ -394,8 +395,6 @@ self.title = @"aaa";
 //注册
 - (void)RegistFromDomin
 {
-    
-    
     if ([self.phoneNumTextfield.text isEqualToString:@""]||[self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
         [self showAlertViewWithString:@"请填写完整信息"];
         
@@ -405,6 +404,11 @@ self.title = @"aaa";
     
     if ([self.passwordTextField.text isEqualToString:self.repasswordTextField.text]==NO) {
         [self showAlertViewWithString:@"您输入的两次密码不一致，请重新输入"];
+        return;
+    }
+    BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
+    if (pass == NO) {
+        [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
         return;
     }
     
@@ -456,22 +460,19 @@ self.title = @"aaa";
             NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
             [userdefault setObject:token forKey:@"token"];
             NSLog(@"%@",token);
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         else if([code isEqualToString:@"405"])
         {
             [self MBProgressWithString:@"账号已注册" timer:1 mode:MBProgressHUDModeText];
-
         }
         else if([code isEqualToString:@"402"])
         {
             [self MBProgressWithString:@"验证码不正确" timer:1 mode:MBProgressHUDModeText];
-            
         }
-       
         else
         {
             [self MBProgressWithString:@"服务器异常，注册失败" timer:1 mode:MBProgressHUDModeText];
-
             NSLog(@"注册失败");
         }
         NSLog(@"%@",dic);

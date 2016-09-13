@@ -14,4 +14,5 @@
 
 + (UIFont *)FontForBigLabel;
 + (UIFont *)FontForSmallLabel;
++ (UIFont *)FontForVideoDesLabel;
 @end

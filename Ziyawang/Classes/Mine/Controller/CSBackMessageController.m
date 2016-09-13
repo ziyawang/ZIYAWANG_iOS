@@ -212,7 +212,6 @@
     title.text = @"反馈意见";
     title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
-    
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;

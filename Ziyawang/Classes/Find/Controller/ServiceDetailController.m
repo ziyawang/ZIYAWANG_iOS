@@ -17,7 +17,15 @@
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 
 #import "LookupMyRushController.h"
+
+#import "KNPhotoBrowerImageView.h"
+#import "KNPhotoBrower.h"
+#import "KNToast.h"
 @interface ServiceDetailController ()<MBProgressHUDDelegate>
+{
+    BOOL     _ApplicationStatusIsHidden;
+    
+}
 @property (weak, nonatomic) IBOutlet UIView *bringView;
 @property (strong, nonatomic) IBOutlet UIView *backGroundView;
 @property (weak, nonatomic) IBOutlet UIImageView *usericon;
@@ -46,6 +54,11 @@
 @property (nonatomic,assign) BOOL isCollected;
 @property (nonatomic,strong) MBProgressHUD *HUD;
 @property (weak, nonatomic) IBOutlet UILabel *serviceLocation;
+
+@property (nonatomic, strong) NSMutableArray *itemsArray;
+@property (nonatomic,strong) NSMutableArray *imageurlArray;
+@property (nonatomic, strong) NSMutableArray *actionSheetArray; // 右上角弹出框的 选项 -->代理回调
+@property (nonatomic, strong) KNPhotoBrower *photoBrower;
 
 
 
@@ -209,7 +222,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"服务详情";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
 
     
@@ -304,6 +317,55 @@
     [self.backView removeFromSuperview];
 }
 
+#pragma mark----查看图片手势方法以及代理
+- (void)imageTapGestureAction:(UITapGestureRecognizer *)imageTapGesture
+{
+    KNPhotoBrower *photoBrower = [[KNPhotoBrower alloc] init];
+    photoBrower.itemsArr = self.itemsArray;
+    photoBrower.currentIndex = imageTapGesture.view.tag;
+    // 如果设置了 photoBrower中的 actionSheetArr 属性. 那么 isNeedRightTopBtn 就应该是默认 YES, 如果设置成NO, 这个actionSheetArr 属性就没有意义了
+    //    photoBrower.actionSheetArr = [self.actionSheetArray mutableCopy];
+    
+    [photoBrower present];
+    
+    _photoBrower = photoBrower;
+    
+    // 设置代理方法 --->可不写
+    [photoBrower setDelegate:self];
+    
+    // 这里是 设置 状态栏的 隐藏 ---> 可不写
+    _ApplicationStatusIsHidden = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+// 下面方法 是让 '状态栏' 在 PhotoBrower 显示的时候 消失, 消失的时候 显示 ---> 根据项目需求而定
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+- (BOOL)prefersStatusBarHidden{
+    if(_ApplicationStatusIsHidden){
+        return YES;
+    }
+    return NO;
+}
+
+/* PhotoBrower 即将消失 */
+- (void)photoBrowerWillDismiss{
+    NSLog(@"Will Dismiss");
+    _ApplicationStatusIsHidden = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+/* PhotoBrower 右上角按钮的点击 */
+- (void)photoBrowerRightOperationActionWithIndex:(NSInteger)index{
+    NSLog(@"operation:%zd",index);
+}
+
+/* PhotoBrower 保存图片是否成功 */
+- (void)photoBrowerWriteToSavedPhotosAlbumStatus:(BOOL)success{
+    NSLog(@"saveImage:%zd",success);
+}
+
+
 - (void)tapgesture1:(UITapGestureRecognizer *)gesture1
 {
     if (self.imageView1.image == nil) {
@@ -365,7 +427,14 @@
     }
     else
     {
+        
     [self.usericon sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:usericonurl]]];
+        [self.usericon setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        self.usericon.contentMode = UIViewContentModeScaleAspectFill;
+        self.usericon.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        self.usericon.clipsToBounds = YES;
+        self.usericon.layer.masksToBounds = YES;
+        self.usericon.layer.cornerRadius = self.usericon.bounds.size.height/2;
     }
     
     
@@ -378,26 +447,66 @@
     self.servicearea.text = self.model.ServiceArea;
     self.serviceType.text = self.model.ServiceType;
     self.serviceLocation.text = self.model.ServiceLocation;
+    NSString *imageURL1 = @"1";
+    NSString *imageURL2 = @"2";
+    NSString *imageURL3 = @"3";
     
-    if (self.model.ConfirmationP1 ==nil)
+    self.itemsArray = [NSMutableArray new];
+    KNPhotoItems *items1 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items2 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items3 = [[KNPhotoItems alloc] init];
+    if ([self.model.ConfirmationP1 isEqualToString:@""])
     {
         
     }
-    else if(self.model.ConfirmationP1!=nil&&self.model.ConfirmationP2 != nil&&self.model.ConfirmationP3 == nil)
+    else if([self.model.ConfirmationP1 isEqualToString:@""]==NO&&[self.model.ConfirmationP2 isEqualToString:@""]==NO&&[self.model.ConfirmationP3 isEqualToString:@""])
     {
+        imageURL1 = [url stringByAppendingString:self.model.ConfirmationP1];
+        imageURL2 = [url stringByAppendingString:self.model.ConfirmationP2];
+        
     [self.imageView1 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP1]]];
         [self.imageView2 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP2]]];
+        [self.imageurlArray addObject:imageURL1];
+        [self.imageurlArray addObject:imageURL2];
+        items1.url = imageURL1;
+        items2.url = imageURL2;
+        items1.sourceView = self.imageView1;
+        items2.sourceView = self.imageView2;
+        [self.itemsArray addObject:items1];
+        [self.itemsArray addObject:items2];
+        [self.imageView3 setHidden:YES];
 
     }
-    else if(self.model.ConfirmationP1 !=nil && self.model.ConfirmationP2 == nil&&self.model.ConfirmationP3 == nil)
+    else if([self.model.ConfirmationP1 isEqualToString:@""]==NO && [self.model.ConfirmationP2 isEqualToString:@""]&&[self.model.ConfirmationP3 isEqualToString:@""])
     {
+        imageURL1 = [url stringByAppendingString:self.model.ConfirmationP1];
         [self.imageView1 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP1]]];
+        items1.url = imageURL1;
+        items1.sourceView = self.imageView1;
+        [self.itemsArray addObject:items1];
+        [self.imageView2 setHidden:YES];
+        [self.imageView3 setHidden:YES];
+
     }
     else
     {
+        imageURL1 = [url stringByAppendingString:self.model.ConfirmationP1];
+        imageURL2 = [url stringByAppendingString:self.model.ConfirmationP2];
+        imageURL3 = [url stringByAppendingString:self.model.ConfirmationP3];
         [self.imageView1 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP1]]];
         [self.imageView2 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP2]]];
         [self.imageView3 sd_setImageWithURL:[NSURL URLWithString:[url stringByAppendingString:self.model.ConfirmationP3]]];
+        items1.url = imageURL1;
+        items2.url = imageURL2;
+        items3.url = imageURL3;
+        items1.sourceView = self.imageView1;
+        items2.sourceView = self.imageView2;
+        items3.sourceView = self.imageView3;
+        
+        [self.itemsArray addObject:items1];
+        [self.itemsArray addObject:items2];
+        [self.itemsArray addObject:items3];
+        
     }
     
     self.imageView1.userInteractionEnabled = YES;
@@ -405,12 +514,12 @@
     self.imageView3.userInteractionEnabled = YES;
     
     //给每个图片添加手势，放大图片查看
-    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture1:)];
+    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView1 addGestureRecognizer:gesture1];
     
-    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture2:)];
+    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView2 addGestureRecognizer:gesture2];
-    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture3:)];
+    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView3 addGestureRecognizer:gesture3];
     
 }

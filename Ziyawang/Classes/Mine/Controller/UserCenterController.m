@@ -53,7 +53,6 @@
     statuView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     [self.navigationController.navigationBar addSubview:statuView];
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
-    
     self.navigationController.navigationBar.shadowImage=[UIImage new];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
@@ -61,10 +60,9 @@
     [rightbutton setBackgroundImage:[UIImage imageNamed:@"modify"] forState:(UIControlStateNormal)];
     [rightbutton setFrame:CGRectMake(0, 0, 20, 25)];
     [rightbutton addTarget:self action:@selector(rightBarbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightbutton];
-    
     [[self navigationItem]setRightBarButtonItem:rightButtonItem];
+    
     
 //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
     
@@ -86,6 +84,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
+    self.userIconImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *userIconGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userIconGestureAction:)];
+    [self.userIconImage addGestureRecognizer:userIconGesture];
+    
     
     self.defaults = [NSUserDefaults standardUserDefaults];
     self.manager = [AFHTTPSessionManager manager];
@@ -111,7 +113,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)rightBarbuttonAction:(UIButton *)rightButtonItem
+- (void)UsericonAndRightButtonAction
 {
     if ([self ifNeedLogin] == YES) {
         LoginController *loginVC = [[UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil]instantiateInitialViewController];
@@ -144,9 +146,16 @@
             [self.navigationController pushViewController:userinfoVC animated:YES];
         }
     }
-    
+}
 
-    
+- (void)userIconGestureAction:(UITapGestureRecognizer *)userIconGesture
+{
+    [self UsericonAndRightButtonAction];
+}
+
+- (void)rightBarbuttonAction:(UIButton *)rightButtonItem
+{
+    [self UsericonAndRightButtonAction];
 }
 - (void)setViews
 {
@@ -168,12 +177,14 @@
     else
     {
         [self.loginButton setHidden:YES];
-        if ([self.role isEqualToString:@"0"]) {
+        if ([self.role isEqualToString:@"0"])
+        {
             [self.nameLabel setHidden:NO];
             [self.areaLabel setHidden:YES];
+            [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
             [self.companyNameLabel setHidden:YES];
             self.nameLabel.text = self.model.phonenumber;
-    }
+        }
         else
         {
             [self.nameLabel setHidden:NO];
@@ -184,10 +195,7 @@
             self.companyNameLabel.text = self.model.ServiceName;
             [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
         }
-            
     }
-    
-    
 }
 - (IBAction)loginButtonAction:(id)sender {
     LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
@@ -218,10 +226,8 @@
             self.MyproCountLabel.text = dataDic[@"MyProCount"];
             self.MyColCountLabel.text = dataDic[@"MyColCount"];
             self.MycooCountLabel.text = dataDic[@"MyCooCount"];
-            
             NSLog(@"%@",dic[@"role"]);
             self.role =dic[@"role"];
-            
             //        NSString *role = self.role;
                     [[NSUserDefaults standardUserDefaults]setObject:self.role forKey:@"role"];
             if ([self.role isEqualToString:@"0"])

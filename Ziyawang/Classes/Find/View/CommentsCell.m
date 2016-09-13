@@ -33,7 +33,9 @@
 
 - (void)setData
 {
-    NSString *str = @"http://images.ziyawang.com";
+    NSString *str = getImageURL;
+    self.usericonImageView.layer.masksToBounds = YES;
+    self.usericonImageView.layer.cornerRadius = self.usericonImageView.bounds.size.height/2;
     [self.usericonImageView sd_setImageWithURL:[NSURL URLWithString:[str stringByAppendingString:self.model.UserPicture] ]];
     self.userNameLabel.text = self.model.UserName;
     self.timeLabel.text = self.model.PubTime;
@@ -57,10 +59,10 @@
 //    @property (nonatomic,strong) UILabel *commentLabel;
 //    @property (nonatomic,strong) UILabel *commentContent;
     
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 10, 80, 20)];
-    self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 10, 200, 20)];
-    self.usericonImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
-    self.commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 40, 250, 20)];
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(52, 10, 80, 20)];
+    self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(137, 10, 200, 20)];
+    self.usericonImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 37, 37)];
+    self.commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(52, 30, 250, 20)];
     self.commentLabel.numberOfLines = 0;
     self.userNameLabel.font = [UIFont FontForLabel];
     self.commentLabel.font = [UIFont FontForLabel];
@@ -79,7 +81,7 @@
 //    CGFloat titleHeight = [self heigthForText:newsDic[@"title"] FontSize:22 width:250];
     CGFloat descHeight = [self heigthForText:text FontSize:12 width:250];
 
-    CGFloat height =descHeight + 60;
+    CGFloat height =descHeight + 45;
     
     NSLog(@"%.2f",height);
     return height;

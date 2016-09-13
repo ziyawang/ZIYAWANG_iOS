@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIView *companyLocationView;
 @property (weak, nonatomic) IBOutlet UIView *companyServiceView;
 @property (weak, nonatomic) IBOutlet UIView *serviceView;
+@property (weak, nonatomic) IBOutlet UIView *sentButtonBackView;
 @property (weak, nonatomic) IBOutlet UIButton *sentMessageButton;
 @property (weak, nonatomic) IBOutlet UIView *userIconBackView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addImageButtonLeftConstraint;
@@ -202,7 +203,6 @@
 
 - (void)layOutViewForRole1
 {
-    
 //    @property (nonatomic,strong) NSString *phonenumber;
 //    @property (nonatomic,strong) NSString *ServiceName;
 //    @property (nonatomic,strong) NSString *ServiceLocation;
@@ -240,16 +240,12 @@
     {
   [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.ConfirmationP3]]];
     }
-
-    
-    
     [self.addImageButton setHidden:YES];
     [self.deleteButton setHidden:YES];
     [self.sentMessageButton setHidden:YES];
+    [self.sentButtonBackView setHidden:YES];
     
-    
-    
-    //添加图片显示VIEW
+     //添加图片显示VIEW
 }
 
 
@@ -264,7 +260,6 @@
     [self.comPanyDesTextView setText:self.ServiceIntroduction];
     NSLog(@"--------%@",self.comPanyDesTextView.text);
     self.fuwuleixing.text = self.ServiceType;
-
 //    [self.qiyesuozai setText:self.ServiceLocation];
 //    [self.fuwuleixing setText:self.ServiceType];
 //    [self.comPanyDesTextView setText:self.ServiceIntroduction];
@@ -425,10 +420,7 @@
 - (IBAction)sentServiceUserInfoButton:(id)sender
 {
     
-   
-    
-    
-    NSString *role = self.role;
+     NSString *role = self.role;
     
     if ([role isEqualToString:@"0"])
     {
@@ -457,7 +449,7 @@
     NSString *accesstoken = @"token";
 //    [paraDic setObject:token forKey:@"token"];
     
-    if (accesstoken == nil||userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil) {
+    if (accesstoken == nil||userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]) {
         NSLog(@"信息不完整");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -512,7 +504,6 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
         
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"信息已上传，等待审核" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -535,9 +526,6 @@
     else if([role isEqualToString:@"2"])
     
     {
-       
-        
-        
         if ([self.sentMessageButton.titleLabel.text isEqualToString:@"重新提交"]) {
             [self.sentMessageButton setTitle:@"提交" forState:(UIControlStateNormal)];
             self.nameTextField.text = @"";
@@ -549,9 +537,7 @@
             self.comPanyDesTextView.text = @"";
         }
         if ([self.sentMessageButton.titleLabel.text isEqualToString:@"提交"]) {
-            
-            
-             [self checkMobilePhoneNumber:self.phoneNumTextField.text];
+        [self checkMobilePhoneNumber:self.phoneNumTextField.text];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *userName = self.nameTextField.text;
         NSString *phoneNumber = self.phoneNumTextField.text;

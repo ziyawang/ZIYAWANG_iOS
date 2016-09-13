@@ -17,9 +17,21 @@
 
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
+
+#import "MyidentifiController.h"
+
+
+#import "KNPhotoBrowerImageView.h"
+#import "KNPhotoBrower.h"
+
+#import "KNToast.h"
 //#import <ShareSDK/ShareSDK.h>
 //#import <ShareSDKUI/ShareSDK+SSUI.h>
-@interface InfoDetailsController ()<MBProgressHUDDelegate>
+@interface InfoDetailsController ()<MBProgressHUDDelegate,KNPhotoBrowerDelegate>
+{
+    BOOL     _ApplicationStatusIsHidden;
+
+}
 /**
  *  storyboard属性
  */
@@ -46,7 +58,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *qingdanHight;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
-
+@property (weak, nonatomic) IBOutlet UIView *areaAndFromBackView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *areaBackViewHight;
+@property (weak, nonatomic) IBOutlet UILabel *PublishtimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ViewCount;
 
 
 /**
@@ -95,6 +110,11 @@
 @property (nonatomic,strong) UIImageView *titleImageView;
 @property (nonatomic,assign) BOOL isZichan;
 
+@property (nonatomic, strong) NSMutableArray *itemsArray;
+@property (nonatomic,strong) NSMutableArray *imageurlArray;
+@property (nonatomic, strong) NSMutableArray *actionSheetArray; // 右上角弹出框的 选项 -->代理回调
+@property (nonatomic, strong) KNPhotoBrower *photoBrower;
+
 /**
  *  清单下载View
  */
@@ -132,9 +152,9 @@
      */
 //    self.navigationItem.title = self.typeName;
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
-   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2, 17, 30, 9.5)];
+   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-40, 17, 30, 9.5)];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-80, 0, 100, 44)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-120, 0, 100, 44)];
     label.text = @"信息详情";
     label.textColor = [UIColor blackColor];
     self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
@@ -145,8 +165,13 @@
     self.isPlaying = NO;
     self.playModel = [[PublishModel alloc]init];
     self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if ([self.typeName isEqualToString:@"固产转让"]||[self.typeName isEqualToString:@"商业保理"]||[self.typeName isEqualToString:@"尽职调查"]||[self.typeName isEqualToString:@"法律服务"]||[self.typeName isEqualToString:@"悬赏信息"]) {
+        self.areaBackViewHight.constant = 1;
+//        self.areaAndFromBackView.backgroundColor = [UIColor lightGrayColor];
+    }
+    
     [self ifHiddenQingdanView];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_left_jt"] style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_left_jt"] style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor lightGrayColor];
 }
 
@@ -332,12 +357,35 @@
 
 
 #pragma mark----设置展示视图，根据不同用户类型设置需要展示的视图
-
 /**
  *  设置所有视图
  */
 - (void)layoutSubview
 {
+    self.PublishtimeLabel.font = [UIFont systemFontOfSize:10];
+    self.ViewCount.font = [UIFont systemFontOfSize:10];
+    
+    self.PublishtimeLabel.text = self.model.PublishTime;
+//    self.ViewCount.text = [NSString stringWithFormat:@"%@",self.model.ViewCount];
+    self.ViewCount.text = [@"浏览"stringByAppendingString:[NSString stringWithFormat:@"%@",self.model.ViewCount]];
+    
+    if ([self.VideoDes isEqualToString:@""]) {
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 4, 60, 20)];
+        label.text = @"无语音";
+        label.font = [UIFont FontForBigLabel];
+        
+        label.textColor = [UIColor lightGrayColor];
+        [self.viedioButton addSubview:label];
+        
+//        [self.viedioButton setTitle:@"无语音" forState:(UIControlStateNormal)];
+//        [self.viedioButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+        [self.viedioButton setBackgroundImage:[UIImage new] forState:(UIControlStateNormal)];
+    }
+    else
+    {
+//        [self.viedioButton setTitle:@"播放" forState:(UIControlStateNormal)];
+//        [self.viedioButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+    }
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
     if ([self.model.Member isEqualToString:@"1"]==NO) {
         [self.titleImageView setHidden:YES];
@@ -345,7 +393,6 @@
     [self layoutBottomViewWithUserType:self.role UserID:self.userid];
     
     self.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
-    
     //设置收藏按钮的状态
     [self.shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
     
@@ -365,6 +412,10 @@
     }
     NSString *url = getImageURL;
     UIImageView *usericonImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    [usericonImage setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    usericonImage.contentMode = UIViewContentModeScaleAspectFill;
+    usericonImage.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    usericonImage.clipsToBounds = YES;
     
     usericonImage.layer.masksToBounds = YES;
     usericonImage.layer.cornerRadius = 30;
@@ -388,22 +439,55 @@
     NSString *imageURL2 = @"2";
     NSString *imageURL3 = @"3";
     
+    /**
+     *  添加图片地址到数组中
+     */
+    self.imageurlArray = [NSMutableArray new];
+    self.itemsArray = [NSMutableArray new];
+//    [self.imageurlArray addObject:self.model.PictureDes1];
+//    [self.imageurlArray addObject:self.model.PictureDes2];
+//    [self.imageurlArray addObject:self.model.PictureDes3];
+    
+    
     self.phoneNumber = self.model.PhoneNumber;
-    if (self.model.PictureDes1 ==nil)
+    
+    
+    
+    KNPhotoItems *items1 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items2 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items3 = [[KNPhotoItems alloc] init];
+
+    if ([self.model.PictureDes1 isEqualToString:@""])
     {
         
     }
-    else if(self.model.PictureDes1!=nil&&self.model.PictureDes2 != nil&&self.model.PictureDes3 == nil)
+    else if([self.model.PictureDes1 isEqualToString:@""]==NO&&[self.model.PictureDes2 isEqualToString:@""]==NO&&[self.model.PictureDes3 isEqualToString:@""])
     {
         imageURL1 = [url stringByAppendingString:self.model.PictureDes1];
         imageURL2 = [url stringByAppendingString:self.model.PictureDes2];
         [self.imageview1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
         [self.imageview2 sd_setImageWithURL:[NSURL URLWithString:imageURL2]];
-    }
-    else if(self.model.PictureDes1 !=nil && self.model.PictureDes2 == nil&&self.model.PictureDes3 == nil)
+        [self.imageurlArray addObject:imageURL1];
+        [self.imageurlArray addObject:imageURL2];
+        items1.url = imageURL1;
+        items2.url = imageURL2;
+        items1.sourceView = self.imageview1;
+        items2.sourceView = self.imageview2;
+        [self.itemsArray addObject:items1];
+        [self.itemsArray addObject:items2];
+        [self.imageview3 setHidden:YES];
+        
+        }
+    else if([self.model.PictureDes1 isEqualToString:@""]==NO && [self.model.PictureDes2 isEqualToString:@""]&&[self.model.PictureDes3 isEqualToString:@""])
     {
         imageURL1 = [url stringByAppendingString:self.model.PictureDes1];
         [self.imageview1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
+         [self.imageurlArray addObject:imageURL1];
+        items1.url = imageURL1;
+        items1.sourceView = self.imageview1;
+        [self.itemsArray addObject:items1];
+        [self.imageview2 setHidden:YES];
+        [self.imageview3 setHidden:YES];
         
     }
     else
@@ -414,6 +498,20 @@
         [self.imageview1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
         [self.imageview2 sd_setImageWithURL:[NSURL URLWithString:imageURL2]];
         [self.imageview3 sd_setImageWithURL:[NSURL URLWithString:imageURL3]];
+        [self.imageurlArray addObject:imageURL1];
+        [self.imageurlArray addObject:imageURL2];
+        [self.imageurlArray addObject:imageURL3];
+        items1.url = imageURL1;
+        items2.url = imageURL2;
+        items3.url = imageURL3;
+        items1.sourceView = self.imageview1;
+        items2.sourceView = self.imageview2;
+        items3.sourceView = self.imageview3;
+        
+        [self.itemsArray addObject:items1];
+        [self.itemsArray addObject:items2];
+        [self.itemsArray addObject:items3];
+        
     }
     
     
@@ -421,14 +519,28 @@
     self.imageview2.userInteractionEnabled = YES;
     self.imageview3.userInteractionEnabled = YES;
     
-    //给每个图片添加手势，放大图片查看
-    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture1:)];
-    [self.imageview1 addGestureRecognizer:gesture1];
+    UITapGestureRecognizer *ImageTapGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+     UITapGestureRecognizer *ImageTapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+     UITapGestureRecognizer *ImageTapGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    self.imageview1.tag = 0;
+    self.imageview2.tag = 1;
+    self.imageview3.tag = 2;
     
-    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture2:)];
-    [self.imageview2 addGestureRecognizer:gesture2];
-    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture3:)];
-    [self.imageview3 addGestureRecognizer:gesture3];
+    [self.imageview1 addGestureRecognizer:ImageTapGesture1];
+    [self.imageview2 addGestureRecognizer:ImageTapGesture2];
+    [self.imageview3 addGestureRecognizer:ImageTapGesture3];
+//    [self.imageview2 addGestureRecognizer:ImageTapGesture];
+//    [self.imageview3 addGestureRecognizer:ImageTapGesture];
+
+    
+    //给每个图片添加手势，放大图片查看
+//    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture1:)];
+//    [self.imageview1 addGestureRecognizer:gesture1];
+//    
+//    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture2:)];
+//    [self.imageview2 addGestureRecognizer:gesture2];
+//    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgesture3:)];
+//    [self.imageview3 addGestureRecognizer:gesture3];
     
     NSLog(@"________________图片%@",self.imageview1.image);
     self.model.TotalMoney = [NSString stringWithFormat:@"%@",self.model.TotalMoney];
@@ -673,17 +785,14 @@
         [self layoutView2];
         return;
     }
-    if (role == nil||[role isEqualToString:@"1"])
+    else
     {
         //认证过的服务方和游客
         [self layoutView1];
     }
-   else if ([self.typeName isEqualToString:@"资产求购"]||[self.typeName isEqualToString:@"投资需求"])
-    {
-        self.isZichan = YES;
-        [self layoutView1];
-    }
     
+
+
 }
 
 /**
@@ -691,6 +800,10 @@
  */
 - (void)layoutView1
 {
+    if ([self.typeName isEqualToString:@"资产求购"]||[self.typeName isEqualToString:@"投资需求"])
+    {
+        self.isZichan = YES;
+    }
     /**
      初始化放两个按钮的View
      */
@@ -760,7 +873,6 @@
         talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
     }
     
-    
     [SomeOneView addSubview:connectButton];
     [SomeOneView addSubview:applyButton];
     [SomeOneView addSubview:talkButton];
@@ -822,17 +934,37 @@
         [self.view addSubview:webView];
         NSLog(@"认证过的服务方，调用打电话");
     }
-    else if(self.isZichan == YES)
+    else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
     {
-        UIWebView *webView = [[UIWebView alloc]init];
-        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
-        NSURL *url = [NSURL URLWithString:telString];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.view addSubview:webView];
-        NSLog(@"认证过的服务方，调用打电话");
+        [self ShowAlertViewController];
+        if(self.isZichan == YES)
+        {
+            UIWebView *webView = [[UIWebView alloc]init];
+            NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+            NSURL *url = [NSURL URLWithString:telString];
+            [webView loadRequest:[NSURLRequest requestWithURL:url]];
+            [self.view addSubview:webView];
+        }
     }
+ 
     
 }
+
+- (void)ShowAlertViewController
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"只有通过认证的服务方可以查看发布方的联系方式，申请抢单，私聊(除投资需求，资产求购外)" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+        MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+        [self.navigationController pushViewController:identifiVC animated:YES];
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+
+}
+
 
 /**
  *  申请抢单
@@ -886,6 +1018,14 @@
             [alert show];
         }];
     }
+    else
+    {
+        
+        [self ShowAlertViewController];
+
+
+    }
+    
 }
 
 
@@ -927,21 +1067,27 @@
         NSLog(@"认证过的服务方，调用私聊界面");
         
     }
-    else if(self.isZichan == YES)
+    else
     {
-        
-        //        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        //        userInfo[@"targetID"] = self.targetID;
-        //        userInfo[@"title"] = self.userid;
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"PushTotalkControllerNotification" object:nil userInfo:userInfo];
-         talkViewController *talkVC = [[talkViewController alloc]init];
-        talkVC.targetId = self.targetID;
-        NSLog(@"~~~~~~~~~~~~~~~~~TargetID%@",self.targetID);
-        talkVC.title = @"对话";//self.userid;
-        talkVC.conversationType = ConversationType_PRIVATE;
-        [self.navigationController pushViewController:talkVC animated:YES];
-        NSLog(@"认证过的服务方，调用私聊界面");
-        
+        [self ShowAlertViewController];
+
+        if(self.isZichan == YES)
+        {
+            
+            //        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+            //        userInfo[@"targetID"] = self.targetID;
+            //        userInfo[@"title"] = self.userid;
+            //        [[NSNotificationCenter defaultCenter] postNotificationName:@"PushTotalkControllerNotification" object:nil userInfo:userInfo];
+            talkViewController *talkVC = [[talkViewController alloc]init];
+            talkVC.targetId = self.targetID;
+            NSLog(@"~~~~~~~~~~~~~~~~~TargetID%@",self.targetID);
+            talkVC.title = @"对话";//self.userid;
+            talkVC.conversationType = ConversationType_PRIVATE;
+            [self.navigationController pushViewController:talkVC animated:YES];
+            NSLog(@"认证过的服务方，调用私聊界面");
+            
+        }
+
     }
     
 }
@@ -1150,6 +1296,55 @@
     
     
 }
+#pragma mark----查看图片手势方法以及代理
+- (void)imageTapGestureAction:(UITapGestureRecognizer *)imageTapGesture
+{
+    KNPhotoBrower *photoBrower = [[KNPhotoBrower alloc] init];
+    photoBrower.itemsArr = self.itemsArray;
+    photoBrower.currentIndex = imageTapGesture.view.tag;
+    // 如果设置了 photoBrower中的 actionSheetArr 属性. 那么 isNeedRightTopBtn 就应该是默认 YES, 如果设置成NO, 这个actionSheetArr 属性就没有意义了
+    //    photoBrower.actionSheetArr = [self.actionSheetArray mutableCopy];
+    
+    [photoBrower present];
+    
+    _photoBrower = photoBrower;
+    
+    // 设置代理方法 --->可不写
+    [photoBrower setDelegate:self];
+    
+    // 这里是 设置 状态栏的 隐藏 ---> 可不写
+    _ApplicationStatusIsHidden = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+// 下面方法 是让 '状态栏' 在 PhotoBrower 显示的时候 消失, 消失的时候 显示 ---> 根据项目需求而定
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+- (BOOL)prefersStatusBarHidden{
+    if(_ApplicationStatusIsHidden){
+        return YES;
+    }
+    return NO;
+}
+
+/* PhotoBrower 即将消失 */
+- (void)photoBrowerWillDismiss{
+    NSLog(@"Will Dismiss");
+    _ApplicationStatusIsHidden = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+/* PhotoBrower 右上角按钮的点击 */
+- (void)photoBrowerRightOperationActionWithIndex:(NSInteger)index{
+    NSLog(@"operation:%zd",index);
+}
+
+/* PhotoBrower 保存图片是否成功 */
+- (void)photoBrowerWriteToSavedPhotosAlbumStatus:(BOOL)success{
+    NSLog(@"saveImage:%zd",success);
+}
+
+
 
 - (void)tapgesture1:(UITapGestureRecognizer *)gesture1
 {

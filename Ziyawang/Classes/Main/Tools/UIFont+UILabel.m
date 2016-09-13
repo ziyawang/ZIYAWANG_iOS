@@ -36,6 +36,27 @@ else
 }
 }
 
++ (UIFont *)FontForVideoDesLabel
+{
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        return [UIFont systemFontOfSize:12];
+        
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    {
+        return [UIFont systemFontOfSize:12];;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    {
+        return [UIFont systemFontOfSize:12];;
+        
+    }
+    else
+    {
+        return [UIFont systemFontOfSize:12];;
+    }
+}
 + (UIFont *)FontForBigLabel
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)

@@ -102,7 +102,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
     self.navigationItem.title = @"找信息";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 //    [self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"icon_left_jt"] forState:(UIControlStateNormal) barMetrics:UIBarMetricsDefault];
    
     CGRect backframe = CGRectMake(0,0,40,30);
@@ -130,6 +130,8 @@
 
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     self.tableView.contentInset = UIEdgeInsetsMake(0,0,104,0);
     self.tableView.separatorStyle = NO;
                                 
@@ -274,7 +276,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [touzi addObject:Stypearray18];
     [touzi addObject:Stypearray19];
     [touzi addObject:Stypearray20];
-    
     
     NSMutableArray *allTypeArray = [NSMutableArray new];
     [allTypeArray addObject:zichan];

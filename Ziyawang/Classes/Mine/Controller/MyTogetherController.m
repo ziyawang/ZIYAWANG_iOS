@@ -44,6 +44,8 @@
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [self getMyTogetherList];
      self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     
 }
 
@@ -116,12 +118,16 @@
         if (addArray.count == 0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
+        else
+        {
         [self.sourceArray addObjectsFromArray:addArray];
         NSLog(@"$$$$$$$$$$$$$$$$%@",self.sourceArray);
         [self.tableView reloadData];
         self.startpage ++;
         [self.tableView.mj_footer endRefreshing];
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //        [alert show];
@@ -185,6 +191,8 @@
     infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+    infoDetailsVC.typeName = model.TypeName;
+
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
 }
 

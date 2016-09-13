@@ -7,7 +7,7 @@
 //
 
 #import "ChangeWordViewController.h"
-
+#import "PassWordCheck.h"
 @interface ChangeWordViewController ()
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UITextField *textField;
@@ -41,6 +41,12 @@
 //    label.font = [UIFont systemFontOfSize:12]
     [self.view addSubview:view];
 }
+- (void)showAlertViewWithString:(NSString *)string
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+    return;
+}
 
 - (void)didClickRightButton:(UIBarButtonItem *)barbutton
 {   NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -49,11 +55,16 @@
     NSString *URL = [[[[url stringByAppendingString:@"?token="]stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
     
     
-    if (self.textField.text.length<6||self.textField.text.length>16) {
+    BOOL pass =  [PassWordCheck judgePassWordLegal:self.textField.text];
+    if (pass == NO) {
+        [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的密码格式" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
     }
+//    if (self.textField.text.length<6||self.textField.text.length>16) {
+//        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的密码格式" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }
     else
     {
         NSMutableDictionary *dic = [NSMutableDictionary new];

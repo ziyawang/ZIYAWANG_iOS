@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "LoginController.h"
+#import "PassWordCheck.h"
 @interface FindwordController ()<MBProgressHUDDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 @property (weak, nonatomic) IBOutlet UITextField *smsCodeTextField;
@@ -405,6 +406,10 @@
             [self showAlertViewWithString:@"您输入的两次密码不一致，请重新输入"];
             return;
         }
+        BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
+        if (pass == NO) {
+            [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
+        }
         
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
@@ -438,14 +443,13 @@
             if ([code isEqualToString:@"200"])
             {
 //                [self MBProgressWithString:@"密码修改成功" timer:1 mode:MBProgressHUDModeText];
-                [self showAlertViewWithString:@"修改密码成功"];
+                [self showAlertViewWithString:@"修改密码成功，请重新登录"];
                 NSLog(@"修改成功");
                 //跳出自己页面，调到登录页面
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
-                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-                
-                [self presentViewController:loginVC animated:YES completion:nil];
+//                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+//                [self presentViewController:loginVC animated:YES completion:nil];
                 
                 NSString *token = dic[@"token"];
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];

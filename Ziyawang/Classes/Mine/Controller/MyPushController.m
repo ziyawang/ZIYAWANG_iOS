@@ -41,6 +41,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getMypushData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     self.sourceArray = [NSMutableArray array];
     [self getMypushData];
 }
@@ -203,6 +205,7 @@
     infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"我的发布点击userid%@",infoDetailsVC.ProjectID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+    infoDetailsVC.typeName = model.TypeName;
     NSLog(@"我的发布点击puserid%@",infoDetailsVC.ProjectID);
     
     model.CertifyState = [NSString stringWithFormat:@"%@",model.CertifyState];

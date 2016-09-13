@@ -42,7 +42,15 @@
     self.contentLabel.text = self.model.Title;
 //    self.timeLabel.font = [UIFont FontForLabel];
     self.contentLabel.font = [UIFont FontForLabel];
-    
+    if ([self.model.Status isEqualToString:@"1"]) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
+    }
+    else
+    {
+        self.contentView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+        
+    }
+
 }
 
 - (void)awakeFromNib {

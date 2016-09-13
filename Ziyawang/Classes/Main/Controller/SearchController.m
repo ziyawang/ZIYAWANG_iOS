@@ -52,7 +52,7 @@
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 38, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 58, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -76,6 +76,8 @@
 //        [self loadMoreDataWithURL:URL Dic:self.dataDic];
 //    }];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     
     
     
@@ -132,7 +134,7 @@
 }
 - (void)setSearchBar
 {
-    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-40, 38)];
+    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(20, 10, self.view.bounds.size.width-40, 38)];
     self.searchBarbutton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     self.searchBarbutton.backgroundColor = [UIColor whiteColor];
     [self.searchBarbutton setTitle:self.findType forState:(UIControlStateNormal)];
@@ -175,7 +177,11 @@
 
     
     self.searchBar = searchBar;
-    [self.view addSubview:self.searchBar];
+    UIView *searchBarBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 58)];
+    searchBarBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    [searchBarBackView addSubview:self.searchBar];
+    [self.view addSubview:searchBarBackView];
+    
    }
 
 - (void)rightButtonAction:(UIButton*)button
@@ -461,13 +467,7 @@
          //        [self MBProgressWithString:@"搜索失败" timer:1 mode:MBProgressHUDModeText];
          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"搜索失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
          [alert show];
-         
-         
      }];
-    
-
-    
-
 }
 - (void)loadMoreDataWithURL:(NSString*)url Dic:(NSMutableDictionary *)dic
 {
@@ -664,6 +664,8 @@
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+        infoDetailsVC.typeName = model.TypeName;
+
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
         
     }

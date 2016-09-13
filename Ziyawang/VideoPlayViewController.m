@@ -79,7 +79,9 @@
       NSLog(@"*********************************%@",self.video.playUrl);
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + 150, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+    CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.model.VideoDes];
+
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 160, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -87,14 +89,16 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 //    [self.tableView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellReuseIdentifier:@"CommentCell"];
-
         [self.tableView registerClass:[CommentsCell class] forCellReuseIdentifier:@"CommentsCell"];
     [self.view addSubview:self.tableView];
     
     
     
     [self registerForKeyboardNotifications];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getContentData)];
   self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreContentData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
     
     [self getContentData];
     [self getVideoDetail];
@@ -155,10 +159,12 @@
         NSLog(@"%@",error);
     }];
 }
+
+
 - (void)layoutView
 {
-  
-    self.contentView = [[UIView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight, self.view.bounds.size.width, 120)];
+    CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.model.VideoDes];
+    self.contentView = [[UIView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight, self.view.bounds.size.width,  videoLabelHight +110)];
     self.contentView.backgroundColor = [UIColor whiteColor];
     UILabel *videoTitle  = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, self.view.bounds.size.width - 120, 20)];
     videoTitle.text = self.model.VideoTitle;
@@ -170,23 +176,28 @@
     viewCount.text =[[str1 stringByAppendingString:self.model.ViewCount]stringByAppendingString:str2];
     viewCount.textColor = [UIColor lightGrayColor];
     viewCount.font = [UIFont systemFontOfSize:10];
-    UILabel *commentTime = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 200, 20)];
-    commentTime.font = [UIFont FontForLabel];
+    UILabel *commentTime = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 200, 20)];
+    commentTime.font = [UIFont FontForVideoDesLabel];
     commentTime.textColor = [UIColor lightGrayColor];
     commentTime.text = self.model.PublishTime;
-    UILabel *videoDes = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, self.view.bounds.size.width -10, 20)];
-    NSString *jianjie = @"简介:";
-    videoDes.text = [jianjie stringByAppendingString:self.model.VideoDes];
+    UILabel *jianjieLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 102, 30, 10)];
+    jianjieLabel.text = @"简介:";
+    jianjieLabel.font = [UIFont FontForVideoDesLabel];
+    jianjieLabel.textColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:jianjieLabel];
+    
+    
+    UILabel *videoDes = [[UILabel alloc]initWithFrame:CGRectMake(40, 100, 300, videoLabelHight)];
+//    NSString *jianjie = @"简介:";
+    videoDes.text = self.model.VideoDes;
     videoDes.textColor = [UIColor lightGrayColor];
-    videoDes.font = [UIFont FontForLabel];
+    videoDes.font = [UIFont FontForVideoDesLabel];
     videoDes.numberOfLines = 0;
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    
     [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 25, 25)];
     [button setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
     self.collectButton = button;
-    
     UIButton *button2 = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [button2 setBackgroundImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
     [button2 setFrame:CGRectMake(self.view.bounds.size.width - 50, 10, 25, 25)];
@@ -212,7 +223,7 @@
     [self.contentView addSubview:videoDes];
     [self.view addSubview:self.contentView];
     
-    self.commentCountView = [[UIView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + 120, self.view.bounds.size.width, 40)];
+    self.commentCountView = [[UIView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight +100 + 10, self.view.bounds.size.width, 40)];
     UILabel *contentCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width, 20)];
     self.commentCountView.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
     contentCountLabel.text = @"全部评论";
@@ -245,6 +256,21 @@
     
     [self.view addSubview:self.commentView];
    
+}
+#pragma mark----label自适应高度
++(CGFloat)heightForTextLabel:(NSString *)text{
+    
+    //    CGFloat titleHeight = [self heigthForText:newsDic[@"title"] FontSize:22 width:250];
+    CGFloat descHeight = [self heigthForText:text FontSize:12 width:300];
+    return descHeight;
+}
+
++(CGFloat)heigthForText:(NSString *)text FontSize:(CGFloat)fontSize width:(CGFloat)width{
+    //字符绘制区域
+    CGSize size = CGSizeMake(width, 1000);
+    CGRect textRect = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]} context:nil];
+    //CGRect textRect = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]} context:nil];
+    return textRect.size.height;
 }
 
 - (void)didClickShareButton:(UIButton*)button2
@@ -628,16 +654,19 @@
         CommentModel *model = [[CommentModel alloc]init];
         [model setValuesForKeysWithDictionary:dic];
         [self.sourceArray addObject:model];
-        
     }
     
     self.startpage ++;
     NSLog(@"!!!!!!!!!%@",self.sourceArray);
     [self.tableView reloadData];
+    [self.tableView.mj_header endRefreshing];
+    
      NSLog(@"请求评论成功");
 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
+    [self.tableView.mj_header endRefreshing];
+
     NSLog(@"请求评论失败");
 }];
 

@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"找服务";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
     self.sourceArray = [NSMutableArray array];
     self.manager = [AFHTTPSessionManager manager];
@@ -66,6 +66,8 @@
     self.tableView.separatorStyle = NO;
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(findServiceswithDic:)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
     self.dataDic = [NSMutableDictionary new];
     [self setHeadView];
     

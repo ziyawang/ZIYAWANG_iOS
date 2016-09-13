@@ -52,7 +52,7 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getSerViceData) ];
     
      self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-  
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
 }
 
 - (void)getSerViceData
@@ -177,10 +177,9 @@
     ZiyaServiceModel *model = [[ZiyaServiceModel alloc]init];
     model = self.sourceArray[indexPath.row];
     cell.model = model;
-    
     cell.model.Status = [NSString stringWithFormat:@"%@",cell.model.Status];
     if ([cell.model.Status isEqualToString:@"0"]) {
-        cell.contentView.backgroundColor = [UIColor lightGrayColor];
+        cell.contentView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     }
    
     else
@@ -188,7 +187,6 @@
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.contentView.backgroundColor = [UIColor lightGrayColor];
     return cell;
 
 }

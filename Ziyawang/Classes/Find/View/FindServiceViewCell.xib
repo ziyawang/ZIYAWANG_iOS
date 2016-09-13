@@ -22,13 +22,16 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务等级：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcJ-sD-B9s">
-                        <rect key="frame" x="333" y="76" width="60" height="15"/>
+                        <rect key="frame" x="333" y="81" width="60" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.47003205129999998" green="0.47003205129999998" blue="0.47003205129999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMf-ZO-hcr">
-                        <rect key="frame" x="90" y="73" width="31" height="15"/>
+                        <rect key="frame" x="90" y="73" width="200" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="IHQ-vS-aqh"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -53,12 +56,6 @@
                             <constraint firstAttribute="height" constant="10" id="hPn-n4-Vg3"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不限" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HEq-mY-tfr">
-                        <rect key="frame" x="393" y="76" width="26" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务地区：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0V-Er-a7l">
                         <rect key="frame" x="30" y="73" width="60" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -99,6 +96,12 @@
                         <color key="textColor" red="0.47003205129999998" green="0.47003205129999998" blue="0.47003205129999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不限" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HEq-mY-tfr">
+                        <rect key="frame" x="393" y="81" width="26" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="HYy-qd-PZt" firstAttribute="top" secondItem="ae8-1V-BBo" secondAttribute="bottom" constant="5" id="0L9-4h-Y42"/>
@@ -116,8 +119,8 @@
                     <constraint firstItem="PE5-h2-6Rs" firstAttribute="leading" secondItem="Ot4-jo-tMR" secondAttribute="leading" constant="30" id="Vxb-wu-x0W"/>
                     <constraint firstItem="HEq-mY-tfr" firstAttribute="leading" secondItem="zcJ-sD-B9s" secondAttribute="trailing" id="aOk-f5-suY"/>
                     <constraint firstItem="qrS-xi-8AV" firstAttribute="leading" secondItem="Ot4-jo-tMR" secondAttribute="leading" constant="30" id="fPE-W5-KlC"/>
-                    <constraint firstItem="zcJ-sD-B9s" firstAttribute="top" secondItem="HYy-qd-PZt" secondAttribute="bottom" constant="48" id="fdq-AI-84q"/>
-                    <constraint firstItem="HEq-mY-tfr" firstAttribute="top" secondItem="HYy-qd-PZt" secondAttribute="bottom" constant="48" id="g0f-fL-37w"/>
+                    <constraint firstItem="zcJ-sD-B9s" firstAttribute="top" secondItem="HYy-qd-PZt" secondAttribute="bottom" constant="53" id="fdq-AI-84q"/>
+                    <constraint firstItem="HEq-mY-tfr" firstAttribute="top" secondItem="HYy-qd-PZt" secondAttribute="bottom" constant="53" id="g0f-fL-37w"/>
                     <constraint firstItem="T0V-Er-a7l" firstAttribute="leading" secondItem="Ot4-jo-tMR" secondAttribute="leading" constant="30" id="g1P-gx-HUw"/>
                     <constraint firstAttribute="bottom" secondItem="5Cn-YZ-h35" secondAttribute="bottom" id="h7y-ET-Qat"/>
                     <constraint firstItem="0xu-xg-e4R" firstAttribute="leading" secondItem="A9w-NV-sMi" secondAttribute="trailing" constant="4" id="iXc-nb-1Dx"/>

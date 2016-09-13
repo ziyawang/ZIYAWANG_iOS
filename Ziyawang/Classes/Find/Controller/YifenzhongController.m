@@ -73,7 +73,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self getNewVideosList];
      self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
 }
 
 //

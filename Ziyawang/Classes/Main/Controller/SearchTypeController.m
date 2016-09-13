@@ -60,7 +60,9 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [self loadMoreDataWithType:self.type SearchValue:self.searchValue];
     }];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftButtonAction:)];
+    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftButtonAction:)];
   
 }
 
@@ -316,6 +318,8 @@
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+        infoDetailsVC.typeName = model.TypeName;
+
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
     }
     else
