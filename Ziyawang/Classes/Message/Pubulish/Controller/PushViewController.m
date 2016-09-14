@@ -62,24 +62,23 @@ self.navigationItem.title = @"发布";
     
     
     self.imageArray = [NSMutableArray array];
+    NSArray *imageNameArray = [NSArray new];
+    imageNameArray = @[@"1",@"2",@"3",@"4",@"11",@"6",@"10",@"7",@"9",@"8",@"13"];
     
-        for (int i = 1; i < 14; i++)
+        for (int i = 1; i < 12; i++)
         {
             NSString *name = [NSString stringWithFormat:@"%d",i];
             
 //        NSString *name = @"fabu2";
-            UIImage *image = [UIImage imageNamed:name];
+            UIImage *image = [UIImage imageNamed:imageNameArray[i-1]];
             
 //            UIImage *image = [UIImage imageNamed:name];
-            if (i==5) {
-                image = [UIImage imageNamed:@"13"];
-            }
             [self.imageArray addObject:image];
             NSLog(@"********************************%@",self.imageArray);
                  //NSLog(@"%@",self.imageArray);
         }
 
-        NSArray *array = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"投资需求",@"融资需求",@"悬赏信息",@"尽职调查",@"委外催收",@"法律服务",@"资产求购"];
+        NSArray *array = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];
     self.nameArray = [NSMutableArray arrayWithArray:array];
     
     
@@ -149,7 +148,7 @@ self.navigationItem.title = @"发布";
 //    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
 //    NSArray *level = @[@"VIP1"];
     
-    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"15",@"06",@"09",@"10",@"02",@"03",@"13"];
+    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
     switch (indexPath.row) {
         case 0:
             PusVc.typeName = @"资产包转让";
@@ -172,7 +171,7 @@ self.navigationItem.title = @"发布";
 
             break;
         case 4:
-            PusVc.typeName = @"投资需求";
+            PusVc.typeName = @"资产求购";
             PusVc.TypeID = TypeID[4];
 
             break;
@@ -182,28 +181,28 @@ self.navigationItem.title = @"发布";
 
             break;
         case 6:
-            PusVc.typeName = @"悬赏信息";
+            PusVc.typeName = @"法律服务";
             PusVc.TypeID = TypeID[6];
 
             break;
         case 7:
-            PusVc.typeName = @"尽职调查";
+            PusVc.typeName = @"悬赏信息";
             PusVc.TypeID = TypeID[7];
 
             break;
         case 8:
-            PusVc.typeName = @"委外催收";
+            PusVc.typeName = @"尽职调查";
             PusVc.TypeID = TypeID[8];
 
             break;
         case 9:
-            PusVc.typeName = @"法律服务";
+            PusVc.typeName = @"委外催收";
             PusVc.TypeID = TypeID[9];
 
             break;
         case 10:
         {
-            PusVc.typeName = @"资产求购";
+            PusVc.typeName = @"投资需求";
             NSLog(@"---------------%@",PusVc.typeName);
         }
             PusVc.TypeID = TypeID[10];

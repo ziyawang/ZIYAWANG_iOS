@@ -276,6 +276,8 @@
     //[self.addImageButton setTitle:@"添加" forState:(UIControlStateNormal)];
     [self.addImageButton addTarget:self action:@selector(didClickChooseImage:) forControlEvents:(UIControlEventTouchUpInside)];
     
+    
+    
     //录音与播放按钮
     self.recorderbutton =[UIButton buttonWithType:(UIButtonTypeSystem)];
     //        [self.recorderbutton setTitle:@"录音" forState:(UIControlStateNormal)];
@@ -283,7 +285,13 @@
     
     [self.recorderbutton setFrame:CGRectMake(75, 5, 150, 30)];
     [self.audioView addSubview:self.recorderbutton];
-    
+    /**
+     *  添加录音按钮的事件
+     *
+     *  @param startRecorder startRecorder description
+     *
+     *  @return return value description
+     */
     [self.recorderbutton addTarget:self action:@selector(startRecorder) forControlEvents:UIControlEventTouchDown];
     [self.recorderbutton addTarget:self action:@selector(cancelRecorder) forControlEvents:UIControlEventTouchUpInside];
     [self.recorderbutton addTarget:self action:@selector(dragRecorder) forControlEvents:UIControlEventTouchDragExit];
@@ -305,14 +313,12 @@
     [self.rerecorderButton setFrame:CGRectMake(85 + self.playRecorderButton.bounds.size.width, 5, 30, 30)];
     ;
     [self.rerecorderButton setBackgroundImage:[UIImage imageNamed:@"rerecord"] forState:(UIControlStateNormal)];
-    
     [self.audioView addSubview:self.rerecorderButton];
     [self.rerecorderButton setHidden:YES];
     [self.playRecorderButton setHidden:YES];
      [self.playRecorderButton addTarget:self action:@selector(playRecorder) forControlEvents:UIControlEventTouchUpInside];
     [self.rerecorderButton addTarget:self action:@selector(didClickRerecorder:) forControlEvents:(UIControlEventTouchUpInside)];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(self.audioView.bounds.size.width-70, 10, 70, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-70, 10, 70, 20)];
     label.textColor = [UIColor lightGrayColor];
     label.text = @"(限30秒内)";
     label.font = [UIFont FontForLabel];
@@ -320,6 +326,7 @@
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
     self.scrollView.delegate = self;
+    
 }
 /**
  *  设置录音中动画提示
@@ -539,7 +546,6 @@
  *  点击发布的事件
  */
 - (IBAction)didClickSentContent:(id)sender {
-    
     
     [self.view endEditing:YES];
     self.pushDic = [NSMutableDictionary new];
@@ -892,7 +898,6 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *setCategoryError = nil;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&setCategoryError];
-    
     if(setCategoryError){
         NSLog(@"%@", [setCategoryError description]);
     }
@@ -941,10 +946,12 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"录音时间不能超过30秒" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         [self.recordAnimationView removeFromSuperview];
-        self.haveVideo = YES;
+         self.haveVideo = YES;
+        
         [self.recorderbutton setHidden:YES];
         [self.playRecorderButton setHidden:NO];
         [self.rerecorderButton setHidden:NO];
+        
         [self.recorder stop];
         [self.timer invalidate];
     }
@@ -975,7 +982,6 @@
     NSLog(@")))))))))))))))))))%d",time);
     NSString *timeStr = [self timeFormatted:time];
     NSLog(@"录音的总时长为：%@",timeStr);
-    
     // 在这个地方铺设新的播放按钮
     if (cTime > 0.5&&cTime<30.0) {
         [self.recordAnimationView removeFromSuperview];
@@ -999,17 +1005,15 @@
 //    }
     else
     {
+        [self.recordAnimationView removeFromSuperview];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"录音时间过短" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
         //删除记录的
         [self.recorder deleteRecording];
         //删除存储的
     }
-    
     NSDate *date = [NSDate date];
     NSLog(@">>??????????????%@",date);
-    
     [self.recorder stop];
     [self.timer invalidate];
 }
@@ -1021,7 +1025,8 @@
     [self.recorder deleteRecording];
     [self.timer invalidate];
     [self.recorder stop];
-    
+    [self.recordAnimationView removeFromSuperview];
+
 }
 /**
  *  播放录音
@@ -1367,7 +1372,14 @@
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
+    if ([scrollView isKindOfClass:[UITextView class]]) {
+        NSLog(@"滑动的是TextView");
+    }
+    else
+    {
     [self.view endEditing:YES];
+    }
     
 }
 - (void)didClickRerecorder:(UIButton*)rerecorderButton
@@ -1378,7 +1390,12 @@
     
     
 }
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    return YES;
+}
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    
     if ([textView.text isEqualToString:@"请输入内容"]) {
         textView.text = @"";
         textView.textColor = [UIColor blackColor];

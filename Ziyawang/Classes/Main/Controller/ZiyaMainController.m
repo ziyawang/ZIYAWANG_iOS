@@ -494,6 +494,7 @@
     NSString *url2 = path;
     NSString *url3 = path;
     NSString *url4 = path;
+    NSString *url5 = path;
     /**
      *  为0
      */
@@ -501,16 +502,19 @@
         url2 = path;
         url3 = path;
         url4 = path;
+        url5 = path;
     }
     else
     {
         url2 = [getImageURL stringByAppendingString:self.imageSourceArray[0]];
         url3 = [getImageURL stringByAppendingString:self.imageSourceArray[1]];
         url4 = [getImageURL stringByAppendingString:self.imageSourceArray[2]];
+        url5 = [getImageURL stringByAppendingString:self.imageSourceArray[3]];
+        
     }
-    NSArray *imagearray = @[url4,url2,url3,url4,url2];
-    NSMutableArray *imageMuarray = [NSMutableArray arrayWithArray:imagearray];
+    NSArray *imagearray = @[url5,url2,url3,url4,url5,url2];
     
+    NSMutableArray *imageMuarray = [NSMutableArray arrayWithArray:imagearray];
     self.scrollHeadView = [[ScrollHeadView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, [self getImageViewHight]) arraySource:imageMuarray];
     self.scrollHeadView.Mydelegate = self;
     imageview.image = [UIImage imageNamed:@"lunbotu.jpg"];
@@ -919,9 +923,7 @@
         [self.tableView reloadData];
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
-        
-        
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"请求服务失败");
@@ -929,10 +931,7 @@
         [self.HUD hideAnimated:YES];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
-        
-        
-    }];
+     }];
 }
 /**
  *  获取更多数据（信息与服务）
@@ -962,7 +961,6 @@
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
-                
             }
             else
             {
@@ -1034,17 +1032,18 @@
     NSString *accesstoken = @"token";
     NSMutableDictionary *dic = [NSMutableDictionary new];
     //    [dic setObject:accesstoken forKey:@"access_token"];
-    NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/banner?access_token=token"];
-    
+//    NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/banner?access_token=token"];
+       NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/twobanner?access_token=token"];
+//    http://api.ziyawang.com/v1/app/twobanner?access_token=token
     //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //
     //    })
     
     // @" http://api.ziyawang.com/v1/app/banner?access_token=token"
-    [self.manager GET:getbannerURL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self.manager GET:getbannerURL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
+    {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         NSLog(@"!!!!!!!!%@",responseObject);
         self.imageDataArray = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"111111111111111%@",self.imageDataArray);

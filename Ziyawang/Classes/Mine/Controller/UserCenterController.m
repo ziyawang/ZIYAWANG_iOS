@@ -378,12 +378,10 @@
     return 44;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     NSString *role = self.role;
-    
     if ([role isEqualToString:@"1"]) {
         switch (indexPath.row)
         {
@@ -514,9 +512,7 @@
                     identifiVC.ServiceArea = self.model.ServiceArea;
                     identifiVC.ConfirmationP1 = self.model.ConfirmationP1;
                     identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
-                    
                     identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
-                    
                     identifiVC.ViewType = @"服务";
                     identifiVC.role = self.role;
                     

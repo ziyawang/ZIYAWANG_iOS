@@ -26,6 +26,7 @@
 @property (nonatomic,strong) NSString *UserPicture;
 @property (nonatomic,strong) NSString *ViewCount;
 @property (nonatomic,strong) NSString *CollectFlag;
+@property (nonatomic,strong) NSString *created_at;
 
 
 @end

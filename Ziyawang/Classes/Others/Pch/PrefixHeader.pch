@@ -14,19 +14,19 @@
  *
  *  @return
  */
-//#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
-//#define getImageURL @"http://images.ziyawang.com"//获取图片
-//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-//#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
+#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
+#define getImageURL @"http://images.ziyawang.com"//获取图片
+#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
 /**
  *  测试服API
  *
  *  @return
  */
-#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
-#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
-#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
+//#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
+//#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
+//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+//#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
 
 
 #define SentCommentContentURL [getDataURL stringByAppendingString:@"/video/comment/create"]//评论

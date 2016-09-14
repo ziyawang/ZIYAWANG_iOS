@@ -146,7 +146,7 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Th1-y7-sf2">
-                                    <rect key="frame" x="20" y="586" width="374" height="50"/>
+                                    <rect key="frame" x="20" y="566" width="374" height="50"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAQ-uM-Bkq">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -167,25 +167,6 @@
                                         <constraint firstItem="pAQ-uM-Bkq" firstAttribute="leading" secondItem="Th1-y7-sf2" secondAttribute="leading" id="6ok-XG-cUp"/>
                                         <constraint firstItem="pAQ-uM-Bkq" firstAttribute="top" secondItem="Th1-y7-sf2" secondAttribute="top" id="GrN-xy-Y7D"/>
                                         <constraint firstAttribute="trailing" secondItem="pAQ-uM-Bkq" secondAttribute="trailing" id="sVH-Zn-GbM"/>
-                                    </constraints>
-                                </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilg-OL-yMY">
-                                    <rect key="frame" x="0.0" y="466" width="414" height="110"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hm3-DA-DOi">
-                                            <rect key="frame" x="10" y="10" width="90" height="90"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="Hm3-DA-DOi" secondAttribute="height" id="8Gx-Pf-FpF"/>
-                                            </constraints>
-                                            <state key="normal" backgroundImage="tianjia.png"/>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="110" id="55x-mj-Dyz"/>
-                                        <constraint firstAttribute="bottom" secondItem="Hm3-DA-DOi" secondAttribute="bottom" constant="10" id="9ba-PY-VWG"/>
-                                        <constraint firstItem="Hm3-DA-DOi" firstAttribute="top" secondItem="ilg-OL-yMY" secondAttribute="top" constant="10" id="Khp-zu-XeV"/>
-                                        <constraint firstItem="Hm3-DA-DOi" firstAttribute="leading" secondItem="ilg-OL-yMY" secondAttribute="leading" constant="10" id="thR-Sz-oO6"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YRs-ct-Ua7">
@@ -362,6 +343,25 @@
                                         <constraint firstItem="BOi-Pz-NJ0" firstAttribute="top" secondItem="grw-Ew-G0D" secondAttribute="top" constant="10" id="dob-qv-YcV"/>
                                         <constraint firstItem="DBc-IM-eyS" firstAttribute="top" secondItem="grw-Ew-G0D" secondAttribute="top" constant="12" id="he7-RO-KV1"/>
                                         <constraint firstItem="BOi-Pz-NJ0" firstAttribute="leading" secondItem="aSv-S3-FZ9" secondAttribute="trailing" constant="10" id="lSV-ZO-pFV"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilg-OL-yMY">
+                                    <rect key="frame" x="0.0" y="468" width="414" height="90"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hm3-DA-DOi">
+                                            <rect key="frame" x="10" y="0.0" width="90" height="90"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="Hm3-DA-DOi" secondAttribute="height" id="8Gx-Pf-FpF"/>
+                                            </constraints>
+                                            <state key="normal" backgroundImage="tianjia.png"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="90" id="55x-mj-Dyz"/>
+                                        <constraint firstAttribute="bottom" secondItem="Hm3-DA-DOi" secondAttribute="bottom" id="9ba-PY-VWG"/>
+                                        <constraint firstItem="Hm3-DA-DOi" firstAttribute="top" secondItem="ilg-OL-yMY" secondAttribute="top" id="Khp-zu-XeV"/>
+                                        <constraint firstItem="Hm3-DA-DOi" firstAttribute="leading" secondItem="ilg-OL-yMY" secondAttribute="leading" constant="10" id="thR-Sz-oO6"/>
                                     </constraints>
                                 </view>
                             </subviews>

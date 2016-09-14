@@ -8,9 +8,10 @@
 
 #import "PushStartViewCell.h"
 #import "MyUItextField.h"
+#import "AppDelegate.h"
 @interface PushStartViewCell()<UITextFieldDelegate>
 @property (nonatomic,strong) NSString *forType;
-
+@property (nonatomic,assign)   BOOL isHaveDian;
 
 @end
 
@@ -63,9 +64,11 @@
     }
 }
 
+
 - (void)setCell
 {
     
+    self.isHaveDian = NO;
     self.textLabel.font = [UIFont systemFontOfSize:14];
     
     NSLog(@"@@@@@@@@@@@@@@@%@",self.textName);
@@ -106,7 +109,7 @@
         
         
         textField.textAlignment = UITextAlignmentRight;
-        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
         
         
         textField.tag = 1;
@@ -121,7 +124,7 @@
 //        UITextField *textField2 = [[UITextField alloc]initWithFrame:CGRectMake(self.bounds.size.width - 170, 10, 150, 20)];
         
         textField2.textAlignment = UITextAlignmentRight;
-        textField2.keyboardType = UIKeyboardTypeNumberPad;
+        textField2.keyboardType = UIKeyboardTypeDecimalPad;
         textField.font = [UIFont systemFontOfSize:14];
         textField2.font = [UIFont systemFontOfSize:14];
         textField2.delegate = self;
@@ -222,7 +225,7 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    
+ 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (textField.tag == 1) {
         [defaults setObject:textField.text forKey:@"金额"];
@@ -233,9 +236,8 @@
         [defaults setObject:textField.text forKey:@"折扣"];
         
     }
-
-
 }
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 
@@ -243,7 +245,6 @@
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-
     return YES;
 }
 
@@ -251,6 +252,8 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+
     if (textField.tag == 1) {
         [defaults setObject:textField.text forKey:@"金额"];
         
@@ -262,6 +265,88 @@
     }
   
 }
+#pragma mark - UITextField delegate
+//textField.text 输入之前的值 string 输入的字符
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSInteger value = [textField.text integerValue];
+        if (value > 999999.9) {
+            textField.text = [textField.text substringToIndex:6];
+//            [self showError:@"您输入的位数过多"];
+        }
+
+    if ([textField.text rangeOfString:@"."].location == NSNotFound) {
+        self.isHaveDian = NO;
+    }
+    if ([string length] > 0) {
+        
+        unichar single = [string characterAtIndex:0];//当前输入的字符
+        if ((single >= '0' && single <= '9') || single == '.') {//数据格式正确
+            
+            //首字母不能为0和小数点
+            if([textField.text length] == 0){
+                if(single == '.') {
+                    [self showError:@"亲，第一个数字不能为小数点"];
+                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                    return NO;
+                }
+                if (single == '0') {
+                    [self showError:@"亲，第一个数字不能为0"];
+                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                    return NO;
+                }
+            }
+            
+            //输入的字符是否是小数点
+            if (single == '.') {
+                if(self.isHaveDian==NO)//text中还没有小数点
+                {
+                    self.isHaveDian = YES;
+                    return YES;
+                    
+                }else{
+                    [self showError:@"亲，您已经输入过小数点了"];
+                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                    return NO;
+                }
+            }else{
+                if (self.isHaveDian) {//存在小数点
+                    
+                    //判断小数点的位数
+                    NSRange ran = [textField.text rangeOfString:@"."];
+                    if (range.location - ran.location <= 2) {
+                        return YES;
+                    }else{
+//                        [self showError:@"亲，您最多输入两位小数"];
+                        return NO;
+                    }
+                }else{
+                    return YES;
+                }
+            }
+        }else{//输入的数据格式不正确
+            [self showError:@"亲，您输入的格式不正确"];
+            [textField.text stringByReplacingCharactersInRange:range withString:@""];
+            return NO;
+        }
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+- (void)showError:(NSString *)errorString
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+    
+//    [(AppDelegate *)[UIApplication sharedApplication].delegate showErrorView:errorString];
+//    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(removeErrorView2) userInfo:nil repeats:NO];
+    
+//    [self.moneyTf resignFirstResponder];
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

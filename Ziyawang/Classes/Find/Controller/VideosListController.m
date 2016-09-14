@@ -40,11 +40,26 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"找视频";
+    [self setupTitle];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initSegment];
     [self initFlipTableView];
     [self getVideoStatu];
+}
+- (void)setupTitle {
+    
+    self.view.backgroundColor = [UIColor colorWithRed:248.0 / 255.0 green:248.0 / 255.0 blue:249.0 / 255.0 alpha:1.0];
+    //    self.view.backgroundColor = [UIColor blueColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    title.textColor = [UIColor whiteColor];
+    title.backgroundColor = [UIColor clearColor];
+    title.textAlignment = NSTextAlignmentCenter;
+    title.text = @"找视频";
+    title.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = title;
+    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
+    // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
+    //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -41,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView3;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet UILabel *PublishTime;
+@property (weak, nonatomic) IBOutlet UILabel *ViewCount;
 
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -403,8 +405,12 @@
 - (void)layoutView
 {
     
+    self.PublishTime.text = self.model.created_at;
+    
+    
+    self.ViewCount.text = [@"浏览" stringByAppendingString:self.model.ViewCount];
+    
     [self layoutBottomViewWithUserType:self.role UserID:self.model.UserID];
-
     NSString *url = getImageURL;
     NSString *usericonurl = self.model.UserPicture;
     self.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
@@ -616,7 +622,7 @@
         NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
         NSURL *url = [NSURL URLWithString:telString];
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.backView addSubview:webView];
+        [self.view addSubview:webView];
         
     }
     

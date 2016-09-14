@@ -76,28 +76,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
-//    [self getUserInfoFromDomin];
-    
-    
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSString *userName = self.nameTextField.text;
-//    NSString *phoneNumber = self.phoneNumTextField.text;
-//    NSString *companyName = self.companyTextField.text;
-//    NSString *companyDes = self.comPanyDesTextView.text;
-    
-    
-    NSString *companyLocation = [defaults objectForKey:@"企业地区"];
-    NSString *ServiceArea = [defaults objectForKey:@"服务地区"];
-    NSString *ServiceType = [defaults objectForKey:@"服务的类型"];
+     NSString *companyLocation = @"a";
+    NSString *ServiceArea = @"b";
+     NSString *ServiceType = @"c";
+    companyLocation = [defaults objectForKey:@"企业地区"];
+    ServiceArea =[defaults objectForKey:@"服务地区"];
+    ServiceType = [defaults objectForKey:@"服务的类型"];
 
+    
     self.servicetypeID = ServiceType;
-    
     NSLog(@"!!!!!!!!!!!!!!!!!!!!!SERviceType%@",ServiceType);
-    
-    
     NSLog(@"~~~~~~~%@",self.ViewType);
     if ([self.ViewType isEqualToString:@"服务"]==NO) {
         self.qiyesuozai.text = companyLocation;
@@ -106,19 +95,35 @@
     }
     self.ViewType = @"非服务";
     
-//   self.ViewType = @"非服务";
+
+    NSLog(@"--------%@",self.comPanyDesTextView.text);
+    if ([self.role isEqualToString:@"2"]) {
+    if([defaults objectForKey:@"企业地区"] == nil)
+    {
+ self.qiyesuozai.text = self.ServiceLocation;
+    }
+        else
+        {
+        self.qiyesuozai.text = companyLocation;
+        }
+    if ([defaults objectForKey:@"服务地区"]== nil)
+    {
+        self.fuwudiqu.text = self.ServiceArea;
+    }
+        else
+        {
+        self.fuwudiqu.text = ServiceArea;
+        }
+    if ([defaults objectForKey:@"服务的类型"] == nil)
+    {
+        self.fuwuleixing.text = self.ServiceType;
+    }
+        else
+        {
+        self.fuwuleixing.text = ServiceType;
+        }
+    }
     
-    
-//    else
-//    {
-//    
-//        self.nameTextField.text = self.ConnectPerson;
-//        self.phoneNumTextField.text = self.ConnectPhone;
-//        self.companyTextField.text = self.ServiceName;
-//        self.qiyesuozai.text = self.ServiceLocation;
-//        self.fuwudiqu.text = self.ServiceArea;
-//    }
-  
 }
 
 
@@ -126,7 +131,6 @@
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
-    
 }
 
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
@@ -191,29 +195,13 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         NSLog(@"获取用户信息失败");
-        
-        //        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
-        //        NSString *userPicture = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
-        //        NSString *
-//        self.hasNet = NO;
-        
+
     }];
 }
 
 
 - (void)layOutViewForRole1
 {
-//    @property (nonatomic,strong) NSString *phonenumber;
-//    @property (nonatomic,strong) NSString *ServiceName;
-//    @property (nonatomic,strong) NSString *ServiceLocation;
-//    @property (nonatomic,strong) NSString *UserPicture;
-//    @property (nonatomic,strong) NSString *ConnectPhone;
-//    @property (nonatomic,strong) NSString *ConfirmationP1;
-//    @property (nonatomic,strong) NSString *ConfirmationP2;
-//    @property (nonatomic,strong) NSString *ConfirmationP3;
-//    @property (nonatomic,strong) NSString *ConnectPerson;
-//    @property (nonatomic,strong) NSString *ServiceIntroduction;
-//    @property (nonatomic,strong) NSString *ServiceType;
     self.nameTextField.text = self.ConnectPerson;
     self.phoneNumTextField.text = self.ConnectPhone;
     self.companyTextField.text = self.ServiceName;
@@ -223,7 +211,6 @@
     self.comPanyDesTextView.text = self.ServiceIntroduction;
     
     UIImageView *imageView1 = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 90, 90)];
-    
     UIImageView *imageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(90+20, 0, 90, 90)];
     UIImageView *imageView3 = [[UIImageView alloc]initWithFrame:CGRectMake(210, 0, 90, 90)];
     
@@ -244,12 +231,8 @@
     [self.deleteButton setHidden:YES];
     [self.sentMessageButton setHidden:YES];
     [self.sentButtonBackView setHidden:YES];
-    
      //添加图片显示VIEW
 }
-
-
-
 - (void)layOutViewForRole2
 {
     self.nameTextField.text = self.ConnectPerson;
@@ -260,7 +243,7 @@
     [self.comPanyDesTextView setText:self.ServiceIntroduction];
     NSLog(@"--------%@",self.comPanyDesTextView.text);
     self.fuwuleixing.text = self.ServiceType;
-//    [self.qiyesuozai setText:self.ServiceLocation];
+   //    [self.qiyesuozai setText:self.ServiceLocation];
 //    [self.fuwuleixing setText:self.ServiceType];
 //    [self.comPanyDesTextView setText:self.ServiceIntroduction];
 //    [self.fuwudiqu setText:self.ServiceArea];
@@ -274,12 +257,6 @@
     [self.sentMessageButton setTitle:@"重新提交" forState:(UIControlStateNormal)];
 }
 
-
-
-
-
-
-
 - (void)setupTitle {
     
     self.view.backgroundColor = [UIColor colorWithRed:248.0 / 255.0 green:248.0 / 255.0 blue:249.0 / 255.0 alpha:1.0];
@@ -291,15 +268,10 @@
     title.text = @"服务方认证";
     title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
-    
-    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
-
-    //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTitle];
-    
     self.ScrollView.delegate = self;
     [self.sentMessageButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -372,6 +344,7 @@
         }
         else if([role isEqualToString:@"2"])
         {
+            self.ViewType = @"服务";
             [self layOutViewForRole2];
         }
 }
@@ -526,17 +499,19 @@
     else if([role isEqualToString:@"2"])
     
     {
+   self.fuwuleixing.text = @"";
+        
+//        if ([self.sentMessageButton.titleLabel.text isEqualToString:@"重新提交"]) {
+//            [self.sentMessageButton setTitle:@"提交" forState:(UIControlStateNormal)];
+//            self.nameTextField.text = @"";
+//            self.phoneNumTextField.text = @"";
+//            self.companyTextField.text = @"";
+//            self.qiyesuozai.text = @"";
+//            self.fuwudiqu.text = @"";
+//            self.fuwuleixing.text = @"";
+//            self.comPanyDesTextView.text = @"";
+//        }
         if ([self.sentMessageButton.titleLabel.text isEqualToString:@"重新提交"]) {
-            [self.sentMessageButton setTitle:@"提交" forState:(UIControlStateNormal)];
-            self.nameTextField.text = @"";
-            self.phoneNumTextField.text = @"";
-            self.companyTextField.text = @"";
-            self.qiyesuozai.text = @"";
-            self.fuwudiqu.text = @"";
-            self.fuwuleixing.text = @"";
-            self.comPanyDesTextView.text = @"";
-        }
-        if ([self.sentMessageButton.titleLabel.text isEqualToString:@"提交"]) {
         [self checkMobilePhoneNumber:self.phoneNumTextField.text];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *userName = self.nameTextField.text;
@@ -548,7 +523,6 @@
         NSString *ServiceType = [[NSUserDefaults standardUserDefaults]objectForKey:@"服务类型"];
 //        NSString *ServiceType = self.fuwuleixing.text;
             NSLog(@"-------------------%@",ServiceType);
-            
         NSString *headurl = getDataURL;
         NSString *footurl = @"/app/service/reconfirm";
         //    NSString *str = @"http://api.ziyawang.com/v1app/service/confirm";
@@ -727,7 +701,7 @@
         }
         if (self.x != 3) {
 //            [self.addImageButton setFrame:CGRectMake(90 * self.x + 10 * self.x, 0, 90, 90)];
-            self.addImageButtonLeftConstraint.constant = 90 * self.x + 10 * self.x;
+            self.addImageButtonLeftConstraint.constant = 90 * self.x + 10 * (self.x+1);
         }
     }
 }
@@ -758,10 +732,7 @@
         [[self.imageBackView viewWithTag:2]removeFromSuperview];
 //        [self.addImageButton setFrame:CGRectMake(90+10, 0, 90, 90)];
         self.addImageButtonLeftConstraint.constant = 100;
-        
         [self.imagearray removeObject:self.imagearray[1]];
-        
-        
         self.x--;
         NSLog(@"X的值@@@@@@@@@@未%ld",self.x);
         

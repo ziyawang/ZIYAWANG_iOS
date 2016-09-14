@@ -25,6 +25,8 @@
 #import "KNPhotoBrower.h"
 
 #import "KNToast.h"
+
+#import "UserInfoModel.h"
 //#import <ShareSDK/ShareSDK.h>
 //#import <ShareSDKUI/ShareSDK+SSUI.h>
 @interface InfoDetailsController ()<MBProgressHUDDelegate,KNPhotoBrowerDelegate>
@@ -101,6 +103,9 @@
 
 @property (nonatomic,strong) PublishModel *playModel;
 
+@property (nonatomic,strong) UserInfoModel *userModel;
+
+
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 
 @property (nonatomic,strong) AVPlayer *player;
@@ -140,27 +145,37 @@
         self.extendedLayoutIncludesOpaqueBars = NO;
         self.modalPresentationCapturesStatusBarAppearance = NO;
     }
-    
-    [self setController];
-    
-}
-
+    }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [self setController];
+
+//    [self setController];
     /**
      *  初始化视图
      */
 //    self.navigationItem.title = self.typeName;
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
-   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-40, 17, 30, 9.5)];
+    self.userModel = [[UserInfoModel alloc]init];
+        [self getUserInfoFromDomin];
+
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(titleView.bounds.size.width/2-120, 0, 100, 44)];
+//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(140, 17, 30, 9.5)];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.textAlignment = UITextAlignmentCenter;
     label.text = @"信息详情";
+    
     label.textColor = [UIColor blackColor];
     self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
-    [titleView addSubview:self.titleImageView];
-    [titleView addSubview:label];
-    self.navigationItem.titleView = titleView;
+    [label addSubview:self.titleImageView];
+    
+    self.navigationItem.titleView = label;
+//    [titleView addSubview:self.titleImageView];
+//    [titleView addSubview:label];
+//    self.navigationItem.titleView = titleView;
     [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
     self.isPlaying = NO;
     self.playModel = [[PublishModel alloc]init];
@@ -218,7 +233,9 @@
 - (void)getData
 {
     //http://api.ziyawang.com/v1/project/list/5?&access_token=token
-    
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
     NSString *url = InformationDetailURL;
     //    NSString *accesstoken = @"?&access_token=token";
     NSLog(@"!!!!!!!!!!!!!!!!%@",self.ProjectID);
@@ -276,11 +293,16 @@
             NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",weakSelf.RushFlag);
             //            self.model.ProArea = [self.model.ProArea substringToIndex:2];
             [weakSelf layoutSubview];
+            [self.HUD removeFromSuperViewOnHide];
+            [self.HUD hideAnimated:YES];
         });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+    
         NSLog(@"请求失败：%@",error);
     }];
     
@@ -557,27 +579,27 @@
     }
     else if([self.typeName isEqualToString:@"委外催收"])
     {
-        self.label1.text = @"金额：";
+        self.label1.text = @"金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
-        self.label3.text = @"佣金比例：";
+        self.label3.text = @"佣金比例:";
         self.label4.text = self.model.Rate;
         self.label4.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
-        self.label7.text = @"状态：";
+        self.label7.text = @"状态:";
         self.label8.text = self.model.Status;
-        self.label9.text = @"债务人所在地：";
+        self.label9.text = @"债务人所在地:";
         self.label10.text = self.model.ProArea;
-        self.label11.text = @"类型：";
+        self.label11.text = @"类型:";
         self.label12.text = self.model.AssetType;
         
         
     }
     else if([self.typeName isEqualToString:@"债权转让"])
     {
-        self.label1.text = @"金额：";
+        self.label1.text = @"金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         self.label4.text = [self.model.TransferMoney stringByAppendingString:@"万"];
@@ -585,22 +607,22 @@
         
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
-        self.label7.text = @"类型：";
+        self.label7.text = @"类型:";
         self.label8.text = self.model.AssetType;
-        self.label9.text = @"地区：";
+        self.label9.text = @"地区:";
         self.label10.text = self.model.ProArea;
         [self.label11 setHidden:YES];
         [self.label12 setHidden:YES];
     }
     else if([self.typeName isEqualToString:@"固产转让"])
     {
-        self.label1.text = @"转让价：";
+        self.label1.text = @"转让价:";
         self.label2.text = [self.model.TransferMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"地区：";
+        self.label3.text = @"地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型：";
+        self.label5.text = @"类型:";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -612,30 +634,30 @@
     }
     else if([self.typeName isEqualToString:@"商业保理"])
     {
-        self.label1.text = @"合同金额：";
+        self.label1.text = @"合同金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"地区：";
+        self.label3.text = @"地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"买方性质：";
+        self.label5.text = @"买方性质:";
         self.label12.text = self.model.BuyerNature;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
         [self.label9 setHidden:YES];
         [self.label10 setHidden:YES];
-        self.label11.text = @"买方性质：";
+        self.label11.text = @"买方性质:";
         [self.label11 setHidden:NO];
         [self.label12 setHidden:NO];
     }
     else if([self.typeName isEqualToString:@"典当担保"])
     {
-        self.label1.text = @"金额：";
+        self.label1.text = @"金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
-        self.label3.text = @"地区：";
+        self.label3.text = @"地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型：";
+        self.label5.text = @"类型:";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -663,11 +685,11 @@
     //    }
     else if([self.typeName isEqualToString:@"融资需求"])
     {
-        self.label1.text = @"金额：";
+        self.label1.text = @"金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"回报率：";
+        self.label3.text = @"回报率:";
         self.label4.text = [self.model.Rate stringByAppendingString:@"%"];
         self.label4.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
@@ -684,13 +706,13 @@
     }
     else if([self.typeName isEqualToString:@"悬赏信息"])
     {
-        self.label1.text = @"金额：";
+        self.label1.text = @"金额:";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"元"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"目标地区：";
+        self.label3.text = @"目标地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型：";
+        self.label5.text = @"类型:";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -701,11 +723,11 @@
     }
     else if([self.typeName isEqualToString:@"尽职调查"])
     {
-        self.label1.text = @"被调查方：";
+        self.label1.text = @"被调查方:";
         self.label2.text = self.model.Informant;
-        self.label3.text = @"地区：";
+        self.label3.text = @"地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型：";
+        self.label5.text = @"类型:";
         self.label12.text = self.model.AssetType;
         
         [self.label7 setHidden:YES];
@@ -717,11 +739,11 @@
     }
     else if([self.typeName isEqualToString:@"法律服务"])
     {
-        self.label1.text = @"需求：";
+        self.label1.text = @"需求:";
         self.label2.text = self.model.Requirement;
-        self.label3.text = @"地区：";
+        self.label3.text = @"地区:";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型：";
+        self.label5.text = @"类型:";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -870,9 +892,11 @@
     if (self.isZichan == YES) {
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
         [applyButton setHidden:YES];
+        
         talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
+        [imageview3 setFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+        [imageview2 setFrame:CGRectMake(connectButton.bounds.size.width/2-38, 17, 20, 20)];
     }
-    
     [SomeOneView addSubview:connectButton];
     [SomeOneView addSubview:applyButton];
     [SomeOneView addSubview:talkButton];
@@ -936,8 +960,11 @@
     }
     else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
     {
+        if(self.isZichan == NO)
+        {
         [self ShowAlertViewController];
-        if(self.isZichan == YES)
+        }
+        else if(self.isZichan == YES)
         {
             UIWebView *webView = [[UIWebView alloc]init];
             NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
@@ -952,11 +979,23 @@
 
 - (void)ShowAlertViewController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"只有通过认证的服务方可以查看发布方的联系方式，申请抢单，私聊(除投资需求，资产求购外)" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方可以查看发布方的联系方式，申请抢单，私聊" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
         MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+        identifiVC.ConnectPhone = self.userModel.ConnectPhone;
+        identifiVC.ServiceName = self.userModel.ServiceName;
+        identifiVC.ServiceLocation = self.userModel.ServiceLocation;
+        identifiVC.ServiceType = self.userModel.ServiceType;
+        identifiVC.ServiceIntroduction = self.userModel.ServiceIntroduction;
+        identifiVC.ConnectPerson = self.userModel.ConnectPerson;
+        identifiVC.ServiceArea = self.userModel.ServiceArea;
+        identifiVC.ConfirmationP1 = self.userModel.ConfirmationP1;
+        identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
+        identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
+        identifiVC.ViewType = @"服务";
+        identifiVC.role = self.role;
         [self.navigationController pushViewController:identifiVC animated:YES];
     }];
     [alertVC addAction:action1];
@@ -1124,6 +1163,7 @@
  *  @param sender 收藏按钮
  */
 - (IBAction)saveButtonAction:(id)sender {
+  
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
@@ -1155,8 +1195,7 @@
                  NSLog(@"收藏成功");
                  [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
                  //                 收藏按钮状态改变
-                 [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang"] forState:(UIControlStateNormal)];
-                 
+                 [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucang"] forState:(UIControlStateNormal)];
                  self.isCollected = YES;
              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                  NSLog(@"%@",error);
@@ -1173,7 +1212,7 @@
              {
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  NSLog(@"取消收藏成功");
-                 [self.saveButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
+                 [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
                  
                  [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
                  
@@ -1382,6 +1421,34 @@
         
     }
 }
+
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
+            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
+            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
+            NSLog(@"%@",dic[@"role"]);
+//            self.role =dic[@"role"];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            NSLog(@"获取用户信息失败");
+        }];
+    }
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

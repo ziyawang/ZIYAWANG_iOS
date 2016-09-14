@@ -79,9 +79,9 @@
       NSLog(@"*********************************%@",self.video.playUrl);
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.view.backgroundColor = [UIColor whiteColor];
-    CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.model.VideoDes];
+    CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.videoDes];
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 160, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
