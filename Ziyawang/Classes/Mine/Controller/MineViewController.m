@@ -725,7 +725,7 @@ self.navigationItem.title = @"个人中心";
                 break;
             case 2:
                 cell.imageView.image = [UIImage imageNamed:@"bangzhu"];
-                cell.textLabel.text = @"反馈意见";
+                cell.textLabel.text = @"意见反馈";
                 
                 
                 break;
@@ -753,7 +753,7 @@ self.navigationItem.title = @"个人中心";
                 break;
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"bangzhu"];
-                cell.textLabel.text = @"反馈意见";
+                cell.textLabel.text = @"意见反馈";
                 
                 
                 break;

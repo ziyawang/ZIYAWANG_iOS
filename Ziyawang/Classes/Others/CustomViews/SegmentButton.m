@@ -30,7 +30,7 @@
     self.frame = frame;
     self.cornerMarkLocationType = cornerMarkLocationType;
     self.imgView = [[UIImageView alloc]init];
-    [self drawBezierPath];
+//    [self drawBezierPath];
     [self addSubview:self.imgView];
     return self;
 }
@@ -38,33 +38,34 @@
 //画线
 - (void)drawBezierPath{
     
-//    CGFloat button_width = self.frame.size.width;
-//    CGFloat button_height = CGRectGetHeight(self.frame);
-//    
-//    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-//    
-//    CGPoint pointOne = CGPointMake(0, button_height / 4);
-//    CGPoint pointSecond = CGPointMake(0, button_height * 3 / 4);
-//    [bezierPath moveToPoint:pointOne];
-//    [bezierPath addLineToPoint:pointSecond];
-//
-//    [bezierPath closePath];
-//    
-//    bezierPath.lineCapStyle = kCGLineCapRound;
-//    bezierPath.lineJoinStyle = kCGLineJoinRound;
-//    
-//    self.shaperLayer = [CAShapeLayer layer];
-//    self.shaperLayer.frame = CGRectMake(button_width - 1, 0, 1, button_height);
-//    self.shaperLayer.path = bezierPath.CGPath;
-//    self.shaperLayer.lineWidth = 0.4;
-//    self.shaperLayer.strokeColor = [UIColor magentaColor].CGColor;
-//    [self.layer addSublayer:self.shaperLayer];
+    CGFloat button_width = self.frame.size.width;
+    CGFloat button_height = CGRectGetHeight(self.frame);
+    
+    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+    
+    CGPoint pointOne = CGPointMake(0, button_height / 4);
+    CGPoint pointSecond = CGPointMake(0, button_height * 3 / 4);
+    [bezierPath moveToPoint:pointOne];
+    [bezierPath addLineToPoint:pointSecond];
+
+    [bezierPath closePath];
+    
+    bezierPath.lineCapStyle = kCGLineCapRound;
+    bezierPath.lineJoinStyle = kCGLineJoinRound;
+    
+    self.shaperLayer = [CAShapeLayer layer];
+    self.shaperLayer.frame = CGRectMake(button_width - 1, 0, 1, button_height);
+    self.shaperLayer.path = bezierPath.CGPath;
+    self.shaperLayer.lineWidth = 0.4;
+    self.shaperLayer.strokeColor = [UIColor magentaColor].CGColor;
+    [self.layer addSublayer:self.shaperLayer];
 }
 
 //重新布局子势图
 - (void)layoutSubviews{
     [super layoutSubviews];
     
+    self.layer.borderColor = [UIColor whiteColor].CGColor;
     
     CGFloat button_width = self.frame.size.width;
     CGFloat button_height = CGRectGetHeight(self.frame);

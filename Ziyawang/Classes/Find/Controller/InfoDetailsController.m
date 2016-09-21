@@ -64,6 +64,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *areaBackViewHight;
 @property (weak, nonatomic) IBOutlet UILabel *PublishtimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ViewCount;
+@property (weak, nonatomic) IBOutlet UILabel *shoucangLabel;
 
 
 /**
@@ -145,6 +146,19 @@
         self.extendedLayoutIncludesOpaqueBars = NO;
         self.modalPresentationCapturesStatusBarAppearance = NO;
     }
+    self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]==nil) {
+        [self.collectButton setHidden:NO];
+        [self.shoucangLabel setHidden:NO];
+    }
+   else if ([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"]) {
+        [self.collectButton setHidden:YES];
+        [self.shoucangLabel setHidden:YES];
+       
+    }
+    
     }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -180,7 +194,7 @@
     self.isPlaying = NO;
     self.playModel = [[PublishModel alloc]init];
     self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-    if ([self.typeName isEqualToString:@"固产转让"]||[self.typeName isEqualToString:@"商业保理"]||[self.typeName isEqualToString:@"尽职调查"]||[self.typeName isEqualToString:@"法律服务"]||[self.typeName isEqualToString:@"悬赏信息"]) {
+    if ([self.typeName isEqualToString:@"商业保理"]||[self.typeName isEqualToString:@"尽职调查"]||[self.typeName isEqualToString:@"法律服务"]||[self.typeName isEqualToString:@"悬赏信息"]) {
         self.areaBackViewHight.constant = 1;
 //        self.areaAndFromBackView.backgroundColor = [UIColor lightGrayColor];
     }
@@ -392,7 +406,7 @@
     self.ViewCount.text = [@"浏览"stringByAppendingString:[NSString stringWithFormat:@"%@",self.model.ViewCount]];
     
     if ([self.VideoDes isEqualToString:@""]) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 4, 60, 20)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, 60, 20)];
         label.text = @"无语音";
         label.font = [UIFont FontForBigLabel];
         
@@ -579,27 +593,27 @@
     }
     else if([self.typeName isEqualToString:@"委外催收"])
     {
-        self.label1.text = @"金额:";
+        self.label1.text = @"金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
-        self.label3.text = @"佣金比例:";
+        self.label3.text = @"佣金比例：";
         self.label4.text = self.model.Rate;
         self.label4.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
-        self.label7.text = @"状态:";
+        self.label7.text = @"状态：";
         self.label8.text = self.model.Status;
-        self.label9.text = @"债务人所在地:";
+        self.label9.text = @"债务人所在地：";
         self.label10.text = self.model.ProArea;
-        self.label11.text = @"类型:";
+        self.label11.text = @"类型：";
         self.label12.text = self.model.AssetType;
         
         
     }
     else if([self.typeName isEqualToString:@"债权转让"])
     {
-        self.label1.text = @"金额:";
+        self.label1.text = @"金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         self.label4.text = [self.model.TransferMoney stringByAppendingString:@"万"];
@@ -607,25 +621,28 @@
         
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
-        self.label7.text = @"类型:";
+        self.label7.text = @"类型：";
         self.label8.text = self.model.AssetType;
-        self.label9.text = @"地区:";
+        self.label9.text = @"地区：";
         self.label10.text = self.model.ProArea;
         [self.label11 setHidden:YES];
         [self.label12 setHidden:YES];
     }
     else if([self.typeName isEqualToString:@"固产转让"])
     {
-        self.label1.text = @"转让价:";
+        self.label1.text = @"转让价：";
         self.label2.text = [self.model.TransferMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"地区:";
+        self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型:";
+        self.label5.text = @"类型：";
         self.label12.text = self.model.AssetType;
-        [self.label7 setHidden:YES];
-        [self.label8 setHidden:YES];
+        self.label7.text = @"标的物：";
+        self.label8.text = self.model.Corpore;
+        [self.label7 setHidden:NO];
+        [self.label8 setHidden:NO];
+        
         [self.label9 setHidden:YES];
         [self.label10 setHidden:YES];
         [self.label11 setHidden:NO];
@@ -634,30 +651,30 @@
     }
     else if([self.typeName isEqualToString:@"商业保理"])
     {
-        self.label1.text = @"合同金额:";
+        self.label1.text = @"合同金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"地区:";
+        self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"买方性质:";
+        self.label5.text = @"买方性质：";
         self.label12.text = self.model.BuyerNature;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
         [self.label9 setHidden:YES];
         [self.label10 setHidden:YES];
-        self.label11.text = @"买方性质:";
+        self.label11.text = @"买方性质：";
         [self.label11 setHidden:NO];
         [self.label12 setHidden:NO];
     }
     else if([self.typeName isEqualToString:@"典当担保"])
     {
-        self.label1.text = @"金额:";
+        self.label1.text = @"金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
-        self.label3.text = @"地区:";
+        self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型:";
+        self.label5.text = @"类型：";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -685,20 +702,20 @@
     //    }
     else if([self.typeName isEqualToString:@"融资需求"])
     {
-        self.label1.text = @"金额:";
+        self.label1.text = @"金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"万"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"回报率:";
+        self.label3.text = @"回报率：";
         self.label4.text = [self.model.Rate stringByAppendingString:@"%"];
         self.label4.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
         
-        self.label7.text = @"方式:";
+        self.label7.text = @"方式：";
         self.label8.text = self.model.AssetType;
-        self.label9.text = @"地区:";
+        self.label9.text = @"地区：";
         self.label10.text = self.model.ProArea;
         
         [self.label11 setHidden:YES];
@@ -706,13 +723,13 @@
     }
     else if([self.typeName isEqualToString:@"悬赏信息"])
     {
-        self.label1.text = @"金额:";
+        self.label1.text = @"金额：";
         self.label2.text = [self.model.TotalMoney stringByAppendingString:@"元"];
         self.label2.textColor = [UIColor colorWithHexString:@"#ef8200"];
         
-        self.label3.text = @"目标地区:";
+        self.label3.text = @"目标地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型:";
+        self.label5.text = @"类型：";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -723,11 +740,11 @@
     }
     else if([self.typeName isEqualToString:@"尽职调查"])
     {
-        self.label1.text = @"被调查方:";
+        self.label1.text = @"被调查方：";
         self.label2.text = self.model.Informant;
-        self.label3.text = @"地区:";
+        self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型:";
+        self.label5.text = @"类型：";
         self.label12.text = self.model.AssetType;
         
         [self.label7 setHidden:YES];
@@ -739,11 +756,11 @@
     }
     else if([self.typeName isEqualToString:@"法律服务"])
     {
-        self.label1.text = @"需求:";
+        self.label1.text = @"需求：";
         self.label2.text = self.model.Requirement;
-        self.label3.text = @"地区:";
+        self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
-        self.label5.text = @"类型:";
+        self.label5.text = @"类型：";
         self.label12.text = self.model.AssetType;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
@@ -754,16 +771,16 @@
     }
     else if([self.typeName isEqualToString:@"资产求购"])
     {
-        self.label1.text = @"求购方:";
+        self.label1.text = @"求购方：";
         self.label2.text = self.model.Buyer;
         [self.label3 setHidden:YES];
         [self.label4 setHidden:YES];
         
         [self.label5 setHidden:YES];
         [self.label12 setHidden:YES];
-        self.label7.text = @"类型:";
+        self.label7.text = @"类型：";
         self.label8.text = self.model.AssetType;
-        self.label9.text = @"地区:";
+        self.label9.text = @"地区：";
         self.label10.text = self.model.ProArea;
         
         [self.label11 setHidden:YES];
@@ -771,23 +788,25 @@
     }
     else if([self.typeName isEqualToString:@"投资需求"])
     {
-    self.label1.text = @"回报率:";
+    self.label1.text = @"回报率：";
         self.label2.text = [self.model.Rate stringByAppendingString:@"%"];
-        self.label3.text = @"投资期限:";
+        self.label3.text = @"投资期限：";
         self.label4.text = [self.model.Year stringByAppendingString:@"年"];
-        self.label7.text = @"投资方式:";
+        self.label7.text = @"投资方式：";
         self.label8.text = self.model.investType;
-        self.label11.text = @"投资类型:";
+        self.label11.text = @"投资类型：";
         self.label12.text = self.model.AssetType;
+        [self.label9 setHidden:NO];
+        
+        self.label9.text = @"投资地区：";
+        self.label10.text = self.model.ProArea;
+        
+        
         [self.label5 setHidden:YES];
         [self.label6 setHidden:YES];
-        [self.label9 setHidden:YES];
+//        [self.label9 setHidden:YES];
     }
-    
 }
-
-
-
 
 /**
  *  判断用户类型显示不同视图
@@ -803,6 +822,9 @@
     
     if([self.userID isEqualToString:UserID])
     {
+        [self.collectButton setHidden:YES];
+        [self.shoucangLabel setHidden:YES];
+        
         NSLog(@"我自己");
         [self layoutView2];
         return;
@@ -813,15 +835,23 @@
         [self layoutView1];
     }
     
-
-
-}
+  }
 
 /**
  *  认证过的服务方或游客视图
  */
 - (void)layoutView1
 {
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]==nil) {
+        [self.collectButton setHidden:NO];
+        [self.shoucangLabel setHidden:NO];
+    }
+    else if ([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"]) {
+        [self.collectButton setHidden:YES];
+        [self.shoucangLabel setHidden:YES];
+        }
+    
     if ([self.typeName isEqualToString:@"资产求购"]||[self.typeName isEqualToString:@"投资需求"])
     {
         self.isZichan = YES;
@@ -842,10 +872,25 @@
         UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
-        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
-        UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+//        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
+        UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
         imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
-        [connectButton addSubview:imageview3];
+//        [connectButton addSubview:imageview3];
+    
+    UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
+    connectLabel.font = [UIFont systemFontOfSize:14];
+    connectLabel.text = @"联系方式";
+    UIView *connectView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+    connectView.centerX = connectButton.centerX;
+    [connectView addSubview:connectLabel];
+    [connectView addSubview:imageview3];
+    
+    connectView.userInteractionEnabled = NO;
+    
+//    [connectButton addSubview:connectLabel];
+//    [connectButton addSubview:imageview3];
+    [connectButton addSubview:connectView];
+    
     /**
      *  申请抢单按钮
      *
@@ -856,20 +901,42 @@
     UIButton *applyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     applyButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/3, 50);
-    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(applyButton.bounds.size.width/2-50, 17, 20, 20)];
-    imageview1.image = [UIImage imageNamed:@"shenqing"];
+    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
+    imageview1.image = [UIImage imageNamed:@"shenqing_black"];
     [applyButton setBackgroundColor:[UIColor colorWithHexString:@"#ea6155"]];
-    [applyButton addSubview:imageview1];
+//    [applyButton addSubview:imageview1];
     
+    UILabel *connectLabe = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
+    connectLabe.font = [UIFont systemFontOfSize:14];
+    connectLabe.text = @"申请抢单";
+    UIView *connectVie = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+    connectVie.centerX = connectButton.centerX;
+    [connectVie addSubview:connectLabe];
+    [connectVie addSubview:imageview1];
+    //    [connectButton addSubview:connectLabel];
+    //    [connectButton addSubview:imageview3];
+    connectVie.userInteractionEnabled = NO;
+    
+    [applyButton addSubview:connectVie];
     if ([self.RushFlag isEqualToString:@"1"]) {
         [applyButton setTitle:@"已抢单" forState:(UIControlStateNormal)];
         [applyButton  setEnabled:NO];
     }
     else
     {
-        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
-        [applyButton setEnabled:YES];
+//        UILabel *rushLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 15, 100, 20)];
+//        rushLabel.font = [UIFont systemFontOfSize:14];
+//        rushLabel.text = @"申请抢单";
+//        UIView *rushView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+//        rushView.centerX = SomeOneView.centerX;
+//        [rushView addSubview:rushLabel];
+//        [rushView addSubview:imageview1];
+//        
+//        [applyButton addSubview:rushView];
         
+     
+//        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
+        [applyButton setEnabled:YES];
     }
     /**
      *  私聊按钮
@@ -880,22 +947,51 @@
      */
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     talkButton.frame = CGRectMake(applyButton.bounds.size.width*2, 0, applyButton.bounds.size.width, 50);
-    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
+//    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
     
-      UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
+      UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(35, 0, 20, 20)];
     imageview2.image = [UIImage imageNamed:@"siliao3"];
     
-    [talkButton addSubview:imageview2];
+    UILabel *talkLabel = [[UILabel alloc]initWithFrame:CGRectMake(69, 15, 100, 20)];
+    talkLabel.font = [UIFont systemFontOfSize:14];
+    talkLabel.text = @"私聊";
+    
+    UILabel *connectLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, 100, 20)];
+    connectLabel2.font = [UIFont systemFontOfSize:14];
+    connectLabel2.text = @"私聊";
+    
+    UIView *connectView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+    connectView2.centerX = connectButton.centerX;
+    [connectView2 addSubview:connectLabel2];
+    [connectView2 addSubview:imageview2];
+    connectView2.userInteractionEnabled = NO;
+    
+    [talkButton addSubview:connectView2];
+    
+
+    
+    
+    //    [connectButton addSubview:connectLabel];
+    //    [connectButton addSubview:imageview3];
+//    //        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
+//    [talkButton addSubview:talkLabel];
+//    
+//    [talkButton addSubview:imageview2];
+    
+    
     
     if (self.isZichan == YES) {
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
         [applyButton setHidden:YES];
-        
         talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
-        [imageview3 setFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
-        [imageview2 setFrame:CGRectMake(connectButton.bounds.size.width/2-38, 17, 20, 20)];
+        [imageview3 setFrame:CGRectMake(50, 0, 20, 20)];
+        [imageview2 setFrame:CGRectMake(70, 0, 20, 20)];
+        [connectLabel setFrame:CGRectMake(85, 0, 130, 20)];
+        [connectLabel2 setFrame:CGRectMake(100, 0, 130, 20)];
+        
+        
     }
     [SomeOneView addSubview:connectButton];
     [SomeOneView addSubview:applyButton];
@@ -911,15 +1007,24 @@
     [applyButton addTarget:self action:@selector(applyButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     self.applyButton = applyButton;
+//    [self.applyButton isFirstResponder];
+//    [connectButton isFirstResponder];
+//    [talkButton isFirstResponder];
     [self.bringView addSubview:SomeOneView];
+    
+    
+    
+    
     //.................
     [self.backGroundView bringSubviewToFront:self.bringView];
+    
 }
 /**
  *  登录但是没有认证过的（发布方）
  */
 - (void)layoutView2
 {
+    
     UIView *selfView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     selfView.backgroundColor = [UIColor whiteColor];
     //    selfView.backgroundColor = [UIColor grayColor];
@@ -927,7 +1032,6 @@
     lookButton.frame = CGRectMake(0, 0, selfView.bounds.size.width, 50);
     [lookButton setTitle:@"查看抢单人" forState:(UIControlStateNormal)];
     [lookButton addTarget:self action:@selector(lookbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    
     lookButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     [lookButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];     [selfView addSubview:lookButton];
     [self.bringView addSubview:selfView];
@@ -944,7 +1048,9 @@
  */
 - (void)connectButtonAction:(UIButton *)button
 {
-    if (self.role == nil) {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    
+    if (token == nil) {
         NSLog(@"未登录,提示登录");
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -1016,7 +1122,7 @@
     self.role = [defaults objectForKey:@"role"];
     self.userID = [defaults objectForKey:@"UserID"];
     [self layoutBottomViewWithUserType:self.role UserID:self.userid];
-    if (self.role == nil) {
+    if ([defaults objectForKey:@"token"] == nil) {
         NSLog(@"未登录,提示登录");
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -1083,7 +1189,7 @@
     self.userID = [defaults objectForKey:@"UserID"];
     NSString *userName = [defaults objectForKey:@"UserName"];
     [self layoutBottomViewWithUserType:self.role UserID:self.userid];
-    if (self.role ==nil) {
+    if ([defaults objectForKey:@"token"] ==nil) {
         NSLog(@"未登录,提示登录");
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -1264,12 +1370,28 @@
     //                                        type:SSDKContentTypeAuto
     //                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
     //    http://ziyawang.com/project/
+    NSString *str1 = self.model.WordDes;
+    
+//    if (self.model.WordDes.length < 40) {
+//        str1 = self.model.WordDes;
+//    }
+//   else
+//   {
+//   str1 = [[self.model.WordDes substringToIndex:40]stringByAppendingString:@"..."];
+//   }
+    
+ 
+    NSString *str2 = self.model.WordDes;
+//    if (self.model.WordDes.length > 40) {
+//        str2 = [[self.model.WordDes substringToIndex:40]stringByAppendingString:@"..."];
+//    }
+  
     NSString *shareURL1 = @"http://ziyawang.com/project/";
     NSString *shareURL = [shareURL1 stringByAppendingString:self.model.ProjectID];
-    [shareParams SSDKSetupShareParamsByText:@"资芽信息"
+    [shareParams SSDKSetupShareParamsByText:str2
                                      images:imageArray
                                         url:[NSURL URLWithString:shareURL]
-                                      title:@"资芽"
+                                      title:str1
                                        type:SSDKContentTypeAuto];
     //        //2、分享（可以弹出我们的分享菜单和编辑界面）
     [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
@@ -1393,8 +1515,7 @@
     else
     {
         [self tapImagViewWithGesture:gesture1];
-        
-        
+   
     }
     
 }

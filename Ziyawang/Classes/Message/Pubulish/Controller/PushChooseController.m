@@ -35,7 +35,21 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(didclickLeftButton:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(didclickLeftButton:)];
+    
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    [leftButton addTarget:self action:@selector(didclickLeftButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
+    buttonimage.image = [UIImage imageNamed:@"back3"];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 30, 20)];
+    buttonLabel.text = @"返回";
+    buttonLabel.font = [UIFont systemFontOfSize:15];
+    
+    [leftButton addSubview:buttonimage];
+    [leftButton addSubview:buttonLabel];
+    UIBarButtonItem *leftbutton = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftbutton;
   }
 
 - (void)didclickLeftButton:(UIBarButtonItem *)leftBarButton

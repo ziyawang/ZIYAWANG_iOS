@@ -49,6 +49,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"我的";
+    UIColor *color = [UIColor clearColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, self.view.bounds.size.width, 20)];
     statuView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     [self.navigationController.navigationBar addSubview:statuView];
@@ -413,7 +417,7 @@
                 break;
             case 2:
                 cell.imageView.image = [UIImage imageNamed:@"help"];
-                cell.textLabel.text = @"反馈意见";
+                cell.textLabel.text = @"意见反馈";
                 
                 
                 break;
@@ -441,7 +445,7 @@
                 break;
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"help"];
-                cell.textLabel.text = @"反馈意见";
+                cell.textLabel.text = @"意见反馈";
                 
                 
                 break;

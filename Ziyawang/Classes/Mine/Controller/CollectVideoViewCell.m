@@ -21,13 +21,14 @@
 - (void)setDataForVideo
 {
     NSLog(@"$$$$$$$$$$$$$$$$$$$$$%@",self.model.VideoLogo);
-    
     NSString *URL = [getImageURL stringByAppendingString:self.model.VideoLogo];
-    
     [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:URL]];
     self.videoTitle.text = self.model.VideoTitle;
-    self.videoDes.text = self.model.VideoDes;
-    self.videoDes.font = [UIFont FontForLabel];
+    if (self.model.VideoDes.length > 60) {
+        self.model.VideoDes = [[self.model.VideoDes substringToIndex:60]stringByAppendingString:@"..."];
+    }
+    self.videoDes.text = [@"简介：" stringByAppendingString:self.model.VideoDes];
+     self.videoDes.font = [UIFont FontForLabel];
     self.videoTitle.font = [UIFont FontForBigLabel];
 }
 

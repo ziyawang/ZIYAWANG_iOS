@@ -44,6 +44,15 @@
 
 
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -58,6 +67,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
     
     AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     delegate.allowRotate = 0;
@@ -82,6 +94,7 @@
     CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.videoDes];
 
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+    self.tableView.contentInset = UIEdgeInsetsMake(10, 0, 30, 0);
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -174,34 +187,47 @@
     NSString *str2 = @"次";
     self.model.ViewCount = [NSString stringWithFormat:@"%@",self.model.ViewCount];
     viewCount.text =[[str1 stringByAppendingString:self.model.ViewCount]stringByAppendingString:str2];
-    viewCount.textColor = [UIColor lightGrayColor];
+    viewCount.textColor = [UIColor darkGrayColor];
     viewCount.font = [UIFont systemFontOfSize:10];
     UILabel *commentTime = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 200, 20)];
     commentTime.font = [UIFont FontForVideoDesLabel];
-    commentTime.textColor = [UIColor lightGrayColor];
+    commentTime.textColor = [UIColor darkGrayColor];
     commentTime.text = self.model.PublishTime;
-    UILabel *jianjieLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 102, 30, 10)];
-    jianjieLabel.text = @"简介:";
-    jianjieLabel.font = [UIFont FontForVideoDesLabel];
-    jianjieLabel.textColor = [UIColor lightGrayColor];
-    [self.contentView addSubview:jianjieLabel];
+//    UILabel *jianjieLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 102, 30, 10)];
+//    jianjieLabel.text = @"简介:";
+//    jianjieLabel.font = [UIFont FontForVideoDesLabel];
+//    jianjieLabel.textColor = [UIColor darkGrayColor];
+//    [self.contentView addSubview:jianjieLabel];
     
     
-    UILabel *videoDes = [[UILabel alloc]initWithFrame:CGRectMake(40, 100, 300, videoLabelHight)];
+    UILabel *videoDes = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, [VideoPlayViewController widthForVideoDes], videoLabelHight)];
 //    NSString *jianjie = @"简介:";
-    videoDes.text = self.model.VideoDes;
-    videoDes.textColor = [UIColor lightGrayColor];
+    videoDes.text = [@"简介:"stringByAppendingString:self.model.VideoDes];
+    
+    videoDes.textColor = [UIColor darkGrayColor];
     videoDes.font = [UIFont FontForVideoDesLabel];
     videoDes.numberOfLines = 0;
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 25, 25)];
+    [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 27, 25)];
     [button setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
+    UILabel *shoucang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 97, 40, 20, 14)];
+    shoucang.text = @"收藏";
+    shoucang.font = [UIFont systemFontOfSize:10];
+    shoucang.textColor = [UIColor darkGrayColor];
+    
+    
+    
     self.collectButton = button;
     UIButton *button2 = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [button2 setBackgroundImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
     [button2 setFrame:CGRectMake(self.view.bounds.size.width - 50, 10, 25, 25)];
     [button2 addTarget:self action:@selector(didClickShareButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UILabel *fenxiang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 47, 40, 20, 14)];
+    fenxiang.text = @"分享";
+    fenxiang.font = [UIFont systemFontOfSize:10];
+    fenxiang.textColor = [UIColor darkGrayColor];
     
     self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
       if ([self.model.CollectFlag isEqualToString:@"0"]) {
@@ -215,6 +241,8 @@
     }
     [self.collectButton addTarget:self action:@selector(didClickCollectbutton:) forControlEvents:(UIControlEventTouchUpInside)];
     
+    [self.contentView addSubview:fenxiang];
+    [self.contentView addSubview:shoucang];
     [self.contentView addSubview:self.collectButton];
     [self.contentView addSubview:button2];
     [self.contentView addSubview:videoTitle];
@@ -248,7 +276,7 @@
     [commentView addSubview:self.commentButton];
     
     self.textView.delegate = self;
-    self.textView.textColor = [UIColor lightGrayColor];
+    self.textView.textColor = [UIColor darkGrayColor];
     self.textView.text = @"请输入评论内容";
     self.view.backgroundColor = [UIColor lightGrayColor];
     [commentView addSubview:self.textView];
@@ -258,10 +286,31 @@
    
 }
 #pragma mark----label自适应高度
+
++(CGFloat)widthForVideoDes
+{
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        
+        return 300;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    {
+        return 340;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    {
+        return 390;
+        
+    }
+    
+    return 280;
+}
+
 +(CGFloat)heightForTextLabel:(NSString *)text{
     
     //    CGFloat titleHeight = [self heigthForText:newsDic[@"title"] FontSize:22 width:250];
-    CGFloat descHeight = [self heigthForText:text FontSize:12 width:300];
+    CGFloat descHeight = [self heigthForText:text FontSize:12 width:[VideoPlayViewController widthForVideoDes]];
     return descHeight;
 }
 
@@ -434,7 +483,7 @@
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
     self.textView.text = @"请输入评论内容";
-    self.textView.textColor = [UIColor lightGrayColor];
+    self.textView.textColor = [UIColor grayColor];
 }
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
@@ -756,13 +805,6 @@
     
     return cell;
 }
-
-
-
-
-
-
-
 
 - (void)playVideo
 {

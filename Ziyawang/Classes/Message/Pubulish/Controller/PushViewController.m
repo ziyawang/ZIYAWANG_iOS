@@ -39,8 +39,23 @@ self.navigationItem.title = @"发布";
     self.navigationController.navigationBar.shadowImage=[UIImage new];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    [leftButton addTarget:self action:@selector(pop) forControlEvents:(UIControlEventTouchUpInside)];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(pop)];
+    UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
+    buttonimage.image = [UIImage imageNamed:@"back3"];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 30, 20)];
+    buttonLabel.text = @"返回";
+    buttonLabel.font = [UIFont systemFontOfSize:15];
+    
+    [leftButton addSubview:buttonimage];
+    [leftButton addSubview:buttonLabel];
+    UIBarButtonItem *leftbutton = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftbutton;
+    
+    
+    
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(pop)];
     
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];

@@ -106,6 +106,11 @@ static NSString *indefier = @"UITableViewCell";
 #pragma mark - init
 - (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)titles{
     self = [[MoreMenuView alloc]initWithFrame:frame];
+    self.backgroundColor = [UIColor whiteColor];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 1)];
+    view.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:view];
+    
     self.titles = [titles mutableCopy];
   return self;
 }
@@ -114,6 +119,8 @@ static NSString *indefier = @"UITableViewCell";
 - (void)layoutSubviews{
 
     [super layoutSubviews];
+  
+    
 }
 
 #pragma mark - confgure segmenBtutton
@@ -134,8 +141,9 @@ static NSString *indefier = @"UITableViewCell";
         [segmentButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
         [segmentButton addTarget:self action:@selector(handleAction:) forControlEvents:UIControlEventTouchUpInside];
         //修改button的背景颜色活着图片
-        segmentButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+        segmentButton.backgroundColor = [UIColor whiteColor];
         segmentButton.tag = 100 + i;
+        
         
         //最后一个移除掉划线
         if (i == self.titles.count - 1) {
@@ -149,8 +157,12 @@ static NSString *indefier = @"UITableViewCell";
     self.bottomButton = [[UIButton alloc]initWithFrame:CGRectMake(0, kSelfCGRectGetMaxY, kSelfCGRectGetMaxX, kSelfBottomButtonHeight)];
     [self.superview addSubview:self.bottomButton];
     [self.bottomButton addTarget:self action:@selector(dismissAllViews:) forControlEvents:UIControlEventTouchDown];
-    self.bottomButton.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.2];
+    self.bottomButton.backgroundColor = [UIColor whiteColor];
+ 
+//    self.bottomButton.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.2];
     self.bottomButton.hidden = YES;
+    
+    
 }
 
 #pragma mark - segmentAction
@@ -480,10 +492,15 @@ static NSString *indefier = @"UITableViewCell";
         
     }else if (tableView == self.rightTableView){
         
+//        string = self.datasourceTwo[self.index][indexPath.row];
+        
+        
+        
         //拼接两级的数据,回调
         string = [NSString stringWithFormat:@"%@%@",self.datasourceOne[_index],self.datasourceTwo[self.index][indexPath.row]];
         self.selectedIndex ? self.selectedIndex(string) : nil;
-        _segmentButtonTitle = string;
+        
+        _segmentButtonTitle = self.datasourceTwo[self.index][indexPath.row];
 
         //初始化下标
         _index = 0;

@@ -43,7 +43,7 @@
     NSString *headURL = @"http://images.ziyawang.com";
 
     [self.VideoImageView sd_setImageWithURL:[NSURL URLWithString:[headURL stringByAppendingString:self.model.VideoLogo]]];
-    self.ViedoDesLabel.text = self.model.VideoDes;
+    self.ViedoDesLabel.text = self.model.VideoTitle;
     NSString *str1= @"已播放";
     NSString *str2 = @"次";
     

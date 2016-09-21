@@ -30,6 +30,9 @@
 #import "VideosListController.h"
 #import "LunboModel.h"
 #import "VideosModel.h"
+
+#import "FindTypeController.h"
+#import "FindServiceTypeController.h"
 @interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate>
 
 /**
@@ -123,6 +126,8 @@
  *  起始页
  */
 @property (nonatomic,assign) NSInteger startPage;
+@property (nonatomic,assign) NSInteger startPage2;
+
 /**
  *  数据请求轮播图接收数组
  */
@@ -168,6 +173,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+self.navigationItem.title = @"首页";
+    UIColor *color = [UIColor clearColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     
     [self setNavigation];
     [self getVideoStatu];
@@ -175,6 +184,8 @@
 }
 - (void)getVideoStatu
 {
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
     //    NSString *pagecount = @"10";
@@ -184,7 +195,7 @@
     [dic setObject:accesstoken forKey:@"access_token"];
     
     //    [dic setObject:pagecount forKey:@"pagecount"];
-    [dic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
+//    [dic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
     [self.manager GET:URL parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -406,7 +417,7 @@
  */
 - (void)setSearchBar
 {
-    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width-121, 38)];
+    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(15, 10, self.view.bounds.size.width-121, 38)];
     self.searchBarbutton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     self.searchBarbutton.backgroundColor = [UIColor whiteColor];
     [self.searchBarbutton setTitle:@"找信息" forState:(UIControlStateNormal)];
@@ -835,7 +846,7 @@
     {
         [self.sourceArray removeAllObjects];
     }
-    self.startPage = 0;
+    self.startPage = 1;
     
     
     NSString *getURL = FindInformationURL;
@@ -891,7 +902,7 @@
     if (self.sourceArray != nil) {
         [self.sourceArray removeAllObjects];
     }
-    self.startPage = 0;
+    self.startPage2 = 1;
     
     NSString *getURL = FindServiceURL;
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
@@ -908,7 +919,7 @@
         
         NSLog(@"请求服务成功");
         
-        self.startPage ++;
+        self.startPage2 ++;
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         
@@ -943,8 +954,11 @@
         NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
         NSString *access_token = @"token";
         NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
+        NSString *pagecount = @"5";
+        [getdic setObject:pagecount forKey:@"pagecount"];
         [getdic setObject:access_token forKey:@"access_token"];
         [getdic setObject:startPage forKey:@"startpage"];
+        
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             self.startPage ++;
@@ -979,15 +993,16 @@
         NSString *getURL = FindServiceURL;
         NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
         NSString *access_token = @"token";
-        
-        NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
+        NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage2];
+        NSString *pagecount = @"5";
+        [getdic setObject:pagecount forKey:@"pagecount"];
         [getdic setObject:access_token forKey:@"access_token"];
         [getdic setObject:startPage forKey:@"startpage"];
         [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            self.startPage ++;
+            self.startPage2 ++;
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             
             dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -1095,12 +1110,9 @@
         [self loadNewServiceData];
         [searchButton setTitle:@"找服务" forState:(UIControlStateNormal)];
         self.findType = @"找服务";
-        
         self.jingxuanView.image = [UIImage imageNamed:@"youzhifuwu"];
         [self.scrollView addSubview:self.leftView2];
         [self.scrollView addSubview:self.rightView2];
-        
-        
     }
     if ([searchButton.titleLabel.text isEqualToString:@"找服务"]) {
         [self loadNewInfoData];
@@ -1110,8 +1122,7 @@
         
         [self.scrollView addSubview:self.leftView];
         [self.scrollView addSubview:self.rightView];
-        
-        
+
     }
     
 }
@@ -1226,9 +1237,12 @@
  */
 - (void)addtatgetWithButtonTag:(UIButton *)sender
 {
-    SearchTypeController *searchVC = [[SearchTypeController alloc]init];
+//    SearchTypeController *searchVC = [[SearchTypeController alloc]init];
+    FindTypeController *searchVC = [[FindTypeController alloc]init];
+    FindServiceTypeController *findserviceVC = [[FindServiceTypeController alloc]init];
     
-    @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"委外催收",@"尽职调查",@"典当担保"];
+    
+//    @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"委外催收",@"尽职调查",@"典当担保"];
     NSArray *level = @[@"VIP1"];
     NSArray *informationTypeID =@[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05"];
     
@@ -1242,165 +1256,184 @@
     {
         case 1:
             NSLog(@"1");
-            searchVC.type = type;
+            
+            searchVC.type = @"资产包转让";
             searchVC.searchValue = @"01";
             searchVC.navigationItem.title = @"资产包转让";
+            [self.navigationController pushViewController:searchVC animated:YES];
             
             break;
         case 2:
             NSLog(@"2");
-            searchVC.type = type;
+            searchVC.type = @"债权转让";
             searchVC.searchValue = @"14";
             searchVC.navigationItem.title = @"债权转让";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 3:
             NSLog(@"3");
-            searchVC.type = type;
+            searchVC.type = @"固产转让";
             searchVC.searchValue = @"12";
             searchVC.navigationItem.title = @"固产转让";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 4:
             NSLog(@"4");
-            searchVC.type = type;
+            searchVC.type = @"商业保理";
             searchVC.searchValue = @"04";
             searchVC.navigationItem.title = @"商业保理";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 5:
             NSLog(@"5");
-            searchVC.type = type;
+            searchVC.type = @"投资需求";
             searchVC.searchValue = @"15";
             searchVC.navigationItem.title = @"投资需求";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 6:
             NSLog(@"6");
-            searchVC.type = type;
+            searchVC.type = @"融资需求";
             searchVC.searchValue = @"06";
             searchVC.navigationItem.title = @"融资需求";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 7:
             NSLog(@"7");
-            searchVC.type = type;
+            searchVC.type = @"悬赏信息";
             searchVC.searchValue = @"09";
             searchVC.navigationItem.title = @"悬赏信息";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 8:
             NSLog(@"8");
-            searchVC.type = type;
+            searchVC.type = @"委外催收";
             searchVC.searchValue = @"02";
             searchVC.navigationItem.title = @"委外催收";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 9:
             NSLog(@"9");
-            searchVC.type = type;
+            searchVC.type = @"尽职调查";
             searchVC.searchValue = @"10";
             searchVC.navigationItem.title = @"尽职调查";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 10:
             NSLog(@"10");
-            searchVC.type = type;
+            searchVC.type = @"法律服务";
             searchVC.searchValue = @"03";
             searchVC.navigationItem.title = @"法律服务";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 11:
             NSLog(@"11");
-            searchVC.type = type;
+            searchVC.type = @"资产求购";
             searchVC.searchValue = @"13";
             searchVC.navigationItem.title = @"资产求购";
-            
+            [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 12:
             NSLog(@"12");
             searchVC.type = type;
             searchVC.searchValue = @"05";
             searchVC.navigationItem.title = @"担保信息";
-            
+        [self.navigationController pushViewController:searchVC animated:YES];
             break;
         case 13:
             NSLog(@"13");
             
-            searchVC.searchValue = @"01";
-            searchVC.navigationItem.title = @"资产包收购";
-            
+            findserviceVC.searchValue = @"01";
+            findserviceVC.type = @"资产包收购";
+            findserviceVC.navigationItem.title = @"资产包收购";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
+            
         case 14:
             NSLog(@"14");
-            searchVC.searchValue = @"14";
-            searchVC.navigationItem.title = @"债权收购";
-            
+            findserviceVC.searchValue = @"14";
+            findserviceVC.type = @"债权收购";
+            findserviceVC.navigationItem.title = @"债权收购";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 15:
             NSLog(@"15");
-            searchVC.searchValue = @"03";
-            searchVC.navigationItem.title = @"律师事务所";
-            
+            findserviceVC.searchValue = @"03";
+            findserviceVC.type = @"律师事务所";
+            findserviceVC.navigationItem.title = @"律师事务所";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 16:
             NSLog(@"16");
-            searchVC.searchValue = @"04";
-            searchVC.navigationItem.title = @"保理服务";
-            
+            findserviceVC.searchValue = @"04";
+            findserviceVC.type = @"保理服务";
+
+            findserviceVC.navigationItem.title = @"保理服务";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 17:
             NSLog(@"17");
-            searchVC.searchValue = @"05";
-            searchVC.navigationItem.title = @"典当公司";
-            
+            findserviceVC.searchValue = @"05";
+            findserviceVC.type = @"典当公司";
+
+            findserviceVC.navigationItem.title = @"典当公司";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 18:
             NSLog(@"18");
-            searchVC.searchValue = @"06";
-            searchVC.navigationItem.title = @"投资放贷";
-            
+            findserviceVC.searchValue = @"06";
+            findserviceVC.type = @"投资放贷";
+
+            findserviceVC.navigationItem.title = @"投资放贷";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 19:
             NSLog(@"19");
-            searchVC.searchValue = @"10";
-            searchVC.navigationItem.title = @"尽职调查";
-            
+            findserviceVC.searchValue = @"10";
+            findserviceVC.type = @"尽职调查";
+
+            findserviceVC.navigationItem.title = @"尽职调查";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         case 20:
             NSLog(@"19");
-            searchVC.searchValue = @"12";
-            searchVC.navigationItem.title = @"资产收购";
-            
+            findserviceVC.searchValue = @"12";
+            findserviceVC.type = @"资产收购";
+
+            findserviceVC.navigationItem.title = @"资产收购";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         case 21:
             NSLog(@"19");
-            searchVC.searchValue = @"05";
-            searchVC.navigationItem.title = @"担保服务";
-            
+            findserviceVC.searchValue = @"05";
+            findserviceVC.type = @"担保服务";
+
+            findserviceVC.navigationItem.title = @"担保服务";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         case 22:
             NSLog(@"19");
-            searchVC.searchValue = @"02";
-            searchVC.navigationItem.title = @"催收机构";
-            
+            findserviceVC.searchValue = @"02";
+            findserviceVC.type = @"债权收购";
+            findserviceVC.navigationItem.title = @"催收机构";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         case 25:
             NSLog(@"25");
-            searchVC.type = type;
-            searchVC.searchValue = @"15";
-            searchVC.navigationItem.title = @"投资需求";
+            findserviceVC.type = @"投资需求";
+            findserviceVC.searchValue = @"15";
+            findserviceVC.navigationItem.title = @"投资需求";
+            [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         default:
             break;
     }
-    [self.navigationController pushViewController:searchVC animated:YES];
     
     
     
@@ -1420,15 +1453,15 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 110;
+        return 130;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 110;
+        return 130;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 120;
+        return 140;
         
     }
     
@@ -1458,9 +1491,9 @@
         //        {
         //            cell = [[FindServiceViewCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"FindServiceViewCell"];
         //        }
-        if (self.sourceArray.count==0) {
-            self.sourceArray = self.lastSourceArray1;
-        }
+//        if (self.sourceArray.count==0) {
+//            self.sourceArray = self.lastSourceArray1;
+//        }
         
         cell.model = self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1473,9 +1506,9 @@
     if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
         InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
         PublishModel *model = [[PublishModel alloc]init];
-        if (self.sourceArray.count == 0) {
-            self.sourceArray = self.lastSourceArray2;
-        }
+//        if (self.sourceArray.count == 0) {
+//            self.sourceArray = self.lastSourceArray2;
+//        }
         model = self.sourceArray[indexPath.row];
         infoDetailsVC.ProjectID = model.ProjectID;
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];

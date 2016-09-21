@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideosViewCell" rowHeight="238" id="KGk-i7-Jjw" customClass="VideosViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="427" height="238"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideosViewCell" rowHeight="281" id="KGk-i7-Jjw" customClass="VideosViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="281"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="427" height="237.5"/>
@@ -25,35 +25,46 @@
                             <action selector="didClickPlayButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Mya-tu-P4i"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJt-2K-yiF">
-                        <rect key="frame" x="376" y="207.5" width="31" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAl-Md-Rws">
-                        <rect key="frame" x="8" y="209" width="150" height="15"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJt-2K-yiF">
+                        <rect key="frame" x="342" y="200.5" width="75" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="150" id="XB5-ee-yiV"/>
+                            <constraint firstAttribute="width" constant="75" id="zGW-ag-ybr"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="47s-GU-KbR">
                         <rect key="frame" x="0.0" y="0.0" width="427" height="187.5"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAl-Md-Rws">
+                        <rect key="frame" x="10" y="199" width="327" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="XB5-ee-yiV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="XB5-ee-yiV"/>
+                            </mask>
+                        </variation>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="47s-GU-KbR" secondAttribute="trailing" id="94d-ry-jwp"/>
                     <constraint firstItem="47s-GU-KbR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ihd-Ow-5ja"/>
-                    <constraint firstAttribute="bottom" secondItem="yAl-Md-Rws" secondAttribute="bottom" constant="15" id="T46-qF-VoQ"/>
+                    <constraint firstAttribute="bottom" secondItem="yAl-Md-Rws" secondAttribute="bottom" constant="20" id="T46-qF-VoQ"/>
                     <constraint firstItem="yAl-Md-Rws" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="XSx-CU-z6Q"/>
                     <constraint firstAttribute="bottom" secondItem="47s-GU-KbR" secondAttribute="bottom" constant="50" id="Xzu-8e-qGh"/>
-                    <constraint firstAttribute="trailing" secondItem="lJt-2K-yiF" secondAttribute="trailing" constant="20" id="dLt-Lg-sN9"/>
+                    <constraint firstAttribute="trailing" secondItem="lJt-2K-yiF" secondAttribute="trailing" constant="10" id="dLt-Lg-sN9"/>
+                    <constraint firstItem="lJt-2K-yiF" firstAttribute="centerY" secondItem="yAl-Md-Rws" secondAttribute="centerY" id="gCf-vD-txC"/>
+                    <constraint firstItem="lJt-2K-yiF" firstAttribute="leading" secondItem="yAl-Md-Rws" secondAttribute="trailing" constant="20" id="mc9-bB-28e"/>
                     <constraint firstItem="APU-N7-Mbe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="pHQ-u6-Msd"/>
                     <constraint firstItem="APU-N7-Mbe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-30" id="pwx-J6-178"/>
                     <constraint firstItem="47s-GU-KbR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qeB-dD-8oy"/>
+                    <constraint firstItem="lJt-2K-yiF" firstAttribute="leading" secondItem="yAl-Md-Rws" secondAttribute="trailing" constant="5" id="vn1-E7-cqf"/>
                     <constraint firstAttribute="bottom" secondItem="lJt-2K-yiF" secondAttribute="bottom" constant="15" id="vnm-g6-ssr"/>
                     <constraint firstItem="yAl-Md-Rws" firstAttribute="top" secondItem="47s-GU-KbR" secondAttribute="bottom" constant="14.5" id="ypb-tE-7n4"/>
                     <constraint firstItem="47s-GU-KbR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="zi0-vO-hpl"/>
@@ -62,6 +73,8 @@
                     <mask key="constraints">
                         <exclude reference="Ihd-Ow-5ja"/>
                         <exclude reference="ypb-tE-7n4"/>
+                        <exclude reference="mc9-bB-28e"/>
+                        <exclude reference="vnm-g6-ssr"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -71,7 +84,7 @@
                 <outlet property="ViedoDesLabel" destination="yAl-Md-Rws" id="iGh-8k-wIh"/>
                 <outlet property="playButton" destination="APU-N7-Mbe" id="gv0-W2-Lnz"/>
             </connections>
-            <point key="canvasLocation" x="-254.5" y="41"/>
+            <point key="canvasLocation" x="-247.5" y="62.5"/>
         </tableViewCell>
     </objects>
     <resources>

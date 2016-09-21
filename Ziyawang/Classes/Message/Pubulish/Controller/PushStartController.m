@@ -136,7 +136,21 @@
     self.manager = [AFHTTPSessionManager manager];
     self.celldic = [NSMutableDictionary dictionary];
     self.imagearray = [NSMutableArray array];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftBarButtonAction:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftBarButtonAction:)];
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    [leftButton addTarget:self action:@selector(leftBarButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
+    buttonimage.image = [UIImage imageNamed:@"back3"];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 30, 20)];
+    buttonLabel.text = @"返回";
+    buttonLabel.font = [UIFont systemFontOfSize:15];
+    
+    [leftButton addSubview:buttonimage];
+    [leftButton addSubview:buttonLabel];
+    UIBarButtonItem *leftbutton = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftbutton;
+    
     [self.tableView registerClass:[PushStartViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -257,16 +271,16 @@
 {
     [self.startPushButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     UIButton *deleteButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [deleteButton setFrame:CGRectMake(90 * 3 + 60, 30, 30, 30)];
+    [deleteButton setFrame:CGRectMake(self.view.bounds.size.width - 140, 30, 30, 30)];
     //    [deleteButton setTitle:@"撤销" forState:(UIControlStateNormal)];
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];
     [deleteButton addTarget:self action:@selector(didClickDeleteButton:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.addImageView addSubview:deleteButton];
     
     self.addImageButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.addImageButton setFrame:CGRectMake(10, 0, 90, 90)];
+    [self.addImageButton setFrame:CGRectMake(5, 5, 80, 80)];
     [self.addImageButton setBackgroundImage:[UIImage imageNamed:@"tianjia"] forState:(UIControlStateNormal)];
-    UILabel *tianjia = [[UILabel alloc]initWithFrame:CGRectMake(0, 70, 90, 20)];
+    UILabel *tianjia = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, 80, 20)];
     tianjia.text = @"添加凭证";
     tianjia.textColor = [UIColor colorWithHexString:@"fdd000"];
     tianjia.font = [UIFont systemFontOfSize:11];
@@ -297,7 +311,7 @@
     [self.recorderbutton addTarget:self action:@selector(dragRecorder) forControlEvents:UIControlEventTouchDragExit];
     
     self.playRecorderButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [self.playRecorderButton setFrame:CGRectMake(75, 5, 150, 30)];
+    [self.playRecorderButton setFrame:CGRectMake(75, 5, 120, 30)];
     [self.playRecorderButton setTitle:@"播放" forState:(UIControlStateNormal)];
     [self.playRecorderButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     
@@ -321,7 +335,7 @@
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width-70, 10, 70, 20)];
     label.textColor = [UIColor lightGrayColor];
     label.text = @"(限30秒内)";
-    label.font = [UIFont FontForLabel];
+    label.font = [UIFont systemFontOfSize:12];
     [self.audioView addSubview:label];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
@@ -341,7 +355,7 @@
 //    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.x, self.view.y, 100, 100 )];
     self.recordAnimationView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     UILabel *recordLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.recordAnimationView.bounds.size.height/2-10, 80, 20)];
-    recordLabel.font = [UIFont FontForBigLabel];
+    recordLabel.font = [UIFont systemFontOfSize:15];
     recordLabel.text = @"正在录音...";
     [self.recordAnimationView addSubview:recordLabel];
     recordLabel.textColor = [UIColor whiteColor];
@@ -471,7 +485,7 @@
     
     [self.imagearray addObject:images.lastObject];
     if (self.x < 4) {
-        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(90 * (self.x - 1) + 10 * self.x, 0, 90, 90)];
+        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(80 * (self.x - 1) + 5 * self.x, 5, 80, 80)];
         iv.image = images[0];
         iv.tag = self.x;
         [self.addImageView addSubview:iv];
@@ -486,7 +500,7 @@
             
         }
         if (self.x != 3) {
-            [self.addImageButton setFrame:CGRectMake(90 * self.x + 10 * (self.x +1), 0, 90, 90)];
+            [self.addImageButton setFrame:CGRectMake(80 * self.x + 5 * (self.x +1), 5, 80, 80)];
             
         }
     }
@@ -512,7 +526,7 @@
         self.x--;
         NSLog(@"X的值$$$$$$$$未%ld",self.x);
         
-        [self.addImageButton setFrame:CGRectMake(90 * 2 +10 *2, 0, 90, 90)];
+        [self.addImageButton setFrame:CGRectMake(80 * 2 +5 *2, 5, 80, 80)];
         [self.imagearray removeObject:self.imagearray[2]];
         
         
@@ -522,7 +536,7 @@
     {
         
         [[self.addImageView viewWithTag:2]removeFromSuperview];
-        [self.addImageButton setFrame:CGRectMake(90+10, 0, 90, 90)];
+        [self.addImageButton setFrame:CGRectMake(80+10, 5, 80, 80)];
         [self.imagearray removeObject:self.imagearray[1]];
         
         
@@ -533,7 +547,7 @@
     else if(a.count == 3)
     {
         [[self.addImageView viewWithTag:1]removeFromSuperview];
-        [self.addImageButton setFrame:CGRectMake(10 , 0, 90, 90)];
+        [self.addImageButton setFrame:CGRectMake(5 , 5, 80, 80)];
         
         [self.imagearray removeObject:self.imagearray[0]];
         self.x--;
@@ -1504,7 +1518,7 @@
     NSArray *array7 = @[@"找人",@"找财产"];
     NSArray *array8 = @[@"法律",@"财务",@"税务",@"商业",@"其他"];
     
-    NSArray *array9 = @[@"个人债权",@"银行贷款",@"企业商账"];
+    NSArray *array9 = @[@"个人债权",@"银行贷款",@"企业商账",@"其他"];
     NSArray *array10 = @[@"民事",@"刑事",@"经济",@"公司"];
     NSArray *array11= @[@"土地",@"房产",@"汽车",@"其他"];
     NSArray *array12 = @[@"担保"];
@@ -1541,11 +1555,13 @@
             if ([cell.textLabel.text isEqualToString:@"来源"]) {
                 allChooseArray =laiyuanArray;
                 chooseVC.soucreArray = allChooseArray;
+                chooseVC.navigationItem.title = @"来源";
             }
             else
             {
                 allChooseArray = array1;
                 chooseVC.soucreArray =allChooseArray;
+                chooseVC.navigationItem.title = @"类型";
                 
             }
             
@@ -1555,7 +1571,7 @@
         {
             allChooseArray = array2;
             chooseVC.soucreArray = allChooseArray;
-            
+             chooseVC.navigationItem.title = @"类型";
             
         }
         else if ([self.typeName isEqualToString:type3])
@@ -1563,12 +1579,14 @@
             if ([cell.textLabel.text isEqualToString:@"标的物"]) {
                 allChooseArray = biaodiArray;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"标的物";
                 
             }
             else
             {
                 allChooseArray = array3;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
                 
             }
         }
@@ -1576,7 +1594,7 @@
         {
             allChooseArray = array4;
             chooseVC.soucreArray = allChooseArray;
-            
+             chooseVC.navigationItem.title = @"类型";
             
         }
         else if ([self.typeName isEqualToString:type5]||[self.typeName isEqualToString:type12])
@@ -1585,7 +1603,7 @@
             if ([self.typeName isEqualToString:type5]) {
                 allChooseArray = array5;
                 chooseVC.soucreArray = allChooseArray;
-                
+                 chooseVC.navigationItem.title = @"类型";
             }
             
             else
@@ -1593,17 +1611,20 @@
                 
                 allChooseArray = array12;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
             }
         }
         else if ([self.typeName isEqualToString:type6])
         {
             allChooseArray = array6;
             chooseVC.soucreArray = allChooseArray;
+             chooseVC.navigationItem.title = @"方式";
         }
         else if ([self.typeName isEqualToString:type7])
         {
             allChooseArray = array7;
             chooseVC.soucreArray = allChooseArray;
+             chooseVC.navigationItem.title = @"类型";
             
             
         }
@@ -1612,11 +1633,13 @@
             if ([cell.textLabel.text isEqualToString:@"被调查方"]) {
                 allChooseArray = diaochaArray;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"被调查方";
             }
             else
             {
                 allChooseArray = array8;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
             }
             
         }
@@ -1624,16 +1647,19 @@
         {
             if ([cell.textLabel.text isEqualToString:@"佣金比例"]) {
                 chooseVC.soucreArray = yongjinArray;
+                 chooseVC.navigationItem.title = @"佣金比例";
             }
             else if([cell.textLabel.text isEqualToString:@"状态"])
             {
                 chooseVC.soucreArray = zhuangtaiArray;
+                 chooseVC.navigationItem.title = @"状态";
                 
             }
             else
             {
                 allChooseArray = array9;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
             }
             
         }
@@ -1641,12 +1667,14 @@
         {
             if ([cell.textLabel.text isEqualToString:@"需求"]) {
                 chooseVC.soucreArray = xuqiuArray;
+                 chooseVC.navigationItem.title = @"需求";
                 
             }
             else
             {
                 allChooseArray = array10;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
             }
             
             
@@ -1655,28 +1683,33 @@
         {
             if ([cell.textLabel.text isEqualToString:@"求购方"]) {
                 chooseVC.soucreArray = qiugouArray;
+                 chooseVC.navigationItem.title = @"求购方";
                 
             }
             else
             {
                 allChooseArray = array11;
                 chooseVC.soucreArray = allChooseArray;
+                 chooseVC.navigationItem.title = @"类型";
             }
         }
         else if ([self.typeName isEqualToString:type13])
         {
             if ([cell.textLabel.text isEqualToString:@"投资类型"]) {
                 chooseVC.soucreArray = touzileixingArray;
+                 chooseVC.navigationItem.title = @"投资类型";
                 
             }
             else if([cell.textLabel.text isEqualToString:@"投资方式"])
             {
                 chooseVC.soucreArray = touzifangshiArray;
+                 chooseVC.navigationItem.title = @"投资方式";
             }
             else
             {
                 chooseVC.touqixian = @"投资期限";
                 chooseVC.soucreArray = touziqixianArray;
+                 chooseVC.navigationItem.title = @"投资期限";
                 
             }
         }

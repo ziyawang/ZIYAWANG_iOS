@@ -79,7 +79,7 @@
     /**
      *  设置当前版本
      */
-    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.2" forKey:@"Version"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.3" forKey:@"Version"];
     /**
      *  检查是否需要版本更新
      */
@@ -107,7 +107,10 @@
     /**
      *  更新当前用户的信息
      */
-    [self getUserInfoFromDomin];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]!=nil) {
+         [self getUserInfoFromDomin];
+    }
+ 
     /**
      *  设置状态栏
      */
@@ -198,6 +201,16 @@
         
         [[NSUserDefaults standardUserDefaults]setObject:currentVersion forKey:key];
         [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"videostatu"];
+        
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"token"];
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"role"];
+        NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+        
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserPicture"];
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"登录状态"];
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserName"];
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"rcToken"];
+        
         LinkpageController *linkVC = [[LinkpageController alloc]init];
         linkVC.controller = tabBarVC;
         self.window.rootViewController = linkVC;
@@ -225,9 +238,7 @@
         NSString *newVersion = dic[@"UpdateTitle"];
         NSLog(@"-------newVersion:%@",newVersion);
         if ([version isEqualToString:newVersion] == NO) {
-      
             [self showAlertController];
-            
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
@@ -235,7 +246,7 @@
 }
 - (void)showAlertController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"资芽已有新版本，请你前往AppStore进行更新" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore进行更新" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"前往更新" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/zi-ya/id1148016346?l=zh&ls=1&mt=8"]];
@@ -271,10 +282,7 @@
         NSLog(@"获取用户信息失败");
     }];
     }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"role"];
-    }
+
 }
 
 #pragma mark----融云、友盟、shareSDK第三方

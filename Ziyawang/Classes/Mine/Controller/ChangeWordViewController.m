@@ -33,7 +33,7 @@
     self.textField = textField;
     view.backgroundColor = [UIColor whiteColor];
     [view addSubview:self.textField];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 125, self.view.bounds.size.width, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, self.view.bounds.size.width, 20)];
     
     label.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:label];

@@ -303,14 +303,14 @@
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.x = 0;
     [self.addImageButton addTarget:self action:@selector(didClickChooseImage:) forControlEvents:(UIControlEventTouchUpInside)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 70, self.addImageButton.bounds.size.width, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, self.addImageButton.bounds.size.width, 20)];
     label.text = @"添加图片";
     label.textColor = [UIColor colorWithHexString:@"fdd000"];
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:11];
     [self.addImageButton addSubview:label];
     UIButton *deleteButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [deleteButton setFrame:CGRectMake(90 * 3 + 60, 30, 30, 30)];
+    [deleteButton setFrame:CGRectMake(self.imageBackView.bounds.size.width - 140, 30, 30, 30)];
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];
 //    [deleteButton setTitle:@"撤销" forState:(UIControlStateNormal)];
     [deleteButton addTarget:self action:@selector(didClickDeleteButton:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -684,7 +684,7 @@
     NSLog(@"X的值未（（（（（（（（（（（%ld",self.x);
     [self.imagearray addObject:images.lastObject];
     if (self.x < 4) {
-        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(90 * (self.x - 1) + 10 * self.x, 0, 90, 90)];
+        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(80 * (self.x - 1) + 5 * self.x, 5, 80, 80)];
         
         iv.image = images[0];
         iv.tag = self.x;
@@ -701,7 +701,7 @@
         }
         if (self.x != 3) {
 //            [self.addImageButton setFrame:CGRectMake(90 * self.x + 10 * self.x, 0, 90, 90)];
-            self.addImageButtonLeftConstraint.constant = 90 * self.x + 10 * (self.x+1);
+            self.addImageButtonLeftConstraint.constant = 80 * self.x + 5 * (self.x+1);
         }
     }
 }
@@ -720,7 +720,7 @@
         self.x--;
         NSLog(@"X的值$$$$$$$$未%ld",self.x);
 //        [self.addImageButton setFrame:CGRectMake(90 * 2 +10 *2, 0, 90, 90)];
-        self.addImageButtonLeftConstraint.constant = 200;
+        self.addImageButtonLeftConstraint.constant = 170;
         
         [self.imagearray removeObject:self.imagearray[2]];
         
@@ -731,7 +731,7 @@
         
         [[self.imageBackView viewWithTag:2]removeFromSuperview];
 //        [self.addImageButton setFrame:CGRectMake(90+10, 0, 90, 90)];
-        self.addImageButtonLeftConstraint.constant = 100;
+        self.addImageButtonLeftConstraint.constant = 90;
         [self.imagearray removeObject:self.imagearray[1]];
         self.x--;
         NSLog(@"X的值@@@@@@@@@@未%ld",self.x);
@@ -741,7 +741,7 @@
     {
         [[self.imageBackView viewWithTag:1]removeFromSuperview];
 //        [self.addImageButton setFrame:CGRectMake(10 , 0, 90, 90)];
-        self.addImageButtonLeftConstraint.constant = 10;
+        self.addImageButtonLeftConstraint.constant = 5;
         [self.imagearray removeObject:self.imagearray[0]];
         self.x--;
         NSLog(@"X的值###########未%ld",self.x);

@@ -19,19 +19,19 @@
 
 + (void)load
 {
-
-
     UIBarButtonItem *item=[UIBarButtonItem appearanceWhenContainedIn:self, nil ];
     NSMutableDictionary *dic=[NSMutableDictionary dictionary];
     dic[NSFontAttributeName]=[UIFont systemFontOfSize:15];
     dic[NSForegroundColorAttributeName]=[UIColor blackColor];
     [item setTitleTextAttributes:dic forState:UIControlStateNormal];
+    
 //    UINavigationBar *bar = [UINavigationBar ]
 //    UINavigationBar *bar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[u class]];
 //    [bar setBackgroundImage:[UIImage imageWithColor:NavBarColor] forBarMetrics:UIBarMetricsDefault];
     NSMutableDictionary *dicBar=[NSMutableDictionary dictionary];
 
     dicBar[NSFontAttributeName]=[UIFont systemFontOfSize:15];
+ 
 //    [bar setTitleTextAttributes:dic];
 
 }
@@ -49,7 +49,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.navigationBar.tintColor = [UIColor blackColor];
 }
 
 //-(BOOL)shouldAutorotate

@@ -74,17 +74,40 @@
 //      UILabel *lable3 = [[UILabel alloc]initWithFrame:CGRectMake(button3.frame.origin.x, button3.frame.origin.y, 100, 30)];
 //    lable3.text = @"找视频";
 //    [button addSubview:lable3];
-    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 30)];
-    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(button2.bounds.size.width - 120, 10, 100, 30)];
+    UILabel *labe1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 30, 30)];
+    UILabel *labe2 = [[UILabel alloc]initWithFrame:CGRectMake(button2.bounds.size.width - 110, 20, 30, 30)];
+    UILabel *labe3 = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 30, 30)];
+    labe1.text = @"找";
+    labe2.text = @"找";
+    labe3.text = @"找";
+    
+    labe1.textColor = [UIColor colorWithHexString:@"#d25852"];
+    labe2.textColor = [UIColor colorWithHexString:@"#2d9cad"];
+    labe3.textColor = [UIColor colorWithHexString:@"#b67630"];
+    
+    labe1.font = [UIFont systemFontOfSize:30];
+    labe2.font = [UIFont systemFontOfSize:30];
+    labe3.font = [UIFont systemFontOfSize:30];
+    
+    labe1.font = [UIFont boldSystemFontOfSize:30];
+    labe2.font = [UIFont boldSystemFontOfSize:30];
+    labe3.font = [UIFont boldSystemFontOfSize:30];
+    
+    [button addSubview:labe1];
+    [button2 addSubview:labe2];
+    [button3 addSubview:labe3];
+    
+    UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(50, 20, 100, 30)];
+    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(50, 20, 100, 30)];
+    UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(button2.bounds.size.width - 120, 20, 100, 30)];
     label2.textAlignment = NSTextAlignmentRight;
     
-    UILabel *label3 = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 30)];
     
-    label1.text = @"找信息";
+    label1.text = @"信息";
     label1.textColor = [UIColor colorWithHexString:@"#d25852"];
-    label2.text = @"找服务";
+    label2.text = @"服务";
     label2.textColor = [UIColor colorWithHexString:@"#2d9cad"];
-    label3.text = @"找视频";
+    label3.text = @"视频";
     label3.textColor = [UIColor colorWithHexString:@"#b67630"];
     
     
@@ -96,10 +119,10 @@
     label2.font = [UIFont systemFontOfSize:30];
     label3.font = [UIFont systemFontOfSize:30];
 
-    UILabel *longlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 55 * kHeightScale, self.view.bounds.size.width , 25)];
-    UILabel *longlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(button2.bounds.size.width - 240 , 55 * kHeightScale, 220, 25)];
+    UILabel *longlabel1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 65 * kHeightScale, self.view.bounds.size.width , 25)];
+    UILabel *longlabel2 = [[UILabel alloc]initWithFrame:CGRectMake(button2.bounds.size.width - 240 , 65 * kHeightScale, 220, 25)];
     longlabel2.textAlignment = NSTextAlignmentRight;
-    UILabel *longlabel3 = [[UILabel alloc]initWithFrame:CGRectMake(20, 55 * kHeightScale, self.view.bounds.size.width, 25)];
+    UILabel *longlabel3 = [[UILabel alloc]initWithFrame:CGRectMake(20, 65 * kHeightScale, self.view.bounds.size.width, 25)];
     //适配三套
     
     

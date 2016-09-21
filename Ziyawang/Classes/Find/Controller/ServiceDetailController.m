@@ -158,12 +158,14 @@
     UIImage *image = [UIImage imageNamed:@"morentouxiang.png"];
     
     NSArray *imageArray = @[image];
+    NSString *str1 = self.model.ServiceName;
+    NSString *str2 = self.model.ServiceIntroduction;
     
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKSetupShareParamsByText:@"服务信息"
+    [shareParams SSDKSetupShareParamsByText:str2
                                      images:imageArray
                                         url:[NSURL URLWithString:shareURL]
-                                      title:@"资芽"
+                                      title:str1
                                        type:SSDKContentTypeAuto];
     //2、分享（可以弹出我们的分享菜单和编辑界面）
     [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
@@ -564,24 +566,85 @@
 {
     UIView *SomeOneView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     SomeOneView.backgroundColor = [UIColor whiteColor];
+//    UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
+//    [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
+//    [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+//    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+//    imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
+//    [connectButton addSubview:imageview3];
     UIButton *connectButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
-    [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
     [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(connectButton.bounds.size.width/2-50, 17, 20, 20)];
+    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
+    //        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
+    UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
     imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
-    [connectButton addSubview:imageview3];
+    //        [connectButton addSubview:imageview3];
     
+    UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
+    connectLabel.font = [UIFont systemFontOfSize:14];
+    connectLabel.text = @"联系方式";
+    UIView *connectView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+    connectView.centerX = connectButton.centerX;
+    [connectView addSubview:connectLabel];
+    [connectView addSubview:imageview3];
+    connectView.userInteractionEnabled = NO;
+    
+    [connectButton addSubview:connectView];
+    
+    
+    
+    
+    
+//    UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/2, 50);
+//    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
+//    [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+//    
+////    [talkButton setBackgroundImage:[UIImage imageNamed:@"siliao2"] forState:(UIControlStateNormal)];
+//    
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
+//    imageView.image = [UIImage imageNamed:@"siliao3"];
+//    
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/2, 50);
-    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
+    talkButton.frame = CGRectMake(connectButton.bounds.size.width*2, 0, connectButton.bounds.size.width, 50);
+    //    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
     
-//    [talkButton setBackgroundImage:[UIImage imageNamed:@"siliao2"] forState:(UIControlStateNormal)];
+    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(35, 0, 20, 20)];
+    imageview2.image = [UIImage imageNamed:@"siliao3"];
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(talkButton.bounds.size.width/2-38, 17, 20, 20)];
-    imageView.image = [UIImage imageNamed:@"siliao3"];
-    [talkButton addSubview:imageView];
+    UILabel *talkLabel = [[UILabel alloc]initWithFrame:CGRectMake(69, 15, 100, 20)];
+    talkLabel.font = [UIFont systemFontOfSize:14];
+    talkLabel.text = @"私聊";
+    
+    
+    UILabel *connectLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, 100, 20)];
+    connectLabel2.font = [UIFont systemFontOfSize:14];
+    connectLabel2.text = @"私聊";
+    
+    UIView *connectView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+    connectView2.centerX = connectButton.centerX;
+    [connectView2 addSubview:connectLabel2];
+    [connectView2 addSubview:imageview2];
+    connectView2.userInteractionEnabled = NO;
+    
+    [talkButton addSubview:connectView2];
+
+    
+    
+    
+    connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
+    talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
+    [imageview3 setFrame:CGRectMake(50, 0, 20, 20)];
+    [imageview2 setFrame:CGRectMake(70, 0, 20, 20)];
+    
+    [connectLabel setFrame:CGRectMake(85, 0, 130, 20)];
+    [connectLabel2 setFrame:CGRectMake(100, 0, 130, 20)];
+    
+    
+//    [talkButton addSubview:imageview2];
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     [SomeOneView addSubview:talkButton];
     [SomeOneView addSubview:connectButton];

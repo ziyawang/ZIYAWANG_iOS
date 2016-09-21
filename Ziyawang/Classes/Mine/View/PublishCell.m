@@ -184,9 +184,15 @@
         {
             [self.midLabel setHidden:NO];
              self.leftChangeLabel.text = @"金额";
-             self.midLabel.text = @"状态：";
-            self.diquLabel.text = @"债务人所在地：";
-             self.FromWhere.text = self.model.Status;
+             self.diquLabel.text = @"状态：";
+            self.midLabel.text = @"债务人所在地：";
+            
+            
+            self.ProAreaLabel.text = self.model.Status;
+        
+             self.FromWhere.text = self.model.ProArea;
+            
+            
              self.TotalMoneyImage.image = [UIImage imageNamed:@"jine"];
              self.TransMoneyImage.image = [UIImage imageNamed:@"yongjinbili"];
             [self.TransMoneyImage setHidden:NO];
@@ -231,7 +237,12 @@
     if ([self.model.TypeName isEqualToString:@"资产包转让"])
     {
         [self.midLabel setHidden:NO];
-        self.midLabel.text = @"来源：";
+        self.midLabel.text = @"地区：";
+        self.diquLabel.text = @"来源：";
+        self.ProAreaLabel.text = self.model.FromWhere;
+        self.FromWhere.text = self.model.ProArea;
+        
+        
         self.TotalMoney.text = self.model.TotalMoney;
         self.TransferMoney.text = self.model.TransferMoney;
         self.rightChangeLabel.text = @"转让价";
@@ -338,25 +349,35 @@
       self.leftChangeLabel.text = @"被调查方";
         self.downLabel.text = @"类型：";
         self.TotalMoneyImage.image = [UIImage imageNamed:@"beidiaochafang"];
+        [self.TotalMoneyImage setHidden:NO];
         [self.TransMoneyImage setHidden:YES];
         [self.TransferMoney setHidden:YES];
         [self.rightChangeLabel setHidden:YES];
         [self.midLabel setHidden:YES];
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:YES];
-
         
     }
     else if ([self.model.TypeName isEqualToString:@"固产转让"])
     {
         self.TotalMoney.text = self.model.TransferMoney;
         self.leftChangeLabel.text = @"转让价";
+        [self.TotalMoneyImage setHidden:NO];
         [self.rightChangeLabel setHidden:YES];
         [self.TransferMoney setHidden:YES];
         [self.TransMoneyImage setHidden:YES];
-        [self.midLabel setHidden:YES];
+        [self.midLabel setHidden:NO];
+        self.diquLabel.text = @"标的物：";
+        self.midLabel.text = @"地区：";
+        
+        self.ProAreaLabel.text = self.model.Corpore;
+        
+        self.FromWhere.text = self.model.ProArea;
+        
+        [self.FromWhere setHidden:NO];
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:NO];
+        
         
         self.TotalMoneyImage.image = [UIImage imageNamed:@"zhuanrangjia"];
         
@@ -396,8 +417,8 @@
   else if([self.model.TypeName isEqualToString:@"投资需求"])
   {
       [self.midLabel setHidden:NO];
-      self.ProAreaLabel.text = self.model.ProArea;
-      self.FromWhere.text = self.model.investType;
+      self.ProAreaLabel.text = self.model.investType;
+      self.FromWhere.text = self.model.ProArea;
       [self.TotalMoney setHidden:NO];
       [self.TransferMoney setHidden:NO];
       self.TotalMoney.text = self.model.Year;
@@ -410,8 +431,10 @@
       [self.TransferMoney setHidden:NO];
       self.TotalMoneyImage.image = [UIImage imageNamed:@"year"];
       self.TransMoneyImage.image = [UIImage imageNamed:@"huibaolv"];
-      self.midLabel.text = @"投资方式：";
-      self.diquLabel.text = @"投资地区：";
+      [self.TransMoneyImage setHidden:NO];
+      
+      self.midLabel.text = @"投资地区：";
+      self.diquLabel.text = @"投资方式：";
       self.downLabel.text = @"投资类型：";
   }
     

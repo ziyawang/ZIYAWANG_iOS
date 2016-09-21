@@ -209,7 +209,7 @@
     title.textColor = [UIColor whiteColor];
     title.backgroundColor = [UIColor clearColor];
     title.textAlignment = NSTextAlignmentCenter;
-    title.text = @"反馈意见";
+    title.text = @"意见反馈";
     title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];

@@ -114,7 +114,7 @@
 
     MineViewController *MineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
     
-    UserCenterController *userCenterVC = [[UserCenterController alloc]init];
+    UserCenterController *userCenterVC = [[UserCenterController alloc]initWithNibName:@"UserCenterController" bundle:nil];
     
     [self setUpOneChildVcWithVc:MainVC Image:@"shouye" selectedImage:@"shouye-xuanzhong" title:@"首页"];
     [self setUpOneChildVcWithVc:FindVC Image:@"chakan" selectedImage:@"chakan-xuanzhong" title:@"查看"];
@@ -183,17 +183,15 @@
 //点击中间按钮的代理方法
 - (void)tabBarPlusBtnClick:(LBTabBar *)tabBar
 {
-
         PushViewController *PushVC = [[PushViewController alloc]init];
         LBNavigationController *navVc = [[LBNavigationController alloc] initWithRootViewController:PushVC];
+//    [self presentViewController:navVc animated:YES completion:^{
+//        [self setHidesBottomBarWhenPushed:NO]
+//    }]
     [self presentViewController:navVc animated:YES completion:nil];
 
 //    LBpostViewController *plusVC = [[LBpostViewController alloc] init];
 //    plusVC.view.backgroundColor = [self randomColor];
-
-
-
-
 
 }
 

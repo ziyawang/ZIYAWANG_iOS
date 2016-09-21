@@ -58,6 +58,8 @@
 @property (nonatomic,strong) NSString *CertifyState;
 
 @property (nonatomic,strong) NSString *role;
+@property (nonatomic,strong) NSString *Corpore;
+
 
 @property (nonatomic,strong) NSString *Year;
 @property (nonatomic,strong) NSString *investType;

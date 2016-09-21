@@ -171,7 +171,7 @@
     }
    else
    {
-       return 155;
+       return 122;
    
    }
     return 155;
@@ -212,7 +212,7 @@
     {
         CollectVideoViewCell *videoCell = [tableView dequeueReusableCellWithIdentifier:@"CollectVideoViewCell" forIndexPath:indexPath];
         videoCell.model = model;
-
+         videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return videoCell;
     }
 }
@@ -223,7 +223,6 @@
     CollectModel *model = [[CollectModel alloc]init];
     model = self.sourceArray[indexPath.row];
     NSString *TypeID  = [NSString stringWithFormat:@"%@",model.TypeID];
-
     if ([TypeID isEqualToString:@"1"]) {
         InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
         infoDetailsVC.ProjectID = model.ProjectID;
@@ -244,17 +243,13 @@
     else
     {
         self.zvideo.title = model.VideoTitle;
-        if (!model.VideoLink) {
+        if (model.VideoLink ==nil) {
         self.zvideo.playUrl = [videoPlayerURL stringByAppendingString:model.VideoLink2];
-
         }
         else
         {
         self.zvideo.playUrl = [videoPlayerURL stringByAppendingString:model.VideoLink];
-     
         }
-        
-        
         NSLog(@"_______________%@",self.zvideo.playUrl);
         VideoPlayViewController *videoPlayVC = [[VideoPlayViewController alloc]init];
         videoPlayVC.videoTitle = model.VideoTitle;

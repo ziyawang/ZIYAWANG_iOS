@@ -52,7 +52,7 @@
 
 - (void)setHeadView
 {
-    NSArray *titles = @[@"点击选择地区"];
+    NSArray *titles = @[@"                 点击选择地区"];
     MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:titles];
     menuView.cornerMarkLocationType = CornerMarkLocationTypeRight;
     NSString *path =  [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];

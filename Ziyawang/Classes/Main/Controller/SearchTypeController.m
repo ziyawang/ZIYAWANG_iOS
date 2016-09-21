@@ -110,7 +110,9 @@
             if (addAddArray.count == 0) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.tableView.mj_footer endRefreshing];
+
             }
             else
             {
@@ -145,7 +147,8 @@
             if (addAddArray.count == 0) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                [self.tableView.mj_footer endRefreshing];
             }
             else
             {
@@ -257,15 +260,15 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 110;
+        return 130;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 110;
+        return 130;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {
-        return 120;
+        return 140;
         
     }
     

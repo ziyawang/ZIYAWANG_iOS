@@ -23,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIView *clearSaveView;
 @property (weak, nonatomic) IBOutlet UIView *ziyagongyueView;
 @property (weak, nonatomic) IBOutlet UIView *outView;
+@property (weak, nonatomic) IBOutlet UIView *versionView;
+@property (nonatomic,strong) AFHTTPSessionManager *manager;
+
 
 @end
 
@@ -111,12 +114,19 @@
     [self.ToFriendView addGestureRecognizer:gesture2];
     UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clearSaveAction:)];
     [self.clearSaveView addGestureRecognizer:gesture3];
-    self.ziyashengming.font = [UIFont FontForLabel];
-    self.tuijianLabel.font = [UIFont FontForLabel];
-    self.qingchuLabel.font = [UIFont FontForLabel];
+    UITapGestureRecognizer *gesture4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(versionVieAction:)];
+    [self.versionView addGestureRecognizer:gesture4];
+    
+//    self.ziyashengming.font = [UIFont FontForLabel];
+//    self.tuijianLabel.font = [UIFont FontForLabel];
+//    self.qingchuLabel.font = [UIFont FontForLabel];
     [self.outButton setBackgroundColor:[UIColor colorWithHexString:@"#e64840"]];
 //    [self.outView setBackgroundColor:[UIColor colorWithHexString:@"#e64840"]];
     
+}
+- (void)versionVieAction:(UITapGestureRecognizer *)gesture4
+{
+    [self ifNeedUpdate];
 }
 - (void)ziyaGestureAction:(UITapGestureRecognizer *)gesture1
 {
@@ -197,6 +207,56 @@
     [AlertC addAction:action2];
     [self presentViewController:AlertC animated:YES completion:nil];
     }
+
+
+
+/**
+ *  检查更新应用版本
+ */
+- (void)ifNeedUpdate
+{
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
+    NSString *URL = [ifNeedUpdateURL stringByAppendingString:@"?access_token=token"];
+    
+    //    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
+    [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSDictionary *dic = Array.lastObject;
+        NSLog(@"----%@",dic);
+        NSString *newVersion = dic[@"UpdateTitle"];
+        NSLog(@"-------newVersion:%@",newVersion);
+        if ([version isEqualToString:newVersion] == NO) {
+            
+            [self showAlertController];
+        }
+        else
+        {
+            UIAlertView *alertVC = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前版本：1.0.3，我们将尽我们最大的努力，提供给您最优质的体验。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alertVC show];
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+}
+- (void)showAlertController
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore进行更新" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"前往更新" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/zi-ya/id1148016346?l=zh&ls=1&mt=8"]];
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
+
+
+
 
 - (NSString *)getCachesPath{
     // 获取Caches目录路径
