@@ -66,9 +66,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTitle];
-    self.touxiang.font = [UIFont FontForLabel];
-    self.connectPhone.font = [UIFont FontForLabel];
-    self.xiugaimima.font = [UIFont FontForLabel];
+//    self.touxiang.font = [UIFont FontForLabel];
+//    self.connectPhone.font = [UIFont FontForLabel];
+//    self.xiugaimima.font = [UIFont FontForLabel];
     
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="67" id="KGk-i7-Jjw" customClass="CostViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="365" height="67"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="365" height="66.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="充值芽币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tp1-DS-xmc">
+                        <rect key="frame" x="20" y="13" width="68" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="芽币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROM-vk-Lri">
+                        <rect key="frame" x="317" y="27" width="28" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-09-23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkf-q6-T3k">
+                        <rect key="frame" x="20" y="38" width="65" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVa-gZ-24P">
+                        <rect key="frame" x="258" y="17.5" width="59.5" height="31.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ROM-vk-Lri" firstAttribute="centerY" secondItem="RVa-gZ-24P" secondAttribute="centerY" id="8u4-RH-Gzu"/>
+                    <constraint firstItem="RVa-gZ-24P" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LbP-sZ-9O0"/>
+                    <constraint firstItem="ROM-vk-Lri" firstAttribute="bottom" secondItem="RVa-gZ-24P" secondAttribute="bottom" id="OHM-93-YHq"/>
+                    <constraint firstItem="ROM-vk-Lri" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2" id="OcA-hR-2pd"/>
+                    <constraint firstItem="tkf-q6-T3k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="UEN-vZ-2RR"/>
+                    <constraint firstAttribute="trailing" secondItem="ROM-vk-Lri" secondAttribute="trailing" constant="20" id="YND-AZ-l7f"/>
+                    <constraint firstItem="tkf-q6-T3k" firstAttribute="top" secondItem="tp1-DS-xmc" secondAttribute="bottom" constant="5" id="hCF-2E-sLU"/>
+                    <constraint firstItem="tp1-DS-xmc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="kFX-5q-SnY"/>
+                    <constraint firstItem="ROM-vk-Lri" firstAttribute="leading" secondItem="RVa-gZ-24P" secondAttribute="trailing" id="qdd-2j-Ayr"/>
+                    <constraint firstItem="tp1-DS-xmc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="xaO-6D-JPE"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="8u4-RH-Gzu"/>
+                        <exclude reference="OHM-93-YHq"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="rechargeAccount" destination="RVa-gZ-24P" id="FB1-RT-hbK"/>
+                <outlet property="rechargeTime" destination="tkf-q6-T3k" id="3zO-gR-3wD"/>
+                <outlet property="rechargeTitle" destination="tp1-DS-xmc" id="qg5-WV-5bm"/>
+                <outlet property="yabiLabel" destination="ROM-vk-Lri" id="a1Q-vu-9xO"/>
+            </connections>
+            <point key="canvasLocation" x="264.5" y="109.5"/>
+        </tableViewCell>
+    </objects>
+</document>

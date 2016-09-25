@@ -549,8 +549,8 @@
 //    }
     self.userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
 
-    
-    if([self.userID isEqualToString:UserID])
+ 
+    if([self.userID isEqualToString:UserID]&&[[NSUserDefaults standardUserDefaults]objectForKey:@"token"] !=nil)
     {
         NSLog(@"我自己");
         [self layoutView2];
@@ -671,7 +671,7 @@
 }
 - (void)connectButtonAction:(UIButton *)button
 {
-    if (self.role == nil) {
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"] ==nil) {
         NSLog(@"未登录,提示登录");
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -680,20 +680,18 @@
     else
     {
         NSLog(@"调用打电话");
-
         UIWebView *webView = [[UIWebView alloc]init];
         NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
         NSURL *url = [NSURL URLWithString:telString];
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
         [self.view addSubview:webView];
-        
     }
     
 }
 
 - (void)talkButtonAction:(UIButton *)button
 {
-    if (self.role ==nil) {
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"] ==nil) {
         NSLog(@"未登录,提示登录");
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];

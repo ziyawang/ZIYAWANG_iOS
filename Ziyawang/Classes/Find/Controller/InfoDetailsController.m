@@ -27,6 +27,9 @@
 #import "KNToast.h"
 
 #import "UserInfoModel.h"
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
+
 //#import <ShareSDK/ShareSDK.h>
 //#import <ShareSDKUI/ShareSDK+SSUI.h>
 @interface InfoDetailsController ()<MBProgressHUDDelegate,KNPhotoBrowerDelegate>
@@ -126,6 +129,9 @@
  */
 @property (weak, nonatomic) IBOutlet UIView *qingdanDownLoadView;
 
+@property (nonatomic,strong) CTCallCenter *callcenter;
+
+
 @end
 
 @implementation InfoDetailsController
@@ -181,7 +187,6 @@
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.textAlignment = UITextAlignmentCenter;
     label.text = @"信息详情";
-    
     label.textColor = [UIColor blackColor];
     self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
     [label addSubview:self.titleImageView];
@@ -202,6 +207,35 @@
     [self ifHiddenQingdanView];
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_left_jt"] style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor lightGrayColor];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.callcenter = [[CTCallCenter alloc] init];
+    self.callcenter.callEventHandler = ^(CTCall* call) {
+        if ([call.callState isEqualToString:CTCallStateDisconnected])
+        {
+            NSLog(@"挂断了电话咯Call has been disconnected");
+        }
+        else if ([call.callState isEqualToString:CTCallStateConnected])
+        {
+            NSLog(@"电话通了Call has just been connected");
+        }
+        else if([call.callState isEqualToString:CTCallStateIncoming])
+        {
+            NSLog(@"来电话了Call is incoming");
+            
+        }
+        else if ([call.callState isEqualToString:CTCallStateDialing])
+        {
+            NSLog(@"正在播出电话call is dialing");
+            [weakSelf payForMessage];
+            }
+        else
+        {
+            NSLog(@"嘛都没做Nothing is done");
+        }
+    };
+    
 }
 
 
@@ -422,10 +456,30 @@
 //        [self.viedioButton setTitle:@"播放" forState:(UIControlStateNormal)];
 //        [self.viedioButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
     }
+    /**
+     *  会员，收费，普通image
+     */
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
     if ([self.model.Member isEqualToString:@"1"]==NO) {
         [self.titleImageView setHidden:YES];
     }
+    if ([self.model.Member isEqualToString:@"0"]) {
+        [self.titleImageView setHidden:YES];
+        
+    }
+    else if([self.model.Member isEqualToString:@"1"])
+    {
+        [self.titleImageView setHidden:NO];
+        
+    }
+    else if([self.model.Member isEqualToString:@"2"])
+    {
+        self.titleImageView.image = [UIImage imageNamed:@""];
+        
+    }
+    
+    
+    
     [self layoutBottomViewWithUserType:self.role UserID:self.userid];
     
     self.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
@@ -819,8 +873,12 @@
     //    NSString *role = [NSString stringWithFormat:@"%@",Role];
     
     self.userID = [NSString stringWithFormat:@"%@",self.userID];
+//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"] ==nil) {
+//        [self layoutView1];
+//        
+//    }
     
-    if([self.userID isEqualToString:UserID])
+    if([self.userID isEqualToString:UserID]&&[[NSUserDefaults standardUserDefaults]objectForKey:@"token"] !=nil)
     {
         [self.collectButton setHidden:YES];
         [self.shoucangLabel setHidden:YES];
@@ -873,13 +931,13 @@
         [connectButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
 //        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
-        UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
+        UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(45, 0, 20, 20)];
         imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
 //        [connectButton addSubview:imageview3];
     
-    UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
+    UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 0, 100, 20)];
     connectLabel.font = [UIFont systemFontOfSize:14];
-    connectLabel.text = @"联系方式";
+    connectLabel.text = @"约谈";
     UIView *connectView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
     connectView.centerX = connectButton.centerX;
     [connectView addSubview:connectLabel];
@@ -891,6 +949,8 @@
 //    [connectButton addSubview:imageview3];
     [connectButton addSubview:connectView];
     
+  
+    
     /**
      *  申请抢单按钮
      *
@@ -898,46 +958,47 @@
      *
      *  @return return value description
      */
-    UIButton *applyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    applyButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/3, 50);
-    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
-    imageview1.image = [UIImage imageNamed:@"shenqing_black"];
-    [applyButton setBackgroundColor:[UIColor colorWithHexString:@"#ea6155"]];
-//    [applyButton addSubview:imageview1];
-    
-    UILabel *connectLabe = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
-    connectLabe.font = [UIFont systemFontOfSize:14];
-    connectLabe.text = @"申请抢单";
-    UIView *connectVie = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
-    connectVie.centerX = connectButton.centerX;
-    [connectVie addSubview:connectLabe];
-    [connectVie addSubview:imageview1];
-    //    [connectButton addSubview:connectLabel];
-    //    [connectButton addSubview:imageview3];
-    connectVie.userInteractionEnabled = NO;
-    
-    [applyButton addSubview:connectVie];
-    if ([self.RushFlag isEqualToString:@"1"]) {
-        [applyButton setTitle:@"已抢单" forState:(UIControlStateNormal)];
-        [applyButton  setEnabled:NO];
-    }
-    else
-    {
-//        UILabel *rushLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 15, 100, 20)];
-//        rushLabel.font = [UIFont systemFontOfSize:14];
-//        rushLabel.text = @"申请抢单";
-//        UIView *rushView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
-//        rushView.centerX = SomeOneView.centerX;
-//        [rushView addSubview:rushLabel];
-//        [rushView addSubview:imageview1];
+//    UIButton *applyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    [applyButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+//    applyButton.frame = CGRectMake(connectButton.bounds.size.width, 0, SomeOneView.bounds.size.width/3, 50);
+//    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
+//    imageview1.image = [UIImage imageNamed:@"shenqing_black"];
+//    [applyButton setBackgroundColor:[UIColor colorWithHexString:@"#ea6155"]];
+////    [applyButton addSubview:imageview1];
+//    
+//    UILabel *connectLabe = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
+//    connectLabe.font = [UIFont systemFontOfSize:14];
+//    connectLabe.text = @"申请抢单";
+//    UIView *connectVie = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+//    connectVie.centerX = connectButton.centerX;
+//    [connectVie addSubview:connectLabe];
+//    [connectVie addSubview:imageview1];
+//    //    [connectButton addSubview:connectLabel];
+//    //    [connectButton addSubview:imageview3];
+//    connectVie.userInteractionEnabled = NO;
+//    
+//    [applyButton addSubview:connectVie];
+//    if ([self.RushFlag isEqualToString:@"1"]) {
+//        [applyButton setTitle:@"已抢单" forState:(UIControlStateNormal)];
+//        [applyButton  setEnabled:NO];
+//    }
+//    else
+//    {
+////        UILabel *rushLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 15, 100, 20)];
+////        rushLabel.font = [UIFont systemFontOfSize:14];
+////        rushLabel.text = @"申请抢单";
+////        UIView *rushView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
+////        rushView.centerX = SomeOneView.centerX;
+////        [rushView addSubview:rushLabel];
+////        [rushView addSubview:imageview1];
+////        
+////        [applyButton addSubview:rushView];
 //        
-//        [applyButton addSubview:rushView];
-        
-     
-//        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
-        [applyButton setEnabled:YES];
-    }
+//     
+////        [applyButton setTitle:@"申请抢单" forState:(UIControlStateNormal)];
+//        [applyButton setEnabled:YES];
+//    }
+
     /**
      *  私聊按钮
      *
@@ -946,7 +1007,7 @@
      *  @return return value description
      */
     UIButton *talkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    talkButton.frame = CGRectMake(applyButton.bounds.size.width*2, 0, applyButton.bounds.size.width, 50);
+    talkButton.frame = CGRectMake(connectButton.bounds.size.width*2, 0, connectButton.bounds.size.width, 50);
 //    [talkButton setTitle:@"私聊" forState:(UIControlStateNormal)];
     [talkButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [talkButton setBackgroundColor:[UIColor colorWithHexString:@"#fdd000"]];
@@ -982,19 +1043,19 @@
     
     
     
-    if (self.isZichan == YES) {
+//    if (self.isZichan == YES) {
         connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/2, 50);
-        [applyButton setHidden:YES];
+//        [applyButton setHidden:YES];
         talkButton.frame = CGRectMake(connectButton.bounds.size.width, 0, connectButton.bounds.size.width, 50);
-        [imageview3 setFrame:CGRectMake(50, 0, 20, 20)];
+        [imageview3 setFrame:CGRectMake(70, 0, 20, 20)];
         [imageview2 setFrame:CGRectMake(70, 0, 20, 20)];
-        [connectLabel setFrame:CGRectMake(85, 0, 130, 20)];
+        [connectLabel setFrame:CGRectMake(100, 0, 130, 20)];
         [connectLabel2 setFrame:CGRectMake(100, 0, 130, 20)];
         
         
-    }
+//    }
     [SomeOneView addSubview:connectButton];
-    [SomeOneView addSubview:applyButton];
+//    [SomeOneView addSubview:applyButton];
     [SomeOneView addSubview:talkButton];
     /**
      *  添加按钮点击事件
@@ -1004,9 +1065,9 @@
      *  @return return value description
      */
     [connectButton addTarget:self action:@selector(connectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    [applyButton addTarget:self action:@selector(applyButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [applyButton addTarget:self action:@selector(applyButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    self.applyButton = applyButton;
+//    self.applyButton = applyButton;
 //    [self.applyButton isFirstResponder];
 //    [connectButton isFirstResponder];
 //    [talkButton isFirstResponder];
@@ -1057,12 +1118,20 @@
     }
     else if([self.role isEqualToString:@"1"])
     {
-        UIWebView *webView = [[UIWebView alloc]init];
-        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
-        NSURL *url = [NSURL URLWithString:telString];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.view addSubview:webView];
-        NSLog(@"认证过的服务方，调用打电话");
+        self.model.PayFlag = [NSString stringWithFormat:@"%@",self.model.PayFlag];
+        
+        if ([self.model.Member isEqualToString:@"0"]||[self.model.Member isEqualToString:@"1"]||[self.model.PayFlag isEqualToString:@"1"]) {
+            UIWebView *webView = [[UIWebView alloc]init];
+            NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+            NSURL *url = [NSURL URLWithString:telString];
+            [webView loadRequest:[NSURLRequest requestWithURL:url]];
+            [self.view addSubview:webView];
+            NSLog(@"认证过的服务方，调用打电话");
+        }
+       else
+       {
+           [self showAlertControllerWithTitle:@"提示" message:@"该条信息是收费信息，若您想继续约谈，需要支付1元服务费用" cancelTitle:@"取消" otherTitle:@"付费约谈" actions:@selector(payForMessage)];
+       }
     }
     else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
     {
@@ -1081,6 +1150,71 @@
     }
  
     
+}
+
+
+- (void)confirmPayMessage
+{
+    NSLog(@"确认收费操作");
+
+}
+- (void)payForMessage
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSMutableDictionary *dataDic = [NSMutableDictionary new];
+    [dataDic setObject:@"token" forKey:@"access_token"];
+    [dataDic setObject:self.model.ProjectID forKey:@"ProjectID"];
+    NSString *URL = [[paidURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSLog(@"-----%@",URL);
+    
+    
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [self.manager POST:URL parameters:dataDic progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+         NSString *status_code = dic[@"status_code"];
+         if ([status_code isEqualToString:@"417"]) {
+             NSLog(@"已支付");
+         }
+         else if ([status_code isEqualToString:@"418"])
+         {
+             NSLog(@"余额不足");
+             
+         }
+         else if ([status_code isEqualToString:@"416"])
+         {
+             NSLog(@"非收费信息");
+         }
+         else if ([status_code isEqualToString:@"200"])
+         {
+             NSLog(@"支付成功");
+         }
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"%@",error);
+         
+     }];
+  
+}
+
+
+- (void)showAlertControllerWithTitle:(NSString *)title message:(NSString *)message cancelTitle:(NSString *)canceltitle otherTitle:(NSString *)othertitle actions:(SEL)actions
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:canceltitle style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:othertitle style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        /**
+         *  收费操作
+         */
+        [self performSelector:actions];
+        
+          }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+
 }
 
 - (void)ShowAlertViewController

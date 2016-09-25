@@ -65,6 +65,9 @@
 @property (nonatomic,strong) NSString *investType;
 @property (nonatomic,strong) NSString *PublishTime;
 @property (nonatomic,strong) NSString *ViewCount;
+@property (nonatomic,strong) NSString *Price;//信息价格
+@property (nonatomic,strong) NSString *PayFlag;//支付状态
+@property (nonatomic,strong) NSString *Account;//余额
 
 
 @end

@@ -25,7 +25,7 @@
 #import "MessageListViewController.h"
 #import "LBTabBar.h"
 #import "UIImage+Image.h"
-
+#import "UITabBar+CustomBadge.h"
 
 @interface LBTabBarController ()<LBTabBarDelegate>
 
@@ -48,6 +48,38 @@
 //{
 //    return [self.viewControllers.lastObject preferredInterfaceOrientationForPresentation];
 //}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didReceiveMessageNotification2:)
+     name:RCKitDispatchMessageNotification
+     object:nil];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:RCKitDispatchMessageNotification
+     object:nil];
+}
+- (void)didReceiveMessageNotification2:(NSNotification *)notification {
+    RCMessage *message = notification.object;
+    
+//    [[self.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
+//    [self.tabBar setTabIconWidth:0];
+//    [self.tabBar setBadgeTop:0];
+//    [self.tabBar setBadgeStyle:kCustomBadgeStyleNumber value:3 atIndex:2];
+//    
+    
+//    if (message.messageDirection == MessageDirection_RECEIVE) {
+//     
+//                UITabBarItem *item = [self.tabBar.items objectAtIndex:2];
+//        //        item.badgeValue = nil;
+//                item.badgeValue = [NSString stringWithFormat:@"%d",[item.badgeValue intValue] + 1];
+//    }
+}
 
 - (BOOL)shouldAutorotate
 {
@@ -87,11 +119,12 @@
 
     //创建自己的tabbar，然后用kvc将自己的tabbar和系统的tabBar替换下
     LBTabBar *tabbar = [[LBTabBar alloc] init];
+
+    NSLog(@"%@",tabbar.items);
+    
     tabbar.myDelegate = self;
     //kvc实质是修改了系统的_tabBar
     [self setValue:tabbar forKeyPath:@"tabBar"];
-
-
 }
 
 

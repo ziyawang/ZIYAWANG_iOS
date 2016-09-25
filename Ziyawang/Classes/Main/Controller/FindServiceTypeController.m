@@ -48,9 +48,26 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+- (void)setupTitle {
+    
+    self.view.backgroundColor = [UIColor colorWithRed:248.0 / 255.0 green:248.0 / 255.0 blue:249.0 / 255.0 alpha:1.0];
+    //    self.view.backgroundColor = [UIColor blueColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    title.textColor = [UIColor whiteColor];
+    title.backgroundColor = [UIColor clearColor];
+    title.textAlignment = NSTextAlignmentCenter;
+    title.text = @"找服务";
+    title.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = title;
+    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
+    // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
+    //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"找服务";
+    [self setupTitle];
+    
     //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     
     self.sourceArray = [NSMutableArray array];
@@ -95,6 +112,8 @@
     NSLog(@"#############%@",getdic);
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];
+    [getdic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
+    
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -235,6 +254,17 @@
     {
         for (NSString *str in self.shengArray) {
             if ([str isEqualToString:string]) {
+                if (str.length == 3) {
+                    string = [string substringToIndex:2];
+                }
+                if (str.length == 4) {
+                    string = [string substringToIndex:3];
+                }
+                if (str.length == 2) {
+                    string = string;
+                }
+
+            
                 [self.dataDic setObject:string forKey:@"ServiceArea"];
                 NSLog(@"得到的数据为%@",string);
                 [weakSelf findServiceswithDic:self.dataDic];

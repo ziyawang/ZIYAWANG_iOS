@@ -397,8 +397,7 @@
     
     if ([role isEqualToString:@"0"])
     {
-        [self checkMobilePhoneNumber:self.phoneNumTextField.text];
-
+    [self checkMobilePhoneNumber:self.phoneNumTextField.text];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userName = self.nameTextField.text;
     NSString *phoneNumber = self.phoneNumTextField.text;
@@ -422,7 +421,7 @@
     NSString *accesstoken = @"token";
 //    [paraDic setObject:token forKey:@"token"];
     
-    if (accesstoken == nil||userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]) {
+    if (accesstoken == nil||userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
         NSLog(@"信息不完整");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -437,10 +436,8 @@
     [paraDic setObject:companyLocation forKey:@"ServiceLocation"];
     [paraDic setObject:ServiceArea forKey:@"ServiceArea"];
     [paraDic setObject:ServiceType forKey:@"ServiceType"];
-    
     [self.manager POST:URL parameters:paraDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //上传四张图片
-        
         if (self.imagearray.count == 1) {
             NSData *imageData1 = UIImageJPEGRepresentation(self.imagearray[0], 1.0f);
 //            NSData *imageData4 = UIImageJPEGRepresentation(self.userIconImageView.image, 1.0f);

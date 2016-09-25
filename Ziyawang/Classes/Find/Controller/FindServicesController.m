@@ -96,6 +96,8 @@
     NSLog(@"#############%@",getdic);
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];
+    [getdic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
+    
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {

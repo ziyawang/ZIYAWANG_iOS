@@ -99,12 +99,29 @@
         self.isInView = NO;
     }
 }
+
+- (void)setupTitle {
+    
+    self.view.backgroundColor = [UIColor colorWithRed:248.0 / 255.0 green:248.0 / 255.0 blue:249.0 / 255.0 alpha:1.0];
+    //    self.view.backgroundColor = [UIColor blueColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    title.textColor = [UIColor whiteColor];
+    title.backgroundColor = [UIColor clearColor];
+    title.textAlignment = NSTextAlignmentCenter;
+    title.text = @"找信息";
+    title.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = title;
+    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
+    // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
+    //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
     self.navigationItem.title = @"找信息";
-    //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+    [self setupTitle];
+       //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     //    [self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"icon_left_jt"] forState:(UIControlStateNormal) barMetrics:UIBarMetricsDefault];
     
     CGRect backframe = CGRectMake(0,0,40,30);

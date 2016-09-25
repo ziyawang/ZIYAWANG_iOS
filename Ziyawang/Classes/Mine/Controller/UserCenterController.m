@@ -21,6 +21,7 @@
 #import "UserInfoModel.h"
 
 #import "MySetController.h"
+#import "MyYabiController.h"
 @interface UserCenterController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *myPushView;
@@ -229,7 +230,9 @@
             dataDic[@"MyCooCount"] = [NSString stringWithFormat:@"%@",dic[@"MyCooCount"]];
             self.MyproCountLabel.text = dataDic[@"MyProCount"];
             self.MyColCountLabel.text = dataDic[@"MyColCount"];
-            self.MycooCountLabel.text = dataDic[@"MyCooCount"];
+            self.MycooCountLabel.text = dataDic[@"MyProCount"];
+            self.MyproCountLabel.text = dataDic[@"user"][@"Account"];
+            
             NSLog(@"%@",dic[@"role"]);
             self.role =dic[@"role"];
             //        NSString *role = self.role;
@@ -260,7 +263,6 @@
             //        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
             //        NSString *userPicture = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
             //        NSString *
-            
         }];
 
         
@@ -281,6 +283,7 @@
     {
         self.tableViewHeight.constant = 132;
     }
+    
 }
 
 - (void)setViewGesture
@@ -288,11 +291,10 @@
     
 
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction1:)];
-    
-    [self.myPushView addGestureRecognizer:gesture1];
-    
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction2:)];
-    [self.myOperationView addGestureRecognizer:gesture2];
+    
+    [self.myPushView addGestureRecognizer:gesture2];
+    [self.myOperationView addGestureRecognizer:gesture1];
     
     UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction3:)];
     [self.myCollectView addGestureRecognizer:gesture3];
@@ -322,9 +324,10 @@
     }
     else
     {
-        MyTogetherController *togetVC = [[MyTogetherController alloc]init];
+        MyYabiController *YabiVC = [[MyYabiController alloc]init];
+        YabiVC.Account = self.MyproCountLabel.text;
         
-        [self.navigationController pushViewController:togetVC animated:YES];
+        [self.navigationController pushViewController:YabiVC animated:YES];
         
     }
 }
@@ -412,7 +415,7 @@
             case 1:
                 
                 cell.imageView.image = [UIImage imageNamed:@"grablist"];
-                cell.textLabel.text = @"我的抢单";
+                cell.textLabel.text = @"我的约谈";
                 
                 break;
             case 2:

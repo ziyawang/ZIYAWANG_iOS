@@ -1318,7 +1318,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             [self.model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:self.model];
             }
-    
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
          [self.tableView reloadData];

@@ -335,12 +335,22 @@ static NSString *indefier = @"UITableViewCell";
         
         if (!self.isMoreMenu || self.notDatasource) {
             mainTableViewFrame.size.height = tableViewHeight;
-            self.mainTableView.frame = mainTableViewFrame;
+            
+            if (self.datasourceMain.count < 10) {
+                 mainTableViewFrame.size.height = self.datasourceMain.count * 44;
+            }
+                   self.mainTableView.frame = mainTableViewFrame;
+            
             [self rotationSegmentButtonAnimation:sender show:YES];
             self.notDatasource = NO;
         }else{
             leftTableViewFrame.size.height = tableViewHeight;
             rightTableViewFrame.size.height = tableViewHeight;
+            leftTableViewFrame.size.height = self.datasourceOne.count * 44;
+            rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+            
+            
+//            rightTableViewFrame.size.height = self.datasourceTwo.count *44;
             self.leftTableView.frame = leftTableViewFrame;
             self.rightTableView.frame = rightTableViewFrame;
             [self rotationSegmentButtonAnimation:sender show:YES];
@@ -488,16 +498,22 @@ static NSString *indefier = @"UITableViewCell";
         
         //记录一级菜单点击下标,刷新二级菜单
         self.index = indexPath.row;
+        
+        CGRect  rightTableViewFrame = CGRectZero;
+        rightTableViewFrame = self.rightTableView.frame;
+        rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+        self.rightTableView.frame = rightTableViewFrame;
+        
         [self.rightTableView reloadData];
         
     }else if (tableView == self.rightTableView){
         
 //        string = self.datasourceTwo[self.index][indexPath.row];
-        
-        
+       
         
         //拼接两级的数据,回调
         string = [NSString stringWithFormat:@"%@%@",self.datasourceOne[_index],self.datasourceTwo[self.index][indexPath.row]];
+        
         self.selectedIndex ? self.selectedIndex(string) : nil;
         
         _segmentButtonTitle = self.datasourceTwo[self.index][indexPath.row];

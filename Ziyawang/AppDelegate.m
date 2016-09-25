@@ -42,6 +42,9 @@
 #import "MineViewController.h"
 #import "LBTabBarController.h"
 #import "LoginController.h"
+
+#import "UITabBar+CustomBadge.h"
+
 @interface AppDelegate ()<RCIMReceiveMessageDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate,UITabBarControllerDelegate>
 /**
  *  网络请求单例
@@ -51,6 +54,8 @@
  *  其他人的融云信息
  */
 @property (nonatomic,strong) RCUserInfo *otherUserinfo;
+@property (nonatomic,strong) LBTabBarController *tabBarController;
+
 @end
 
 @implementation AppDelegate
@@ -185,7 +190,18 @@
      初始化
      */
     LBTabBarController *tabBarVC = [[LBTabBarController alloc]init];
+    
+    
     tabBarVC.delegate = self;
+//        [[tabBarVC.tabBar.items objectAtIndex:0] setBadgeValue:@"3"];
+//        [tabBarVC.tabBar setTabIconWidth:0];
+//        [tabBarVC.tabBar setBadgeTop:0];
+//        [tabBarVC.tabBar setBadgeStyle:kCustomBadgeStyleNumber value:3 atIndex:0];
+    
+    self.tabBarController = tabBarVC;
+    
+    
+    
     CATransition *amin = [[CATransition alloc]init];
     amin.type = @"rippleEffect";
     amin.duration = 1.0;
@@ -212,12 +228,13 @@
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"rcToken"];
         
         LinkpageController *linkVC = [[LinkpageController alloc]init];
+    
         linkVC.controller = tabBarVC;
         self.window.rootViewController = linkVC;
     }
     else
     {
-        self.window.rootViewController =tabBarVC;
+        self.window.rootViewController =self.tabBarController;
     }
 }
 #pragma mark----检查更新版本以及用户信息
@@ -246,14 +263,16 @@
 }
 - (void)showAlertController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore进行更新" preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"前往更新" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/zi-ya/id1148016346?l=zh&ls=1&mt=8"]];
-    }];
-    [alertVC addAction:action1];
-    [alertVC addAction:action2];
-    [self.window.rootViewController presentViewController:alertVC animated:YES completion:nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"资芽新版本已上线，致力于为您提供更优质的用户体验！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+//    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"资芽已有新版本，请您前往AppStore进行更新" preferredStyle:(UIAlertControllerStyleAlert)];
+//    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+//    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"前往更新" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/zi-ya/id1148016346?l=zh&ls=1&mt=8"]];
+//    }];
+//    [alertVC addAction:action1];
+//    [alertVC addAction:action2];
+//    [self.window.rootViewController presentViewController:alertVC animated:YES completion:nil];
 }
 
 /**
@@ -681,6 +700,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                                                          @(ConversationType_GROUP)
                                                                          ]];
     application.applicationIconBadgeNumber = unreadMsgCount;
+//    UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:2];
+//    item.badgeValue = [NSString stringWithFormat:@"%d",unreadMsgCount];
+    
+    
 }
 
 /**
@@ -732,8 +755,22 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if (message.messageDirection == MessageDirection_RECEIVE) {
         [UIApplication sharedApplication].applicationIconBadgeNumber =
         [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
+        
+//        [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
+        
+//        [self.tabBarController.tabBar setTabIconWidth:29];
+//        [self.tabBarController.tabBar setBadgeTop:9];
+//        [self.tabBarController.tabBar setBadgeStyle:kCustomBadgeStyleNumber value:3 atIndex:2];
+//        UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:2];
+//        [item setBadgeValue:@"3"];
+        
+//        LBTabBarController *lBTVC = (LBTabBarController*)self.window.rootViewController;
+//        
+//        [[lBTVC.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
+        
+//        item.badgeValue = nil;
+//        item.badgeValue = [NSString stringWithFormat:@"%d",[item.badgeValue intValue] + 1];
     }
-    
 }
 //**********************************    检测网络状态           ***************************************
 /**
