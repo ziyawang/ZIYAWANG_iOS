@@ -1523,10 +1523,9 @@
     NSArray *array11= @[@"土地",@"房产",@"汽车",@"其他"];
     NSArray *array12 = @[@"担保"];
     //投资需求
-    
     NSArray *laiyuanArray = @[@"银行",@"非银行金融机构",@"企业"];
     NSArray *diaochaArray = @[@"企业",@"个人"];
-    NSArray *yongjinArray = @[@"5%-15%",@"15%-30%",@"30%－50%",@"50%以上"];
+    NSArray *yongjinArray = @[@"5%-15%",@"15%-30%",@"30%－50%",@"50%以上",@"面议"];
     NSArray *zhuangtaiArray = @[@"已诉讼",@"未诉讼"];
     NSArray *xuqiuArray = @[@"咨询",@"诉讼",@"其他"];
     NSArray *qiugouArray = @[@"个人",@"企业"];

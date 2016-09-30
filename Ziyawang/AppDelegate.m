@@ -84,11 +84,11 @@
     /**
      *  设置当前版本
      */
-    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.3" forKey:@"Version"];
+//    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.3" forKey:@"Version"];
     /**
      *  检查是否需要版本更新
      */
-    [self ifNeedUpdate];
+//    [self ifNeedUpdate];
        /**
      *  初始化融云SDK
      */

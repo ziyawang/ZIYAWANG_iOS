@@ -105,6 +105,7 @@
 
 - (void)getsmscode
 {
+    
     NSString *postUrl = @"http://api.ziyawang.com/v1/auth/getsmscode";
     NSString *access_token = @"token";
     NSString *phonenumber = self.registNumberTextField.text;

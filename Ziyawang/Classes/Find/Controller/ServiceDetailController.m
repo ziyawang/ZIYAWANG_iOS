@@ -578,7 +578,7 @@
     connectButton.frame = CGRectMake(0, 0, SomeOneView.bounds.size.width/3, 50);
     //        [connectButton setTitle:@"联系方式" forState:(UIControlStateNormal)];
     UIImageView *imageview3 = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, 20, 20)];
-    imageview3.image = [UIImage imageNamed:@"lianxifangshi"];
+    imageview3.image = [UIImage imageNamed:@"wodeyuetan"];
     //        [connectButton addSubview:imageview3];
     
     UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
@@ -657,11 +657,13 @@
 }
 - (void)layoutView2
 {
+    [self.saveButton setHidden:YES];
+    
     UIView *selfView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     selfView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     UIButton *lookButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     lookButton.frame = CGRectMake(0, 0, selfView.bounds.size.width, 50);
-    [lookButton setTitle:@"我的抢单" forState:(UIControlStateNormal)];
+    [lookButton setTitle:@"我的约谈" forState:(UIControlStateNormal)];
     [lookButton addTarget:self action:@selector(lookbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [lookButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [selfView addSubview:lookButton];

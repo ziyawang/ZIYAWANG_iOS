@@ -28,6 +28,7 @@
 }
 - (void)setViews
 {
+    self.navigationItem.title = @"明细";
     self.TimeLAbel.text = self.costTime;
     self.orderNumber.text = self.ordernumber;
     self.operationLabel.text = self.operate;

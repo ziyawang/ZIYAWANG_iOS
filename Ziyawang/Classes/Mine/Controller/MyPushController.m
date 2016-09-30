@@ -34,6 +34,14 @@
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
     self.navigationController.navigationBar.titleTextAttributes = dict;
     
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, self.view.bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
@@ -165,7 +173,7 @@
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 130;
+        return 140;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {

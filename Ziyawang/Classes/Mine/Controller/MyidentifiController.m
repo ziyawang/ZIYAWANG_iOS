@@ -17,7 +17,7 @@
 #import "LoginController.h"
 #import "UserInfoModel.h"
 #import "MyUItextField.h"
-@interface MyidentifiController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIScrollViewDelegate>
+@interface MyidentifiController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userIconImageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
@@ -36,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIView *userIconBackView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addImageButtonLeftConstraint;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+@property (nonatomic,strong) MBProgressHUD *HUD;
+
 @property (nonatomic,strong) NSMutableArray *imagearray;
 
 @property (nonatomic,strong)UIButton *deleteButton;
@@ -393,6 +395,9 @@
 - (IBAction)sentServiceUserInfoButton:(id)sender
 {
     
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
      NSString *role = self.role;
     
     if ([role isEqualToString:@"0"])
@@ -443,6 +448,7 @@
 //            NSData *imageData4 = UIImageJPEGRepresentation(self.userIconImageView.image, 1.0f);
             [formData appendPartWithFileData:imageData1 name:@"ConfirmationP1"fileName:@"ConfirmationP1.png" mimeType:@"image/jpg/png/jpeg"];
 //            [formData appendPartWithFileData:imageData4 name:@"UserPicture" fileName:@"bbb" mimeType:@"image/jpg/png/jpeg"];
+      
 
         }
         else if(self.imagearray.count == 2)
@@ -477,6 +483,8 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"信息已上传，等待审核" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
         [self.navigationController popViewControllerAnimated:YES];
         NSLog(@"上传审核信息成功");
         
@@ -485,6 +493,8 @@
         [alert show];
         NSLog(@"上传审核信息失败");
         NSLog(@"@@@@@@@@@@%@",error);
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
     }];
     }
     }
@@ -593,8 +603,12 @@
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"信息已上传，等待审核" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
+                
+                [self.HUD removeFromSuperViewOnHide];
+                [self.HUD hideAnimated:YES];
                 [self.navigationController popViewControllerAnimated:YES];
                 NSLog(@"上传审核信息成功");
+                
                 
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"审核信息上传失败，请重新上传" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -602,6 +616,8 @@
                 [alert show];
                 NSLog(@"上传审核信息失败");
                 NSLog(@"@@@@@@@@@@%@",error);
+                [self.HUD removeFromSuperViewOnHide];
+                [self.HUD hideAnimated:YES];
             }];
         }
         }

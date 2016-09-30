@@ -46,54 +46,54 @@
     // Initialization code
 }
 - (IBAction)cancelButtonAction:(id)sender {
-    self.manager = [AFHTTPSessionManager manager];
-    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    NSString *url1= getDataURL;
-    NSString *url2 = @"/project/rushcancel?token=";
-    NSString *url = [url1 stringByAppendingString:url2];
-    NSString *URL = [[[url stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
-//    NSString *URL = [[url stringByAppendingString:token]stringByAppendingString:self.model.ProjectID];
-      NSLog(@"-------%@",URL);
-    NSMutableDictionary *dic = [NSMutableDictionary new];
+//    self.manager = [AFHTTPSessionManager manager];
+//    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+//    NSString *url1= getDataURL;
+//    NSString *url2 = @"/project/rushcancel?token=";
+//    NSString *url = [url1 stringByAppendingString:url2];
+//    NSString *URL = [[[url stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
+////    NSString *URL = [[url stringByAppendingString:token]stringByAppendingString:self.model.ProjectID];
+//      NSLog(@"-------%@",URL);
+//    NSMutableDictionary *dic = [NSMutableDictionary new];
+////    [dic setObject:self.model.ProjectID forKey:@"ProjectID"];
+////    [dic setObject:@"token" forKey:@"access_token"];
+////    [dic setObject:@"token" forKey:@"access_token"];
 //    [dic setObject:self.model.ProjectID forKey:@"ProjectID"];
-//    [dic setObject:@"token" forKey:@"access_token"];
-//    [dic setObject:@"token" forKey:@"access_token"];
-    [dic setObject:self.model.ProjectID forKey:@"ProjectID"];
-   
-    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        
-        NSDictionary *dic = [NSDictionary new];
-        dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"~~~~~~~~~~~~~~%@",dic);
-        
-        
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"成功取消抢单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        
-        
-        NSLog(@"取消抢单成功");
-//        [self.quxiaoqiangdanButton setHidden:YES];
-        [self.quxiaoqiangdanButton setUserInteractionEnabled:NO];
-        [self.quxiaoqiangdanButton.titleLabel setText:@"已取消"];
-
-//        [self.quxiaoqiangdanButton setTitle:@"已取消" forState:(UIControlStateNormal)];
-//        [self.quxiaoqiangdanButton setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
-        
-//        self.quxiaoqiangdanButton.selected = YES;
-        //通知页面刷新;
-    
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        NSLog(@"--------%@",error);
-        NSLog(@"取消抢单失败");
-        
-    }];
-    
+//   
+//    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        
+//        
+//        NSDictionary *dic = [NSDictionary new];
+//        dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"~~~~~~~~~~~~~~%@",dic);
+//        
+//        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"成功取消抢单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        
+//        
+//        NSLog(@"取消抢单成功");
+////        [self.quxiaoqiangdanButton setHidden:YES];
+//        [self.quxiaoqiangdanButton setUserInteractionEnabled:NO];
+//        [self.quxiaoqiangdanButton.titleLabel setText:@"已取消"];
+//
+////        [self.quxiaoqiangdanButton setTitle:@"已取消" forState:(UIControlStateNormal)];
+////        [self.quxiaoqiangdanButton setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
+//        
+////        self.quxiaoqiangdanButton.selected = YES;
+//        //通知页面刷新;
+//    
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        NSLog(@"--------%@",error);
+//        NSLog(@"取消抢单失败");
+//        
+//    }];
+//    
     
 }
 
@@ -129,15 +129,30 @@
 
 - (void)setDataForCell
 {
-    
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
-    if ([self.model.Member isEqualToString:@"1"] == NO ) {
+    
+    if ([self.model.Member isEqualToString:@"0"]) {
         [self.VipImage setHidden:YES];
+        
     }
-    else
+    else if([self.model.Member isEqualToString:@"1"])
     {
         [self.VipImage setHidden:NO];
+        self.VipImage.image = [UIImage imageNamed:@"vipziyuan"];
     }
+    else if([self.model.Member isEqualToString:@"2"])
+    {
+        self.VipImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        
+    }
+//    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
+//    if ([self.model.Member isEqualToString:@"1"] == NO ) {
+//        [self.VipImage setHidden:YES];
+//    }
+//    else
+//    {
+//        [self.VipImage setHidden:NO];
+//    }
     
     [self.quxiaoqiangdanButton setUserInteractionEnabled:YES];
 

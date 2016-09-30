@@ -20,8 +20,8 @@
                         <color key="textColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sc1-rg-THe">
-                        <rect key="frame" x="95" y="10" width="22" height="13.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="号码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sc1-rg-THe">
+                        <rect key="frame" x="95" y="10" width="22" height="15.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -54,15 +54,15 @@
                             </mask>
                         </variation>
                     </label>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFQ-HH-8xT">
-                        <rect key="frame" x="20" y="27" width="417" height="1"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFQ-HH-8xT">
+                        <rect key="frame" x="20" y="29" width="426" height="1"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="J3Q-Il-Ert"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="zhuanrangjia.png" translatesAutoresizingMaskIntoConstraints="NO" id="AnS-Qf-agB">
-                        <rect key="frame" x="285" y="56" width="40" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhuanrangjia.png" translatesAutoresizingMaskIntoConstraints="NO" id="AnS-Qf-agB">
+                        <rect key="frame" x="283" y="56.5" width="40" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="FQv-kZ-vaQ"/>
                             <constraint firstAttribute="width" constant="17" id="HRJ-H8-oth"/>
@@ -93,8 +93,8 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="300万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-bk-ObY">
-                        <rect key="frame" x="271" y="81" width="48" height="21.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-bk-ObY">
+                        <rect key="frame" x="269" y="81.5" width="48" height="21.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="D3R-uu-C91"/>
                         </constraints>
@@ -108,14 +108,14 @@
                             </mask>
                         </variation>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pg-hG-Cjg">
-                        <rect key="frame" x="195" y="108" width="60" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pg-hG-Cjg">
+                        <rect key="frame" x="193" y="108" width="60" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="1zx-vR-96x"/>
                             <constraint firstAttribute="width" constant="60" id="mud-Sb-n5r"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="取消抢单" backgroundImage="quxiaohezuo.png">
+                        <state key="normal" title="已约谈" backgroundImage="quxiaohezuo.png">
                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -123,8 +123,8 @@
                             <action selector="cancelButtonAction:" destination="0I5-oE-Kd7" eventType="touchUpInside" id="883-Pm-eP8"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="zongjine.png" translatesAutoresizingMaskIntoConstraints="NO" id="mQW-tf-vg4">
-                        <rect key="frame" x="185" y="56" width="40" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zongjine.png" translatesAutoresizingMaskIntoConstraints="NO" id="mQW-tf-vg4">
+                        <rect key="frame" x="183" y="56.5" width="40" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="17" id="9Rv-SO-7Ge"/>
                             <constraint firstAttribute="width" constant="40" id="JOt-B9-3lG"/>
@@ -156,8 +156,8 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="500万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHO-pY-0fl">
-                        <rect key="frame" x="171" y="81" width="48" height="21.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHO-pY-0fl">
+                        <rect key="frame" x="169" y="81.5" width="48" height="21.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="fj6-wz-YAm"/>
                         </constraints>
@@ -212,14 +212,14 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZZ-sy-5Lm">
-                        <rect key="frame" x="319" y="86" width="10" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZZ-sy-5Lm">
+                        <rect key="frame" x="317" y="86.5" width="10" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" red="0.98052811620000002" green="0.59285616500000005" blue="0.090292894649999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-Ij-9AN">
-                        <rect key="frame" x="219" y="83" width="10" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qU-Ij-9AN">
+                        <rect key="frame" x="217" y="83.5" width="10" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" red="0.98052811620000002" green="0.59285616500000005" blue="0.090292894649999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -239,16 +239,16 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sj9-Ce-chE">
-                        <rect key="frame" x="30" y="31" width="410" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sj9-Ce-chE">
+                        <rect key="frame" x="30" y="29.5" width="406" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.47003205129999998" green="0.47003205129999998" blue="0.47003205129999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vipziyuan.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-8z-XJT">
-                        <rect key="frame" x="411" y="10" width="30" height="9"/>
+                        <rect key="frame" x="400" y="10" width="40" height="9"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="K7J-22-WvE"/>
+                            <constraint firstAttribute="width" constant="40" id="K7J-22-WvE"/>
                         </constraints>
                     </imageView>
                 </subviews>

@@ -23,7 +23,6 @@
 - (void)setDataForCell
 {
     NSString *str = getImageURL;
-    
     self.userIcon.layer.masksToBounds = YES;
     self.userIcon.layer.cornerRadius = self.userIcon.bounds.size.height/2;
     [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[str stringByAppendingString:self.model.UserPicture] ]];

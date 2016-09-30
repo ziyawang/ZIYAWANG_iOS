@@ -22,6 +22,6 @@
 @property (nonatomic,strong) NSString *ServiceType;
 @property (nonatomic,strong) NSString *ServiceArea;
 @property (nonatomic,strong) NSString *role;
-
+@property (nonatomic,strong) NSString *username;
 
 @end

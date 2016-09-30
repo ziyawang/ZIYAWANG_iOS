@@ -22,6 +22,7 @@
 @property (nonatomic,strong) UIView *chooseView2;
 @property (nonatomic,strong) NSMutableDictionary *requestDic;
 @property (nonatomic,assign) BOOL barselected;
+@property (nonatomic,assign) NSInteger selectedButtonTag;
 
 @end
 
@@ -43,8 +44,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"CostViewCell" bundle:nil] forCellReuseIdentifier:@"CostViewCell"];
-    self.sourceArray = [NSMutableArray new];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
     
+    self.sourceArray = [NSMutableArray new];
     [self.view addSubview:self.tableView];
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadNewData];
@@ -82,9 +84,26 @@
     [button2 setBackgroundImage:[UIImage imageNamed:@"yixuanzhong"] forState:(UIControlStateHighlighted)];
     [button3 setBackgroundImage:[UIImage imageNamed:@"yixuanzhong"] forState:(UIControlStateHighlighted)];
     
+    switch (self.selectedButtonTag) {
+        case 1:
+        [button1 setBackgroundImage:[UIImage imageNamed:@"yixuanzhong"] forState:(UIControlStateNormal)];
+            break;
+        case 2:
+        [button2 setBackgroundImage:[UIImage imageNamed:@"yixuanzhong"] forState:(UIControlStateNormal)];
+            break;
+        case 3:
+        [button3 setBackgroundImage:[UIImage imageNamed:@"yixuanzhong"] forState:(UIControlStateNormal)];
+            break;
+        default:
+            break;
+    }
     [button1 setTitle:@"全部" forState:(UIControlStateNormal)];
     [button2 setTitle:@"充值" forState:(UIControlStateNormal)];
     [button3 setTitle:@"付费" forState:(UIControlStateNormal)];
+    
+    button1.titleLabel.font = [UIFont systemFontOfSize:16];
+    button2.titleLabel.font = [UIFont systemFontOfSize:16];
+    button3.titleLabel.font = [UIFont systemFontOfSize:16];
     
     [button1 setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [button2 setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
@@ -131,18 +150,19 @@
     if (button.tag == 1) {
         
         [self loadNewData];
-        
+        self.selectedButtonTag = 1;
     }
     else if(button.tag == 2)
     {
         [self.requestDic setObject:@"1" forKey:@"Type"];
-        
         [self loadNewData];
+        self.selectedButtonTag = 2;
     }
     else
     {
         [self.requestDic setObject:@"2" forKey:@"Type"];
         [self loadNewData];
+        self.selectedButtonTag = 3;
     }
 }
 - (void)loadNewData
@@ -154,22 +174,20 @@
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *URL = [[CostURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-    
     [self.requestDic setObject:@"token" forKey:@"access_token"];
+    [self.requestDic setObject:@"10" forKey:@"pagecount"];
     
 [self.manager POST:URL parameters:self.requestDic progress:^(NSProgress * _Nonnull uploadProgress) {
     
 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
     NSLog(@"获取信息成功");
-    
     for (NSDictionary *Dic in dic[@"data"]) {
         CostModel *model = [[CostModel alloc]init];
         [model setValuesForKeysWithDictionary:Dic];
         [self.sourceArray addObject:model];
     }
     self.startpage ++;
-    
     [self.HUD removeFromSuperViewOnHide];
     [self.HUD hideAnimated:YES];
     [self.tableView reloadData];
@@ -190,6 +208,7 @@
     NSString *URL = [[CostURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     [self.requestDic setObject:@"token" forKey:@"access_token"];
     [self.requestDic setObject:[NSString stringWithFormat:@"%ld",self.startpage] forKey:@"startpage"];
+    [self.requestDic setObject:@"10" forKey:@"pagecount"];
     [self.manager POST:URL parameters:self.requestDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -206,7 +225,6 @@
         if (addArray.count == 0) {
             [self.tableView.mj_footer endRefreshing];
             [self showAlerViewWithMessage:@"没有更多消费信息"];
-            
         }
         else
         {

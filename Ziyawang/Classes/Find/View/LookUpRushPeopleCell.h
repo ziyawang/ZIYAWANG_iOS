@@ -11,7 +11,7 @@
 
 @protocol pushDelegate <NSObject>
 - (void)pushToControllerWithModel:(RushPeopleModel *)model;
-
+- (void)connectServiceWithTel:(NSString *)tel;
 @end
 
 @interface LookUpRushPeopleCell : UITableViewCell

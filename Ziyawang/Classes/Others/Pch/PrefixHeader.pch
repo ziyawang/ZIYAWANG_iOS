@@ -18,9 +18,13 @@
 //#define getImageURL @"http://images.ziyawang.com"//获取图片
 //#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
 //#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
+
+
 //#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
 //#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
 //#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
+//#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
+//#define RechargeSussceeURL @"http://api.ziyawang.com/v1/v1/apple/pay"//支付成功回调业务服务器
 /**
  *  测试服API
  *
@@ -34,6 +38,9 @@
 #define paidURL @"http://apitest.ziyawang.com/v1/app/consume"//消费接口
 #define rechargeURL @"http://apitest.ziyawang.com/v1/pay/list"//充值芽币金额类型
 #define CostURL @"http://apitest.ziyawang.com/v1/mybill"//充值明细
+#define changeNickNameURL @"http://apitest.ziyawang.com/v1/auth/chusername"//修改昵称
+#define RechargeSussceeURL @"http://apitest.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
+
 
 
 
@@ -44,7 +51,7 @@
 #define registURL [getDataURL stringByAppendingString:@"/auth/register"]//注册
 #define changePaswordURL [getDataURL stringByAppendingString:@"/auth/resetpwd"]//忘记密码
 
-#define FindInformationURL [getDataURL stringByAppendingString:@"/project/list"]//找信息
+#define FindInformationURL [getDataURL stringByAppendingString:@"/project/lists"]//找信息
 #define InformationDetailURL [getDataURL stringByAppendingString:@"/project/list/"]//信息详情
 #define FindServiceURL [getDataURL stringByAppendingString:@"/service/list"]//找服务
 #define ServiceDetailURL [getDataURL stringByAppendingString:@"/service/list/"]//服务详情

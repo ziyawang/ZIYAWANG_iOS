@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *MyproCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *MycooCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *MyColCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *redRechageLabel;
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
@@ -59,7 +60,6 @@
     [self.navigationController.navigationBar addSubview:statuView];
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.shadowImage=[UIImage new];
-    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
     UIButton *rightbutton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [rightbutton setBackgroundImage:[UIImage imageNamed:@"modify"] forState:(UIControlStateNormal)];
@@ -67,6 +67,13 @@
     [rightbutton addTarget:self action:@selector(rightBarbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightbutton];
     [[self navigationItem]setRightBarButtonItem:rightButtonItem];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token == nil) {
+    [self.redRechageLabel setHidden:NO];
+    }
+    [self.redRechageLabel setTitleColor:[UIColor colorWithHexString:@"ee5a50"] forState:(UIControlStateNormal)];
+    self.redRechageLabel.layer.borderColor = [UIColor colorWithHexString:@"ee5a50"].CGColor;
     
     
 //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
@@ -138,6 +145,7 @@
             UserInfoController *userinfoVC = [[UserInfoController alloc]init];
             userinfoVC.imageData = imageData;
             userinfoVC.phoneNumber = self.nameLabel.text;
+            userinfoVC.nickNme = self.nameLabel.text;
             [self.navigationController pushViewController:userinfoVC animated:YES];
             
         }
@@ -148,6 +156,8 @@
             UserInfoController *userinfoVC = [[UserInfoController alloc]init];
             userinfoVC.imageData = imageData;
             userinfoVC.phoneNumber = self.nameLabel.text;
+            userinfoVC.nickNme = self.nameLabel.text;
+            
             [self.navigationController pushViewController:userinfoVC animated:YES];
         }
     }
@@ -228,10 +238,18 @@
             dataDic[@"MyProCount"] = [NSString stringWithFormat:@"%@",dic[@"MyProCount"]];
             dataDic[@"MyColCount"] = [NSString stringWithFormat:@"%@",dic[@"MyColCount"]];
             dataDic[@"MyCooCount"] = [NSString stringWithFormat:@"%@",dic[@"MyCooCount"]];
-            self.MyproCountLabel.text = dataDic[@"MyProCount"];
+//            self.MyproCountLabel.text = dataDic[@"MyProCount"];
             self.MyColCountLabel.text = dataDic[@"MyColCount"];
             self.MycooCountLabel.text = dataDic[@"MyProCount"];
             self.MyproCountLabel.text = dataDic[@"user"][@"Account"];
+            if ([self.MyproCountLabel.text isEqualToString:@"0"]) {
+                [self.redRechageLabel setHidden:NO];
+            }
+            else
+            {
+                [self.redRechageLabel setHidden:YES];
+                
+            }
             
             NSLog(@"%@",dic[@"role"]);
             self.role =dic[@"role"];
@@ -414,7 +432,7 @@
                 break;
             case 1:
                 
-                cell.imageView.image = [UIImage imageNamed:@"grablist"];
+                cell.imageView.image = [UIImage imageNamed:@"gerenwodeyuetan"];
                 cell.textLabel.text = @"我的约谈";
                 
                 break;

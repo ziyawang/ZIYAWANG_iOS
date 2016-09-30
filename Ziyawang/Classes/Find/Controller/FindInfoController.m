@@ -85,9 +85,16 @@
                  [self.dataDic setObject:@"1" forKey:@"Vip"];
                  [self findInfomationsWithDic:self.dataDic];
              }
+             else if (index == 3)
+             {
+                 [self.dataDic setObject:@"2" forKey:@"Vip"];
+                 [self findInfomationsWithDic:self.dataDic];
+                 
+             }
+             
         }];
         self.dropMenu.direction = CLDirectionTypeBottom;
-        self.dropMenu.titleList = @[@"全部",@"普通",@"VIP"];
+        self.dropMenu.titleList = @[@"全部",@"普通",@"VIP",@"收费"];
         
         [self.view addSubview:self.dropMenu];
         self.isInView = YES;
@@ -179,7 +186,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         [self.allshiArray addObject:self.shiArray];
     }
     NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];
-    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
+    NSArray *informationTypeID = @[@"1",@"14",@"12",@"4",@"13",@"6",@"3",@"9",@"10",@"2",@"15"];
     
     
     
@@ -201,7 +208,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     //资产包转让
     NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类"];
-    NSArray *Stypearray2 = @[@"银行",@"非银行机构",@"企业"];
+    NSArray *Stypearray2 = @[@"银行",@"非银行金融机构",@"企业"];
     NSMutableArray *zichan = [NSMutableArray new];
     [zichan addObject:Stypearray1];
     [zichan addObject:Stypearray2];
@@ -253,7 +260,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [jinzhi addObject:Stypearray13];
     //委外催收
     NSArray *Stypearray14 = @[@"个人债权",@"银行贷款",@"企业商账",@"其他"];
-    NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上"];
+    NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上",@"面议"];
     NSArray *Stypearray16 = @[@"已诉讼",@"未诉讼"];
     NSMutableArray *weiwai = [NSMutableArray new];
     [weiwai addObject:Stypearray14];
@@ -357,14 +364,17 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
             if ([substr isEqualToString:@"类型"]) {
+                [self.dataDic removeObjectForKey:@"Corpore"];
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
+                
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
             else if ([substr isEqualToString:@"标的"])
             {
+                [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
                 NSString *findValue = [string substringFromIndex:3];
                 [self.dataDic setObject:findValue forKey:@"Corpore"];
@@ -524,7 +534,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic removeObjectForKey:@"Rate"];
                 [self.dataDic setObject:findValue forKey:@"Status"];
-                
+                [self findInfomationsWithDic:self.dataDic];
             }
         }
         
@@ -548,7 +558,16 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             }
             else if([Str isEqualToString:@"投资期限"])
             {
-                NSString *findValue = [[string substringFromIndex:4]substringToIndex:1];
+                
+                NSString *findValue = [string substringFromIndex:4];
+                if (findValue.length == 3) {
+                    findValue = [findValue substringToIndex:2];
+                }
+                else
+                {
+                    findValue = [findValue substringToIndex:1];
+                }
+                
                 [self.dataDic setObject:findValue forKey:@"Year"];
                 [self.dataDic removeObjectForKey:@"AssetType"];
                 [self.dataDic removeObjectForKey:@"investType"];
@@ -772,7 +791,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     }
     NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
     NSArray *level = @[@""];
-    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"05"];
+    NSArray *informationTypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"2",@"05"];
     NSArray *typearray1 = @[@"类型",@"来源"];
     NSArray *typearray2 = @[@"类型"];
     NSArray *typearray3 = @[@"类型"];
@@ -789,7 +808,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     //资产包转让
     NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类"];
-    NSArray *Stypearray2 = @[@"银行",@"非银行机构",@"企业"];
+    NSArray *Stypearray2 = @[@"银行",@"非银行金融机构",@"企业"];
     NSMutableArray *zichan = [NSMutableArray new];
     [zichan addObject:Stypearray1];
     [zichan addObject:Stypearray2];
@@ -839,7 +858,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [jinzhi addObject:Stypearray13];
     //委外催收
     NSArray *Stypearray14 = @[@"个人债权",@"银行贷款",@"企业商账",@"状态",@"地区"];
-    NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上"];
+    NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上",@"面议"];
     NSArray *Stypearray16 = @[@"已诉讼",@"未诉讼"];
     NSMutableArray *weiwai = [NSMutableArray new];
     [weiwai addObject:Stypearray14];
@@ -1318,6 +1337,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             [self.model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:self.model];
             }
+        if (self.sourceArray.count == 0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+        }
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
          [self.tableView reloadData];
@@ -1439,7 +1463,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
     {
-        return 130;
+        return 140;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
     {

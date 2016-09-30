@@ -14,4 +14,6 @@ pod 'ShareSDK3/ShareSDKPlatforms/QQ'
 pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
 pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 pod 'UMengAnalytics-NO-IDFA'
+pod 'HcdPopMenu'
+
 end

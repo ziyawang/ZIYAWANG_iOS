@@ -10,6 +10,10 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "PassWordCheck.h"
+
+#define NUM @"0123456789"
+#define ALPHA @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define ALPHANUM @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 @interface RegistController ()<MBProgressHUDDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *smsCodeTextField;
@@ -18,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *getsmsCodeButton;
 @property (weak, nonatomic) IBOutlet UIButton *YesButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *xiyeLabel;
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) NSUserDefaults *userDefault;
@@ -32,8 +37,12 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationbar;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftBarButton;
+@property (nonatomic,strong) UIButton *getSmsButton;
+
 @property (nonatomic,assign) BOOL isPhoneNumber;
 
+@property (nonatomic,strong) UIWebView *webView;
+@property (nonatomic,strong) UIView *topView;
 
 @end
 
@@ -54,7 +63,7 @@
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
     if (mobile.length < 11)
     {
-        [self showAlertViewWithString:@"手机格式不正确"];
+        [self showAlertViewWithString:@"请输入正确的手机号"];
         _isPhoneNumber = NO;
     }else{
         /**
@@ -78,7 +87,7 @@
         
         if (!(isMatch1 || isMatch2 || isMatch3)) {
             _isPhoneNumber = NO;
-            [self showAlertViewWithString:@"手机格式不正确"];
+            [self showAlertViewWithString:@"请输入正确的手机号"];
             return;
             
         } else {
@@ -92,24 +101,84 @@
     [alert show];
     
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.phoneNumTextfield) {
+        if (string.length == 0)
+            return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 11) {
+            return NO;
+        }
+    }
+    else if(textField == self.smsCodeTextField)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 6) {
+            return NO;
+        }
+    
+    }
+    else if(textField == self.passwordTextField || textField == self.repasswordTextField)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 16) {
+            return NO;
+        }
+        
+    }
+          NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHANUM] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        return [string isEqualToString:filtered];
+}
 - (IBAction)didClickRegistButton:(id)sender {
     
     [self checkMobilePhoneNumber:self.phoneNumTextfield.text];
     //判断输入
-    if (self.phoneNumTextfield.text.length !=11) {
-        [self MBProgressWithString:@"号码不存在" timer:1 mode:MBProgressHUDModeText];
-        
-        NSLog(@"号码不存在");
-        return;
-    }
-    if ([self.phoneNumTextfield.text isEqualToString:@""]||[self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
-        [self showAlertViewWithString:@"请填写完整信息"];
+//    if (self.phoneNumTextfield.text.length !=11) {
+//        [self MBProgressWithString:@"号码不存在" timer:1 mode:MBProgressHUDModeText];
+//        
+//        NSLog(@"号码不存在");
+//        return;
+//    }
+    if ([self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
+        if ([self.smsCodeTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入验证码"];
+            return;
+        }
+        if ([self.passwordTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入密码"];
+            return;
+        }
+        if ([self.passwordTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请再次输入密码"];
+            return;
+        }
         NSLog(@"您输入的信息不完整");
         return;
     }
     if(self.passwordTextField.text.length<6||self.passwordTextField.text.length>16)
     {
-        [self showAlertViewWithString:@"密码格式不正确"];
+        if(self.passwordTextField.text.length < 6)
+        {
+         [self showAlertViewWithString:@"请输入不少于6位密码"];
+            return;
+        }
+        if (self.passwordTextField.text.length > 16) {
+            [self showAlertViewWithString:@"输入密码不能多于16位"];
+        }
         return;
         
     }
@@ -130,9 +199,19 @@
 }
 - (IBAction)didClickYesButton:(id)sender {
     
+    if (self.agree == YES) {
+        [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaoli"] forState:(UIControlStateNormal)];
+        self.agree = NO;
+    }
+    else if (self.agree == NO) {
+        [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:(UIControlStateNormal)];
+        self.agree = YES;
+    }
+    
 //    if (self.YesButton.selected == YES)
 //    {
 //    self.YesButton.selected = NO;
+//        
 //    }
 //    if(self.YesButton.selected == NO)
 //    {
@@ -140,6 +219,7 @@
 //        self.agree = YES;
 //        self.tapgesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureAction:)];
 //        [self.YesButton addGestureRecognizer:self.tapgesture];
+//        
 //    }
     
 }
@@ -168,24 +248,70 @@
     
 }
 // 给同意按钮添加手势方法
-//- (void)tapGestureAction:(UITapGestureRecognizer *)tapGesture
-//{
-//    
-//    self.YesButton.selected = NO;
-//    self.agree = NO;
-//    [self.YesButton removeGestureRecognizer:self.tapgesture];
-//
-//}
+- (void)tapGestureAction:(UITapGestureRecognizer *)tapGesture
+{
+    self.YesButton.selected = NO;
+    self.agree = NO;
+    [self.YesButton removeGestureRecognizer:self.tapgesture];
+}
+- (void)xiyeLabelGesture:(UITapGestureRecognizer *)gesture
+{
+    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.webView = webView;
+    NSString *URL = [AudioURL stringByAppendingString:@"/law.html"];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    view.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+   
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 25, 150, 20)];
+    titleLabel.text = @"资芽网注册协议";
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.centerX = view.centerX;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [view addSubview:titleLabel];
+    
+    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(5, 25, 10, 18)];
+    imageview.image = [UIImage imageNamed:@"back3"];
+    
+    [view addSubview:imageview];
+    
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [button setFrame:CGRectMake(20, 20, 40, 30)];
+    [button setTitle:@"返回" forState:(UIControlStateNormal)];
+    [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [button addTarget:self action:@selector(didClickWebViewButton) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [view addSubview:button];
+    self.topView = view;
+       [self.view addSubview:self.topView];
+    [self.view addSubview:self.webView];
+}
+- (void)didClickWebViewButton
+{
+    [self.webView removeFromSuperview];
+    [self.topView removeFromSuperview];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
 self.title = @"aaa";
     self.navigationController.navigationBar.topItem.title = @"aaa";
     
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(xiyeLabelGesture:)];
+    
+    [self.xiyeLabel addGestureRecognizer:gesture];
+    self.xiyeLabel.userInteractionEnabled = YES;
+    
     [self setColorForTextPlaceHoder];
     [self initPravite];
+    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateNormal];
+    self.agree = YES;
     [self setAgreeButtonState];
     //设置注册按钮不可点击
      //    [self.registButton setUserInteractionEnabled:NO];
@@ -198,7 +324,8 @@ self.title = @"aaa";
       }
 - (void)setAgreeButtonState
 {
-    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateNormal];
+    
+    
 //    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateHighlighted];
 //    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected];
 //    [self.YesButton setBackgroundImage:[UIImage imageNamed:@"tiaolixuanzhong"] forState:UIControlStateSelected | UIControlStateHighlighted];
@@ -263,24 +390,66 @@ self.title = @"aaa";
     UIImageView *imageView5 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight],[self leftimageHeight] )];
     imageView5.image = [UIImage imageNamed:@"shoujihao"];
     
-    self.phoneNumTextfield.leftView = imageView1;
-    self.smsCodeTextField.leftView = imageView2;
-    self.passwordTextField.leftView = imageView3;
-    self.repasswordTextField.leftView = imageView4;
+    UIView *View1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10, [self leftimageHeight])];
+    UIView *View2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10, [self leftimageHeight])];
     
-    UIButton *getcodeButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+     UIView *View3 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10,[self leftimageHeight])];
+     UIView *View4 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10, [self leftimageHeight])];
+    
+    [View1 addSubview:imageView1];
+    [View2 addSubview:imageView2];
+    [View3 addSubview:imageView3];
+    [View4 addSubview:imageView4];
+    
+    
+    self.phoneNumTextfield.leftView = View1;
+    self.smsCodeTextField.leftView = View2;
+    self.passwordTextField.leftView = View3;
+    self.repasswordTextField.leftView = View4;
+    
+    UIButton *getcodeButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [getcodeButton setFrame:CGRectMake(self.phoneNumTextfield.bounds.size.width * 0.75, 0, self.phoneNumTextfield.bounds.size.width * 0.25, self.phoneNumTextfield.bounds.size.height)];
     [getcodeButton setTitle:@"获取验证码" forState:(UIControlStateNormal)];
     getcodeButton.titleLabel.font = [UIFont FontForLabel];
     [getcodeButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
 //    [getcodeButton.titleLabel setTextColor:[UIColor lightGrayColor]];
     
+    
+    
     self.smsCodeTextField.rightView = getcodeButton;
     
     [getcodeButton setBackgroundImage:[UIImage imageNamed:@"yanzhengmaB"] forState:(UIControlStateNormal)];
         [getcodeButton setBackgroundImage:[UIImage imageNamed:@"yanzhengmaB"] forState:(UIControlStateHighlighted)];
     [getcodeButton addTarget:self action:@selector(getsmscode) forControlEvents:(UIControlEventTouchUpInside)];
+    self.getSmsButton = getcodeButton;
     
+    
+}
+-(void)startTime{
+    __block int timeout= 60; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.getSmsButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+                self.getSmsButton.userInteractionEnabled = YES;
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:1];
+                [self.getSmsButton setTitle:[NSString stringWithFormat:@"%zd秒",timeout] forState:UIControlStateNormal];
+                [UIView commitAnimations];
+                self.getSmsButton.userInteractionEnabled = NO;
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
     
 }
 
@@ -329,10 +498,10 @@ self.title = @"aaa";
 - (void)getsmscode
 {
     
+    
      [self checkMobilePhoneNumber:self.phoneNumTextfield.text];
     if (self.isPhoneNumber == YES) {
-        
-    
+      
     NSString *access_token = @"token";
     NSString *phonenumber = self.phoneNumTextfield.text;
     NSString *act = @"register";
@@ -363,8 +532,9 @@ self.title = @"aaa";
         if([code isEqualToString:@"200"])
         {
             
+            [self startTime];
 //            [self MBProgressWithString:@"发送成功" timer:1 mode:MBProgressHUDModeText];
-            [self showAlertViewWithString:@"验证码发送成功,您可于60s后可重新获取"];
+            [self showAlertViewWithString:@"验证码发送成功,60s后可重新获取"];
             
             NSLog(@"验证码发送成功");
             
@@ -372,12 +542,15 @@ self.title = @"aaa";
         else if([code isEqualToString:@"405"])
             
         {
-            [self MBProgressWithString:@"手机号已注册" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"该账号已注册，请直接登录"];
+//            [self MBProgressWithString:@"手机号已注册" timer:1 mode:MBProgressHUDModeText];
 
         }
         else
         {
-            [self MBProgressWithString:@"发送失败" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"服务器异常，请稍后重试"];
+            
+//            [self MBProgressWithString:@"发送失败" timer:1 mode:MBProgressHUDModeText];
 
             NSLog(@"验证码发送失败");
         }
@@ -385,7 +558,10 @@ self.title = @"aaa";
         NSLog(@"%@",dic);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
- [self showAlertViewWithString:@"验证码发送失败,请检查您的网络设置"];    }];
+ [self showAlertViewWithString:@"验证码发送失败,请检查您的网络设置"];
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
+    }];
         
     }
 }
@@ -395,22 +571,39 @@ self.title = @"aaa";
 //注册
 - (void)RegistFromDomin
 {
-    if ([self.phoneNumTextfield.text isEqualToString:@""]||[self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
-        [self showAlertViewWithString:@"请填写完整信息"];
-        
-        NSLog(@"您输入的信息不完整");
-        return;
+    if ([self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
+        if ([self.smsCodeTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入验证码"];
+            return;
+            
+        }
+        if ([self.passwordTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入的密码"];
+            return;
+            
+        }
+        if ([self.repasswordTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请再次输入密码"];
+            return;
+            
+        }
+
     }
     
     if ([self.passwordTextField.text isEqualToString:self.repasswordTextField.text]==NO) {
-        [self showAlertViewWithString:@"您输入的两次密码不一致，请重新输入"];
+        [self showAlertViewWithString:@"两次输入密码不一致"];
         return;
     }
-    BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
-    if (pass == NO) {
-        [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
-        return;
-    }
+  
+//    BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
+//    if (pass == NO) {
+//        [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
+//        return;
+//    }
+//    if (self.agree == NO) {
+//        [self showAlertViewWithString:@"您还未阅读并同意《资芽网注册协议》"];
+//        return;
+//    }
     
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
@@ -451,10 +644,16 @@ self.title = @"aaa";
         if ([code isEqualToString:@"200"])
         {
 //            [self MBProgressWithString:@"注册成功" timer:1 mode:MBProgressHUDModeText];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功，请用新账号登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功，请用新账号登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
             NSLog(@"请求失败");
-            
+//            self.HUD = [MBProgressHUD showHUDAddedTo:[self window]animated:YES];
+//            self.HUD.delegate = self;
+//            self.HUD.mode = MBProgressHUDModeText;
+//            self.HUD.labelText = @"注册成功";
+//            self.HUD.removeFromSuperViewOnHide = YES;
+//            [self.HUD hideAnimated:YES afterDelay:2];
+            [self showAlertViewWithString:@"注册成功"];
             NSLog(@"注册成功");
             NSString *token = dic[@"token"];
             NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
@@ -464,20 +663,25 @@ self.title = @"aaa";
         }
         else if([code isEqualToString:@"405"])
         {
-            [self MBProgressWithString:@"账号已注册" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"该账号已注册"];
+//            [self MBProgressWithString:@"账号已注册" timer:1 mode:MBProgressHUDModeText];
         }
         else if([code isEqualToString:@"402"])
         {
-            [self MBProgressWithString:@"验证码不正确" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"验证码不正确"];
+//            [self MBProgressWithString:@"验证码不正确" timer:1 mode:MBProgressHUDModeText];
         }
         else
         {
-            [self MBProgressWithString:@"服务器异常，注册失败" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"服务器异常，请稍后重试"];
+//            [self MBProgressWithString:@"服务器异常，注册失败" timer:1 mode:MBProgressHUDModeText];
             NSLog(@"注册失败");
         }
         NSLog(@"%@",dic);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         NSLog(@"请求失败");
@@ -487,7 +691,10 @@ self.title = @"aaa";
     
 }
 
-
+- (UIWindow *)window
+{
+    return [UIApplication sharedApplication].keyWindow;
+}
 
 
 - (void)didReceiveMemoryWarning {

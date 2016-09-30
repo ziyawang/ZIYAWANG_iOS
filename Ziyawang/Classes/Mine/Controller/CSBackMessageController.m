@@ -276,8 +276,9 @@
 - (void)setupUploadButton {
     
     UIButton *uploadBtn = [[UIButton alloc] init];
-    uploadBtn.frame = CGRectMake(20 * kWidthScale, 300 * kHeightScale, self.view.width   - 40 * kWidthScale , 40 * kHeightScale);
-    uploadBtn.backgroundColor = [UIColor colorWithRed:236.0 / 255.0 green:206.0 / 255.0 blue:83.0 / 255.0 alpha:1.0];
+    uploadBtn.frame = CGRectMake(20 , 300 * kHeightScale, self.view.width   - 40, 50);
+//    uploadBtn.backgroundColor = [UIColor colorWithRed:236.0 / 255.0 green:206.0 / 255.0 blue:83.0 / 255.0 alpha:1.0];
+    [uploadBtn setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     [uploadBtn setTitle:@"提交" forState:UIControlStateNormal];
     [uploadBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [uploadBtn addTarget:self action:@selector(uploadBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];

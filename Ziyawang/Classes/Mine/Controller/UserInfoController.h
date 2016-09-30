@@ -11,5 +11,6 @@
 @interface UserInfoController : UIViewController
 @property (nonatomic,strong) NSData *imageData;
 @property (nonatomic,strong) NSString *phoneNumber;
+@property (nonatomic,strong) NSString *nickNme;
 
 @end

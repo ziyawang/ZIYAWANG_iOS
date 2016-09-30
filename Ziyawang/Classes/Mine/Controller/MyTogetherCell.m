@@ -187,13 +187,28 @@
     
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
     
-    if ([self.model.Member isEqualToString:@"1"] == NO ) {
+    if ([self.model.Member isEqualToString:@"0"]) {
         [self.VipImage setHidden:YES];
+        
     }
-    else
+    else if([self.model.Member isEqualToString:@"1"])
     {
         [self.VipImage setHidden:NO];
+        self.VipImage.image = [UIImage imageNamed:@"vipziyuan"];
+        
     }
+    else if([self.model.Member isEqualToString:@"2"])
+    {
+        self.VipImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        
+    }
+//    if ([self.model.Member isEqualToString:@"1"] == NO ) {
+//        [self.VipImage setHidden:YES];
+//    }
+//    else
+//    {
+//        [self.VipImage setHidden:NO];
+//    }
     
     
     [self.wan1 setHidden:NO];

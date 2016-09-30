@@ -20,6 +20,7 @@
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 @property (nonatomic,strong) RushPeopleModel *model;
 @property (nonatomic,strong) MBProgressHUD *HUD;
+@property (nonatomic,assign) NSInteger startpage;
 
 @end
 
@@ -50,12 +51,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.model = [[RushPeopleModel alloc]init];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+    self.navigationItem.title = @"查看约谈人";
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, self.view.bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     self.tableVeiw = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
     [self.tableVeiw registerNib:[UINib nibWithNibName:@"LookUpRushPeopleCell" bundle:nil] forCellReuseIdentifier:@"LookUpRushPeopleCell"];
     [self.view addSubview:self.tableVeiw];
     self.tableVeiw.delegate = self;
     self.tableVeiw.dataSource = self;
+    
+    self.tableVeiw.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.sourceArray = [NSMutableArray new];
@@ -69,10 +81,12 @@
 
 - (void)getRushPeopleData
 {
-    
-    
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    self.startpage = 1;
+    [self.sourceArray removeAllObjects];
     NSString *headurl = getDataURL;
-    
     NSString *footurl = @"/project/rushlist/";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
@@ -86,6 +100,7 @@
     NSString *accesstoken = @"token";
     [paraDic setObject:token forKey:@"token"];
     [paraDic setObject:accesstoken forKey:@"access_token"];
+    [paraDic setObject:@"10" forKey:@"pagecount"];
 //    [paraDic setObject:projectID forKey:@"ProjectID"];
     
     [self.manager GET:URL parameters:paraDic progress:^(NSProgress * _Nonnull downloadProgress)
@@ -99,19 +114,106 @@
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
         }
+         if (self.sourceArray.count == 0) {
+             [self showAlertWithString:@"暂时没有抢单人"];
+         }
+         else
+         {
         [self.tableVeiw reloadData];
+             self.startpage ++;
+         }
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
         NSLog(@"请求成功");
         NSLog(@"自己的抢单人返回的数据%@",dic);
          
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"----------------------%@",error);
+        [self showAlertWithString:@"获取信息失败，请检查您的网络设置"];
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
         
 //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //        [alert show];
 //        NSLog(@"申请请求失败！%@",error);
     }];
 }
+- (void)loadMoreData
+{
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    NSString *headurl = getDataURL;
+    NSString *footurl = @"/project/rushlist/";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+    //    NSString *token = [@"?token=" stringByAppendingString:token1];
+    //    NSString *projectID = [NSString stringWithFormat:@"%@",self.ProjectID];
+    NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!%@",self.ProjectID);
+    NSString *projectID = [NSString stringWithFormat:@"%@",self.ProjectID];
+    NSString *URL =[[headurl stringByAppendingString:footurl]stringByAppendingString:projectID];
+    
+    NSMutableDictionary *paraDic = [NSMutableDictionary new];
+    NSString *accesstoken = @"token";
+    [paraDic setObject:token forKey:@"token"];
+    [paraDic setObject:accesstoken forKey:@"access_token"];
+    [paraDic setObject:@"10" forKey:@"pagecount"];
+    [paraDic setObject:[NSString stringWithFormat:@"%ld",self.startpage] forKey:@"startpage"];
+    
+    //    [paraDic setObject:projectID forKey:@"ProjectID"];
+    
+    [self.manager GET:URL parameters:paraDic progress:^(NSProgress * _Nonnull downloadProgress)
+     {
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+         NSArray *array = dic[@"data"];
+         NSMutableArray *addArray = [NSMutableArray new];
+         for (NSDictionary *dic in array)
+         {
+             RushPeopleModel *model = [[RushPeopleModel alloc]init];
+             [model setValuesForKeysWithDictionary:dic];
+             [addArray addObject:model];
+         }
+         [self.sourceArray addObjectsFromArray:addArray];
+         if (addArray.count == 0) {
+             [self showAlertWithString:@"没有更多数据"];
+             [self.tableVeiw.mj_footer endRefreshingWithNoMoreData];
+         }
+         else
+         {
+         
+         [self.tableVeiw reloadData];
+            
+          self.startpage ++;
+             
+         }
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
+         NSLog(@"请求成功");
+         NSLog(@"自己的抢单人返回的数据%@",dic);
+         [self.tableVeiw.mj_footer endRefreshing];
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"----------------------%@",error);
+         
+         [self showAlertWithString:@"获取信息失败，请检查您的网络设置"];
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
+         //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         //        [alert show];
+         //        NSLog(@"申请请求失败！%@",error);
+     }];
 
+
+
+}
+
+- (void)showAlertWithString:(NSString *)str
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+    
+}
 //- (void)collectButtonAction:(UIButton *)collectButton
 //{
 //    NSString *headurl = @"http://api.ziyawang.com/v1";
@@ -242,7 +344,15 @@
 
     
 }
+- (void)connectServiceWithTel:(NSString *)tel
+{
+       UIWebView *webView = [[UIWebView alloc]init];
+        NSString *telString = [@"tel:"stringByAppendingString:tel];
+        NSURL *url = [NSURL URLWithString:telString];
+        [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self.view addSubview:webView];
 
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

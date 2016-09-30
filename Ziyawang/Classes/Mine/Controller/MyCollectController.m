@@ -33,9 +33,22 @@
 
 @implementation MyCollectController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"我的收藏";
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, self.view.bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
   self.zvideo = [[ZXVideo alloc]init];

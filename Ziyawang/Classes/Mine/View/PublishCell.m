@@ -95,14 +95,29 @@
 - (void)setDataForCell
 {
 //    NSLog(@"--------------------%@",self.model.Member);
-    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
-    if ([self.model.Member isEqualToString:@"1"] == NO ) {
+    if ([self.model.Member isEqualToString:@"0"]) {
         [self.VipImage setHidden:YES];
+        
     }
-    else 
+    else if([self.model.Member isEqualToString:@"1"])
     {
         [self.VipImage setHidden:NO];
+        self.VipImage.image = [UIImage imageNamed:@"vipziyuan"];
     }
+    else if([self.model.Member isEqualToString:@"2"])
+    {
+        [self.VipImage setHidden:NO];
+        self.VipImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        
+    }
+//    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
+//    if ([self.model.Member isEqualToString:@"1"]||[self.model.Member isEqualToString:@"2"]) {
+//        [self.VipImage setHidden:NO];
+//    }
+//    else 
+//    {
+//        [self.VipImage setHidden:YES];
+//    }
     [self.wan1 setHidden:NO];
     [self.wan2 setHidden:NO];
     self.wan1.text = @"万";

@@ -15,7 +15,7 @@
 @property (nonatomic,strong) MBProgressHUD *HUD;
 
 @property (weak, nonatomic) IBOutlet UILabel *operateStateButton;
-
+@property (nonatomic,strong) UIWebView *webView;
 @end
 
 
@@ -47,7 +47,7 @@
     if (_PublishState != PublishState) {
         _PublishState = nil;
         _PublishState = PublishState;
-        [self setStateForCell];
+//        [self setStateForCell];
     }
 }
 - (void)setDataForCell
@@ -58,12 +58,18 @@
     [self.usericonImageView sd_setImageWithURL:[NSURL URLWithString:URL]];
     self.usericonImageView.layer.masksToBounds = YES;
     self.usericonImageView.layer.cornerRadius = 30;
-        self.numberLable.text = self.model.ServiceNumber;
+    [self.usericonImageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    self.usericonImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.usericonImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.usericonImageView.clipsToBounds = YES;
+  
+        self.numberLable.text = self.model.ServiceName;
     self.phoneNumberLabel.text = self.model.ConnectPhone;
     self.model.CooperateFlag = [NSString stringWithFormat:@"%@",self.model.CooperateFlag];
     
     self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
     
+    self.webView = [[UIWebView alloc]init];
     
     
 
@@ -126,7 +132,6 @@
             //            [self.operateStateButton setText:@"取消中"];
             
         }
-        
     }
     else if([self.PublishState isEqualToString:@"2"])
     {
@@ -210,18 +215,37 @@
 }
 - (IBAction)agreeButtonAction:(id)sender {
     
-    if ([self.model.CooperateFlag isEqualToString:@"0"]) {
-        [self agreeAction];
+    if (self.Mydelegate != nil && [self.Mydelegate respondsToSelector:@selector(pushToControllerWithModel:)]) {
+        [self.Mydelegate connectServiceWithTel:self.model.ConnectPhone];
     }
-    else
-    {
+//    if ([self.model.CooperateFlag isEqualToString:@"0"]) {
 //        [self agreeAction];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您已与该服务方经合作" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        
-    }
+//    }
+//    else
+//    {
+////        [self agreeAction];
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您已与该服务方合作" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        
+//    }
+    
+//    NSMutableString *str = [[NSMutableString alloc]initWithFormat:@"telprompt://%@",self.model.ConnectPhone];
+//    NSString *str = [@"tel://"stringByAppendingString:self.model.ConnectPhone];
+//    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:str]];
+    
+//    NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
+//    NSURL *url = [NSURL URLWithString:telString];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+//    [[self window] addSubview:self.webView];
 
+    
 }
+
+- (UIWindow *)window
+{
+    return [UIApplication sharedApplication].keyWindow;
+}
+
 
 
 - (void)agreeAction
@@ -254,7 +278,7 @@
         NSLog(@"合作成功");
         [self MBProgressWithString:@"合作成功" timer:1 mode:MBProgressHUDModeText];
         [self.agreeButton setHidden:YES];
-        [self.operateStateButton setText:@"合作中"];
+//        [self.operateStateButton setText:@"合作中"];
         NSLog(@"%@",dic[@"status_code"]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];

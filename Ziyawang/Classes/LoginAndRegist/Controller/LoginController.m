@@ -56,14 +56,14 @@
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
-    
   }
  //正则判断
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
     if (mobile.length < 11)
     {
-        [self showAlertViewWithString:@"手机格式不正确"];
+        [self showAlertViewWithString:@"请输入正确的手机号"];
         _isPhoneNumber = NO;
+        return;
     }else{
         /**
          * 移动号段正则表达式
@@ -86,7 +86,7 @@
         
         if (!(isMatch1 || isMatch2 || isMatch3)) {
             _isPhoneNumber = NO;
-            [self showAlertViewWithString:@"手机格式不正确"];
+            [self showAlertViewWithString:@"请输入正确的手机号"];
             return;
             
         } else {
@@ -104,15 +104,22 @@
 //        NSLog(@"号码不存在");
 //        return;
 //    }
+    if ([self.userNnameTextField.text isEqualToString:@""]&&[self.passWordTextField.text isEqualToString:@""]) {
+        [self showAlertViewWithString:@"请输入正确的手机号"];
+        return;
+    }
     [self checkMobilePhoneNumber:self.userNnameTextField.text];
     
     
-    
     if ([self.userNnameTextField.text isEqualToString:@""]||[self.passWordTextField.text isEqualToString:@""]) {
-        [self MBProgressWithString:@"您输入的信息不完整" timer:1 mode:MBProgressHUDModeText];
-            NSLog(@"您输入的信息不完整");
+      if([self.passWordTextField.text isEqualToString:@""])
+        {
+            [self showAlertViewWithString:@"请输入密码"];
             return;
+        }
+
     }
+    
     else
     {
         [self checkNetWorkStatus];
@@ -228,6 +235,7 @@
     
     UIView *View1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.userNnameTextField.bounds.size.height+[self leftimageHeight]+10, self.userNnameTextField.bounds.size.height + [self leftimageHeight])];
      UIView *View2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.userNnameTextField.bounds.size.height+[self leftimageHeight]+10, self.userNnameTextField.bounds.size.height + [self leftimageHeight])];
+    
     [View1 addSubview:imageView1];
     [View2 addSubview:imageView2];
     
@@ -286,6 +294,36 @@
     [self.view endEditing:YES];
     return YES;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.userNnameTextField) {
+        if (string.length == 0)
+            return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 11) {
+            return NO;
+        }
+    }
+    else if(textField == self.passWordTextField)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 16) {
+            return NO;
+        }
+        
+    }
+ 
+    return YES;
+}
+
 //显示菊花
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
@@ -413,24 +451,32 @@
 //               [RCIM sharedRCIM].userInfoDataSource = self;
                
             [self getRongCloudToken];
+//               UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"登录成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//               [alert show];
+               NSLog(@"请求失败");
+               self.HUD = [MBProgressHUD showHUDAddedTo:[self window]animated:YES];
+               self.HUD.delegate = self;
+               self.HUD.mode = MBProgressHUDModeText;
+               self.HUD.labelText = @"登录成功";
+               self.HUD.removeFromSuperViewOnHide = YES;
+               [self.HUD hideAnimated:YES afterDelay:2];
+               
+//           [self MBProgressWithString:@"登录成功" timer:2 mode:MBProgressHUDModeText];
             [self dismissViewControllerAnimated:YES completion:nil];
-
             NSLog(@"登录成功");
-            
-//                        [self MBProgressWithString:@"登录成功" timer:1 mode:MBProgressHUDModeText];
-
-           
-            
-        }
+               
+                }
         else if([code isEqualToString:@"404"])
-        { [self.HUD removeFromSuperViewOnHide];
+        {
+            [self.HUD removeFromSuperViewOnHide];
             [self.HUD hideAnimated:YES];
-            [self MBProgressWithString:@"密码错误" timer:1 mode:MBProgressHUDModeText];
+//            [self MBProgressWithString:@"密码错误" timer:1 mode:MBProgressHUDModeText];
+            [self showAlertViewWithString:@"用户名或密码错误"];
         }
         else if ([code isEqualToString:@"406"])
         { [self.HUD removeFromSuperViewOnHide];
             [self.HUD hideAnimated:YES];
-            [self MBProgressWithString:@"用户不存在" timer:1 mode:MBProgressHUDModeText];
+            [self MBProgressWithString:@"该手机号未注册" timer:1 mode:MBProgressHUDModeText];
         }
         else
         {
@@ -454,7 +500,10 @@
     }
 }
 
-
+- (UIWindow *)window
+{
+    return [UIApplication sharedApplication].keyWindow;
+}
 #pragma mark----融云数据源提供者
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion
 {

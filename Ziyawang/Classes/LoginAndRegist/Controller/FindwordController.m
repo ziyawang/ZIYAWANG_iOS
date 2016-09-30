@@ -11,6 +11,9 @@
 #import "AFNetworking.h"
 #import "LoginController.h"
 #import "PassWordCheck.h"
+#define NUM @"0123456789"
+#define ALPHA @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define ALPHANUM @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 @interface FindwordController ()<MBProgressHUDDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 @property (weak, nonatomic) IBOutlet UITextField *smsCodeTextField;
@@ -27,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationbar;
 @property (nonatomic,assign) BOOL isPhoneNumber;
 
+@property (nonatomic,strong) UIButton *getSmsButton;
 
 @end
 
@@ -45,8 +49,9 @@
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
     if (mobile.length < 11)
     {
-        [self showAlertViewWithString:@"手机格式不正确"];
+        [self showAlertViewWithString:@"请输入正确的手机号"];
         _isPhoneNumber = NO;
+        
     }else{
         /**
          * 移动号段正则表达式
@@ -69,7 +74,7 @@
         
         if (!(isMatch1 || isMatch2 || isMatch3)) {
             _isPhoneNumber = NO;
-            [self showAlertViewWithString:@"手机格式不正确"];
+            [self showAlertViewWithString:@"请输入正确的手机号"];
             return;
         } else {
             _isPhoneNumber = YES;
@@ -122,7 +127,9 @@
     if (self.phoneNumTextField.text == nil||self.smsCodeTextField.text == nil||self.passwordTextField.text == nil||self.repasswordTextField.text == nil) {
 //        [self MBProgressWithString:@"您输入的信息不完整" timer:1 mode:MBProgressHUDModeText];
         
-        
+        if (self.phoneNumTextField.text == nil) {
+            
+        }
         
         
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请填写完整信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -133,10 +140,6 @@
         
     }
     
-    
-    
-    
-    
     else
     {
     [self checkMobilePhoneNumber:self.phoneNumTextField.text];
@@ -144,7 +147,14 @@
     }
     
   }
+- (void)shoAlertWithString:(NSString *)String
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:String delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+    
+    NSLog(@"您输入的信息不完整");
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -253,11 +263,26 @@
     UIImageView *imageView4 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight],[self leftimageHeight])];
     imageView4.image = [UIImage imageNamed:@"mimaqueren"];//    UIImageView *imageView5 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.phoneNumTextField.bounds.size.height +[self leftimageHeight], self.phoneNumTextField.bounds.size.height+[self leftimageHeight] )];
 //    imageView5.image = [UIImage imageNamed:@"yanzhengmaB"];
-    self.phoneNumTextField.leftView = imageView1;
-    self.smsCodeTextField.leftView = imageView2;
-    self.passwordTextField.leftView = imageView3;
-    self.repasswordTextField.leftView = imageView4;
+    
+    UIView *View1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10,  [self leftimageHeight])];
+    UIView *View2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0,[self leftimageHeight]+10, [self leftimageHeight])];
+    
+    UIView *View3 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10,  [self leftimageHeight])];
+    UIView *View4 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [self leftimageHeight]+10, [self leftimageHeight])];
+    
+    [View1 addSubview:imageView1];
+    [View2 addSubview:imageView2];
+    [View3 addSubview:imageView3];
+    [View4 addSubview:imageView4];
+    
+    self.phoneNumTextField.leftView = View1;
+    self.smsCodeTextField.leftView = View2;
+    self.passwordTextField.leftView = View3;
+    self.repasswordTextField.leftView = View4;
 //    self.smsCodeTextField.rightView = imageView5;
+    
+    
+    
     
     self.phoneNumTextField.delegate = self;
     self.smsCodeTextField.delegate = self;
@@ -271,7 +296,8 @@
     getcodeButton.titleLabel.font = [UIFont FontForLabel];
     [getcodeButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
         [getcodeButton.titleLabel setTextColor:[UIColor lightGrayColor]];
-    self.smsCodeTextField.rightView = getcodeButton;
+    self.getSmsButton = getcodeButton;
+    self.smsCodeTextField.rightView = self.getSmsButton;
     
     
 //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(self.passwordTextField.bounds.size.width * 0.75-1, 0,self.passwordTextField.bounds.size.width * 0.25, self.passwordTextField.bounds.size.height)];
@@ -310,9 +336,80 @@
     
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.phoneNumTextField) {
+        if (string.length == 0)
+            return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 11) {
+            return NO;
+        }
+    }
+    else if(textField == self.smsCodeTextField)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 6) {
+            return NO;
+        }
+        
+    }
+    else if(textField == self.passwordTextField || textField == self.repasswordTextField)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 16) {
+            return NO;
+        }
+        
+    }
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ALPHANUM] invertedSet];
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    return [string isEqualToString:filtered];
+}
+
+
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+}
+
+-(void)startTime{
+    __block int timeout= 60; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.getSmsButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+                self.getSmsButton.userInteractionEnabled = YES;
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:1];
+                [self.getSmsButton setTitle:[NSString stringWithFormat:@"%zd秒",timeout] forState:UIControlStateNormal];
+                [UIView commitAnimations];
+                self.getSmsButton.userInteractionEnabled = NO;
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+    
 }
 
 - (void)getsmscode
@@ -351,20 +448,23 @@
             [self.HUD hideAnimated:YES];
             if([code isEqualToString:@"200"])
             {
+                [self startTime];
 //                [self MBProgressWithString:@"发送成功" timer:1 mode:MBProgressHUDModeText];
-                [self showAlertViewWithString:@"验证码发送成功,您可于60s后可重新获取"];
+                [self showAlertViewWithString:@"验证码发送成功,60s后可重新获取"];
                 NSLog(@"验证码发送成功");
                 
             }
             else if([code isEqualToString:@"405"])
                 
             {
-                [self MBProgressWithString:@"手机号已注册" timer:1 mode:MBProgressHUDModeText];
+                [self showAlertViewWithString:@"该手机号已注册"];
+//                [self MBProgressWithString:@"该手机号已注册" timer:1 mode:MBProgressHUDModeText];
                 
             }
             else if([code isEqualToString:@"406"])
             {
-                [self MBProgressWithString:@"手机号未注册" timer:1 mode:MBProgressHUDModeText];
+                [self showAlertViewWithString:@"该手机号未注册"];
+//                [self MBProgressWithString:@"该手机号未注册" timer:1 mode:MBProgressHUDModeText];
                 
                 NSLog(@"手机未注册验证码发送失败");
             }
@@ -378,13 +478,17 @@
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"连接失败");
+            [self.HUD removeFromSuperViewOnHide];
+            [self.HUD hideAnimated:YES];
 //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //            [alert show];
+            [self showAlertViewWithString:@"获取验证码失败"];
         }];
 
         
     }
     }
+
 
 
 
@@ -395,21 +499,31 @@
     if (self.isPhoneNumber == YES)
     {
     
-        if ([self.phoneNumTextField.text isEqualToString:@""]||[self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
-            [self showAlertViewWithString:@"请填写完整信息"];
-            
-            NSLog(@"您输入的信息不完整");
-            return;
+        if ([self.smsCodeTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""]||[self.repasswordTextField.text isEqualToString:@""]) {
+            if ([self.smsCodeTextField.text isEqualToString:@""]) {
+                [self showAlertViewWithString:@"请输入您的验证码"];
+                return;
+            }
+            if ([self.passwordTextField.text isEqualToString:@""]) {
+                [self showAlertViewWithString:@"请输入您的密码"];
+                return;
+            }
+            if ([self.passwordTextField.text isEqualToString:@""]) {
+                [self showAlertViewWithString:@"请再次输入密码"];
+                return;
+            }
+       
+  
         }
         
         if ([self.passwordTextField.text isEqualToString:self.repasswordTextField.text]==NO) {
-            [self showAlertViewWithString:@"您输入的两次密码不一致，请重新输入"];
+            [self showAlertViewWithString:@"两次输入的密码不一致"];
             return;
         }
-        BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
-        if (pass == NO) {
-            [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
-        }
+//        BOOL pass =  [PassWordCheck judgePassWordLegal:self.passwordTextField.text];
+//        if (pass == NO) {
+//            [self showAlertViewWithString:@"请输入6-16位字母与数字组合"];
+//        }
         
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
@@ -473,7 +587,7 @@
             {
                 [self.HUD removeFromSuperViewOnHide];
                 [self.HUD hideAnimated:YES];
-                [self MBProgressWithString:@"手机号未注册" timer:1 mode:MBProgressHUDModeText];
+                [self MBProgressWithString:@"该手机号未注册" timer:1 mode:MBProgressHUDModeText];
                 NSLog(@"注册失败");
             }
             NSLog(@"%@",dic);

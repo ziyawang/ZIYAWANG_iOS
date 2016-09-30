@@ -228,6 +228,30 @@ static NSString *indefier = @"UITableViewCell";
         default:
             break;
     }
+    
+     CGFloat tableViewHeight = kTableViewHeight;
+     CGFloat bottomHeight = kSelfBottomButtonHeight;
+     CGRect  leftTableViewFrame = CGRectZero;
+     CGRect  rightTableViewFrame = CGRectZero;
+     CGRect  mainTableViewFrame = CGRectZero;
+     CGRect  bottomButtonFrame = self.bottomButton.frame;
+    
+    if (self.datasourceOne.count < 10) {
+        leftTableViewFrame.size.height = self.datasourceOne.count * 44;
+    }
+    else
+    {
+         leftTableViewFrame.size.height = tableViewHeight;
+    }
+    if ([self.datasourceTwo[self.index] count] < 10) {
+        rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+    }
+    else
+    {rightTableViewFrame.size.height = tableViewHeight;
+    
+    }
+   
+    
 }
 
 //点击消失视图事件
@@ -344,11 +368,25 @@ static NSString *indefier = @"UITableViewCell";
             [self rotationSegmentButtonAnimation:sender show:YES];
             self.notDatasource = NO;
         }else{
-            leftTableViewFrame.size.height = tableViewHeight;
+            if (self.datasourceOne.count < 10) {
+                   leftTableViewFrame.size.height = self.datasourceOne.count * 44;
+            }
+            else
+            {
+              leftTableViewFrame.size.height = tableViewHeight;
+            }
+            if ([self.datasourceTwo[self.index] count] < 10) {
+                rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+            }
+            else
+            {
             rightTableViewFrame.size.height = tableViewHeight;
-            leftTableViewFrame.size.height = self.datasourceOne.count * 44;
-            rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+            }
+          
             
+            
+
+//            
             
 //            rightTableViewFrame.size.height = self.datasourceTwo.count *44;
             self.leftTableView.frame = leftTableViewFrame;
@@ -496,12 +534,23 @@ static NSString *indefier = @"UITableViewCell";
 
     }else if (tableView == self.leftTableView){
         
+        
+         CGFloat tableViewHeight = kTableViewHeight;
+      
         //记录一级菜单点击下标,刷新二级菜单
         self.index = indexPath.row;
         
         CGRect  rightTableViewFrame = CGRectZero;
         rightTableViewFrame = self.rightTableView.frame;
-        rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+        if ([self.datasourceTwo[self.index] count] < 10) {
+              rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+        }
+        else
+        {
+            rightTableViewFrame.size.height = tableViewHeight;
+            
+        }
+      
         self.rightTableView.frame = rightTableViewFrame;
         
         [self.rightTableView reloadData];
@@ -512,6 +561,7 @@ static NSString *indefier = @"UITableViewCell";
        
         
         //拼接两级的数据,回调
+    
         string = [NSString stringWithFormat:@"%@%@",self.datasourceOne[_index],self.datasourceTwo[self.index][indexPath.row]];
         
         self.selectedIndex ? self.selectedIndex(string) : nil;

@@ -29,8 +29,8 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="北京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4A-an-ggm">
-                        <rect key="frame" x="66" y="87.5" width="24" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4A-an-ggm">
+                        <rect key="frame" x="66" y="87.5" width="50" height="14.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="LgT-bw-CWq"/>
                             <constraint firstAttribute="width" constant="50" id="O2o-7X-MNG"/>
@@ -231,9 +231,9 @@
                         </variation>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vipziyuan.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-ri-GgJ">
-                        <rect key="frame" x="402" y="15" width="30" height="9"/>
+                        <rect key="frame" x="392" y="15" width="40" height="9"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="3n7-Y9-RSQ"/>
+                            <constraint firstAttribute="width" constant="40" id="3n7-Y9-RSQ"/>
                         </constraints>
                     </imageView>
                 </subviews>

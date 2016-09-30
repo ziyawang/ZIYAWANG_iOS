@@ -11,17 +11,22 @@
 #import "LoginController.h"
 #import "ChangeWordViewController.h"
 #import "PassWordCheck.h"
+#import "ChageNickNameController.h"
+#import "UserInfoModel.h"
 @interface UserInfoController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *usericonImageView;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberLabel;
 @property (weak, nonatomic) IBOutlet UIView *changePasswordView;
 @property (weak, nonatomic) IBOutlet UIView *changeIconView;
+@property (weak, nonatomic) IBOutlet UIView *nickNameView;
 @property (nonatomic,strong) MBProgressHUD *HUD;
 @property (weak, nonatomic) IBOutlet UILabel *touxiang;
 @property (weak, nonatomic) IBOutlet UILabel *connectPhone;
 @property (weak, nonatomic) IBOutlet UILabel *xiugaimima;
+@property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+@property (nonatomic,strong) UserInfoModel *model;
 
 @end
 
@@ -51,6 +56,10 @@
         self.extendedLayoutIncludesOpaqueBars = NO;
         self.modalPresentationCapturesStatusBarAppearance = NO;
     }
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    self.model = [[UserInfoModel alloc]init];
+    [self getUserInfoFromDomin];
 }
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
@@ -85,6 +94,43 @@
 [self setSubViews];
     }
  }
+
+
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
+            [self.model setValuesForKeysWithDictionary:dic[@"user"]];
+            [self.model setValuesForKeysWithDictionary:dic[@"service"]];
+            self.nickNameLabel.text = self.model.username;
+            
+
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            NSLog(@"获取用户信息失败");
+            //        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
+            //        NSString *userPicture = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
+            //        NSString *
+        }];
+        
+        
+    }
+
+}
+
+
+
 - (void)setSubViews
 {
     
@@ -98,13 +144,24 @@
     [self.changeIconView addGestureRecognizer:gesture1];
     self.usericonImageView.image = [UIImage imageWithData:self.imageData];
     self.phoneNumberLabel.text = self.phoneNumber;
+//    self.nickNameLabel.text = self.nickNme;
+    
     
     
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(changePassword:)];
     [self.changePasswordView addGestureRecognizer:gesture2];
+    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(changeNickName:)];
+    [self.nickNameView addGestureRecognizer:gesture3];
+    
 }
 
+- (void)changeNickName:(UITapGestureRecognizer *)gesture
+{
+    ChageNickNameController *changeVC = [[ChageNickNameController alloc]init];
+    [self.navigationController pushViewController:changeVC animated:YES];
+    
 
+}
 - (void)changeicon:(UITapGestureRecognizer *)gesture
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];

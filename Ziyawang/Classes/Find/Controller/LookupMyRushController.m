@@ -34,7 +34,7 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     title.backgroundColor = [UIColor clearColor];
     title.textAlignment = NSTextAlignmentCenter;
-    title.text = @"我的抢单";
+    title.text = @"我的约谈";
     title.textColor = [UIColor blackColor];
     self.navigationItem.titleView = title;
     
@@ -122,6 +122,8 @@
     NSString *accesstoken = @"token";
     //    [paraDic setObject:token forKey:@"token"];
     [paraDic setObject:accesstoken forKey:@"access_token"];
+    [paraDic setObject:[NSString stringWithFormat:@"%ld",self.startpage] forKey:@"startpage"];
+    
     [self.manager GET:URL parameters:paraDic progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -134,6 +136,7 @@
             [model setValuesForKeysWithDictionary:dic];
             [addArray addObject:model];
 //            [self.sourceArray addObject:model];
+            
         }
         if(addArray.count == 0)
         {
@@ -143,11 +146,10 @@
         }
         else
         {
-        [self.sourceArray addObject:addArray];
+        [self.sourceArray addObjectsFromArray:addArray];
         self.startpage ++;
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
-
         NSLog(@"请求自己抢的单子成功");
         NSLog(@"自己的单子%@",dic);
         }
