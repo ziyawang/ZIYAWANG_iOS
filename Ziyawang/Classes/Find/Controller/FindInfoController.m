@@ -1471,7 +1471,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         
     }
     
-    return 150;
+    return 140;
 }
 
 

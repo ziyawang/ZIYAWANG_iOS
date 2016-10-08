@@ -211,7 +211,7 @@
         return 270;
         
     }
-    return 238;
+    return 270;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VideosViewCell" forIndexPath:indexPath];

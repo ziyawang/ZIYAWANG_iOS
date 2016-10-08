@@ -32,6 +32,11 @@
                               @"iPhone7,1" : @(iPhone6Plus),
                               @"iPhone8,1" : @(iPhone6S),
                               @"iPhone8,2" : @(iPhone6SPlus),
+                              
+                              @"iPhone9,1" : @(iPhone7),
+                              @"iPhone9,2" : @(iPhone7Plus),
+                              
+                              
                               @"iPhone8,4" : @(iPhoneSE),
                               @"i386"      : @(Simulator),
                               @"x86_64"    : @(Simulator),

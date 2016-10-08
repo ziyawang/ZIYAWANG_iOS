@@ -221,7 +221,7 @@
         
     }
     
-    return 0;
+    return self.phoneNumTextField.bounds.size.height;;
     
 }
 
