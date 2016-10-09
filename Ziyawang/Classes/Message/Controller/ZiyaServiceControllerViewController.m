@@ -38,7 +38,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    self.navigationItem.title = @"系统消息";
     
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
@@ -64,6 +64,8 @@
     NSString *url = [getDataURL stringByAppendingString:@"/getmessage"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:@"10" forKey:@"pagecount"];
+    
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *URL = [[url stringByAppendingString:@"?token="]stringByAppendingString:token];
     
@@ -197,12 +199,11 @@
     model = self.sourceArray[indexPath.row];
     servicceVC.Text = model.Text;
     servicceVC.TextID = model.TextID;
+    servicceVC.Time = model.Time;
+    
 //    ZiyaServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZiyaServiceCell" forIndexPath:indexPath];
 //    cell.contentView.backgroundColor = [UIColor whiteColor];
-    
-    
     [self.navigationController pushViewController:servicceVC animated:YES];
-
 }
 
 

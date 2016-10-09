@@ -68,6 +68,7 @@
 @property (nonatomic,strong) NSString *Price;//信息价格
 @property (nonatomic,strong) NSString *PayFlag;//支付状态
 @property (nonatomic,strong) NSString *Account;//余额
+@property (nonatomic,strong) NSString *CompanyDes;
 
 
 @end

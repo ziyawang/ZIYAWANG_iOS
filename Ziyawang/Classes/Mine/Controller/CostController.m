@@ -128,7 +128,7 @@
 - (void)rightBarbuttonAction:(UIBarButtonItem *)barbutton
 {
    
-    if (!self.barselected) {
+    if (self.barselected == NO) {
        [self setChooseView];
         [self.view addSubview:self.chooseView2];
         [self.view addSubview:self.chooseView];
@@ -144,10 +144,12 @@
 }
 - (void)buttonsAction:(UIButton *)button
 {
+    self.barselected = NO;
     [self.chooseView removeFromSuperview];
     [self.chooseView2 removeFromSuperview];
     self.requestDic = [NSMutableDictionary new];
     if (button.tag == 1) {
+        
         
         [self loadNewData];
         self.selectedButtonTag = 1;

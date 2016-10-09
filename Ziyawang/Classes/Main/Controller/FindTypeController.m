@@ -70,26 +70,35 @@
         //        CLDropDownMenu *dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
         //            NSLog(@"点击了第%ld个btn",index+1);
         //        }];
-        self.dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
+        self.dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index)
+        {
             NSLog(@"点击了第%ld个btn",index+1);
-            if (index  == 0) {
+            if (index  == 0)
+            {
                 [self.dataDic setObject:@"" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+
             }
             else if(index == 1)
             {
                 [self.dataDic setObject:@"0" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+
             }
             else if(index == 2)
             {
                 [self.dataDic setObject:@"1" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+
             }
             else if (index == 3)
             {
                 [self.dataDic setObject:@"2" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
                 
             }
         }];
@@ -1630,6 +1639,7 @@
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
         [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
         //        [self.HUD removeFromSuperViewOnHide];
         //        [self.HUD hideAnimated:YES];
         [HUD removeFromSuperViewOnHide];
@@ -1747,11 +1757,11 @@
         
         return 130;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
         return 140;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
         return 140;
         

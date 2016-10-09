@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *xitongiCon;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end
 
@@ -19,7 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.messageLabel.text = self.Text;
+    self.navigationItem.title = @"消息详情";
+
+    NSArray *strArr =[self.Text componentsSeparatedByString:@"！"];
+    self.messageLabel.text = [strArr[0]stringByAppendingString:@"！"];
+    self.timeLabel.text =self.Time;
     self.xitongiCon.layer.masksToBounds = YES;
     self.xitongiCon.layer.cornerRadius = 25;
     self.xitongiCon.image = [UIImage imageNamed:@"morentouxiang"];

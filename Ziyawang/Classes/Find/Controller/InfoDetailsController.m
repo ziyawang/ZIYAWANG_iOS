@@ -77,6 +77,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *ViewCount;
 @property (weak, nonatomic) IBOutlet UILabel *shoucangLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *companyInfoLabel;
+@property (weak, nonatomic) IBOutlet UIView *beizhuView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *beizhuViewHight;
+@property (weak, nonatomic) IBOutlet UIView *topToBeizhuVeiw;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toptobeizhuView;
 
 /**
  *  storyboard每一个label
@@ -478,7 +483,12 @@
 {
     self.PublishtimeLabel.font = [UIFont systemFontOfSize:10];
     self.ViewCount.font = [UIFont systemFontOfSize:10];
+    self.companyInfoLabel.text = self.model.CompanyDes;
     
+    if ([self.model.Member isEqualToString:@"2"] == NO) {
+        self.beizhuViewHight.constant = 0;
+        self.toptobeizhuView.constant = 0;
+    }
     self.PublishtimeLabel.text = self.model.PublishTime;
 //    self.ViewCount.text = [NSString stringWithFormat:@"%@",self.model.ViewCount];
     self.ViewCount.text = [@"浏览"stringByAppendingString:[NSString stringWithFormat:@"%@",self.model.ViewCount]];

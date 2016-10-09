@@ -67,7 +67,6 @@
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
-          
             
             self.accountLabel.text = dic[@"user"][@"Account"];
             

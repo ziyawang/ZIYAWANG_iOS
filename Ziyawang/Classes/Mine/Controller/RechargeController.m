@@ -84,15 +84,15 @@
 - (void)setamountArray
 {
     self.amountArray = [NSMutableArray new];
-    [self.amountArray addObject:@"10"];
-    [self.amountArray addObject:@"120"];
-    [self.amountArray addObject:@"500"];
-    [self.amountArray addObject:@"1080"];
-    [self.amountArray addObject:@"3880"];
-    [self.amountArray addObject:@"5880"];
-    [self.amountArray addObject:@"12980"];
-    [self.amountArray addObject:@"39980"];
-    [self.amountArray addObject:@"64980"];
+    [self.amountArray addObject:@"100"];
+    [self.amountArray addObject:@"1200"];
+    [self.amountArray addObject:@"5000"];
+    [self.amountArray addObject:@"10800"];
+    [self.amountArray addObject:@"38800"];
+    [self.amountArray addObject:@"58800"];
+    [self.amountArray addObject:@"129800"];
+    [self.amountArray addObject:@"399800"];
+    [self.amountArray addObject:@"649800"];
 
 }
 - (void)confirmViewAction:(UITapGestureRecognizer *)gesture
@@ -417,11 +417,11 @@
         
         return 91.7;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
         return 110;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
         return 123;
         
@@ -437,11 +437,11 @@
         
         return 7;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
         return 13;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
         return 14;
         
@@ -457,11 +457,11 @@
         
         return 27;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S )
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
         return 33;
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus)
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
         return 35;
         

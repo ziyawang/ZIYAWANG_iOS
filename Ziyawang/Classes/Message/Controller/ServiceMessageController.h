@@ -11,4 +11,6 @@
 @interface ServiceMessageController : UIViewController
 @property (nonatomic,strong) NSString *Text;
 @property (nonatomic,strong) NSString *TextID;
+@property (nonatomic,strong) NSString *Time;
+
 @end

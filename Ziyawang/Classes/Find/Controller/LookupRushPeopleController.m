@@ -115,7 +115,7 @@
             [self.sourceArray addObject:model];
         }
          if (self.sourceArray.count == 0) {
-             [self showAlertWithString:@"暂时没有抢单人"];
+             [self showAlertWithString:@"暂时没有约谈人"];
          }
          else
          {

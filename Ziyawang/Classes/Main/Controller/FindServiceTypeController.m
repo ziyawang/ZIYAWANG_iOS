@@ -136,6 +136,7 @@
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
         [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
         [self.tableView.mj_header endRefreshing];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
