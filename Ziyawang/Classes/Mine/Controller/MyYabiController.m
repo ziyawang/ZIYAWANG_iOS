@@ -9,6 +9,7 @@
 #import "MyYabiController.h"
 #import "RechargeController.h"
 #import "CostController.h"
+#import "YabiRuleController.h"
 @interface MyYabiController ()
 @property (weak, nonatomic) IBOutlet UIButton *rechargeButton;
 @property (weak, nonatomic) IBOutlet UILabel *accountLabel;
@@ -94,10 +95,8 @@
     [self.navigationController pushViewController:recharVC animated:YES];
 }
 - (IBAction)xiyiButtonAction:(id)sender {
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    NSString *URL = [AudioURL stringByAppendingString:@"/rechargeproto.html"];
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];
-    [self.view addSubview:webView];
+    YabiRuleController *ruleVc = [[YabiRuleController alloc]init];
+    [self.navigationController pushViewController:ruleVc animated:YES];
 }
 - (void)setupTitle {
     

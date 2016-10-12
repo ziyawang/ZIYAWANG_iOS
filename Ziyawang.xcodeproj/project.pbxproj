@@ -10,6 +10,7 @@
 		78026DCB1DACE3EA0080794B /* wei.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DC81DACE3EA0080794B /* wei.png */; };
 		78026DCC1DACE3EA0080794B /* wei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DC91DACE3EA0080794B /* wei@2x.png */; };
 		78026DCD1DACE3EA0080794B /* wei@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DCA1DACE3EA0080794B /* wei@3x.png */; };
+		78026DD01DADE37A0080794B /* YabiRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78026DCF1DADE37A0080794B /* YabiRuleController.m */; };
 		780B5BB11D65A9070005E123 /* CollectInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B5BAF1D65A9070005E123 /* CollectInfoViewCell.m */; };
 		780B5BB21D65A9070005E123 /* CollectInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 780B5BB01D65A9070005E123 /* CollectInfoViewCell.xib */; };
 		780B5BB61D65B47A0005E123 /* CollectVideoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B5BB41D65B47A0005E123 /* CollectVideoViewCell.m */; };
@@ -719,6 +720,8 @@
 		78026DC81DACE3EA0080794B /* wei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wei.png; sourceTree = "<group>"; };
 		78026DC91DACE3EA0080794B /* wei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wei@2x.png"; sourceTree = "<group>"; };
 		78026DCA1DACE3EA0080794B /* wei@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wei@3x.png"; sourceTree = "<group>"; };
+		78026DCE1DADE37A0080794B /* YabiRuleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabiRuleController.h; sourceTree = "<group>"; };
+		78026DCF1DADE37A0080794B /* YabiRuleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabiRuleController.m; sourceTree = "<group>"; };
 		780B5BAE1D65A9070005E123 /* CollectInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectInfoViewCell.h; path = ../Controller/CollectInfoViewCell.h; sourceTree = "<group>"; };
 		780B5BAF1D65A9070005E123 /* CollectInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectInfoViewCell.m; path = ../Controller/CollectInfoViewCell.m; sourceTree = "<group>"; };
 		780B5BB01D65A9070005E123 /* CollectInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CollectInfoViewCell.xib; path = ../Controller/CollectInfoViewCell.xib; sourceTree = "<group>"; };
@@ -2644,6 +2647,8 @@
 				78D9602E1D96562F007ECABA /* MyYabiController.h */,
 				78D9602F1D96562F007ECABA /* MyYabiController.m */,
 				78D960301D96562F007ECABA /* MyYabiController.xib */,
+				78026DCE1DADE37A0080794B /* YabiRuleController.h */,
+				78026DCF1DADE37A0080794B /* YabiRuleController.m */,
 				78D960471D968701007ECABA /* RechargeController.h */,
 				78D960481D968701007ECABA /* RechargeController.m */,
 				78D960491D968701007ECABA /* RechargeController.xib */,
@@ -3855,6 +3860,7 @@
 				780B5BB11D65A9070005E123 /* CollectInfoViewCell.m in Sources */,
 				782522DE1D796C2A00F2C0A2 /* PushStartViewCell.m in Sources */,
 				78F624531D5AC13E002E21B3 /* MASLayoutConstraint.m in Sources */,
+				78026DD01DADE37A0080794B /* YabiRuleController.m in Sources */,
 				78F3DD731D45ADB400C1E62E /* UIView+SU.m in Sources */,
 				7836E8741D5C699D00187E41 /* UIColor+StringToColor.m in Sources */,
 				78F3DD741D45ADB400C1E62E /* UIView+SuAnimation.m in Sources */,

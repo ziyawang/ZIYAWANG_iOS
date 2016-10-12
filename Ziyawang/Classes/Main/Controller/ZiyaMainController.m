@@ -498,7 +498,7 @@ self.navigationItem.title = @"首页";
     [searchBarRightView addSubview:rightSearchbutton];
     
     //添加小三角
-    UIImageView *sanjiao = [[UIImageView alloc]initWithFrame:CGRectMake(self.searchBarbutton.bounds.size.width - 10, 22, 12, 6)];
+    UIImageView *sanjiao = [[UIImageView alloc]initWithFrame:CGRectMake(self.searchBarbutton.bounds.size.width - 12, 22, 12, 6)];
     [searchBar.leftView addSubview:sanjiao];
     sanjiao.image = [UIImage imageNamed:@"xiala"];
     self.searchBarbutton.layer.cornerRadius = 10;
