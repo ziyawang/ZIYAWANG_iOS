@@ -80,8 +80,28 @@
  */
 - (void)setupSubViews {
     
-    [self setupTitle];
+//    [self setupTitle];
+    self.navigationItem.title = @"服务类型";
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    //    [self setupTitle];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClickAction)];
+    
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     
 }
 /**
@@ -101,21 +121,22 @@
     NSString *TypeString = [NSString string];
     
     
-    if (self.selectArray.count > 3) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"类型选择不能超过3个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    else
-    {
-    if (self.selectArray.count == 0)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-        
+//    if (self.selectArray.count > 3) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"类型选择不能超过3个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }
+//    else
+//    {
+//    if (self.selectArray.count == 0)
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    
         
         
     for (CSChooseServiceTypeModel *model in self.selectArray) {
-        if ([model.title isEqualToString:@"资产包收购"]) {
+        if ([model.title isEqualToString:@"资产包收购"])
+        {
             [TypeIDArray addObject:@"01"];
             
         }
@@ -156,7 +177,6 @@
         {
             [TypeIDArray addObject:@"12"];
         }
-
     }
     
     
@@ -164,13 +184,16 @@
         
         string = [string stringByAppendingFormat:@",%@",str];
         NSLog(@"输出的类型的ID为%@",string);
-
     }
-        
+    
+    if (self.selectArray.count != 0) {
         for (CSChooseServiceTypeModel *model in self.selectArray) {
             TypeString = [TypeString stringByAppendingFormat:@" %@",model.title];
         }
-           [defaults setObject:TypeString forKey:@"服务的类型"];
+        [defaults setObject:TypeString forKey:@"服务的类型"];
+    }
+    
+    
         
 //    string = [string stringByAppendingFormat:@",%@", model.title];
     if ([string isEqualToString:@""]==NO) {
@@ -180,7 +203,6 @@
     }
         
      
-        
     else
     {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择类型" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -188,7 +210,7 @@
     }
    
     NSLog(@"输出的类型的ID为%@",string);
-    }
+//    }
 }
 
 #pragma mark - 实现代理方法

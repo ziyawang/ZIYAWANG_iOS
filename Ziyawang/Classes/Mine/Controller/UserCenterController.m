@@ -80,7 +80,10 @@
     
     self.defaults = [NSUserDefaults standardUserDefaults];
     self.manager = [AFHTTPSessionManager manager];
-    self.role = [self.defaults objectForKey:@"role"];
+ 
+    
+    self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.sourceArray  = [NSMutableArray new];
     self.model = [[UserInfoModel alloc]init];
@@ -91,6 +94,7 @@
     [self setTableViewHight];
 //    [self setViews];
     [self getUserInfoFromDomin];
+
 //    [self setViews];
 }
 - (void)viewDidLoad {
@@ -242,13 +246,13 @@
             self.MyColCountLabel.text = dataDic[@"MyColCount"];
             self.MycooCountLabel.text = dataDic[@"MyProCount"];
             self.MyproCountLabel.text = dataDic[@"user"][@"Account"];
-            if ([self.MyproCountLabel.text isEqualToString:@"0"]) {
+            if (self.MyproCountLabel.text.integerValue < 10)
+            {
                 [self.redRechageLabel setHidden:NO];
             }
             else
             {
                 [self.redRechageLabel setHidden:YES];
-                
             }
             
             NSLog(@"%@",dic[@"role"]);
@@ -296,10 +300,14 @@
 {
     if ([self.role isEqualToString:@"1"]) {
         self.tableViewHeight.constant = 176;
+        [self.tableView reloadData];
+        
     }
     else
     {
         self.tableViewHeight.constant = 132;
+        [self.tableView reloadData];
+        
     }
     
 }
@@ -467,7 +475,6 @@
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"help"];
                 cell.textLabel.text = @"意见反馈";
-                
                 
                 break;
             case 2:

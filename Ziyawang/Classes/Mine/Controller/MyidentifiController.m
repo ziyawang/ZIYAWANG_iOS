@@ -17,6 +17,8 @@
 #import "LoginController.h"
 #import "UserInfoModel.h"
 #import "MyUItextField.h"
+#import <AVFoundation/AVFoundation.h>
+
 @interface MyidentifiController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userIconImageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -136,13 +138,7 @@
 }
 
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
-    if (mobile.length < 11)
-    {
-        
-        [self showAlertViewWithString:@"手机格式不正确"];
-        _isPhoneNumber = NO;
-        
-    }else{
+
         /**
          * 移动号段正则表达式
          */
@@ -164,13 +160,13 @@
         
         if (!(isMatch1 || isMatch2 || isMatch3)) {
             _isPhoneNumber = NO;
-            [self showAlertViewWithString:@"手机格式不正确"];
+//            [self showAlertViewWithString:@"手机格式不正确"];
             return;
             
         } else {
             _isPhoneNumber = YES;
         }
-    }
+
 }
 
 - (void)getUserInfoFromDomin
@@ -219,13 +215,13 @@
     [self.imageBackView addSubview:imageView1];
     [self.imageBackView addSubview:imageView2];
     [self.imageBackView addSubview:imageView3];
-    if ([self.ConfirmationP1 isEqualToString:@""]==NO) {
+    if (self.ConfirmationP1 != nil) {
         [imageView1 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.ConfirmationP1]]];
     }
-    if ([self.ConfirmationP2 isEqualToString:@""]==NO) {
+    if (self.ConfirmationP2 != nil) {
   [imageView2 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.ConfirmationP2]]];    }
     
-    if ([self.ConfirmationP3 isEqualToString:@""]==NO)
+    if (self.ConfirmationP3 != nil)
     {
   [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.ConfirmationP3]]];
     }
@@ -273,7 +269,22 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupTitle];
+    self.navigationItem.title = @"服务方认证";
+//    [self setupTitle];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    //    [self setupTitle];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     self.ScrollView.delegate = self;
     [self.sentMessageButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -394,15 +405,10 @@
 }
 - (IBAction)sentServiceUserInfoButton:(id)sender
 {
-    
-    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.HUD.delegate = self;
-    self.HUD.mode = MBProgressHUDModeIndeterminate;
      NSString *role = self.role;
-    
     if ([role isEqualToString:@"0"])
     {
-    [self checkMobilePhoneNumber:self.phoneNumTextField.text];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userName = self.nameTextField.text;
     NSString *phoneNumber = self.phoneNumTextField.text;
@@ -426,13 +432,52 @@
     NSString *accesstoken = @"token";
 //    [paraDic setObject:token forKey:@"token"];
     
-    if (accesstoken == nil||userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
+    if (userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
         NSLog(@"信息不完整");
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+        if ([userName isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请添加联系人的姓名"];
+            return;
+        }
+        if ([phoneNumber isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请添加您的联系方式"];
+            return;
+        }
+        if ([companyName isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入您的企业名称"];
+            return;
+        }
+        if ([companyDes isEqualToString:@""] || [companyDes isEqualToString:@"企业简介"]) {
+            [self showAlertViewWithString:@"请输入您的企业简介"];
+            return;
+        }
+        if (companyLocation == nil) {
+            [self showAlertViewWithString:@"请选择您的企业所在地区"];
+            return;
+        }
+        
+        if (ServiceArea == nil) {
+            [self showAlertViewWithString:@"请选择您的服务地区"];
+            return;
+        }
+        if (ServiceType  == nil) {
+            [self showAlertViewWithString:@"请选择您的服务类型"];
+            return;
+        }
+        if (self.imagearray.count == 0) {
+            [self showAlertViewWithString:@"请添加相关凭证图片"];
+            return;
+        }
     }
     else
     {
+        [self checkMobilePhoneNumber:self.phoneNumTextField.text];
+        
+        if(_isPhoneNumber == NO)
+        {
+            [self showAlertViewWithString:@"请输入正确的手机号"];
+            return;
+        }
+
     [paraDic setObject:accesstoken forKey:@"access_token"];
     [paraDic setObject:userName forKey:@"ConnectPerson"];
     [paraDic setObject:phoneNumber forKey:@"ConnectPhone"];
@@ -448,7 +493,6 @@
 //            NSData *imageData4 = UIImageJPEGRepresentation(self.userIconImageView.image, 1.0f);
             [formData appendPartWithFileData:imageData1 name:@"ConfirmationP1"fileName:@"ConfirmationP1.png" mimeType:@"image/jpg/png/jpeg"];
 //            [formData appendPartWithFileData:imageData4 name:@"UserPicture" fileName:@"bbb" mimeType:@"image/jpg/png/jpeg"];
-      
 
         }
         else if(self.imagearray.count == 2)
@@ -476,6 +520,10 @@
             [formData appendPartWithFileData:imageData3 name:@"ConfirmationP3" fileName:@"ConfirmationP3.png" mimeType:@"image/jpg/png/jpeg"];
 //            [formData appendPartWithFileData:imageData4 name:@"UserPicture" fileName:@"UserPicture.png" mimeType:@"image/jpg/png/jpeg"];
         }
+        
+        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.HUD.delegate = self;
+        self.HUD.mode = MBProgressHUDModeIndeterminate;
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"%@",uploadProgress);
@@ -506,7 +554,7 @@
     else if([role isEqualToString:@"2"])
     
     {
-   self.fuwuleixing.text = @"";
+//   self.fuwuleixing.text = @"";
         
 //        if ([self.sentMessageButton.titleLabel.text isEqualToString:@"重新提交"]) {
 //            [self.sentMessageButton setTitle:@"提交" forState:(UIControlStateNormal)];
@@ -519,7 +567,7 @@
 //            self.comPanyDesTextView.text = @"";
 //        }
         if ([self.sentMessageButton.titleLabel.text isEqualToString:@"重新提交"]) {
-        [self checkMobilePhoneNumber:self.phoneNumTextField.text];
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *userName = self.nameTextField.text;
         NSString *phoneNumber = self.phoneNumTextField.text;
@@ -527,7 +575,64 @@
         NSString *companyDes = self.comPanyDesTextView.text;
         NSString *companyLocation = self.qiyesuozai.text;
         NSString *ServiceArea =  self.fuwudiqu.text;
+            
+        NSMutableArray *TypeIDArray = [NSMutableArray new];
+        NSArray *array = [self.fuwuleixing.text componentsSeparatedByString:@" "];
+        NSString *string = [NSString string];
+
+            for (NSString *str in array) {
+                if ([str isEqualToString:@"资产包收购"])
+                {
+                    [TypeIDArray addObject:@"01"];
+                }
+                else if([str isEqualToString:@"催收机构"])
+                {
+                    [TypeIDArray addObject:@"02"];
+                }
+               else if ([str isEqualToString:@"律师事务所"]) {
+                    [TypeIDArray addObject:@"03"];
+                    
+                }
+                else if([str isEqualToString:@"保理公司"])
+                {
+                    [TypeIDArray addObject:@"04"];
+                }
+                else if([str isEqualToString:@"担保公司"])
+                {
+                    [TypeIDArray addObject:@"05"];
+                }
+                else if([str isEqualToString:@"典当公司"])
+                {
+                    [TypeIDArray addObject:@"05"];
+                }
+                else if([str isEqualToString:@"投融资服务"])
+                {
+                    [TypeIDArray addObject:@"06"];
+                }
+                
+                else if([str isEqualToString:@"尽职调查"])
+                {
+                    [TypeIDArray addObject:@"10"];
+                }
+                else if([str isEqualToString:@"债权收购"])
+                {
+                    [TypeIDArray addObject:@"14"];
+                }
+                else if([str isEqualToString:@"资产收购"])
+                {
+                    [TypeIDArray addObject:@"12"];
+                }
+            }
+            for (NSString *str in TypeIDArray) {
+                string = [string stringByAppendingFormat:@",%@",str];
+                NSLog(@"输出的类型的ID为%@",string);
+            }
+         if ([string isEqualToString:@""]==NO) {
+            string = [string substringFromIndex:1];
+            [defaults setObject:string forKey:@"服务类型"];
+         }
         NSString *ServiceType = [[NSUserDefaults standardUserDefaults]objectForKey:@"服务类型"];
+            
 //        NSString *ServiceType = self.fuwuleixing.text;
             NSLog(@"-------------------%@",ServiceType);
         NSString *headurl = getDataURL;
@@ -541,13 +646,59 @@
         NSMutableDictionary *paraDic = [NSMutableDictionary new];
         NSLog(@"token:::::%@",token);
         NSString *accesstoken = @"token";
-            if ([accesstoken isEqualToString:@""]||[userName isEqualToString:@""]|| [phoneNumber isEqualToString:@""]||[companyName isEqualToString:@""]||[companyDes isEqualToString:@""] || [companyLocation isEqualToString:@""]||[ServiceArea isEqualToString:@"" ]|| [ServiceType isEqualToString:@""]||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
+            if ([userName isEqualToString:@""]|| [phoneNumber isEqualToString:@""]||[companyName isEqualToString:@""]||[companyDes isEqualToString:@""] || [companyLocation isEqualToString:@""]||[ServiceArea isEqualToString:@""]|| [ServiceType isEqualToString:@""]||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0|| companyLocation == nil||ServiceArea == nil || ServiceType == nil)
+            
+            {
+                
+                if ([userName isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请添加联系人的姓名"];
+                    return;
+                }
+                if ([phoneNumber isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请添加您的联系方式"];
+                    return;
+                }
+                if ([companyName isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请输入您的企业名称"];
+                    return;
+                }
+                if ([companyDes isEqualToString:@""] || [companyDes isEqualToString:@"企业简介"]) {
+                    [self showAlertViewWithString:@"请输入您的企业简介"];
+                    return;
+                }
+                if ([companyLocation isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请选择您的企业所在地区"];
+                    return;
+                }
+                
+                if ([ServiceArea isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请选择您的服务地区"];
+                    return;
+                }
+                if ([ServiceType isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请选择您的服务类型"];
+                    return;
+                }
+                if (self.imagearray.count == 0) {
+                    [self showAlertViewWithString:@"请添加相关凭证图片"];
+                    return;
+                }
+
+                
+                
             NSLog(@"信息不完整");
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
         }
         else
         {
+            [self checkMobilePhoneNumber:self.phoneNumTextField.text];
+            
+            if(_isPhoneNumber == NO)
+            {
+                [self showAlertViewWithString:@"请输入正确的手机号"];
+                return;
+            }
             [paraDic setObject:accesstoken forKey:@"access_token"];
             [paraDic setObject:userName forKey:@"ConnectPerson"];
             [paraDic setObject:phoneNumber forKey:@"ConnectPhone"];
@@ -596,6 +747,9 @@
                     [formData appendPartWithFileData:imageData3 name:@"ConfirmationP3" fileName:@"ConfirmationP3.png" mimeType:@"image/jpg/png/jpeg"];
                     //            [formData appendPartWithFileData:imageData4 name:@"UserPicture" fileName:@"UserPicture.png" mimeType:@"image/jpg/png/jpeg"];
                 }
+                self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                self.HUD.delegate = self;
+                self.HUD.mode = MBProgressHUDModeIndeterminate;
                 
             } progress:^(NSProgress * _Nonnull uploadProgress) {
                 NSLog(@"%@",uploadProgress);
@@ -674,7 +828,20 @@
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         PickerImage.allowsEditing = YES;
         PickerImage.delegate = self;
-        [self presentViewController:PickerImage animated:YES completion:nil];
+        
+        
+        NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"应用相机权限受限,请在设置中启用" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+            return;
+        }
+        else
+        {
+            [self presentViewController:PickerImage animated:YES completion:nil];
+        }
     }]];
     //按钮：取消，类型：UIAlertActionStyleCancel
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -797,7 +964,18 @@
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         PickerImage.allowsEditing = YES;
         PickerImage.delegate = self;
-        [self presentViewController:PickerImage animated:YES completion:nil];
+        NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"应用相机权限受限,请在设置中启用" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+            return;
+        }
+        else
+        {
+            [self presentViewController:PickerImage animated:YES completion:nil];
+        }
     }]];
     //按钮：取消，类型：UIAlertActionStyleCancel
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

@@ -211,8 +211,14 @@
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 27, 25)];
     [button setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
-    UILabel *shoucang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 97, 40, 20, 14)];
+    UILabel *shoucang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 97, 40, 30, 14)];
+    
+    shoucang.centerX = button.centerX;
+    
     shoucang.text = @"收藏";
+    shoucang.textAlignment = NSTextAlignmentCenter;
+    
+    
     shoucang.font = [UIFont systemFontOfSize:10];
     shoucang.textColor = [UIColor darkGrayColor];
     
@@ -224,7 +230,12 @@
     [button2 setFrame:CGRectMake(self.view.bounds.size.width - 50, 10, 25, 25)];
     [button2 addTarget:self action:@selector(didClickShareButton:) forControlEvents:(UIControlEventTouchUpInside)];
     
-    UILabel *fenxiang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 47, 40, 20, 14)];
+    UILabel *fenxiang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 47, 40, 30, 14)];
+    fenxiang.textAlignment = NSTextAlignmentCenter;
+    
+    
+    fenxiang.centerX = button2.centerX;
+    
     fenxiang.text = @"分享";
     fenxiang.font = [UIFont systemFontOfSize:10];
     fenxiang.textColor = [UIColor darkGrayColor];
@@ -274,14 +285,12 @@
     
     [self.commentButton addTarget:self action:@selector(commentButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [commentView addSubview:self.commentButton];
-    
     self.textView.delegate = self;
     self.textView.textColor = [UIColor darkGrayColor];
     self.textView.text = @"请输入评论内容";
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [commentView addSubview:self.textView];
     self.commentView = commentView;
-    
     [self.view addSubview:self.commentView];
    
 }

@@ -70,5 +70,8 @@
 @property (nonatomic,strong) NSString *Account;//余额
 @property (nonatomic,strong) NSString *CompanyDes;
 
+@property (nonatomic,strong) NSString *Publisher;
+
+
 
 @end

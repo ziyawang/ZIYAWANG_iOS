@@ -13,6 +13,8 @@
 #import "PassWordCheck.h"
 #import "ChageNickNameController.h"
 #import "UserInfoModel.h"
+#import <AVFoundation/AVFoundation.h>
+
 @interface UserInfoController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *usericonImageView;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberLabel;
@@ -51,11 +53,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-        self.extendedLayoutIncludesOpaqueBars = NO;
-        self.modalPresentationCapturesStatusBarAppearance = NO;
-    }
+    [super viewWillAppear:animated];
+//    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//        self.extendedLayoutIncludesOpaqueBars = NO;
+//        self.modalPresentationCapturesStatusBarAppearance = NO;
+//    }
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[UserInfoModel alloc]init];
@@ -74,10 +77,27 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupTitle];
+//    [self setupTitle];
 //    self.touxiang.font = [UIFont FontForLabel];
 //    self.connectPhone.font = [UIFont FontForLabel];
 //    self.xiugaimima.font = [UIFont FontForLabel];
+    self.navigationItem.title = @"个人信息";
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    //    [self setupTitle];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+
     
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -190,7 +210,20 @@
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         PickerImage.allowsEditing = YES;
         PickerImage.delegate = self;
-        [self presentViewController:PickerImage animated:YES completion:nil];
+        
+        
+        NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"应用相机权限受限,请在设置中启用" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+            return;
+        }
+        else
+        {
+            [self presentViewController:PickerImage animated:YES completion:nil];
+        }
     }]];
     //按钮：取消，类型：UIAlertActionStyleCancel
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

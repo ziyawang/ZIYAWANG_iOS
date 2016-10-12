@@ -442,6 +442,11 @@
     }]];
     //按钮：拍照，类型：UIAlertActionStyleDefault
     [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+        
+        
+    
+        
+        
         /**
          其实和从相册选择一样，只是获取方式不同，前面是通过相册，而现在，我们要通过相机的方式
          */
@@ -450,7 +455,21 @@
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         PickerImage.allowsEditing = NO;
         PickerImage.delegate = self;
+        
+        
+        
+        NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"应用相机权限受限,请在设置中启用" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+            return;
+        }
+        else
+        {
         [self presentViewController:PickerImage animated:YES completion:nil];
+        }
     }]];
     
     //按钮：取消，类型：UIAlertActionStyleCancel

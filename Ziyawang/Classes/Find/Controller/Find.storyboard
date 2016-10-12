@@ -151,16 +151,25 @@
                                                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wei.png" translatesAutoresizingMaskIntoConstraints="NO" id="kbu-tK-75U">
+                                                        <rect key="frame" x="76" y="12.5" width="12" height="12"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="12" id="nld-Li-MLY"/>
+                                                            <constraint firstAttribute="width" constant="12" id="vhc-T0-E7Z"/>
+                                                        </constraints>
+                                                    </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="uLw-jr-gc9" firstAttribute="leading" secondItem="3Y2-Nb-7Sf" secondAttribute="leading" constant="10" id="9Wl-iM-m4g"/>
                                                     <constraint firstAttribute="trailing" secondItem="qSL-cV-9nm" secondAttribute="trailing" id="9fz-eI-gaY"/>
+                                                    <constraint firstItem="kbu-tK-75U" firstAttribute="leading" secondItem="uLw-jr-gc9" secondAttribute="trailing" constant="10" id="Afd-YB-c9t"/>
                                                     <constraint firstAttribute="width" secondItem="3Y2-Nb-7Sf" secondAttribute="height" multiplier="69:19" id="Bii-m8-9cV"/>
                                                     <constraint firstItem="IqK-UN-gRf" firstAttribute="leading" secondItem="3Y2-Nb-7Sf" secondAttribute="leading" constant="10" id="EYM-hu-Jek"/>
                                                     <constraint firstAttribute="height" secondItem="IqK-UN-gRf" secondAttribute="height" constant="57" id="KP4-Ip-YLW"/>
                                                     <constraint firstItem="IqK-UN-gRf" firstAttribute="top" secondItem="qSL-cV-9nm" secondAttribute="bottom" constant="10" id="XqO-rq-fOD"/>
                                                     <constraint firstItem="IqK-UN-gRf" firstAttribute="top" secondItem="uLw-jr-gc9" secondAttribute="bottom" constant="20" id="Y0c-ur-WF4"/>
+                                                    <constraint firstItem="kbu-tK-75U" firstAttribute="centerY" secondItem="uLw-jr-gc9" secondAttribute="centerY" id="joq-Ah-8xZ"/>
                                                     <constraint firstItem="uLw-jr-gc9" firstAttribute="top" secondItem="3Y2-Nb-7Sf" secondAttribute="top" constant="10" id="nxF-84-Q9x"/>
                                                     <constraint firstItem="qSL-cV-9nm" firstAttribute="leading" secondItem="3Y2-Nb-7Sf" secondAttribute="leading" id="pxp-9L-5B8"/>
                                                     <constraint firstAttribute="trailing" secondItem="IqK-UN-gRf" secondAttribute="trailing" constant="10" id="wA5-8h-uHX"/>
@@ -682,6 +691,7 @@
                     <navigationItem key="navigationItem" id="bOz-en-XUG"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="PublisherImage" destination="kbu-tK-75U" id="oZh-of-qZU"/>
                         <outlet property="PublishtimeLabel" destination="UUj-ri-inZ" id="vVd-cP-cwA"/>
                         <outlet property="ScrollView" destination="gPO-fh-MFW" id="z9C-QE-rOY"/>
                         <outlet property="ViewCount" destination="Sd1-eq-M9v" id="3Fk-HP-63W"/>
@@ -1304,6 +1314,7 @@
     <resources>
         <image name="fenxiang.png" width="21" height="20"/>
         <image name="shoucang-hui.png" width="22" height="22"/>
+        <image name="wei.png" width="13" height="13"/>
         <image name="yuyin.png" width="101" height="30"/>
     </resources>
 </document>

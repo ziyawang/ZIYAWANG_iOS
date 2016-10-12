@@ -14,6 +14,7 @@
 #import "ZiyaMainController.h"
 
 #import "MineViewController.h"
+#import "ZiyaRuleController.h"
 @interface MySetController ()
 @property (weak, nonatomic) IBOutlet UILabel *ziyashengming;
 @property (weak, nonatomic) IBOutlet UILabel *tuijianLabel;
@@ -60,6 +61,7 @@
             [defaults removeObjectForKey:@"UserPicture"];
             [defaults removeObjectForKey:@"UserName"];
             [defaults removeObjectForKey:@"rcToken"];
+            [defaults synchronize];
             
 //            [[SDImageCache sharedImageCache] clearDisk];  //清楚磁盘缓存
 //            [[SDImageCache sharedImageCache] clearMemory];
@@ -101,13 +103,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    title.textColor = [UIColor whiteColor];
-    title.backgroundColor = [UIColor clearColor];
-    title.textAlignment = NSTextAlignmentCenter;
-    title.text = @"设置";
-    title.textColor = [UIColor blackColor];
-    self.navigationItem.titleView = title;
+//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+//    title.textColor = [UIColor whiteColor];
+//    title.backgroundColor = [UIColor clearColor];
+//    title.textAlignment = NSTextAlignmentCenter;
+//    title.text = @"设置";
+//    title.textColor = [UIColor blackColor];
+//    self.navigationItem.titleView = title;
+    self.navigationItem.title = @"设置";
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    //    [self setupTitle];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ziyaGestureAction:)];
     [self.ziyagongyueView addGestureRecognizer:gesture1];
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(toFriendAction:)];
@@ -130,11 +147,11 @@
 }
 - (void)ziyaGestureAction:(UITapGestureRecognizer *)gesture1
 {
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    NSString *URL = [AudioURL stringByAppendingString:@"/law.html"];
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];
-    [self.view addSubview:webView];
+    ZiyaRuleController *ruleVC = [[ZiyaRuleController alloc]init];
     
+    [self.navigationController pushViewController:ruleVC animated:YES];
+    
+
 }
 - (void)toFriendAction:(UITapGestureRecognizer *)gesture2
 {

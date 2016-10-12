@@ -82,6 +82,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *beizhuViewHight;
 @property (weak, nonatomic) IBOutlet UIView *topToBeizhuVeiw;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toptobeizhuView;
+@property (weak, nonatomic) IBOutlet UIImageView *PublisherImage;
 
 /**
  *  storyboard每一个label
@@ -171,6 +172,27 @@
 {
     [super viewWillAppear:animated];
     
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+    self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(145, 17, 40, 9.5)];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    label.textAlignment = UITextAlignmentCenter;
+    label.centerX = self.view.bounds.size.width/2;
+    
+    label.text = @"";
+    label.textColor = [UIColor blackColor];
+    self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
+    [label addSubview:self.titleImageView];
+    self.label = label;
+    [self.navigationController.navigationBar addSubview:self.label];
+    
+    
+    self.navigationItem.title = self.typeName;
+    
+    
     /**
      *  iOS7之后导航栏问题
      */
@@ -223,18 +245,7 @@
 
     
 //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
-   self.titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(145, 17, 40, 9.5)];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
-    label.textAlignment = UITextAlignmentCenter;
-    label.centerX = self.view.bounds.size.width/2;
-    
-    label.text = self.typeName;
-    label.textColor = [UIColor blackColor];
-    self.titleImageView.image = [UIImage imageNamed:@"vipziyuan"];
-    [label addSubview:self.titleImageView];
-    self.label = label;
-    [self.navigationController.navigationBar addSubview:self.label];
+  
     
     
 //    self.navigationItem.titleView = label;
@@ -484,6 +495,13 @@
     self.PublishtimeLabel.font = [UIFont systemFontOfSize:10];
     self.ViewCount.font = [UIFont systemFontOfSize:10];
     self.companyInfoLabel.text = self.model.CompanyDes;
+    self.model.Publisher = [NSString stringWithFormat:@"%@",self.model.Publisher];
+    
+    if ([self.model.Publisher isEqualToString:@"0"])
+    {
+        [self.PublisherImage setHidden:YES];
+        
+    }
     
     if ([self.model.Member isEqualToString:@"2"] == NO) {
         self.beizhuViewHight.constant = 0;
@@ -602,7 +620,9 @@
 
     if ([self.model.PictureDes1 isEqualToString:@""])
     {
-        
+        [self.imageview1 setHidden:YES];
+        [self.imageview2 setHidden:YES];
+        [self.imageview3 setHidden:YES];
     }
     else if([self.model.PictureDes1 isEqualToString:@""]==NO&&[self.model.PictureDes2 isEqualToString:@""]==NO&&[self.model.PictureDes3 isEqualToString:@""])
     {
@@ -1862,7 +1882,7 @@
         talkViewController *talkVC = [[talkViewController alloc]init];
         talkVC.targetId = self.targetID;
         NSLog(@"~~~~~~~~~~~~~~~~~TargetID%@",self.targetID);
-        talkVC.title = @"对话";//self.userid;
+        talkVC.title = @"私聊";//self.userid;
         talkVC.conversationType = ConversationType_PRIVATE;
         [self.navigationController pushViewController:talkVC animated:YES];
         NSLog(@"认证过的服务方，调用私聊界面");

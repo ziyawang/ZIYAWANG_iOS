@@ -11,6 +11,7 @@
 #import "UIView+Extension.h"
 #import "CSCancelOperationController.h"
 #import "LoginController.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/414)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/736)
@@ -60,8 +61,23 @@
  */
 - (void)setupSubViews {
     
-    [self setupTitle];
+//    [self setupTitle];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"意见反馈";
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    //    [self setupTitle];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+    statuView.backgroundColor = [UIColor blackColor];
+    [self.navigationController.navigationBar addSubview:statuView];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     [self setupTextView];
     
     [self setupAddImageView];
@@ -110,7 +126,21 @@
         PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         PickerImage.allowsEditing = NO;
         PickerImage.delegate = self;
-        [self presentViewController:PickerImage animated:YES completion:nil];
+        
+        
+        
+        NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"应用相机权限受限,请在设置中启用" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+            return;
+        }
+        else
+        {
+            [self presentViewController:PickerImage animated:YES completion:nil];
+        }
     }]];
     //按钮：取消，类型：UIAlertActionStyleCancel
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

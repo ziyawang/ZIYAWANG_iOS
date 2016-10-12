@@ -8,6 +8,11 @@
 
 #import "RechargeController.h"
 #import <StoreKit/StoreKit.h>
+
+
+#define AppStoreInfoLocalFilePath [NSString stringWithFormat:@"%@/%@/", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],@"EACEF35FE363A75A"]
+
+
 @interface RechargeController ()<SKPaymentTransactionObserver,SKProductsRequestDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *buttonOne;
 @property (weak, nonatomic) IBOutlet UIButton *buttonTwo;
@@ -213,6 +218,9 @@
     
     //凭证发送给服务器
     NSString *receipt =  [transaction.transactionReceipt base64Encoding];
+    
+    
+    
     [self sendReceiptToDomainWithReceipt:receipt];
     
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -250,16 +258,34 @@
         }
         else
         {
-        [self sendReceiptToDomainWithReceipt:receipt];
+        [self saveReceiptWithReceipt:receipt];
         }
         NSLog(@"%@",dic[@"status_code"]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
-        [self sendReceiptToDomainWithReceipt:receipt];
+        
+        
+        [self saveReceiptWithReceipt:receipt];
+        
+        
+//        [self sendReceiptToDomainWithReceipt:receipt];
     }];
-    
-
 }
+
+//持久化存储用户购买凭证(这里最好还要存储当前日期，用户id等信息，用于区分不同的凭证)
+-(void)saveReceiptWithReceipt:(NSString *)receipt{
+    NSString *fileName = @"AppStorerRceipt";
+    NSString *savedPath = [NSString stringWithFormat:@"%@%@.plist", AppStoreInfoLocalFilePath, fileName];
+    
+    NSLog(@"%@",savedPath);
+    
+    NSDictionary *dic =[ NSDictionary dictionaryWithObjectsAndKeys:
+                        receipt,                           @"receipt",
+                        self.amount,                   @"amount",
+                        nil];
+    [dic writeToFile:savedPath atomically:YES];
+}
+
 - (void)dealloc
 {
     [[SKPaymentQueue defaultQueue]removeTransactionObserver:self];

@@ -173,6 +173,44 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+//    /**
+//     *  设置主页视图数据源
+//     */
+//    [self setArrays];
+//    /**
+//     初始化tableView以及其他属性
+//     */
+//    [self setViewsAndinitOthers];
+//    /**
+//     *  初始化scrollview pagecontrol searchbar backView
+//     */
+//    [self setView];
+//    /**
+//     *  初始化头视图
+//     */
+//    [self setHeadView];
+//    /**
+//     *  获取轮播图
+//     */
+//    [self getLunbotu];
+//    /**
+//     *  获取信息数据
+//     */
+//    [self loadNewInfoData];
+//    /**
+//     *  上拉加载
+//     *
+//     *  @param loadMoreData 获取更多数据
+//     *
+//     *  @return NO
+//     */
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//    [self.tableView.mj_footer setAutomaticallyHidden:YES];
+    
+    
+    
 self.navigationItem.title = @"首页";
     UIColor *color = [UIColor clearColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
@@ -180,6 +218,9 @@ self.navigationItem.title = @"首页";
     
     [self setNavigation];
     [self getVideoStatu];
+    
+    
+    
     
 }
 - (void)getVideoStatu
@@ -226,8 +267,8 @@ self.navigationItem.title = @"首页";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    //        });
+//    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    //        });
     /**
      *  设置主页视图数据源
      */
@@ -260,6 +301,21 @@ self.navigationItem.title = @"首页";
      *  @return NO
      */
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
+            [self loadNewInfoData];
+            [self getLunbotu];
+        }
+        else
+        {
+            [self loadNewServiceData];
+            [self getLunbotu];
+            
+        }
+        // 进入刷新状态后会自动调用这个block
+        
+    }];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
 
 }
@@ -446,6 +502,7 @@ self.navigationItem.title = @"首页";
     [searchBar.leftView addSubview:sanjiao];
     sanjiao.image = [UIImage imageNamed:@"xiala"];
     self.searchBarbutton.layer.cornerRadius = 10;
+    self.searchBarbutton.layer.masksToBounds = YES;
     searchBar.rightViewMode = UITextFieldViewModeAlways;
     searchBar.leftViewMode = UITextFieldViewModeAlways;
     searchBar.backgroundColor = [UIColor whiteColor];
@@ -454,7 +511,9 @@ self.navigationItem.title = @"首页";
     
     searchBar.layer.borderColor = [UIColor colorWithHexString:@"#ef8200"].CGColor;
     
-    searchBar.layer.cornerRadius = 20;
+  
+    searchBar.layer.cornerRadius = 19;
+      searchBar.layer.masksToBounds = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapgestureAction:)];
     
     [searchBar addGestureRecognizer:tapGesture];
@@ -878,12 +937,15 @@ self.navigationItem.title = @"首页";
         [self.tableView.mj_footer endRefreshing];
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
+        [self.tableView.mj_header endRefreshing];
+        
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
    
@@ -934,6 +996,8 @@ self.navigationItem.title = @"首页";
             
         }
         [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
 

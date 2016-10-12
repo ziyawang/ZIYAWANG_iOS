@@ -1487,7 +1487,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //        {
     //            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];
     //        }
-    cell.model = self.sourceArray[indexPath.row];
+    if (self.sourceArray.count!=0) {
+        cell.model = self.sourceArray[indexPath.row];
+
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;

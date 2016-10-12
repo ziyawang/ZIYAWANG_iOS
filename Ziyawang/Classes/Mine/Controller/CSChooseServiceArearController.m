@@ -87,6 +87,7 @@
  *  保存按钮
  */
 - (void)rightBarButtonClickAction {
+ 
     NSString *string = [NSString string];
     //    if (self.selectArray.count > 5) {
     //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -96,18 +97,23 @@
     //    else
     //    {
     
-    for (NSString *title in self.selectArray) {
-        //        if ([title isEqualToString:@"全国"]) {
-        //            string = @" 全国";
-        //        }
-        //      else
-        //      {
-        string = [string stringByAppendingFormat:@" %@", title];
-        //      }
+    if (self.selectArray.count != 0) {
+        for (NSString *title in self.selectArray) {
+            //        if ([title isEqualToString:@"全国"]) {
+            //            string = @" 全国";
+            //        }
+            //      else
+            //      {
+            string = [string stringByAppendingFormat:@" %@", title];
+            //      }
+        }
+        
+    }
+ 
+    if ([string isEqualToString:@""] == NO) {
+        string = [string substringFromIndex:1];
     }
     
-    
-    string = [string substringFromIndex:1];
     NSLog(@"!!!!!!!!!!!!!%@",string);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (self.selectArray.count == 0) {

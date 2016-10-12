@@ -14,32 +14,31 @@
  *
  *  @return
  */
-//#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
-//#define getImageURL @"http://images.ziyawang.com"//获取图片
-//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-//#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
+#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
+#define getImageURL @"http://images.ziyawang.com"//获取图片
+#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
 
-
-//#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
-//#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
-//#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
-//#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
-//#define RechargeSussceeURL @"http://api.ziyawang.com/v1/v1/apple/pay"//支付成功回调业务服务器
+#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
+#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
+#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
+#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
+#define RechargeSussceeURL @"http://api.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
 /**
  *  测试服API
  *
  *  @return
  */
-#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
-#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
-#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
-
-#define paidURL @"http://apitest.ziyawang.com/v1/app/consume"//消费接口
-#define rechargeURL @"http://apitest.ziyawang.com/v1/pay/list"//充值芽币金额类型
-#define CostURL @"http://apitest.ziyawang.com/v1/mybill"//充值明细
-#define changeNickNameURL @"http://apitest.ziyawang.com/v1/auth/chusername"//修改昵称
-#define RechargeSussceeURL @"http://apitest.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
+//#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
+//#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
+//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+//#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
+//
+//#define paidURL @"http://apitest.ziyawang.com/v1/app/consume"//消费接口
+//#define rechargeURL @"http://apitest.ziyawang.com/v1/pay/list"//充值芽币金额类型
+//#define CostURL @"http://apitest.ziyawang.com/v1/mybill"//充值明细
+//#define changeNickNameURL @"http://apitest.ziyawang.com/v1/auth/chusername"//修改昵称
+//#define RechargeSussceeURL @"http://apitest.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
 
 
 

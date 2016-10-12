@@ -15,7 +15,7 @@
 @interface LBTabBar ()
 
 /** plus按钮 */
-@property (nonatomic, weak) UIButton *plusBtn ;
+@property (nonatomic, strong) UIButton *plusBtn ;
 
 @end
 

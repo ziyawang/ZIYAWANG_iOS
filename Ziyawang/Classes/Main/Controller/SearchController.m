@@ -161,16 +161,18 @@
     [searchBar.leftView addSubview:sanjiao];
     sanjiao.image = [UIImage imageNamed:@"xiala"];
     self.searchBarbutton.layer.cornerRadius = 10;
+    self.searchBarbutton.layer.masksToBounds = YES;
+    
     searchBar.rightViewMode = UITextFieldViewModeAlways;
     searchBar.leftViewMode = UITextFieldViewModeAlways;
     searchBar.backgroundColor = [UIColor whiteColor];
     searchBar.layer.borderWidth = 1.0f;
     searchBar.borderStyle = UITextBorderStyleRoundedRect;
-    
     searchBar.layer.borderColor = [UIColor colorWithHexString:@"#ef8200"].CGColor;
     
-    searchBar.layer.cornerRadius = 20;
+    searchBar.layer.cornerRadius = 19;
     searchBar.userInteractionEnabled = YES;
+    searchBar.layer.masksToBounds = YES;
     self.searchBarbutton.userInteractionEnabled = YES;
 
     [self.searchBarbutton addTarget:self action:@selector(searchBarbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];

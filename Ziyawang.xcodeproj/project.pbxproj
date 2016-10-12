@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78026DCB1DACE3EA0080794B /* wei.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DC81DACE3EA0080794B /* wei.png */; };
+		78026DCC1DACE3EA0080794B /* wei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DC91DACE3EA0080794B /* wei@2x.png */; };
+		78026DCD1DACE3EA0080794B /* wei@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78026DCA1DACE3EA0080794B /* wei@3x.png */; };
 		780B5BB11D65A9070005E123 /* CollectInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B5BAF1D65A9070005E123 /* CollectInfoViewCell.m */; };
 		780B5BB21D65A9070005E123 /* CollectInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 780B5BB01D65A9070005E123 /* CollectInfoViewCell.xib */; };
 		780B5BB61D65B47A0005E123 /* CollectVideoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780B5BB41D65B47A0005E123 /* CollectVideoViewCell.m */; };
@@ -307,6 +310,7 @@
 		7825239B1D801A2400F2C0A2 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7825238B1D801A2400F2C0A2 /* TableViewCell.xib */; };
 		7825239C1D801A2400F2C0A2 /* VideosViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825238D1D801A2400F2C0A2 /* VideosViewCell.m */; };
 		7825239D1D801A2400F2C0A2 /* VideosViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7825238E1D801A2400F2C0A2 /* VideosViewCell.xib */; };
+		7826E7FF1DAC986A00228657 /* ZiyaRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7826E7FE1DAC986A00228657 /* ZiyaRuleController.m */; };
 		7836E7F21D5AF51800187E41 /* FlipTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7EE1D5AF51800187E41 /* FlipTableView.m */; };
 		7836E7F31D5AF51800187E41 /* SegmentTapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7F11D5AF51800187E41 /* SegmentTapView.m */; };
 		7836E7F61D5AF65B00187E41 /* VideosListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7836E7F51D5AF65B00187E41 /* VideosListController.m */; };
@@ -712,6 +716,9 @@
 /* Begin PBXFileReference section */
 		4624258CFE00AC3EEB120187 /* Pods-Ziyawang.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ziyawang.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ziyawang/Pods-Ziyawang.release.xcconfig"; sourceTree = "<group>"; };
 		7775909C6CB3E8DBF2737C13 /* libPods-Ziyawang.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ziyawang.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78026DC81DACE3EA0080794B /* wei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wei.png; sourceTree = "<group>"; };
+		78026DC91DACE3EA0080794B /* wei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wei@2x.png"; sourceTree = "<group>"; };
+		78026DCA1DACE3EA0080794B /* wei@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wei@3x.png"; sourceTree = "<group>"; };
 		780B5BAE1D65A9070005E123 /* CollectInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectInfoViewCell.h; path = ../Controller/CollectInfoViewCell.h; sourceTree = "<group>"; };
 		780B5BAF1D65A9070005E123 /* CollectInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectInfoViewCell.m; path = ../Controller/CollectInfoViewCell.m; sourceTree = "<group>"; };
 		780B5BB01D65A9070005E123 /* CollectInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CollectInfoViewCell.xib; path = ../Controller/CollectInfoViewCell.xib; sourceTree = "<group>"; };
@@ -1035,6 +1042,8 @@
 		7825238C1D801A2400F2C0A2 /* VideosViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosViewCell.h; sourceTree = "<group>"; };
 		7825238D1D801A2400F2C0A2 /* VideosViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosViewCell.m; sourceTree = "<group>"; };
 		7825238E1D801A2400F2C0A2 /* VideosViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideosViewCell.xib; sourceTree = "<group>"; };
+		7826E7FD1DAC986A00228657 /* ZiyaRuleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiyaRuleController.h; sourceTree = "<group>"; };
+		7826E7FE1DAC986A00228657 /* ZiyaRuleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZiyaRuleController.m; sourceTree = "<group>"; };
 		7836E7ED1D5AF51800187E41 /* FlipTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlipTableView.h; sourceTree = "<group>"; };
 		7836E7EE1D5AF51800187E41 /* FlipTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlipTableView.m; sourceTree = "<group>"; };
 		7836E7F01D5AF51800187E41 /* SegmentTapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTapView.h; sourceTree = "<group>"; };
@@ -1845,6 +1854,9 @@
 		782521D01D77DE5300F2C0A2 /* small */ = {
 			isa = PBXGroup;
 			children = (
+				78026DC81DACE3EA0080794B /* wei.png */,
+				78026DC91DACE3EA0080794B /* wei@2x.png */,
+				78026DCA1DACE3EA0080794B /* wei@3x.png */,
 				78D960FC1D9D1F5E007ECABA /* fangdajing@.png */,
 				78D960FD1D9D1F5E007ECABA /* fangdajing@2x .png */,
 				78D960FE1D9D1F5E007ECABA /* fangdajing@3x.png */,
@@ -2619,6 +2631,8 @@
 				7883E8F91D65EF8400192C11 /* MySetController.h */,
 				7883E8FA1D65EF8400192C11 /* MySetController.m */,
 				7883E8FB1D65EF8400192C11 /* MySetController.xib */,
+				7826E7FD1DAC986A00228657 /* ZiyaRuleController.h */,
+				7826E7FE1DAC986A00228657 /* ZiyaRuleController.m */,
 				78469B161D54B2A600F3DE4C /* MyPushController.h */,
 				78469B171D54B2A600F3DE4C /* MyPushController.m */,
 				78469B191D54B2E000F3DE4C /* MyTogetherController.h */,
@@ -3170,6 +3184,7 @@
 			files = (
 				7836E91B1D5DFFC900187E41 /* 8.png in Resources */,
 				780E52B81D73E1120083A3E1 /* xiaoxi.png in Resources */,
+				78026DCB1DACE3EA0080794B /* wei.png in Resources */,
 				782523521D80037300F2C0A2 /* year@3x.png in Resources */,
 				78F3DDDC1D461B2C00C1E62E /* zx-video-player-unlock@2x.png in Resources */,
 				78F3DDE11D461B2C00C1E62E /* zx-video-player-volumeMute@3x.png in Resources */,
@@ -3283,6 +3298,7 @@
 				782522801D77DE5300F2C0A2 /* shenqingqiangdanren@3x.png in Resources */,
 				78F3DDD41D461B2C00C1E62E /* zx-video-player-brightness@2x.png in Resources */,
 				7836E91A1D5DFFC900187E41 /* 7@3x.png in Resources */,
+				78026DCD1DACE3EA0080794B /* wei@3x.png in Resources */,
 				780E52101D73E1120083A3E1 /* tiaolixuanzhong.png in Resources */,
 				780E52B61D73E1120083A3E1 /* xiaoxi-xuanzhong@2x.png in Resources */,
 				782522AD1D77DE5300F2C0A2 /* chexiao@3x.png in Resources */,
@@ -3495,6 +3511,7 @@
 				7836E9C71D5E041200187E41 /* bottom.jpg in Resources */,
 				789371041D61E5D9000F6DD4 /* daohanglan@2x.png in Resources */,
 				7836E9131D5DFFC900187E41 /* 5@2x.png in Resources */,
+				78026DCC1DACE3EA0080794B /* wei@2x.png in Resources */,
 				780E52041D73E1120083A3E1 /* mima.png in Resources */,
 				789371071D61E5D9000F6DD4 /* daohanglan2.png in Resources */,
 				780E52B11D73E1120083A3E1 /* wode-xuanzhong@3x.png in Resources */,
@@ -3769,6 +3786,7 @@
 				78F3DD861D45ADB400C1E62E /* SuPhotoAblumCell.m in Sources */,
 				787DD1C21D52E03D00132B3B /* MessageListViewController.m in Sources */,
 				7889626E1D8680BE008DC681 /* KNPhotoBrowerCell.m in Sources */,
+				7826E7FF1DAC986A00228657 /* ZiyaRuleController.m in Sources */,
 				78F3DD971D45BDD500C1E62E /* testDataController.m in Sources */,
 				7836E85E1D5C41BD00187E41 /* ScrollHeadView.m in Sources */,
 				7836E8021D5AF77200187E41 /* YifenzhongController.m in Sources */,

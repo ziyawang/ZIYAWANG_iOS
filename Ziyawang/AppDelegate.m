@@ -45,6 +45,11 @@
 
 #import "UITabBar+CustomBadge.h"
 
+
+#define AppStoreInfoLocalFilePath [NSString stringWithFormat:@"%@/%@/", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],@"EACEF35FE363A75A"]
+
+
+
 @interface AppDelegate ()<RCIMReceiveMessageDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate,UITabBarControllerDelegate>
 /**
  *  网络请求单例
@@ -89,6 +94,13 @@
      *  检查是否需要版本更新
      */
 //    [self ifNeedUpdate];
+    /**
+     *  是否要重新发送订单验证
+     */
+    [self ifNeedSendReceiotToDomain];
+    
+    
+    
        /**
      *  初始化融云SDK
      */
@@ -237,6 +249,124 @@
         self.window.rootViewController =self.tabBarController;
     }
 }
+
+
+#pragma mark----重新验证发送订单
+
+- (void)ifNeedSendReceiotToDomain
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token != nil) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        //从服务器验证receipt失败之后，在程序再次启动的时候，使用保存的receipt再次到服务器验证
+        if (![fileManager fileExistsAtPath:AppStoreInfoLocalFilePath]) {//如果在改路下不存在文件，说明就没有保存验证失败后的购买凭证，也就是说发送凭证成功。
+            [fileManager createDirectoryAtPath:AppStoreInfoLocalFilePath//创建目录
+                   withIntermediateDirectories:YES
+                                    attributes:nil
+                                         error:nil];
+        }
+        else//存在购买凭证，说明发送凭证失败，再次发起验证
+        {
+            [self sendReceiptToDomain];
+        }
+    }
+   
+}
+- (void)sendReceiptToDomain
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    
+    //搜索该目录下的所有文件和目录
+    NSArray *cacheFileNameArray = [fileManager contentsOfDirectoryAtPath:AppStoreInfoLocalFilePath error:&error];
+    
+    if (error == nil)
+    {
+        for (NSString *name in cacheFileNameArray)
+        {
+            if ([name hasSuffix:@".plist"])//如果有plist后缀的文件，说明就是存储的购买凭证
+            {
+                NSString *filePath = [NSString stringWithFormat:@"%@%@", AppStoreInfoLocalFilePath, name];
+                [self sendAppStoreRequestBuyPlist:filePath];
+                
+            }
+        }
+    }
+    else
+    {
+        NSLog(@"%@",error);
+        
+    }
+    
+  
+   
+}
+
+-(void)sendAppStoreRequestBuyPlist:(NSString *)plistPath
+{
+    NSString *path = [NSString stringWithFormat:@"%@%@", AppStoreInfoLocalFilePath, plistPath];
+    NSLog(@"%@",path);
+    
+    
+    NSString *fileName = @"AppStorerRceipt";
+    NSString *savedPath = [NSString stringWithFormat:@"%@%@.plist", AppStoreInfoLocalFilePath, fileName];
+    
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:savedPath];
+    
+    //这里的参数请根据自己公司后台服务器接口定制，但是必须发送的是持久化保存购买凭证
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [dic objectForKey:@"amount"],                           @"amount",
+                                   [dic objectForKey:@"receipt"],                             @"backnumber",
+                                   
+                                   nil];
+    
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *URL = [[RechargeSussceeURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSLog(@"--------%@",URL);
+//    NSMutableDictionary *dic = [NSMutableDictionary new];
+//    NSString *amount = [[NSUserDefaults standardUserDefaults]objectForKey:@"amount"];
+    
+    [params setObject:@"token" forKey:@"access_token"];
+//    [dic setObject:amount forKey:@"amount"];
+//    [dic setObject:receipt forKey:@"backnumber"];
+    
+    
+    [self.manager POST:URL parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if ([dic[@"status_code"] isEqualToString:@"200"]) {
+            NSLog(@"发送成功");
+            [self removeIapFailedPath:AppStoreInfoLocalFilePath];
+        }
+        else
+        {
+            
+        }
+        NSLog(@"%@",dic[@"status_code"]);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        
+    }];
+
+}
+- (void)removeIapFailedPath:(NSString *)plistPath{
+    NSString *path = [NSString stringWithFormat:@"%@/%@", AppStoreInfoLocalFilePath, plistPath];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:AppStoreInfoLocalFilePath])
+    {
+        [fileManager removeItemAtPath:AppStoreInfoLocalFilePath error:nil];
+    }
+    
+    if ([fileManager fileExistsAtPath:path])
+    {
+        [fileManager removeItemAtPath:path error:nil];
+    }
+}
+
 #pragma mark----检查更新版本以及用户信息
 /**
  *  检查更新应用版本
