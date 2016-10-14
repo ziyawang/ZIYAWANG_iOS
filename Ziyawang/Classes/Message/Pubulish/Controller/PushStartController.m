@@ -67,17 +67,14 @@
 @property (nonatomic,strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic,strong) NSURL *aurl;
 @property (nonatomic,strong) UIView *recordAnimationView;
-
-
 @property (nonatomic,assign) BOOL haveVideo;
-
 @property (nonatomic,assign) NSInteger x;
-
 @end
 
 @implementation PushStartController
 
 #pragma mark----视图周期
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -90,6 +87,8 @@
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
+    
+    
     [super viewDidLoad];
     /**
      初始化视图
@@ -126,6 +125,7 @@
  */
 - (void)initView
 {
+
     if ([self.typeName isEqualToString:@"资产包转让"]==NO) {
         [self.qingdanView setHidden:YES];
     }
@@ -1104,11 +1104,11 @@
 - (void)showSuccessAlertViewController
 {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的信息已提交" preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+//    UIAlertAction *action1 = [UIAlertAction actionWithTitle:nil style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    [alertVC addAction:action1];
+//    [alertVC addAction:action1];
     [alertVC addAction:action2];
     [self presentViewController:alertVC animated:YES completion:nil];
 }

@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    self.navigationItem.title = @"资芽网芽币使用协议";
+    self.navigationItem.title = @"充值协议";
     UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     NSString *URL = [AudioURL stringByAppendingString:@"/rechargeproto.html"];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]]];

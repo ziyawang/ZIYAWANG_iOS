@@ -129,9 +129,12 @@
         textField2.font = [UIFont systemFontOfSize:14];
         textField2.delegate = self;
         textField2.tag = 2;
+        textField.keyboardType = UIKeyboardTypePhonePad;
+        textField2.keyboardType = UIKeyboardTypePhonePad;
+        
         if ([self.textName isEqualToString:@"总金额"]||[self.textName isEqualToString:@"合同金额"]||[self.textName isEqualToString:@"金额"])
         {
-           lable.text = @"万";
+            lable.text = @"万";
             
             textField.placeholder = @"请输入金额";
             [self addSubview:textField];
@@ -296,7 +299,6 @@
                     return NO;
                 }
             }
-            
             //输入的字符是否是小数点
             if (single == '.') {
                 if(self.isHaveDian==NO)//text中还没有小数点
@@ -326,7 +328,11 @@
             }
         }else{//输入的数据格式不正确
             [self showError:@"亲，您输入的格式不正确"];
+            NSLog(@"%lu",(unsigned long)range.length);
+            if (range.length != 0) {
             [textField.text stringByReplacingCharactersInRange:range withString:@""];
+
+            }
             return NO;
         }
     }

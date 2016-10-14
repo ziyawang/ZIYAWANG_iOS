@@ -225,11 +225,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+
     self.navigationItem.title = @"服务详情";
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
-
-
-    
     self.sourceArray = [NSMutableArray array];
     self.manager = [AFHTTPSessionManager manager];
     self.model = [[FindServiceModel alloc]init];

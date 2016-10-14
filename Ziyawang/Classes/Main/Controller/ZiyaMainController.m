@@ -492,7 +492,8 @@ self.navigationItem.title = @"首页";
     UIButton *rightSearchbutton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [rightSearchbutton setFrame:CGRectMake(25, 4, 30, 30)];
     [rightSearchbutton setImage:[UIImage imageNamed:@"xiaosousuo"] forState:(UIControlStateNormal)];
-    //    [rightSearchbutton addTarget:self action:@selector(rightButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+   
+    [rightSearchbutton addTarget:self action:@selector(SrachBarRightButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
     searchBar.rightView = searchBarRightView;
     [searchBarRightView addSubview:rightSearchbutton];
@@ -971,7 +972,8 @@ self.navigationItem.title = @"首页";
     NSString *getURL = FindServiceURL;
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
-    NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
+    NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage2];
+    
     [getdic setObject:startPage forKey:@"startpage"];
     [getdic setObject:access_token forKey:@"access_token"];
     
@@ -1146,6 +1148,17 @@ self.navigationItem.title = @"首页";
 }
 
 #pragma mark---监听事件
+
+
+- (void)SrachBarRightButtonAction:(UIButton *)button
+{
+    SearchController *searchVC = [[SearchController alloc]init];
+    searchVC.findType = self.searchBarbutton.titleLabel.text;
+    
+    [self.navigationController pushViewController:searchVC animated:YES];
+
+}
+
 - (void)didClickVideoButton:(UIButton*)button
 {
     VideosListController *videoVC = [[VideosListController alloc]init];

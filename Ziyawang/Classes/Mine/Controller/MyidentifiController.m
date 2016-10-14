@@ -576,8 +576,9 @@
         NSString *companyLocation = self.qiyesuozai.text;
         NSString *ServiceArea =  self.fuwudiqu.text;
             
+            
         NSMutableArray *TypeIDArray = [NSMutableArray new];
-        NSArray *array = [self.fuwuleixing.text componentsSeparatedByString:@" "];
+        NSArray *array = [self.fuwuleixing.text componentsSeparatedByString:@"、"];
         NSString *string = [NSString string];
 
             for (NSString *str in array) {
@@ -686,9 +687,9 @@
 
                 
                 
-            NSLog(@"信息不完整");
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
+//            NSLog(@"信息不完整");
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的认证信息不完整" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
         }
         else
         {

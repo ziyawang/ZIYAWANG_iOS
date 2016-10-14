@@ -49,6 +49,14 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+    self.navigationItem.title = @"搜索";
+    
+    
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];

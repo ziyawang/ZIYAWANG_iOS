@@ -494,7 +494,23 @@
 {
     self.PublishtimeLabel.font = [UIFont systemFontOfSize:10];
     self.ViewCount.font = [UIFont systemFontOfSize:10];
+//    NSString *htmlString = self.model.CompanyDesPC;
+//    NSAttributedString * attrStr =  [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+//    
+//    self.companyInfoLabel.attributedText = attrStr;
     self.companyInfoLabel.text = self.model.CompanyDes;
+    
+    self.typeLable.text = self.model.TypeName;
+    self.idNumLable.text = self.model.ProjectNumber;
+    
+    
+    NSLog(@"@@@@@@@@@@@@@@FBiD：%@",self.model.ProjectNumber);
+    self.infoDescribLable.text = self.model.WordDes;
+    
+    
+    
+    
+    
     self.model.Publisher = [NSString stringWithFormat:@"%@",self.model.Publisher];
     
     if ([self.model.Publisher isEqualToString:@"0"])
@@ -591,10 +607,7 @@
     }
     self.userID = self.model.UserID;
     
-    self.typeLable.text = self.model.TypeName;
-    self.idNumLable.text = self.model.ProjectNumber;
-    NSLog(@"@@@@@@@@@@@@@@FBiD：%@",self.model.ProjectNumber);
-    self.infoDescribLable.text = self.model.WordDes;
+  
     
     NSString *imageURL1 = @"1";
     NSString *imageURL2 = @"2";

@@ -236,8 +236,8 @@
     //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
     //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
-    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"律师事务所",@"保理公司",@"典当担保",@"催收机构",@"尽职调查",@"资产收购",@"债权收购"];
-    NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"02",@"10",@"12",@"14"];
+    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"律师事务所",@"保理公司",@"典当公司",@"担保公司",@"催收机构",@"尽职调查",@"资产收购",@"债权收购"];
+    NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"05",@"02",@"10",@"12",@"14"];
     
     
     
@@ -321,6 +321,11 @@
                     
                 }
                 
+                else if([sstr isEqualToString:infonmationType[9]])
+                {
+                    [self.dataDic setObject:informationTypeID[9] forKey:@"ServiceType"];
+                    
+                }
                 [weakSelf findServiceswithDic:self.dataDic];
                 
                 //                dispatch_async(dispatch_get_main_queue(), ^{
