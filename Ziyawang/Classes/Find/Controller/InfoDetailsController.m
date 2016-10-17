@@ -1141,7 +1141,7 @@
     UILabel *connectLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(65, 0, 100, 20)];
     connectLabel2.font = [UIFont systemFontOfSize:14];
     connectLabel2.text = @"私聊";
-    
+
     UIView *connectView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
     connectView2.centerX = talkButton.frame.size.width/3;
     [connectView2 addSubview:connectLabel2];
@@ -1259,7 +1259,13 @@
       
         self.model.PayFlag = [NSString stringWithFormat:@"%@",self.model.PayFlag];
         
-        if ([self.model.PayFlag isEqualToString:@"1"] || self.isZichan == YES) {
+        if ([self.model.Member isEqualToString:@"2"] == NO || self.isZichan == YES) {
+            
+            if([self.model.PayFlag isEqualToString:@"1"]== NO)
+            {
+            [self payForMessage];
+            }
+            
             UIWebView *webView = [[UIWebView alloc]init];
             NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
             NSURL *url = [NSURL URLWithString:telString];
@@ -1274,8 +1280,8 @@
            
            self.model.Member  = [NSString stringWithFormat:@"%@",self.model.Member];
            
-           if ([self.model.Member isEqualToString:@"2"]) {
-               
+//           if ([self.model.Member isEqualToString:@"2"]) {
+           
 //               self.AccountLabel1.text = self.model.Account;
 //               NSString *str = self.AccountLabel1.text;
 //               
@@ -1283,16 +1289,16 @@
 //               [self.view addSubview:self.blackBackView1];
 //               [self.view addSubview:self.alertView1];
                 [self createViewForLessMoney];
-           }
+//           }
            
-          else
-          {
-//              self.AccountLabel2.text = self.model.Account;
-//              [self.alertView2 addSubview:self.AccountLabel2];
-//              [self.view addSubview:self.blackBackView2];
-//              [self.view addSubview:self.alertView2];
-           [self createViewForManyMoney];
-          }
+//          else
+//          {
+////              self.AccountLabel2.text = self.model.Account;
+////              [self.alertView2 addSubview:self.AccountLabel2];
+////              [self.view addSubview:self.blackBackView2];
+////              [self.view addSubview:self.alertView2];
+//           [self createViewForManyMoney];
+//          }
 //           __weak typeof(self) weakSelf = self;
 //           NSArray *array = @[@{kHcdPopMenuItemAttributeTitle : @"", kHcdPopMenuItemAttributeIconImageName : @"quedingjian"},
 //                              @{kHcdPopMenuItemAttributeTitle : @"", kHcdPopMenuItemAttributeIconImageName : @"chongzhijian"}];
@@ -1300,7 +1306,6 @@
            
            
 //           [xiaohaoLabel setFrame:CGRectMake(20, 250, labelsize.width, labelsize.height)];
-           
            
            
            

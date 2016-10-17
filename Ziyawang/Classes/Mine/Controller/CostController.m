@@ -57,8 +57,14 @@
 - (void)setChooseView
 {
     self.chooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 70)];
+   
+    
     NSLog(@"%f",self.chooseView.bounds.size.width);
     self.chooseView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    
 //    self.chooseImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width, self.view.bounds.size.height - 50)];
 //    self.chooseImageView.backgroundColor = [UIColor blackColor];
 //    self.chooseImageView.alpha = 0.1;
@@ -114,6 +120,9 @@
     [self.chooseView addSubview:button3];
     
     self.chooseView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width, self.view.bounds.size.height - 50)];
+
+    
+    
     self.chooseView2.backgroundColor = [UIColor blackColor];
     self.chooseView2.alpha = 0.3;
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ChooseViewGestureAction:)];
@@ -127,18 +136,42 @@
 }
 - (void)rightBarbuttonAction:(UIBarButtonItem *)barbutton
 {
+    
+    
+
    
     if (self.barselected == NO) {
+//           [self setChooseView];
+//                    [self.view addSubview:self.chooseView2];
+//                    [self.view addSubview:self.chooseView];
+//        [UIView animateWithDuration:0.5 animations:^{
+//            CGRect chooseView2Frame = self.chooseView2.frame;
+//            chooseView2Frame.size.height = self.view.bounds.size.height - 50;
+//            self.chooseView2.frame = chooseView2Frame;
+//            
+//            
+//        }];
+        
        [self setChooseView];
-        [self.view addSubview:self.chooseView2];
-        [self.view addSubview:self.chooseView];
-        self.barselected = YES;
+        
+        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [self.view addSubview:self.chooseView2];
+            [self.view addSubview:self.chooseView];
+            self.barselected = YES;
+        } completion:nil];
+        
+        
+     
+        
     }
     else
     {
-        [self.chooseView removeFromSuperview];
-        [self.chooseView2 removeFromSuperview];
-        self.barselected = NO;
+        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+            [self.chooseView removeFromSuperview];
+            [self.chooseView2 removeFromSuperview];
+            self.barselected = NO;
+        } completion:nil];
+    
     }
 
 }
