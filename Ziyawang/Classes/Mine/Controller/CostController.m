@@ -154,23 +154,22 @@
         
        [self setChooseView];
         
-        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-            [self.view addSubview:self.chooseView2];
-            [self.view addSubview:self.chooseView];
-            self.barselected = YES;
-        } completion:nil];
-        
-        
-     
-        
+        [self.view addSubview:self.chooseView2];
+        [self.view addSubview:self.chooseView];
+        self.barselected = YES;
+//        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+//         
+//        } completion:nil];
+
     }
     else
     {
-        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
-            [self.chooseView removeFromSuperview];
-            [self.chooseView2 removeFromSuperview];
-            self.barselected = NO;
-        } completion:nil];
+        [self.chooseView removeFromSuperview];
+        [self.chooseView2 removeFromSuperview];
+        self.barselected = NO;
+//        [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+//           
+//        } completion:nil];
     
     }
 

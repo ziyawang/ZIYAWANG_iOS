@@ -18,6 +18,15 @@
 #import "SDVersion.h"
 #import "SDiOSVersion.h"
 #import "CLDropDownMenu.h"
+
+
+#import "LoginController.h"
+#import "UserInfoModel.h"
+#import "MyidentifiController.h"
+#import "RechargeController.h"
+#define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
+#define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
+
 @interface FindTypeController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 {
     UINib *nib;
@@ -53,11 +62,40 @@
 
 
 
+@property (nonatomic,strong) UIView *alertView1;
+@property (nonatomic,strong) UIView *alertView2;
+@property (nonatomic,strong) UIView *blackBackView1;
+@property (nonatomic,strong) UIView *blackBackView2;
+@property (nonatomic,strong) UILabel *label;
+@property (nonatomic,strong) UILabel *AccountLabel1;
+@property (nonatomic,strong) UILabel *AccountLabel2;
+@property (nonatomic,strong) UILabel *buzuLabel;
+
+@property (nonatomic,strong) NSString *account;
+@property (nonatomic,strong) NSString *role;
+@property (nonatomic,strong) UserInfoModel *userModel;
+@property (nonatomic,strong) NSString *USERID;
+
+@property (nonatomic,strong) InfoDetailsController *infoDetailsVC;
+@property (nonatomic,strong) PublishModel *pubModel;
+
+
+
 @end
 
 @implementation FindTypeController
 
+//显示菊花
+- (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
+{
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = mode;
+    self.HUD.labelText = lableText;
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.HUD hideAnimated:YES afterDelay:timer];
+}
 - (void)popAction:(UIBarButtonItem *)barbutton
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -129,6 +167,15 @@
     //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
     //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.userModel = [[UserInfoModel alloc]init];
+    [self getUserInfoFromDomin];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -1609,6 +1656,10 @@
     //    [getdic setObject:access_token forKey:@"access_token"];
     //    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
     NSString *getURL = FindInformationURL;
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token != nil) {
+        getURL = [[getURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    }
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     getdic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
     NSString *access_token = @"token";
@@ -1665,7 +1716,12 @@
 - (void)InfomationsWithDic:(NSMutableDictionary *)dataDic
 {
     
-    NSString *getURL =[FindInformationURL stringByAppendingString:@"?access_token=token"];
+    NSString *getURL =FindInformationURL;
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token != nil) {
+        getURL = [[getURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    }
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     getdic = self.dataDic;
     NSString *access_token = @"token";
@@ -1719,13 +1775,38 @@
     }];
 }
 
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark----支付
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            self.account = dic[@"user"][@"Account"];
+            self.role = dic[@"role"];
+            self.USERID = dic[@"user"][@"userid"];
+            
+            
+            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
+            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
+            
+            
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            
+        }];
+    }
+    
 }
+
 
 #pragma mark - Table view data source
 
@@ -1788,17 +1869,412 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+//    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+//    
+//    PublishModel *model = [[PublishModel alloc]init];
+//    model = self.sourceArray[indexPath.row];
+//    infoDetailsVC.ProjectID = model.ProjectID;
+//    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
+//    NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
+//    infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+//    infoDetailsVC.typeName = model.TypeName;
+//    [self.navigationController pushViewController:infoDetailsVC animated:YES];
+
     
+    /**
+     *  新支付
+     *
+     */
+    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
+    self.pubModel = model;
+    
     infoDetailsVC.ProjectID = model.ProjectID;
     infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;
-    [self.navigationController pushViewController:infoDetailsVC animated:YES];
+    self.infoDetailsVC = infoDetailsVC;
+    
+    model.Member = [NSString stringWithFormat:@"%@",model.Member];
+    
+    if ([self.USERID isEqualToString:model.UserID])
+    {
+        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+        return;
+    }
+    
+    if ([model.Member isEqualToString:@"2"] == NO)
+    {
+        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+    }
+    else
+    {
+        NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+        if (token == nil) {
+            NSLog(@"未登录,提示登录");
+            LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+            [self presentViewController:loginVC animated:YES completion:nil];
+        }
+        else if([self.role isEqualToString:@"1"])
+        {
+            self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
+            if ([self.pubModel.Member isEqualToString:@"2"] == NO )
+            {
+                //                    if([self.pubModel.PayFlag isEqualToString:@"1"]== NO)
+                //                    {
+                //                        [self payForMessage];
+                //                    }
+                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+            }
+            else
+            {
+                NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+                NSString *URL = IfHadPayMessageURL;
+                if (token != nil) {
+                    URL = [[URL stringByAppendingString:@"?token="]stringByAppendingString:token];
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                    [dic setObject:@"token" forKey:@"access_token"];
+                    [dic setObject:self.pubModel.ProjectID forKey:@"ProjectID"];
+                    
+                    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+                        
+                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                        if ([dic[@"status_code"] isEqualToString:@"200"]) {
+                            self.pubModel.PayFlag = dic[@"PayFlag"];
+                            self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
+                            
+                            
+                            if ([self.pubModel.PayFlag isEqualToString:@"1"] == NO)
+                            {
+                                [self createViewForLessMoney];
+                            }
+                            else
+                            {
+                                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                            }
+                        }
+                        
+                    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                        
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络状况" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                        [alert show];
+                    }];
+                    
+                }
+                
+                
+                
+                
+            }
+        }
+        else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
+        {
+            
+            if([self.pubModel.TypeName isEqualToString:@"投资需求"] || [self.pubModel.TypeName isEqualToString:@"资产求购"])
+            {
+                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                
+            }
+            else
+            {
+                [self ShowAlertViewController];
+            }
+        }
+        
+        
+    }
+    
+    
+    
+
+    
 }
+
+
+
+- (void)payForMessage
+{
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSMutableDictionary *dataDic = [NSMutableDictionary new];
+    [dataDic setObject:@"token" forKey:@"access_token"];
+    [dataDic setObject:self.pubModel.ProjectID forKey:@"ProjectID"];
+    NSString *URL = [[paidURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSLog(@"-----%@",URL);
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [self.manager POST:URL parameters:dataDic progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+         NSString *status_code = dic[@"status_code"];
+         if ([status_code isEqualToString:@"417"]) {
+             NSLog(@"已支付");
+         }
+         else if ([status_code isEqualToString:@"418"])
+         {
+             NSLog(@"余额不足");
+             [self MBProgressWithString:@"余额不足，请充值！" timer:2 mode:MBProgressHUDModeText];
+         }
+         else if ([status_code isEqualToString:@"416"])
+         {
+             NSLog(@"非收费信息");
+         }
+         else if ([status_code isEqualToString:@"200"])
+         {
+             [self.blackBackView1 removeFromSuperview];
+             [self.alertView1 removeFromSuperview];
+             [self.blackBackView2 removeFromSuperview];
+             [self.alertView2 removeFromSuperview];
+             
+             NSLog(@"支付成功");
+             self.pubModel.PayFlag = @"1";
+             
+             [self.navigationController pushViewController:self.infoDetailsVC animated:YES];
+             
+             
+             //             [self.connectButton setTitle:@"已约谈" forState:(UIControlStateNormal)];
+             [self.blackBackView2 removeFromSuperview];
+             [self.alertView2 removeFromSuperview];
+         }
+         [self.HUD removeFromSuperViewOnHide];
+         [self.HUD hideAnimated:YES];
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"%@",error);
+         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"支付失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         
+     }];
+    
+}
+
+
+- (void)ShowAlertViewController
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+        MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+        identifiVC.ConnectPhone = self.userModel.ConnectPhone;
+        identifiVC.ServiceName = self.userModel.ServiceName;
+        identifiVC.ServiceLocation = self.userModel.ServiceLocation;
+        identifiVC.ServiceType = self.userModel.ServiceType;
+        identifiVC.ServiceIntroduction = self.userModel.ServiceIntroduction;
+        identifiVC.ConnectPerson = self.userModel.ConnectPerson;
+        identifiVC.ServiceArea = self.userModel.ServiceArea;
+        identifiVC.ConfirmationP1 = self.userModel.ConfirmationP1;
+        identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
+        identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
+        identifiVC.ViewType = @"服务";
+        identifiVC.role = self.role;
+        [self.navigationController pushViewController:identifiVC animated:YES];
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+}
+
+- (void)createViewForLessMoney
+{
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(20, 30, self.view.bounds.size.width - 40, 70)];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    UIView *blackBackview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [blackBackview setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
+    UITapGestureRecognizer *blackBackViewTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(blackBackTapAction1:)];
+    [blackBackview addGestureRecognizer:blackBackViewTapGesture];
+    
+    UIView *alertView  = [[UIView alloc]initWithFrame:CGRectMake(44 * kWidthScale, 69 * kHeightScale, 288 * kWidthScale , 400 * kHeightScale)];
+    [alertView setBackgroundColor:[UIColor whiteColor]];
+    
+    
+    UIView *yellowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, alertView.bounds.size.width, alertView.bounds.size.height/2)];
+    yellowView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    [alertView addSubview:yellowView];
+    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(30, 24*kHeightScale, 98 * kWidthScale, 98 * kWidthScale)];
+    CGRect frame = imageview.frame;
+    frame.size = CGSizeMake(98 * kWidthScale, 98 * kWidthScale);
+    imageview.frame = frame;
+    CGPoint center = imageview.center;
+    center.x = alertView.frame.size.width/2;
+    imageview.center = center;
+    
+    //           imageview.centerX = self.view.bounds.size.width/2;
+    imageview.image = [UIImage imageNamed:@"yuetan-popup-logo"];
+    [yellowView addSubview:imageview];
+    
+    UILabel *resourceType = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20  *kHeightScale, alertView.bounds.size.width, 20)];
+    resourceType.text = @"该信息为收费资源";
+    UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20 *kHeightScale +25 * kHeightScale, alertView.bounds.size.width, 20)];
+    textLabel.text = @"需消耗芽币即可查看对方联系方式";
+    resourceType.font = [UIFont systemFontOfSize:20];
+    textLabel.font = [UIFont systemFontOfSize:15];
+    resourceType.textAlignment = NSTextAlignmentCenter;
+    textLabel.textAlignment = NSTextAlignmentCenter;
+    [yellowView addSubview:resourceType];
+    [yellowView addSubview:textLabel];
+    
+    CGFloat Height = yellowView.bounds.size.height;
+    UIImageView *smallImage1 = [[UIImageView alloc]initWithFrame:CGRectMake(30*kWidthScale, Height + 20*kHeightScale, 20, 20)];
+    smallImage1.image = [UIImage imageNamed:@"yuetan-goldcoin"];
+    
+    UILabel *xiaohaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + 20, 150, 100, 20)];
+    CGSize labelSize1 = [@"消耗：" sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:CGSizeMake(MAXFLOAT, 20) lineBreakMode:UILineBreakModeWordWrap];
+    xiaohaoLabel.frame = CGRectMake(30*kWidthScale + 36*kWidthScale, Height + 20*kHeightScale, labelSize1.width,20);
+    xiaohaoLabel.text = @"消耗：";
+    
+    CGSize labelSize2 = [self.pubModel.Price sizeWithFont:[UIFont systemFontOfSize:20] constrainedToSize:CGSizeMake(MAXFLOAT, 20) lineBreakMode:UILineBreakModeWordWrap];
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize1.width,Height + 20*kHeightScale,labelSize2.width,20)];//这个frame是初设的，没关系，后面还会重新设置其size。
+    label1.numberOfLines = 0;
+    label1.text = self.pubModel.Price;
+    label1.font = [UIFont systemFontOfSize:20];
+    label1.textColor = [UIColor colorWithHexString:@"#ff9000"];
+    
+    UILabel *yabiLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize1.width + labelSize2.width, Height + 20*kHeightScale, 40, 20)];
+    yabiLabel1.text = @"芽币";
+    
+    UIImageView *smallImage2 = [[UIImageView alloc]initWithFrame:CGRectMake(30*kWidthScale, Height + 20*kHeightScale + 32 * kHeightScale, 20, 20)];
+    smallImage2.image = [UIImage imageNamed:@"yuetan-goldcoin"];
+    
+    UILabel *xiaohaoLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + 20 , 150+32, 100, 20)];
+    CGSize labelSize11 = [@"余额：" sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:CGSizeMake(MAXFLOAT, 20) lineBreakMode:UILineBreakModeWordWrap];
+    
+    xiaohaoLabel2.frame = CGRectMake(30*kWidthScale + 36*kWidthScale, Height + 20*kHeightScale + 32* kHeightScale, labelSize1.width,20);
+    xiaohaoLabel2.text = @"余额：";
+    CGSize labelSize22 = [self.account sizeWithFont:[UIFont systemFontOfSize:20] constrainedToSize:CGSizeMake(MAXFLOAT, 20) lineBreakMode:UILineBreakModeWordWrap];
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width,Height + 20*kHeightScale + 32* kHeightScale,labelSize22.width,20)];//这个frame是初设的，没关系，后面还会重新设置其size。
+    label2.numberOfLines = 0;
+    label2.text = self.account;
+    label2.font = [UIFont systemFontOfSize:20];
+    
+    label2.textColor = [UIColor colorWithHexString:@"#ff9000"];
+    
+    //   self.AccountLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width,Height + 20*kHeightScale + 32* kHeightScale,labelSize22.width,20)];//这个frame是初设的，没关系，后面还会重新设置其size。
+    //    self.AccountLabel1.numberOfLines = 0;
+    //    self.AccountLabel1.text = self.model.Account;
+    //    self.AccountLabel1.font = [UIFont systemFontOfSize:20];
+    //
+    //    self.AccountLabel1.textColor = [UIColor colorWithHexString:@"#ff9000"];
+    
+    
+    UILabel *yabiLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width + labelSize22.width, Height + 20*kHeightScale+32* kHeightScale, 40, 20)];
+    
+    
+    yabiLabel2.text = @"芽币";
+    
+    UILabel *buzuLabel = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width + labelSize22.width + 40,  Height + 20*kHeightScale+32* kHeightScale, 100, 20)];
+    if (self.account.integerValue < self.pubModel.Price.integerValue)
+    {
+        buzuLabel.text = @"(余额不足)";
+    }
+    buzuLabel.font = [UIFont systemFontOfSize:11];
+    
+    self.buzuLabel = buzuLabel;
+    UIButton *cancelButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [cancelButton setFrame:CGRectMake(alertView.bounds.size.width - 30 * kWidthScale, 10 *kWidthScale, 20 * kWidthScale, 20 * kWidthScale)];
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    cancelButton.tag = 1;
+    [cancelButton addTarget:self action:@selector(didClickCancelButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [sureButton setFrame:CGRectMake(26*kWidthScale, Height + 20*kHeightScale+32* kHeightScale + 20*kHeightScale + 20 * kHeightScale, alertView.bounds.size.width - 52 * kWidthScale, 40 * kHeightScale)];
+    [sureButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+    [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    [sureButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    sureButton.tag = 3;
+    [sureButton addTarget:self action:@selector(sureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    UIButton *rechargeButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [rechargeButton setFrame:CGRectMake(26*kWidthScale, Height + 20*kHeightScale+32* kHeightScale + 20*kHeightScale+12*kHeightScale+40*kHeightScale+ 20 * kHeightScale, alertView.bounds.size.width - 52 * kWidthScale, 40 * kHeightScale)];
+    [rechargeButton setBackgroundColor:[UIColor whiteColor]];
+    [rechargeButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [rechargeButton setTitle:@"充值" forState:(UIControlStateNormal)];
+    
+    rechargeButton.layer.borderWidth = 2.5;
+    rechargeButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    [rechargeButton addTarget:self action:@selector(rechareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    [alertView addSubview:smallImage1];
+    [alertView addSubview:xiaohaoLabel];
+    [alertView addSubview:label1];
+    [alertView addSubview:yabiLabel1];
+    [alertView addSubview:smallImage2];
+    [alertView addSubview:xiaohaoLabel2];
+    [alertView addSubview:label2];
+    [alertView addSubview:yabiLabel2];
+    [alertView addSubview:buzuLabel];
+    [alertView addSubview:cancelButton];
+    [alertView addSubview:sureButton];
+    [alertView addSubview:rechargeButton];
+    
+    self.blackBackView1 = blackBackview;
+    self.alertView1 = alertView;
+    [self.view addSubview:self.blackBackView1];
+    [self.view addSubview:self.alertView1];
+    
+}
+
+- (void)blackBackTapAction1:(UITapGestureRecognizer *)gesture
+{
+    [self.alertView1 removeFromSuperview];
+    [self.blackBackView1 removeFromSuperview];
+}
+- (void)blackBackTapAction2:(UITapGestureRecognizer *)gesture
+{
+    [self.alertView2 removeFromSuperview];
+    [self.blackBackView2 removeFromSuperview];
+}
+- (void)didClickCancelButton:(UIButton *)button
+{
+    if (button.tag == 1) {
+        [self.alertView1 removeFromSuperview];
+        [self.blackBackView1 removeFromSuperview];
+    }
+    else
+    {
+        [self.alertView2 removeFromSuperview];
+        [self.blackBackView2 removeFromSuperview];
+    }
+    
+}
+- (void)sureButtonAction:(UIButton *)button
+{
+    if(self.pubModel.Price.integerValue > self.account.integerValue)
+    {
+        [self MBProgressWithString:@"余额不足，请充值！" timer:2 mode:MBProgressHUDModeText];
+    }
+    else
+    {
+        
+        [self payForMessage];
+    }
+    
+}
+- (void)rechareButtonAction:(UIButton *)button
+{
+    //    MyYabiController *yabiVC = [[MyYabiController alloc]init];
+    RechargeController *rechargeVC = [[RechargeController alloc]init];
+    
+    [self.blackBackView1 removeFromSuperview];
+    [self.alertView1 removeFromSuperview];
+    [self.blackBackView2 removeFromSuperview];
+    [self.alertView2 removeFromSuperview];
+    [self.navigationController pushViewController:rechargeVC animated:YES];
+    
+}
+
 
 
 /*

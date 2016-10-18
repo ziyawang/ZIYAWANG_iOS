@@ -271,8 +271,12 @@
 {
     [self.startPushButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     UIButton *deleteButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [deleteButton setFrame:CGRectMake(self.view.bounds.size.width - 140, 30, 30, 30)];
-    //    [deleteButton setTitle:@"撤销" forState:(UIControlStateNormal)];
+    [deleteButton setFrame:CGRectMake(270, 30, 30, 30)];
+    
+    NSLog(@"%f",[UIScreen mainScreen].bounds.size.width);
+    
+    
+    //[deleteButton setTitle:@"撤销" forState:(UIControlStateNormal)];
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];
     [deleteButton addTarget:self action:@selector(didClickDeleteButton:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.addImageView addSubview:deleteButton];
@@ -750,7 +754,7 @@
         [self.pushDic setObject:@"token" forKey:@"access_token"];
         //照片
         //语音
-        if ([self.pushDic[@"TotalMoney"]isEqualToString:@"请选择"]||self.pushDic[@"Rate"]==nil||[self.pushDic[@"AssetType"]isEqualToString:@"请选择"]||[self.pushDic[@"ProArea"]isEqualToString:@"请选择"]||[self.pushDic[@"WordDes"]isEqualToString:@"请输入内容"])
+        if ([self.pushDic[@"TotalMoney"]isEqualToString:@"请选择"]||self.pushDic[@"Rate"]==nil||[self.pushDic[@"AssetType"]isEqualToString:@"请选择"]||[self.pushDic[@"ProArea"]isEqualToString:@"请选择"]||[self.pushDic[@"WordDes"]isEqualToString:@"请输入内容"]||[self.pushDic[@"Rate"]isEqualToString:@"请选择"])
         {
             NSLog(@"请完善信息！");
             [self MBProgressWithString:@"请完善信息资料" timer:1 mode:MBProgressHUDModeText];
@@ -894,7 +898,7 @@
         [self.pushDic setObject:self.TypeID forKey:@"TypeID"];
         [self.pushDic setObject:self.contentTextView.text forKey:@"WordDes"];
         [self.pushDic setObject:@"token" forKey:@"access_token"];
-        if ([self.pushDic[@"AssetType"]isEqualToString:@"请选择"]||[self.pushDic[@"InvestType"]isEqualToString:@"请选择"]||[self.pushDic[@"Year"]isEqualToString:@"请选择"]||[self.pushDic[@"Rate"]isEqualToString:@"请选择"]||[self.pushDic[@"ProArea"]isEqualToString:@"请选择"]||[self.pushDic[@"WordDes"]isEqualToString:@"请选择"]) {
+        if ([self.pushDic[@"AssetType"]isEqualToString:@"请选择"]||[self.pushDic[@"InvestType"]isEqualToString:@"请选择"]||[self.pushDic[@"Year"]isEqualToString:@"请选择"]||[self.pushDic[@"Rate"]isEqualToString:@"请选择"]||[self.pushDic[@"Rate"]isEqualToString:@""]||[self.pushDic[@"ProArea"]isEqualToString:@"请选择"]||[self.pushDic[@"WordDes"]isEqualToString:@"请输入内容"]) {
         [self MBProgressWithString:@"请完善信息资料" timer:1 mode:MBProgressHUDModeText];
         }
         else

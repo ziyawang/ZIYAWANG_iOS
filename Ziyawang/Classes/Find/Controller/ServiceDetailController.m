@@ -21,6 +21,7 @@
 #import "KNPhotoBrowerImageView.h"
 #import "KNPhotoBrower.h"
 #import "KNToast.h"
+#import "TipTableViewController.h"
 @interface ServiceDetailController ()<MBProgressHUDDelegate>
 {
     BOOL     _ApplicationStatusIsHidden;
@@ -207,6 +208,18 @@
 }
 
 
+- (void)rightBarbuttonAction:(UIBarButtonItem *)UIBarButton
+{
+    TipTableViewController *tipVc = [[TipTableViewController alloc]init];
+    tipVc.Type = @"2";
+    self.model.ServiceID = [NSString stringWithFormat:@"%@",self.model.ServiceID];
+    tipVc.ItemID = self.model.ServiceID;
+    
+    [self.navigationController pushViewController:tipVc animated:YES];
+    
+    
+}
+
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
 {
@@ -230,6 +243,10 @@
     self.navigationController.navigationBar.titleTextAttributes = dict;
 
     self.navigationItem.title = @"服务详情";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"举报" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
+    
+
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     self.sourceArray = [NSMutableArray array];
     self.manager = [AFHTTPSessionManager manager];

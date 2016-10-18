@@ -72,6 +72,8 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+//    [super pushViewController:viewController animated:animated];
+    
 
     if (self.viewControllers.count > 0) {
         

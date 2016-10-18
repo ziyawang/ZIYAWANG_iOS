@@ -323,7 +323,9 @@
     label.font = [UIFont systemFontOfSize:11];
     [self.addImageButton addSubview:label];
     UIButton *deleteButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [deleteButton setFrame:CGRectMake(self.imageBackView.bounds.size.width - 140, 30, 30, 30)];
+    [deleteButton setFrame:CGRectMake(self.view.bounds.size.width - 140, 30, 30, 30)];
+    NSLog(@"%f",self.view.bounds.size.width);
+    
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];
 //    [deleteButton setTitle:@"撤销" forState:(UIControlStateNormal)];
     [deleteButton addTarget:self action:@selector(didClickDeleteButton:) forControlEvents:(UIControlEventTouchUpInside)];

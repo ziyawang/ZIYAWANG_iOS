@@ -102,12 +102,12 @@
     else if([self.model.Member isEqualToString:@"1"])
     {
         [self.VipImage setHidden:NO];
-        self.VipImage.image = [UIImage imageNamed:@"vipziyuan"];
+        self.VipImage.image = [UIImage imageNamed:@"VIP_resources"];
     }
     else if([self.model.Member isEqualToString:@"2"])
     {
         [self.VipImage setHidden:NO];
-        self.VipImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        self.VipImage.image = [UIImage imageNamed:@"Fee_resources"];
         
     }
 //    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
@@ -132,6 +132,7 @@
     self.ProAreaLabel.font = [UIFont FontForLabel];
     self.FromWhere.font = [UIFont FontForLabel];
     self.AssetTypeLabel.font = [UIFont FontForLabel];
+    
     self.projectNumberLabel.font = [UIFont FontForSmallLabel];
     [self.projectNumberLabel setTextColor:[UIColor lightGrayColor]];
     

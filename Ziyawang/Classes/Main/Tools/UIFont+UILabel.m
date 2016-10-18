@@ -23,11 +23,11 @@
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
-        return [UIFont systemFontOfSize:12];;
+        return [UIFont systemFontOfSize:13];;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
-        return [UIFont systemFontOfSize:12];;
+        return [UIFont systemFontOfSize:13];;
         
     }
 else
@@ -66,7 +66,7 @@ else
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
-        return [UIFont systemFontOfSize:12];;
+        return [UIFont systemFontOfSize:15];;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {

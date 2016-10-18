@@ -33,6 +33,7 @@
 #import "HcdPopMenu.h"
 #import "MyYabiController.h"
 #import "RechargeController.h"
+#import "TipTableViewController.h"
 
 
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
@@ -244,6 +245,9 @@
         [self getUserInfoFromDomin];
 
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"举报" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
+    
+    
 //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
   
     
@@ -293,6 +297,19 @@
         }
     };
     
+}
+
+- (void)rightBarbuttonAction:(UIBarButtonItem *)UIBarButton
+{
+    TipTableViewController *tipVc = [[TipTableViewController alloc]init];
+    tipVc.Type = @"1";
+    self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
+    
+    tipVc.ItemID = self.model.ProjectID;
+    
+    [self.navigationController pushViewController:tipVc animated:YES];
+    
+
 }
 
 
@@ -522,6 +539,7 @@
     if ([self.model.Member isEqualToString:@"2"] == NO) {
         self.beizhuViewHight.constant = 0;
         self.toptobeizhuView.constant = 0;
+        [self.beizhuView setHidden:YES];
     }
     self.PublishtimeLabel.text = self.model.PublishTime;
 //    self.ViewCount.text = [NSString stringWithFormat:@"%@",self.model.ViewCount];
@@ -1272,74 +1290,23 @@
             [webView loadRequest:[NSURLRequest requestWithURL:url]];
             [self.view addSubview:webView];
             NSLog(@"认证过的服务方，调用打电话");
-            
-       
-        }
+            }
        else
        {
-           
            self.model.Member  = [NSString stringWithFormat:@"%@",self.model.Member];
-           
-//           if ([self.model.Member isEqualToString:@"2"]) {
-           
-//               self.AccountLabel1.text = self.model.Account;
-//               NSString *str = self.AccountLabel1.text;
-//               
-//               [self.alertView1 addSubview:self.AccountLabel1];
-//               [self.view addSubview:self.blackBackView1];
-//               [self.view addSubview:self.alertView1];
-                [self createViewForLessMoney];
-//           }
-           
-//          else
-//          {
-////              self.AccountLabel2.text = self.model.Account;
-////              [self.alertView2 addSubview:self.AccountLabel2];
-////              [self.view addSubview:self.blackBackView2];
-////              [self.view addSubview:self.alertView2];
-//           [self createViewForManyMoney];
-//          }
-//           __weak typeof(self) weakSelf = self;
-//           NSArray *array = @[@{kHcdPopMenuItemAttributeTitle : @"", kHcdPopMenuItemAttributeIconImageName : @"quedingjian"},
-//                              @{kHcdPopMenuItemAttributeTitle : @"", kHcdPopMenuItemAttributeIconImageName : @"chongzhijian"}];
-//           
-           
-           
-//           [xiaohaoLabel setFrame:CGRectMake(20, 250, labelsize.width, labelsize.height)];
-           
-           
-           
-           
-//           HcdPopMenuView *menu = [[HcdPopMenuView alloc]initWithItems:array View:view];
-//           [menu setBgImageViewByUrlStr:@"http://img3.duitang.com/uploads/item/201411/17/20141117102333_rwHMH.thumb.700_0.jpeg"];
-//           [menu setSelectCompletionBlock:^(NSInteger index) {
-//               if(index == 0)
-//               {
-//                   [weakSelf payForMessage];
-//               }
-//               
-//               if (index == 1) {
-//                   MyYabiController *yabiVC = [[MyYabiController alloc]init];
-//                   [self.navigationController pushViewController:yabiVC animated:YES];
-//               }
-//           }];
-//           [menu setTipsLblByTipsStr:@""];
-//           [menu setExitViewImage:@"cuowu"];
-           //           [HcdPopMenuView createPopmenuItems:array closeImageName: @"cuowu" backgroundImageUrl:@"http://img3.duitang.com/uploads/item/201411/17/20141117102333_rwHMH.thumb.700_0.jpeg" tipStr:@"" completionBlock:^(NSInteger index) {
-//           }];
-//           [HcdPopMenuView createPopmenuItems:array closeImageName:@"cuowu" backgroundImageUrl:@"" tipStr:@"" completionBlock:^(NSInteger index) {
-//      //           UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您的余额不足，请充值后再拨打" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-////               [alert show];
-// 
-//               NSLog(@"%ld",index);
-//               
-//           }];
-           
-          
-//           [self showAlertControllerWithTitle:@"提示" message:@"该条信息是收费信息，若您想继续约谈，需要支付1元服务费用" cancelTitle:@"取消" otherTitle:@"付费约谈" actions:@selector(payForMessage)];
-           
-           
-           
+           if ([self.model.PayFlag isEqualToString:@"1"] == NO) {
+            [self createViewForLessMoney];
+           }
+           else
+           {
+               UIWebView *webView = [[UIWebView alloc]init];
+               NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+               NSURL *url = [NSURL URLWithString:telString];
+               [webView loadRequest:[NSURLRequest requestWithURL:url]];
+               [self.view addSubview:webView];
+
+           }
+         
        }
     }
     else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
@@ -1778,7 +1745,7 @@
 
 - (void)ShowAlertViewController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方可以查看发布方的联系方式，申请抢单，私聊" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可以进行约谈或私聊" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         

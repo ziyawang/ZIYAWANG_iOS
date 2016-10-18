@@ -44,8 +44,8 @@
     [self.contentView addSubview:_chooseBtn];
     
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.textColor = [UIColor darkGrayColor];
-    _titleLabel.font = [UIFont systemFontOfSize:12];
+    _titleLabel.textColor = [UIColor blackColor];
+    _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.text = @"sdfsdsdaf";
     _titleLabel.frame = CGRectMake(80 * kWidthScale, 0, 300 * kWidthScale, 50 * kHeightScale);
     [self.contentView addSubview:_titleLabel];
