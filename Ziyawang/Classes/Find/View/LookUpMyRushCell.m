@@ -31,6 +31,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *asettyoeWidth;
 @property (weak, nonatomic) IBOutlet UIButton *quxiaoqiangdanButton;
 @property (weak, nonatomic) IBOutlet UIImageView *VipImage;
+@property (weak, nonatomic) IBOutlet UILabel *PriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yabiLabel;
+
+
+
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *FromWhereWidth;
 @property (weak, nonatomic) IBOutlet UIImageView *TotalMoneyImage;
@@ -133,16 +138,23 @@
     
     if ([self.model.Member isEqualToString:@"0"]) {
         [self.VipImage setHidden:YES];
-        
+        [self.PriceLabel setHidden:YES];
+        [self.yabiLabel setHidden:YES];
     }
     else if([self.model.Member isEqualToString:@"1"])
     {
         [self.VipImage setHidden:NO];
-        self.VipImage.image = [UIImage imageNamed:@"vipziyuan"];
+        [self.PriceLabel setHidden:YES];
+        [self.yabiLabel setHidden:YES];
+        self.VipImage.image = [UIImage imageNamed:@"vip_ziyuan"];
     }
     else if([self.model.Member isEqualToString:@"2"])
     {
-        self.VipImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        self.VipImage.image = [UIImage imageNamed:@"fee_again"];
+        self.PriceLabel.text = self.model.Price;
+        [self.PriceLabel setHidden:NO];
+        [self.yabiLabel setHidden:NO];
+        
         
     }
 //    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];

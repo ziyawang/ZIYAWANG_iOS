@@ -182,7 +182,6 @@
     self.requestDic = [NSMutableDictionary new];
     if (button.tag == 1) {
         
-        
         [self loadNewData];
         self.selectedButtonTag = 1;
     }
