@@ -51,7 +51,9 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
         
         UIViewController *vc = [_dataArray objectAtIndex:indexPath.row];
-        vc.view.frame = cell.bounds;
+//        vc.view.frame = cell.bounds;
+        
+        vc.view.frame = CGRectMake(0, 10, cell.bounds.size.width, cell.bounds.size.height);
         [cell.contentView addSubview:vc.view];
     }
     return cell;

@@ -148,6 +148,7 @@
     self.userModel = [[UserInfoModel alloc]init];
     [self getUserInfoFromDomin];
     
+    
 }
 
 - (void)getUserInfoFromDomin
@@ -183,6 +184,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
     self.navigationItem.title = @"找信息";
@@ -1664,6 +1666,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 
             }
         }
+        
+        
+        
         else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
         {
             
@@ -1748,7 +1753,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 
 - (void)ShowAlertViewController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您需要先通过服务方认证才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
@@ -1808,7 +1813,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     UILabel *resourceType = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20  *kHeightScale, alertView.bounds.size.width, 20)];
     resourceType.text = @"该信息为收费资源";
     UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20 *kHeightScale +25 * kHeightScale, alertView.bounds.size.width, 20)];
-    textLabel.text = @"需消耗芽币即可查看对方联系方式";
+    textLabel.text = @"消耗芽币可查看详细信息";
     resourceType.font = [UIFont systemFontOfSize:20];
     textLabel.font = [UIFont systemFontOfSize:15];
     resourceType.textAlignment = NSTextAlignmentCenter;
@@ -1912,6 +1917,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [alertView addSubview:rechargeButton];
     
     self.blackBackView1 = blackBackview;
+    self.alertView1 = alertView;
     self.alertView1 = alertView;
     [self.view addSubview:self.blackBackView1];
     [self.view addSubview:self.alertView1];

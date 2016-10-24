@@ -57,6 +57,7 @@
 @property (nonatomic,assign) BOOL isCollected;
 @property (nonatomic,strong) MBProgressHUD *HUD;
 @property (weak, nonatomic) IBOutlet UILabel *serviceLocation;
+@property (weak, nonatomic) IBOutlet UILabel *saveLabel;
 
 @property (nonatomic, strong) NSMutableArray *itemsArray;
 @property (nonatomic,strong) NSMutableArray *imageurlArray;
@@ -210,12 +211,21 @@
 
 - (void)rightBarbuttonAction:(UIBarButtonItem *)UIBarButton
 {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token == nil) {
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+        
+    }
+    else
+    {
     TipTableViewController *tipVc = [[TipTableViewController alloc]init];
     tipVc.Type = @"2";
     self.model.ServiceID = [NSString stringWithFormat:@"%@",self.model.ServiceID];
     tipVc.ItemID = self.model.ServiceID;
     
     [self.navigationController pushViewController:tipVc animated:YES];
+    }
     
     
 }
@@ -677,6 +687,7 @@
 {
     [self.saveButton setHidden:YES];
     
+    [self.saveLabel setHidden:YES];
     UIView *selfView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     selfView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     UIButton *lookButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -699,6 +710,24 @@
     }
     else
     {
+        NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+        NSString *URL = [[ServiceConnectCountURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [dic setObject:@"IOS" forKey:@"Channel"];
+        [dic setObject:self.model.ServiceID forKey:@"ServiceID"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"%@",dic);
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
+        
         NSLog(@"调用打电话");
         UIWebView *webView = [[UIWebView alloc]init];
         NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];

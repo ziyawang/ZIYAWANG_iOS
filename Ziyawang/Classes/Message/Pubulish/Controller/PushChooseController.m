@@ -42,7 +42,7 @@
     
     UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
     buttonimage.image = [UIImage imageNamed:@"back3"];
-    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 30, 20)];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 45, 20)];
     buttonLabel.text = @"返回";
     buttonLabel.font = [UIFont systemFontOfSize:15];
     

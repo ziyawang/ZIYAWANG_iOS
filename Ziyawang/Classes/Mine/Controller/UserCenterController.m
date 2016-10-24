@@ -148,8 +148,8 @@
             NSData *imageData = UIImagePNGRepresentation(self.userIconImage.image);
             UserInfoController *userinfoVC = [[UserInfoController alloc]init];
             userinfoVC.imageData = imageData;
-            userinfoVC.phoneNumber = self.nameLabel.text;
-            userinfoVC.nickNme = self.nameLabel.text;
+            userinfoVC.phoneNumber = self.model.phonenumber;
+            userinfoVC.nickNme = self.model.username;
             [self.navigationController pushViewController:userinfoVC animated:YES];
             
         }
@@ -159,8 +159,8 @@
             NSData *imageData = UIImagePNGRepresentation(self.userIconImage.image);
             UserInfoController *userinfoVC = [[UserInfoController alloc]init];
             userinfoVC.imageData = imageData;
-            userinfoVC.phoneNumber = self.nameLabel.text;
-            userinfoVC.nickNme = self.nameLabel.text;
+            userinfoVC.phoneNumber = self.model.phonenumber;
+            userinfoVC.nickNme = self.model.username;
             
             [self.navigationController pushViewController:userinfoVC animated:YES];
         }
@@ -202,14 +202,27 @@
             [self.areaLabel setHidden:YES];
             [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
             [self.companyNameLabel setHidden:YES];
-            self.nameLabel.text = self.model.phonenumber;
+            if ([self.model.username isEqualToString:@""]) {
+                self.nameLabel.text = self.model.phonenumber;
+            }
+            else
+            {
+                self.nameLabel.text = self.model.username;
+            }
         }
         else
         {
             [self.nameLabel setHidden:NO];
             [self.areaLabel setHidden:NO];
             [self.companyNameLabel setHidden:NO];
-            self.nameLabel.text = self.model.phonenumber;
+            
+            if ([self.model.username isEqualToString:@""]) {
+                self.nameLabel.text = self.model.phonenumber;
+            }
+            else
+            {
+               self.nameLabel.text = self.model.username;
+            }
             self.areaLabel.text = self.model.ServiceLocation;
             self.companyNameLabel.text = self.model.ServiceName;
             [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];

@@ -93,7 +93,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.videoDes];
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25, self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25 , self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
     self.tableView.contentInset = UIEdgeInsetsMake(10, 0, 30, 0);
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
@@ -232,10 +232,7 @@
     
     UILabel *fenxiang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 47, 40, 30, 14)];
     fenxiang.textAlignment = NSTextAlignmentCenter;
-    
-    
     fenxiang.centerX = button2.centerX;
-    
     fenxiang.text = @"分享";
     fenxiang.font = [UIFont systemFontOfSize:10];
     fenxiang.textColor = [UIColor darkGrayColor];
@@ -266,6 +263,8 @@
     UILabel *contentCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width, 20)];
     self.commentCountView.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
     contentCountLabel.text = @"全部评论";
+    contentCountLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    
     self.contentCountLabel = contentCountLabel;
     [self.commentCountView addSubview:self.contentCountLabel];
     [self.view addSubview:self.commentCountView];
@@ -288,6 +287,7 @@
     self.textView.delegate = self;
     self.textView.textColor = [UIColor darkGrayColor];
     self.textView.text = @"请输入评论内容";
+    self.textView.font = [UIFont systemFontOfSize:15];
     self.view.backgroundColor = [UIColor whiteColor];
     [commentView addSubview:self.textView];
     self.commentView = commentView;

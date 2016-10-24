@@ -138,10 +138,12 @@
     self.FromWhereWidth.constant = [self getwidth];
     self.asettyoeWidth.constant = [self getwidth];
     
-    self.wordDesLabel.font = [UIFont FontForLabel];
+//    self.wordDesLabel.font = [UIFont FontForLabel];
     self.wordDesLabel.text = self.model.WordDes;
     self.TypeNameLabel.font = [UIFont FontForBigLabel];
      [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    
+    
     self.ProAreaLabel.font = [UIFont FontForLabel];
     self.FromWhere.font = [UIFont FontForLabel];
     self.AssetTypeLabel.font = [UIFont FontForLabel];
@@ -157,11 +159,22 @@
     self.TransferMoney.font = [UIFont FontForBigLabel];
     [self.TotalMoney setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
     [self.TransferMoney setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
-
-    self.TransferMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
-    self.TotalMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
+    self.TotalMoney.font = [UIFont boldSystemFontOfSize:15];
+    self.TransferMoney.font = [UIFont boldSystemFontOfSize:15];
+//    self.TransferMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
+//    self.TotalMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
     self.wan1.font = [UIFont FontForSmallLabel];
     self.wan2.font = [UIFont FontForSmallLabel];
+    [self.wan1 setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    [self.wan2 setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    self.wan1.font = [UIFont boldSystemFontOfSize:10];
+    self.wan2.font = [UIFont boldSystemFontOfSize:10];
+    
+    
+    [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    [self.PriceLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    
+    
     
     
     NSLog(@"-------------------%@",self.model.ProArea);

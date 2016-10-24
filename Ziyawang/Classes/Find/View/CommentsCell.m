@@ -38,6 +38,7 @@
     self.usericonImageView.layer.cornerRadius = self.usericonImageView.bounds.size.height/2;
     [self.usericonImageView sd_setImageWithURL:[NSURL URLWithString:[str stringByAppendingString:self.model.UserPicture] ]];
     self.userNameLabel.text = self.model.UserName;
+    self.userNameLabel.textColor = [UIColor grayColor];
     self.timeLabel.text = self.model.PubTime;
     self.commentLabel.text = self.model.Content;
     CGRect detailFrame = self.commentLabel.frame;
@@ -64,6 +65,8 @@
     self.usericonImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 37, 37)];
     self.commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(52, 30, 250, 20)];
     self.commentLabel.numberOfLines = 0;
+//    self.commentLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    
     self.userNameLabel.font = [UIFont FontForLabel];
     self.commentLabel.font = [UIFont FontForLabel];
     self.timeLabel.font = [UIFont systemFontOfSize:10]

@@ -77,6 +77,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *PublishtimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ViewCount;
 @property (weak, nonatomic) IBOutlet UILabel *shoucangLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backViewHeightConstant;
 
 @property (weak, nonatomic) IBOutlet UILabel *companyInfoLabel;
 @property (weak, nonatomic) IBOutlet UIView *beizhuView;
@@ -205,7 +206,6 @@
     }
     self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]==nil) {
         [self.collectButton setHidden:NO];
         [self.shoucangLabel setHidden:NO];
@@ -244,10 +244,17 @@
     self.userModel = [[UserInfoModel alloc]init];
         [self getUserInfoFromDomin];
 
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [button setFrame:CGRectMake(0, 0, 40, 20)];
+    [button setTitle:@"举报" forState:(UIControlStateNormal)];
+    [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"举报" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
     
+    [button addTarget:self action:@selector(rightBarbuttonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:button];
     
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"举报" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
 //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
   
     
@@ -301,13 +308,20 @@
 
 - (void)rightBarbuttonAction:(UIBarButtonItem *)UIBarButton
 {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token == nil) {
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+        
+    }
+    else
+    {
     TipTableViewController *tipVc = [[TipTableViewController alloc]init];
     tipVc.Type = @"1";
     self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
-    
     tipVc.ItemID = self.model.ProjectID;
-    
     [self.navigationController pushViewController:tipVc animated:YES];
+    }
     
 
 }
@@ -507,6 +521,21 @@
 /**
  *  设置所有视图
  */
+
+- (CGSize)boundingRectWithSize:(CGSize)size Text:(NSString *)text font:(UIFont *)font
+{
+    NSDictionary *attribute = @{NSFontAttributeName: font};
+    
+    CGSize retSize = [text boundingRectWithSize:size
+                                             options:\
+                      NSStringDrawingTruncatesLastVisibleLine |
+                      NSStringDrawingUsesLineFragmentOrigin |
+                      NSStringDrawingUsesFontLeading
+                                          attributes:attribute
+                                             context:nil].size;
+    
+    return retSize;
+}
 - (void)layoutSubview
 {
     self.PublishtimeLabel.font = [UIFont systemFontOfSize:10];
@@ -524,7 +553,11 @@
     NSLog(@"@@@@@@@@@@@@@@FBiD：%@",self.model.ProjectNumber);
     self.infoDescribLable.text = self.model.WordDes;
     
+    CGSize size1 = [self boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 0) Text:self.model.CompanyDes font:self.companyInfoLabel.font];
+    CGSize size2 = [self boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 0) Text:self.model.WordDes font:self.infoDescribLable.font];
     
+    CGFloat addHeight = size1.height + size2.height;
+    self.backViewHeightConstant.constant = addHeight + 630;
     
     
     
@@ -986,6 +1019,7 @@
     {
         [self.collectButton setHidden:YES];
         [self.shoucangLabel setHidden:YES];
+        self.navigationItem.rightBarButtonItem.customView.hidden = YES;
         
         NSLog(@"我自己");
         [self layoutView2];
@@ -1021,6 +1055,7 @@
     {
         self.isZichan = YES;
         [self.collectButton setHidden:NO];
+        [self.shoucangLabel setHidden:NO];
     }
     
     /**
@@ -1053,9 +1088,9 @@
     self.model.PayFlag = [NSString stringWithFormat:@"%@",self.model.PayFlag];
     
     if ([self.model.PayFlag isEqualToString:@"1"]) {
-      connectLabel.text = @"已约谈";
-        [connectLabel setFrame:CGRectMake(55, 0, 100, 20)];
-        [imageview3 setFrame:CGRectMake(25, 0, 20, 20)];
+      connectLabel.text = @"约谈";
+//        [connectLabel setFrame:CGRectMake(55, 0, 100, 20)];
+//        [imageview3 setFrame:CGRectMake(25, 0, 20, 20)];
         
     }
     else if([self.model.PayFlag isEqualToString:@"0"])
@@ -1278,7 +1313,6 @@
         self.model.PayFlag = [NSString stringWithFormat:@"%@",self.model.PayFlag];
         
         if ([self.model.Member isEqualToString:@"2"] == NO || self.isZichan == YES) {
-            
             if([self.model.PayFlag isEqualToString:@"1"]== NO)
             {
             [self payForMessage];
@@ -1304,7 +1338,6 @@
                NSURL *url = [NSURL URLWithString:telString];
                [webView loadRequest:[NSURLRequest requestWithURL:url]];
                [self.view addSubview:webView];
-
            }
          
        }
@@ -1362,7 +1395,7 @@
     UILabel *resourceType = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20  *kHeightScale, alertView.bounds.size.width, 20)];
     resourceType.text = @"该信息为收费资源";
     UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20 *kHeightScale +25 * kHeightScale, alertView.bounds.size.width, 20)];
-    textLabel.text = @"需消耗芽币即可查看对方联系方式";
+    textLabel.text = @"消耗芽币可查看详细信息";
     resourceType.font = [UIFont systemFontOfSize:20];
     textLabel.font = [UIFont systemFontOfSize:15];
     resourceType.textAlignment = NSTextAlignmentCenter;
@@ -1702,7 +1735,7 @@
              [self.alertView2 removeFromSuperview];
              NSLog(@"支付成功");
 //             [self.connectButton setTitle:@"已约谈" forState:(UIControlStateNormal)];
-             self.connectLabel.text = @"已约谈";
+             self.connectLabel.text = @"约谈";
              self.model.PayFlag = @"1";
              [self.blackBackView2 removeFromSuperview];
              [self.alertView2 removeFromSuperview];
@@ -1711,7 +1744,6 @@
              NSURL *url = [NSURL URLWithString:telString];
              [webView loadRequest:[NSURLRequest requestWithURL:url]];
              [self.view addSubview:webView];
-             
          }
          [self.HUD removeFromSuperViewOnHide];
          [self.HUD hideAnimated:YES];
@@ -1719,9 +1751,7 @@
          NSLog(@"%@",error);
          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"支付失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
          [alert show];
-         
      }];
-  
 }
 
 
@@ -1748,7 +1778,6 @@
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可以进行约谈或私聊" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        
         MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
         identifiVC.ConnectPhone = self.userModel.ConnectPhone;
         identifiVC.ServiceName = self.userModel.ServiceName;
@@ -1767,7 +1796,6 @@
     [alertVC addAction:action1];
     [alertVC addAction:action2];
     [self presentViewController:alertVC animated:YES completion:nil];
-
 }
 
 

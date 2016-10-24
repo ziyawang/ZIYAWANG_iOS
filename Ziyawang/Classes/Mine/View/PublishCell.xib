@@ -102,7 +102,7 @@
                             <constraint firstAttribute="width" constant="80" id="clV-GN-OZY"/>
                             <constraint firstAttribute="width" constant="42" id="p0p-OT-72R"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
@@ -112,20 +112,13 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qa9-6l-GVN">
-                        <rect key="frame" x="188" y="99" width="30.5" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="799" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qa9-6l-GVN">
+                        <rect key="frame" x="189" y="99" width="28.5" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="JOD-p2-RQ6"/>
                         </constraints>
-                        <attributedString key="attributedText">
-                            <fragment content="799">
-                                <attributes>
-                                    <color key="NSColor" red="0.98548173904418945" green="0.62876700863321655" blue="0.16850346056044399" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="17" name="Helvetica-Bold"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                        <color key="textColor" red="0.98548173904418945" green="0.62876700863321655" blue="0.16850346056044399" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <color key="shadowColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
@@ -149,30 +142,10 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9m-Gb-mQ2">
-                        <rect key="frame" x="219" y="105" width="10" height="12"/>
-                        <attributedString key="attributedText">
-                            <fragment content="万">
-                                <attributes>
-                                    <color key="NSColor" red="0.98052811620000002" green="0.5321045739164989" blue="0.087018506218493774" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="10" name="PingFangSC-Semibold"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                        <nil key="highlightedColor"/>
-                        <color key="shadowColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcP-Fh-aY4">
-                        <rect key="frame" x="306" y="105" width="10" height="12"/>
-                        <attributedString key="attributedText">
-                            <fragment content="万">
-                                <attributes>
-                                    <color key="NSColor" red="0.98052811620000002" green="0.53210457389999999" blue="0.08701850622" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="10" name="Helvetica-Bold"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="万" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9m-Gb-mQ2">
+                        <rect key="frame" x="217" y="103" width="10" height="14"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="10"/>
+                        <color key="textColor" red="0.98052811620000002" green="0.5321045739164989" blue="0.087018506218493774" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <color key="shadowColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
@@ -185,7 +158,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZw-DP-2iU">
-                        <rect key="frame" x="277.5" y="99" width="28.5" height="20"/>
+                        <rect key="frame" x="279" y="99" width="28.5" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="9Pa-SQ-u5m"/>
                         </constraints>
@@ -216,7 +189,7 @@
                         </variation>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhuanrangjia.png" translatesAutoresizingMaskIntoConstraints="NO" id="bYy-on-fw3">
-                        <rect key="frame" x="279" y="74" width="45" height="20"/>
+                        <rect key="frame" x="281" y="74" width="45" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="CkW-Fi-wc6"/>
                             <constraint firstAttribute="width" constant="45" id="QT6-hm-4bX"/>
@@ -228,13 +201,12 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an2-Of-VnU">
-                        <rect key="frame" x="30" y="47" width="397" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an2-Of-VnU">
+                        <rect key="frame" x="30" y="47" width="397" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Ipe-n7-Inj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.47003205129999998" green="0.47003205129999998" blue="0.47003205129999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
@@ -274,6 +246,14 @@
                             <constraint firstAttribute="width" constant="25" id="zIU-yl-coN"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="万" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcP-Fh-aY4">
+                        <rect key="frame" x="308" y="103" width="10" height="14"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="10"/>
+                        <color key="textColor" red="0.98052811620000002" green="0.5321045739164989" blue="0.087018506218493774" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="calibratedRGB"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -285,7 +265,7 @@
                     <constraint firstItem="ofz-32-2kj" firstAttribute="leading" secondItem="esK-uE-W2V" secondAttribute="trailing" constant="5" id="2VP-Hu-NcC"/>
                     <constraint firstItem="t4F-aN-k2f" firstAttribute="centerY" secondItem="rYY-Aw-968" secondAttribute="centerY" id="3XV-te-tr6"/>
                     <constraint firstItem="rYY-Aw-968" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="50B-ZG-zuo"/>
-                    <constraint firstItem="bYy-on-fw3" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="83" id="5e0-FQ-nnz"/>
+                    <constraint firstItem="bYy-on-fw3" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="85" id="5e0-FQ-nnz"/>
                     <constraint firstItem="U4A-an-ggm" firstAttribute="top" secondItem="O7Q-z2-i4o" secondAttribute="bottom" id="6EC-S5-H39"/>
                     <constraint firstItem="oxl-tR-Cdo" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-5" id="6w2-LE-9D6"/>
                     <constraint firstItem="mJe-3w-T2Y" firstAttribute="top" secondItem="qQO-T1-naw" secondAttribute="bottom" constant="20" id="7WC-Fd-PPv"/>
@@ -328,16 +308,17 @@
                     <constraint firstItem="O7Q-z2-i4o" firstAttribute="top" secondItem="an2-Of-VnU" secondAttribute="bottom" constant="3" id="TbX-7X-nBU"/>
                     <constraint firstAttribute="bottom" secondItem="k0d-04-JBy" secondAttribute="bottom" id="TeU-bw-MMz"/>
                     <constraint firstItem="rYY-Aw-968" firstAttribute="top" secondItem="6OA-MO-Mn7" secondAttribute="bottom" constant="10" id="U2j-bf-U80"/>
-                    <constraint firstItem="DZw-DP-2iU" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="73" id="ULL-AV-HtB"/>
+                    <constraint firstItem="DZw-DP-2iU" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="75" id="ULL-AV-HtB"/>
                     <constraint firstItem="qa9-6l-GVN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="43" id="UgM-OY-HMQ"/>
                     <constraint firstItem="R9m-Gb-mQ2" firstAttribute="leading" secondItem="qa9-6l-GVN" secondAttribute="trailing" id="VMS-Dm-46i"/>
                     <constraint firstItem="k0d-04-JBy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="WRd-Nl-4Hn"/>
-                    <constraint firstItem="zcP-Fh-aY4" firstAttribute="top" secondItem="bYy-on-fw3" secondAttribute="bottom" constant="11" id="WUb-wd-dcV"/>
+                    <constraint firstItem="zcP-Fh-aY4" firstAttribute="top" secondItem="bYy-on-fw3" secondAttribute="bottom" constant="9" id="WUb-wd-dcV"/>
                     <constraint firstItem="bYy-on-fw3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="230" id="WtP-AI-T5y"/>
                     <constraint firstItem="Mvs-ZI-nU6" firstAttribute="centerY" secondItem="Hdk-ri-GgJ" secondAttribute="centerY" id="XXQ-Ir-Muj"/>
                     <constraint firstItem="6OA-MO-Mn7" firstAttribute="top" secondItem="jqj-dQ-lit" secondAttribute="bottom" constant="10" id="Xpd-EY-Nqy"/>
                     <constraint firstItem="rYY-Aw-968" firstAttribute="top" secondItem="6OA-MO-Mn7" secondAttribute="bottom" id="Xqw-nm-Re6"/>
-                    <constraint firstItem="R9m-Gb-mQ2" firstAttribute="top" secondItem="oxl-tR-Cdo" secondAttribute="bottom" constant="11" id="a7r-lK-FBM"/>
+                    <constraint firstItem="zcP-Fh-aY4" firstAttribute="centerY" secondItem="R9m-Gb-mQ2" secondAttribute="centerY" id="Xw4-67-hTt"/>
+                    <constraint firstItem="R9m-Gb-mQ2" firstAttribute="top" secondItem="oxl-tR-Cdo" secondAttribute="bottom" constant="9" id="a7r-lK-FBM"/>
                     <constraint firstItem="t4F-aN-k2f" firstAttribute="centerX" secondItem="rYY-Aw-968" secondAttribute="centerX" id="aCJ-aT-RHl"/>
                     <constraint firstItem="Grg-2U-FrG" firstAttribute="top" secondItem="ofz-32-2kj" secondAttribute="bottom" constant="10" id="aP3-AX-spj"/>
                     <constraint firstItem="oxl-tR-Cdo" firstAttribute="height" secondItem="qa9-6l-GVN" secondAttribute="height" multiplier="3:2" id="atZ-tb-MrT"/>
@@ -368,6 +349,7 @@
                     <constraint firstAttribute="trailing" secondItem="Grg-2U-FrG" secondAttribute="trailing" id="uqE-SE-dNL"/>
                     <constraint firstAttribute="bottom" secondItem="t4F-aN-k2f" secondAttribute="bottom" constant="13" id="uui-eM-r2d"/>
                     <constraint firstItem="bYy-on-fw3" firstAttribute="top" secondItem="Grg-2U-FrG" secondAttribute="bottom" constant="10" id="v7A-hO-TfA"/>
+                    <constraint firstItem="zcP-Fh-aY4" firstAttribute="leading" secondItem="DZw-DP-2iU" secondAttribute="trailing" id="vAB-ge-eNq"/>
                     <constraint firstItem="6OA-MO-Mn7" firstAttribute="top" secondItem="an2-Of-VnU" secondAttribute="bottom" constant="3" id="wAa-XK-gfl"/>
                     <constraint firstItem="Hdk-ri-GgJ" firstAttribute="leading" secondItem="ofz-32-2kj" secondAttribute="trailing" constant="10" id="wdd-Qt-yZN"/>
                     <constraint firstItem="an2-Of-VnU" firstAttribute="top" secondItem="Grg-2U-FrG" secondAttribute="bottom" constant="10" id="xcJ-4a-WNu"/>
@@ -427,6 +409,8 @@
                         <exclude reference="RET-nR-gb3"/>
                         <exclude reference="fks-xN-sw5"/>
                         <exclude reference="yqx-pW-K7Q"/>
+                        <exclude reference="KaG-8N-S1S"/>
+                        <exclude reference="WUb-wd-dcV"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

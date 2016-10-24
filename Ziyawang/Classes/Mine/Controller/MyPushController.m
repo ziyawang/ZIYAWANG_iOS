@@ -11,7 +11,7 @@
 #import "AFNetWorking.h"
 #import "MBProgressHUD.h"
 #import "PublishModel.h"
-
+#import "MyPushCell.h"
 #import "SDVersion.h"
 #import "SDiOSVersion.h"
 #import "InfoDetailsController.h"
@@ -49,7 +49,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"MyPushCell" bundle:nil] forCellReuseIdentifier:@"MyPushCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getMypushData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -89,6 +89,10 @@
             PublishModel *model = [[PublishModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
+        }
+        if (self.sourceArray.count == 0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未发布任何信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
         }
         NSLog(@"$$$$$$$$$$$$$$$$%@",self.sourceArray);
         self.starpage ++;
@@ -198,7 +202,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+    MyPushCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyPushCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.model = self.sourceArray[indexPath.row];
@@ -223,14 +227,13 @@
     model.CertifyState = [NSString stringWithFormat:@"%@",model.CertifyState];
     NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@",model.CertifyState);
     
-    if ([model.CertifyState isEqualToString:@"0"]) {
+    if ([model.CertifyState isEqualToString:@"0"])
+    {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您的信息正在审核中" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
     }
     else if ([model.CertifyState isEqualToString:@"1"])
     {
-        
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
     }
     else
@@ -238,9 +241,7 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您的信息未通过审核，请重新提交" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
-    
-    
-}
+    }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

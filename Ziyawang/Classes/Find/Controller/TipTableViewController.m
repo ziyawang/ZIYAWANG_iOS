@@ -9,6 +9,7 @@
 #import "TipTableViewController.h"
 #import "CSChooseServiceTypeCell.h"
 #import "CSChooseServiceTypeModel.h"
+#import "UILabel+UIFonts.h"
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/414)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/736)
 
@@ -28,8 +29,16 @@
 
 - (NSMutableArray *)dataArray {
     if (!_dataArray) {
-        
-        CSChooseServiceTypeModel *model1 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"已合作或已处置"];
+         CSChooseServiceTypeModel *model1 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"已合作或已处置"];
+        if ([self.Type isEqualToString:@"1"]) {
+            model1 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"已合作或已处置"];
+            
+        }
+        else
+        {
+        model1 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"服务方描述与事实不符"];
+        }
+       
         CSChooseServiceTypeModel *model2 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"虚假信息"];
         CSChooseServiceTypeModel *model3 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"泄露私密"];
         CSChooseServiceTypeModel *model4 = [[CSChooseServiceTypeModel alloc] initWithTitle:@"垃圾广告"];
@@ -107,6 +116,34 @@
     [sureButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     
     [sureButton addTarget:self action:@selector(rightBarButtonClickAction) forControlEvents:(UIControlEventTouchUpInside)];
+    UIView *labelBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 50 * kHeightScale * 6 + 30 + 64, 230, 20)];
+    labelBackView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    UILabel *kefuLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 125, 20)];
+    UILabel *phoneNumberLabel = [[UILabel alloc]initWithFrame:CGRectMake(125, 0, 115, 20)];
+    UIFont *font1 = [UIFont systemFontOfSize:11];
+    kefuLabel.font = font1;
+    phoneNumberLabel.font = font1;
+    
+    kefuLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    phoneNumberLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    
+    kefuLabel.text = @"资芽网全国服务热线";
+    phoneNumberLabel.text = @"400-898-8557";
+    
+    [UILabel setFontDistanceWithLabel:kefuLabel Font:font1];
+    [UILabel setFontDistanceWithLabel:phoneNumberLabel Font:font1];
+    
+    
+    [labelBackView addSubview:kefuLabel];
+    [labelBackView addSubview:phoneNumberLabel];
+    
+    labelBackView.centerX = self.view.centerX;
+    
+    [self.view addSubview:labelBackView];
+    
     [self.view addSubview:sureButton];
     
 }
@@ -141,8 +178,8 @@
     
     
     for (CSChooseServiceTypeModel *model in self.selectArray) {
-        if ([model.title isEqualToString:@"已合作或已处置"])
-        {
+        if ([model.title isEqualToString:@"已合作或已处置"] || [model.title isEqualToString:@"服务方描述与事实不符"])
+         {
             [TypeIDArray addObject:@"1"];
         }
         else if([model.title isEqualToString:@"虚假信息"])
@@ -165,11 +202,9 @@
             [TypeIDArray addObject:@"6"];
         }
     }
-    
+
     for (NSString *str in TypeIDArray) {
-        
         string = [string stringByAppendingFormat:@",%@",str];
-        
         NSLog(@"输出的类型的ID为%@",string);
     }
     
@@ -191,6 +226,7 @@
     {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择举报原因" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+        return;
     }
     
     NSLog(@"输出的类型的ID为%@",string);
@@ -202,25 +238,25 @@
         
     }
     
-    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:string forKey:@"ReasonID"];
     [dic setObject:self.ItemID forKey:@"ItemID"];
     [dic setObject:self.Type forKey:@"Type"];
-    
+    [dic setObject:@"IOS" forKey:@"Channel"];
+
     [self.manager POST:getURL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if ([dic[@"status_code"] isEqualToString:@"200"]) {
-            [self showAlertViewControllerWithMessage:@"举报成功"];
+        if ([dic[@"status_code"] isEqualToString:@"200"])
+        {
+        [self showAlertViewControllerWithMessage:@"客服人员将尽快进行处理"];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"举报失败，请稍后重试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"举报失败" message:@"举报失败，请稍后重试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
         
     }];
     
@@ -232,7 +268,7 @@
 
 - (void)showAlertViewControllerWithMessage:(NSString *)str
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"举报成功！" message:str preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
         

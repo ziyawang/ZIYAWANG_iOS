@@ -80,6 +80,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.userModel = [[UserInfoModel alloc]init];
     self.view.backgroundColor = [UIColor whiteColor];
     UIColor *color = [UIColor blackColor];
@@ -99,7 +100,7 @@
     
     [self setSearchBar];
     NSString *headURL = getDataURL;
-    NSString *footURL = @"/search";
+    NSString *footURL = @"/searchs";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
     [paraDic setObject:@"token" forKey:@"access_token"];
@@ -142,20 +143,19 @@
 - (void)getServiceData
 {
     NSString *headURL = getDataURL;
-    NSString *footURL = @"/search";
+    NSString *footURL = @"/searchs";
     NSString *URL = [headURL stringByAppendingString:footURL];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];
     [paraDic setObject:@"token" forKey:@"access_token"];
     [paraDic setObject:self.searchBar.text forKey:@"content"];
     [paraDic setObject:@"4" forKey:@"type"];
     [self getDataWithURL:URL paraDic:paraDic];
-
 }
 
 - (void)getInfoData
 {
     NSString *headURL = getDataURL;
-    NSString *footURL = @"/search";
+    NSString *footURL = @"/searchs";
     NSString *URL = [headURL stringByAppendingString:footURL];
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -750,7 +750,7 @@
 
 - (void)ShowAlertViewController
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您需要先通过服务方认证才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
@@ -810,7 +810,7 @@
     UILabel *resourceType = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20  *kHeightScale, alertView.bounds.size.width, 20)];
     resourceType.text = @"该信息为收费资源";
     UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 24*kHeightScale + 98 * kWidthScale + 20 *kHeightScale +25 * kHeightScale, alertView.bounds.size.width, 20)];
-    textLabel.text = @"需消耗芽币即可查看对方联系方式";
+    textLabel.text = @"消耗芽币可查看详细信息";
     resourceType.font = [UIFont systemFontOfSize:20];
     textLabel.font = [UIFont systemFontOfSize:15];
     resourceType.textAlignment = NSTextAlignmentCenter;
@@ -1124,7 +1124,9 @@
                                 
                                 if ([self.pubModel.PayFlag isEqualToString:@"1"] == NO)
                                 {
+                                 
                                     [self createViewForLessMoney];
+
                                 }
                                 else
                                 {

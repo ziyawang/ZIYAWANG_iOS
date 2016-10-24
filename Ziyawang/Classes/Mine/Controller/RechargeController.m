@@ -200,7 +200,6 @@
             case SKPaymentTransactionStateFailed:
                 NSLog(@"交易失败");
                 [self failedTransaction:tran];
-               
                 break;
             default:
                 break;
@@ -229,7 +228,8 @@
 }
 - (void)failedTransaction:(SKPaymentTransaction *)transaction
 {
-    NSLog(@"交易失败");
+    NSLog(@"交易失败:%@",transaction.error);
+    
     if(transaction.error.code != SKErrorPaymentCancelled) {
         [self showMessageWithMessage:@"交易失败"];
     } else {

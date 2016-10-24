@@ -1,25 +1,37 @@
 //
-//  LookUpMyRushCell.m
+//  MyPushCell.m
 //  Ziyawang
 //
-//  Created by Mr.Xu on 16/8/8.
+//  Created by Mr.Xu on 16/10/20.
 //  Copyright © 2016年 Mr.Xu. All rights reserved.
 //
 
-#import "LookUpMyRushCell.h"
+#import "MyPushCell.h"
 
-@interface LookUpMyRushCell ()
+@interface MyPushCell ()
+//property (nonatomic,strong) NSString *TypeName;//需求名字类型
+//@property (nonatomic,strong) NSString *ProArea;//地区
+//@property (nonatomic,strong) NSString *FromWhere;//来源
+//@property (nonatomic,strong) NSString *AssetType;//类型
+//
+//@property (nonatomic,strong) NSString *TotalMoney;//金额
+//@property (nonatomic,strong) NSString *TransferMoney;//转让价
+//@property (nonatomic,strong) NSString *Status;//状态
+//@property (nonatomic,strong) NSString *Rate;//佣金比例
+//@property (nonatomic,strong) NSString *Requirement;//需求
+//@property (nonatomic,strong) NSString *BuyerNature;//买方性质
+//@property (nonatomic,strong) NSString *Informant;//被调查方
+//@property (nonatomic,strong) NSString *Buyer;//求购方
 @property (weak, nonatomic) IBOutlet UILabel *TypeNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ProAreaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *FromWhere;
 @property (weak, nonatomic) IBOutlet UILabel *AssetTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *projectNumberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *wordDesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *diquLabel;
-@property (weak, nonatomic) IBOutlet UILabel *laiyuanLabel;
-@property (weak, nonatomic) IBOutlet UILabel *wan1;
-@property (weak, nonatomic) IBOutlet UILabel *wan2;
 
+@property (weak, nonatomic) IBOutlet UIView *ContentView;
+@property (weak, nonatomic) IBOutlet UILabel *diquLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *wordDesLabel;
 //需要判断的控件
 @property (weak, nonatomic) IBOutlet UILabel *TotalMoney;
 @property (weak, nonatomic) IBOutlet UILabel *TransferMoney;
@@ -27,80 +39,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *rightChangeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *midLabel;
 @property (weak, nonatomic) IBOutlet UILabel *downLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *asettyoeWidth;
-@property (weak, nonatomic) IBOutlet UIButton *quxiaoqiangdanButton;
-@property (weak, nonatomic) IBOutlet UIImageView *VipImage;
 @property (weak, nonatomic) IBOutlet UILabel *PriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yabiLabel;
 
 
 
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *FromWhereWidth;
 @property (weak, nonatomic) IBOutlet UIImageView *TotalMoneyImage;
 @property (weak, nonatomic) IBOutlet UIImageView *TransMoneyImage;
-@property (nonatomic,strong) AFHTTPSessionManager *manager;
-@property (nonatomic,strong) NSString *ProjectID;
+@property (weak, nonatomic) IBOutlet UIImageView *VipImage;
+@property (weak, nonatomic) IBOutlet UILabel *wan1;
+@property (weak, nonatomic) IBOutlet UILabel *wan2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *FromWhereWidth;
+@property (weak, nonatomic) IBOutlet UILabel *AsetTypeWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *asettyoeWidth;
+@property (weak, nonatomic) IBOutlet UIImageView *ifPassImage;
+
 @end
-
-@implementation LookUpMyRushCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-- (IBAction)cancelButtonAction:(id)sender {
-//    self.manager = [AFHTTPSessionManager manager];
-//    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-//    NSString *url1= getDataURL;
-//    NSString *url2 = @"/project/rushcancel?token=";
-//    NSString *url = [url1 stringByAppendingString:url2];
-//    NSString *URL = [[[url stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
-////    NSString *URL = [[url stringByAppendingString:token]stringByAppendingString:self.model.ProjectID];
-//      NSLog(@"-------%@",URL);
-//    NSMutableDictionary *dic = [NSMutableDictionary new];
-////    [dic setObject:self.model.ProjectID forKey:@"ProjectID"];
-////    [dic setObject:@"token" forKey:@"access_token"];
-////    [dic setObject:@"token" forKey:@"access_token"];
-//    [dic setObject:self.model.ProjectID forKey:@"ProjectID"];
-//   
-//    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-//
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        
-//        
-//        NSDictionary *dic = [NSDictionary new];
-//        dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        NSLog(@"~~~~~~~~~~~~~~%@",dic);
-//        
-//        
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"成功取消抢单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//        
-//        
-//        NSLog(@"取消抢单成功");
-////        [self.quxiaoqiangdanButton setHidden:YES];
-//        [self.quxiaoqiangdanButton setUserInteractionEnabled:NO];
-//        [self.quxiaoqiangdanButton.titleLabel setText:@"已取消"];
-//
-////        [self.quxiaoqiangdanButton setTitle:@"已取消" forState:(UIControlStateNormal)];
-////        [self.quxiaoqiangdanButton setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
-//        
-////        self.quxiaoqiangdanButton.selected = YES;
-//        //通知页面刷新;
-//    
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//        NSLog(@"--------%@",error);
-//        NSLog(@"取消抢单失败");
-//        
-//    }];
-//    
-    
-}
-
+@implementation MyPushCell
 - (void)setModel:(PublishModel *)model
 {
     if (_model != model) {
@@ -130,9 +86,24 @@
     return 40;
     
 }
-
 - (void)setDataForCell
 {
+    
+    
+    if ([self.model.CertifyState isEqualToString:@"0"])
+    {
+        self.ifPassImage.image = [UIImage imageNamed:@"shenhezhong"];
+        
+    }
+    else if ([self.model.CertifyState isEqualToString:@"1"])
+    {
+        self.ifPassImage.image = [UIImage imageNamed:@"tongguoshenhe"];
+    }
+    else
+    {
+      self.ifPassImage.image = [UIImage imageNamed:@"weitongguo"];
+    }
+    //    NSLog(@"--------------------%@",self.model.Member);
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
     
     if ([self.model.Member isEqualToString:@"0"]) {
@@ -149,29 +120,21 @@
     }
     else if([self.model.Member isEqualToString:@"2"])
     {
+        [self.VipImage setHidden:NO];
         self.VipImage.image = [UIImage imageNamed:@"fee_again"];
         self.PriceLabel.text = self.model.Price;
         [self.PriceLabel setHidden:NO];
         [self.yabiLabel setHidden:NO];
         
-        
     }
-//    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
-//    if ([self.model.Member isEqualToString:@"1"] == NO ) {
-//        [self.VipImage setHidden:YES];
-//    }
-//    else
-//    {
-//        [self.VipImage setHidden:NO];
-//    }
-    
-    [self.quxiaoqiangdanButton setUserInteractionEnabled:YES];
-
-    self.diquLabel.font = [UIFont FontForLabel];
-    self.downLabel.font = [UIFont FontForLabel];
-    self.midLabel.font = [UIFont FontForLabel];
-    self.TypeNameLabel.text = self.model.TypeName;
-    
+    //    self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
+    //    if ([self.model.Member isEqualToString:@"1"]||[self.model.Member isEqualToString:@"2"]) {
+    //        [self.VipImage setHidden:NO];
+    //    }
+    //    else
+    //    {
+    //        [self.VipImage setHidden:YES];
+    //    }
     [self.wan1 setHidden:NO];
     [self.wan2 setHidden:NO];
     self.wan1.text = @"万";
@@ -179,13 +142,16 @@
     self.FromWhereWidth.constant = [self getwidth];
     self.asettyoeWidth.constant = [self getwidth];
     
-//    self.wordDesLabel.font = [UIFont FontForLabel];
+    //    self.wordDesLabel.font = [UIFont FontForLabel];
     self.wordDesLabel.text = self.model.WordDes;
     self.TypeNameLabel.font = [UIFont FontForBigLabel];
     [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    
+    
     self.ProAreaLabel.font = [UIFont FontForLabel];
     self.FromWhere.font = [UIFont FontForLabel];
     self.AssetTypeLabel.font = [UIFont FontForLabel];
+    
     self.projectNumberLabel.font = [UIFont FontForSmallLabel];
     [self.projectNumberLabel setTextColor:[UIColor lightGrayColor]];
     
@@ -197,12 +163,10 @@
     self.TransferMoney.font = [UIFont FontForBigLabel];
     [self.TotalMoney setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
     [self.TransferMoney setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
-    
-    
     self.TotalMoney.font = [UIFont boldSystemFontOfSize:15];
     self.TransferMoney.font = [UIFont boldSystemFontOfSize:15];
-//    self.TransferMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
-//    self.TotalMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
+    //    self.TransferMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
+    //    self.TotalMoney.shadowColor = [UIColor colorWithHexString:@"#ef8200"];
     self.wan1.font = [UIFont FontForSmallLabel];
     self.wan2.font = [UIFont FontForSmallLabel];
     [self.wan1 setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
@@ -213,6 +177,9 @@
     
     [self.TypeNameLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
     [self.PriceLabel setTextColor:[UIColor colorWithHexString:@"#ef8200"]];
+    
+    
+    
     
     NSLog(@"-------------------%@",self.model.ProArea);
     
@@ -263,9 +230,15 @@
     {
         [self.midLabel setHidden:NO];
         self.leftChangeLabel.text = @"金额";
-        self.midLabel.text = @"状态：";
-        self.diquLabel.text = @"债务人所在地：";
-        self.FromWhere.text = self.model.Status;
+        self.diquLabel.text = @"状态：";
+        self.midLabel.text = @"债务人所在地：";
+        
+        
+        self.ProAreaLabel.text = self.model.Status;
+        
+        self.FromWhere.text = self.model.ProArea;
+        
+        
         self.TotalMoneyImage.image = [UIImage imageNamed:@"jine"];
         self.TransMoneyImage.image = [UIImage imageNamed:@"yongjinbili"];
         [self.TransMoneyImage setHidden:NO];
@@ -310,7 +283,12 @@
     if ([self.model.TypeName isEqualToString:@"资产包转让"])
     {
         [self.midLabel setHidden:NO];
-        self.midLabel.text = @"来源：";
+        self.midLabel.text = @"地区：";
+        self.diquLabel.text = @"来源：";
+        self.ProAreaLabel.text = self.model.FromWhere;
+        self.FromWhere.text = self.model.ProArea;
+        
+        
         self.TotalMoney.text = self.model.TotalMoney;
         self.TransferMoney.text = self.model.TransferMoney;
         self.rightChangeLabel.text = @"转让价";
@@ -417,6 +395,7 @@
         self.leftChangeLabel.text = @"被调查方";
         self.downLabel.text = @"类型：";
         self.TotalMoneyImage.image = [UIImage imageNamed:@"beidiaochafang"];
+        [self.TotalMoneyImage setHidden:NO];
         [self.TransMoneyImage setHidden:YES];
         [self.TransferMoney setHidden:YES];
         [self.rightChangeLabel setHidden:YES];
@@ -424,18 +403,27 @@
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:YES];
         
-        
     }
     else if ([self.model.TypeName isEqualToString:@"固产转让"])
     {
         self.TotalMoney.text = self.model.TransferMoney;
         self.leftChangeLabel.text = @"转让价";
+        [self.TotalMoneyImage setHidden:NO];
         [self.rightChangeLabel setHidden:YES];
         [self.TransferMoney setHidden:YES];
         [self.TransMoneyImage setHidden:YES];
-        [self.midLabel setHidden:YES];
+        [self.midLabel setHidden:NO];
+        self.diquLabel.text = @"标的物：";
+        self.midLabel.text = @"地区：";
+        
+        self.ProAreaLabel.text = self.model.Corpore;
+        
+        self.FromWhere.text = self.model.ProArea;
+        
+        [self.FromWhere setHidden:NO];
         [self.wan2 setHidden:YES];
         [self.wan1 setHidden:NO];
+        
         
         self.TotalMoneyImage.image = [UIImage imageNamed:@"zhuanrangjia"];
         
@@ -475,8 +463,8 @@
     else if([self.model.TypeName isEqualToString:@"投资需求"])
     {
         [self.midLabel setHidden:NO];
-        self.ProAreaLabel.text = self.model.ProArea;
-        self.FromWhere.text = self.model.investType;
+        self.ProAreaLabel.text = self.model.investType;
+        self.FromWhere.text = self.model.ProArea;
         [self.TotalMoney setHidden:NO];
         [self.TransferMoney setHidden:NO];
         self.TotalMoney.text = self.model.Year;
@@ -489,15 +477,19 @@
         [self.TransferMoney setHidden:NO];
         self.TotalMoneyImage.image = [UIImage imageNamed:@"year"];
         self.TransMoneyImage.image = [UIImage imageNamed:@"huibaolv"];
-        self.midLabel.text = @"投资方式：";
-        self.diquLabel.text = @"投资地区：";
+        [self.TransMoneyImage setHidden:NO];
+        
+        self.midLabel.text = @"投资地区：";
+        self.diquLabel.text = @"投资方式：";
         self.downLabel.text = @"投资类型：";
     }
     
     
-    
 }
-
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

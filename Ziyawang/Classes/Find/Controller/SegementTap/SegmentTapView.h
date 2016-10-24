@@ -13,7 +13,6 @@
 @optional
 /**
  选择index回调
- 
  @param index
  */
 -(void)selectedIndex:(NSInteger)index;

@@ -10,10 +10,14 @@
 #import "PushViewCell.h"
 #import "PushStartController.h"
 #import "LoginController.h"
+#import "UserInfoModel.h"
+
+#import "MyidentifiController.h"
 @interface PushViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) NSMutableArray *nameArray;
 @property (nonatomic,strong) NSMutableArray *imageArray;
-
+@property (nonatomic,strong) UserInfoModel *userModel;
+@property (nonatomic,strong) AFHTTPSessionManager *manager;
 
 @end
 
@@ -74,7 +78,11 @@ self.navigationItem.title = @"发布";
     [super viewDidLoad];
   
     [self setUpNav];
-    
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    self.userModel = [[UserInfoModel alloc]init];
+    [self getUserInfoFromDomin];
+
     
     self.imageArray = [NSMutableArray array];
     NSArray *imageNameArray = [NSArray new];
@@ -132,6 +140,33 @@ self.navigationItem.title = @"发布";
     
     [self.view addSubview:collectionView];
 }
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
+            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
+            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
+            NSLog(@"%@",dic[@"role"]);
+            //            self.role =dic[@"role"];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            NSLog(@"获取用户信息失败");
+        }];
+    }
+}
+
+
 //分区数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -163,6 +198,9 @@ self.navigationItem.title = @"发布";
 //    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
 //    NSArray *level = @[@"VIP1"];
     
+    
+    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
     NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
     switch (indexPath.row) {
         case 0:
@@ -186,9 +224,32 @@ self.navigationItem.title = @"发布";
 
             break;
         case 4:
+        {
             PusVc.typeName = @"资产求购";
             PusVc.TypeID = TypeID[4];
-
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *isLogin = [defaults objectForKey:@"登录状态"];
+            if ([isLogin isEqualToString:@"已登录"] && [role isEqualToString:@"1"])
+            {
+                [self.navigationController pushViewController:PusVc animated:YES];
+                return;
+            }
+            else if([isLogin isEqualToString:@"已登录"] == NO)
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+                return;
+            }
+            else if([role isEqualToString:@"1"] == NO)
+            {
+//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未通过服务方认证，无法发布此类信息,请到个人中心进行服务方认证" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//                [alert show];
+                [self ShowAlertViewController];
+                return;
+                
+            }
+        }
+            
             break;
         case 5:
             PusVc.typeName = @"融资需求";
@@ -213,21 +274,40 @@ self.navigationItem.title = @"发布";
         case 9:
             PusVc.typeName = @"委外催收";
             PusVc.TypeID = TypeID[9];
-
             break;
         case 10:
         {
             PusVc.typeName = @"投资需求";
             NSLog(@"---------------%@",PusVc.typeName);
-        }
             PusVc.TypeID = TypeID[10];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *isLogin = [defaults objectForKey:@"登录状态"];
+            if ([isLogin isEqualToString:@"已登录"] && [role isEqualToString:@"1"])
+            {
+                [self.navigationController pushViewController:PusVc animated:YES];
+                return;
+            }
+            else if([isLogin isEqualToString:@"已登录"] == NO)
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+                return;
+            }
+            else if([role isEqualToString:@"1"] == NO)
+            {
+//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未通过服务方认证，无法发布此类信息,请到个人中心进行服务方认证" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//                [alert show];
+                [self ShowAlertViewController];
+                return;
+                
+            }
+        }
 
             break;
  
         default:
             break;
     }
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"0"];
     [defaults removeObjectForKey:@"1"];
@@ -247,11 +327,40 @@ self.navigationItem.title = @"发布";
     {
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
-        
     }
     
 //    [self presentViewController:PusVc animated:YES completion:nil];
 }
+
+- (void)ShowAlertViewController
+{
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您需要先通过服务方认证才可以发布此类信息" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+        MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+        identifiVC.ConnectPhone = self.userModel.ConnectPhone;
+        identifiVC.ServiceName = self.userModel.ServiceName;
+        identifiVC.ServiceLocation = self.userModel.ServiceLocation;
+        identifiVC.ServiceType = self.userModel.ServiceType;
+        identifiVC.ServiceIntroduction = self.userModel.ServiceIntroduction;
+        identifiVC.ConnectPerson = self.userModel.ConnectPerson;
+        identifiVC.ServiceArea = self.userModel.ServiceArea;
+        identifiVC.ConfirmationP1 = self.userModel.ConfirmationP1;
+        identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
+        identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
+        identifiVC.ViewType = @"服务";
+        NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+        identifiVC.role = role;
+        [self.navigationController pushViewController:identifiVC animated:YES];
+        
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

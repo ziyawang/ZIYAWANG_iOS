@@ -103,6 +103,12 @@
         [model setValuesForKeysWithDictionary:dic];
         [self.sourceArray addObject:model];
     }
+    if (self.sourceArray.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未收藏任何信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+        
+    }
     self.startpage ++;
     [self.tableView reloadData];
 //    [self.tableView.mj_header endRefreshing];

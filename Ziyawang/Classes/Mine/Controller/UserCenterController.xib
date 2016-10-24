@@ -113,19 +113,19 @@
                                                     <color key="textColor" red="0.41740976410000002" green="0.41143070030000001" blue="0.42582131410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="collection.png" translatesAutoresizingMaskIntoConstraints="NO" id="y8x-rh-gRy">
-                                                    <rect key="frame" x="18" y="37" width="23" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="23" id="FLU-WK-ya6"/>
-                                                        <constraint firstAttribute="height" constant="20" id="wlT-8q-Y1m"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的收藏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-hV-0Mi">
                                                     <rect key="frame" x="49" y="39" width="56" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Collection.png" translatesAutoresizingMaskIntoConstraints="NO" id="y8x-rh-gRy">
+                                                    <rect key="frame" x="18" y="37" width="23" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="23" id="FLU-WK-ya6"/>
+                                                        <constraint firstAttribute="height" constant="20" id="wlT-8q-Y1m"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -305,7 +305,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="hJG-NP-sGu" secondAttribute="bottom" id="1Qf-rd-lAj"/>
                                         <constraint firstItem="hJG-NP-sGu" firstAttribute="leading" secondItem="u4p-Po-YGp" secondAttribute="leading" id="NjY-s0-Ma9"/>
@@ -363,7 +363,7 @@
         </view>
     </objects>
     <resources>
-        <image name="collection.png" width="23" height="20"/>
+        <image name="Collection.png" width="20" height="20"/>
         <image name="login-bg.png" width="87" height="25"/>
         <image name="publish.png" width="23" height="20"/>
         <image name="user2.png" width="65" height="65"/>

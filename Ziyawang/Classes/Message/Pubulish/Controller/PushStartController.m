@@ -142,7 +142,7 @@
     
     UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
     buttonimage.image = [UIImage imageNamed:@"back3"];
-    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 30, 20)];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 45, 20)];
     buttonLabel.text = @"返回";
     buttonLabel.font = [UIFont systemFontOfSize:15];
     
@@ -293,9 +293,6 @@
     [self.addImageView addSubview:self.addImageButton];
     //[self.addImageButton setTitle:@"添加" forState:(UIControlStateNormal)];
     [self.addImageButton addTarget:self action:@selector(didClickChooseImage:) forControlEvents:(UIControlEventTouchUpInside)];
-    
-    
-    
     //录音与播放按钮
     self.recorderbutton =[UIButton buttonWithType:(UIButtonTypeSystem)];
     //        [self.recorderbutton setTitle:@"录音" forState:(UIControlStateNormal)];
@@ -586,12 +583,14 @@
     
     [self.view endEditing:YES];
     self.pushDic = [NSMutableDictionary new];
-    
+//    [self.pushDic setObject:@"IOS" forKey:@"Channel"];
+    [self.pushDic setObject:@"IOS" forKey:@"Channel"];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *jine = [defaults objectForKey:@"金额"];
     NSString *zhekou = [defaults objectForKey:@"折扣"];
     NSString *ProArea = [defaults objectForKey:@"企业所在"];
-    if (ProArea == nil) {
+    if (ProArea == nil){
         ProArea = @"请选择";
     }
 
@@ -602,6 +601,7 @@
     NSLog(@"折扣！！！！！！！！！！！%@",zhekou);
     if ([self.typeName isEqualToString:@"资产包转让"])
     {
+
         [self.pushDic setObject:jine forKey:@"TotalMoney"];
         [self.pushDic setObject:zhekou forKey:@"TransferMoney"];
         [self.pushDic setObject:self.pushDataArray[0] forKey:@"AssetType"];

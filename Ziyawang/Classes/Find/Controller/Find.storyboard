@@ -152,7 +152,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wei.png" translatesAutoresizingMaskIntoConstraints="NO" id="kbu-tK-75U">
-                                                        <rect key="frame" x="76" y="12.5" width="12" height="12"/>
+                                                        <rect key="frame" x="76" y="12" width="12" height="12"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="12" id="nld-Li-MLY"/>
                                                             <constraint firstAttribute="width" constant="12" id="vhc-T0-E7Z"/>
@@ -453,8 +453,8 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="euT-or-1ws">
-                                                        <rect key="frame" x="81" y="13" width="120" height="30"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="euT-or-1ws">
+                                                        <rect key="frame" x="81" y="14" width="120" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="120" id="dtV-kJ-bHc"/>
                                                         </constraints>
@@ -562,8 +562,8 @@
                                                             <constraint firstAttribute="height" constant="1" id="IL8-rK-NoR"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXY-TO-VC9">
-                                                        <rect key="frame" x="10" y="49" width="394" height="17"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXY-TO-VC9">
+                                                        <rect key="frame" x="10" y="47" width="394" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -699,6 +699,7 @@
                         <outlet property="areaAndFromBackView" destination="00u-SI-Uq5" id="fvS-og-anu"/>
                         <outlet property="areaBackViewHight" destination="tBA-E8-TyF" id="EwN-Ix-UuL"/>
                         <outlet property="backGroundView" destination="udK-Cu-6JY" id="jfQ-pP-fWi"/>
+                        <outlet property="backViewHeightConstant" destination="OiV-8t-t6B" id="z60-cH-qOK"/>
                         <outlet property="beizhuView" destination="QwD-bG-6o7" id="uUJ-MW-PrQ"/>
                         <outlet property="beizhuViewHight" destination="Mzw-ae-0ct" id="Mhl-nd-ptl"/>
                         <outlet property="bringView" destination="I8G-xl-gcf" id="ENe-ON-cPe"/>
@@ -1048,8 +1049,8 @@
                                                     <constraint firstAttribute="height" constant="40" id="vdY-7i-Nbo"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZJy-AU-3Bx">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJy-AU-3Bx">
+                                                <rect key="frame" x="0.0" y="100" width="414" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编号:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhx-N9-8sm">
                                                         <rect key="frame" x="80" y="15" width="33" height="17"/>
@@ -1268,6 +1269,7 @@
                         <outlet property="imageView3" destination="0jE-K4-JWY" id="Dj8-P9-gJz"/>
                         <outlet property="projectNumber" destination="efm-G0-Zb3" id="fhh-7J-lFL"/>
                         <outlet property="saveButton" destination="JEI-3G-6yA" id="L71-gl-7lD"/>
+                        <outlet property="saveLabel" destination="Haf-Ek-q8p" id="M3f-Hx-l2G"/>
                         <outlet property="serviceLocation" destination="ZeK-NI-1OT" id="Kfr-E7-hP3"/>
                         <outlet property="serviceType" destination="Noy-rR-N93" id="fRF-wr-SBt"/>
                         <outlet property="servicearea" destination="uT9-ir-R5m" id="gUO-Ji-V8Y"/>

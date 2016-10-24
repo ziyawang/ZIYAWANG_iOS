@@ -903,7 +903,7 @@
         self.x--;
         NSLog(@"X的值$$$$$$$$未%ld",self.x);
 //        [self.addImageButton setFrame:CGRectMake(90 * 2 +10 *2, 0, 90, 90)];
-        self.addImageButtonLeftConstraint.constant = 170;
+        self.addImageButtonLeftConstraint.constant = 175;
         
         [self.imagearray removeObject:self.imagearray[2]];
         

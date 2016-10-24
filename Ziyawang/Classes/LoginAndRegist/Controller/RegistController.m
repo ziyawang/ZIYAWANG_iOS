@@ -624,6 +624,7 @@ self.title = @"aaa";
     [postDic setObject:password  forKey:@"password"];
     [postDic setObject:access_token forKey:@"access_token"];
     [postDic setObject:smscode forKey:@"smscode"];
+    [postDic setObject:@"IOS" forKey:@"Channel"];
     
     
     [manager POST:registURL parameters:postDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
