@@ -217,7 +217,8 @@
     VideosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VideosViewCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.zvideo = self.zvideo;
-    cell.Mydelegate = self;    return cell;
+    cell.Mydelegate = self;
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -59,6 +59,10 @@
  *  其他人的融云信息
  */
 @property (nonatomic,strong) RCUserInfo *otherUserinfo;
+
+/**
+ <#Description#>
+ */
 @property (nonatomic,strong) LBTabBarController *tabBarController;
 
 @end
@@ -74,6 +78,7 @@
  *  @return BOOL
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     /**
      初始化window和网络请求manager等
      
@@ -121,6 +126,11 @@
      *  友盟统计
      */
     [self UmobClick];
+    
+    /**
+     获取启动次数
+     */
+    [self getStartCount];
     /**
      *  更新当前用户的信息
      */
@@ -174,6 +184,29 @@
     NSLog(@">>>>>>>>>>>>>>>>>%@",remoteNotificationUserInfo);
     
      return YES;
+}
+
+- (void)getStartCount
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:@"IOS" forKey:@"Channel"];
+    NSString *URL = StartCountURL;
+    if (token != nil) {
+         URL = [[StartCountURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    }
+   
+    
+[self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    
+} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    
+}];
+    
+
 }
 #pragma mark----初始化视图
 /**

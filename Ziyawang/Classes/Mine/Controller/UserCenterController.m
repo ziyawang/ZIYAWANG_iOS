@@ -22,6 +22,7 @@
 
 #import "MySetController.h"
 #import "MyYabiController.h"
+#import "MessageListViewController.h"
 @interface UserCenterController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *myPushView;
@@ -312,13 +313,13 @@
 - (void)setTableViewHight
 {
     if ([self.role isEqualToString:@"1"]) {
-        self.tableViewHeight.constant = 176;
+        self.tableViewHeight.constant = 220;
         [self.tableView reloadData];
         
     }
     else
     {
-        self.tableViewHeight.constant = 132;
+        self.tableViewHeight.constant = 176;
         [self.tableView reloadData];
         
     }
@@ -404,13 +405,13 @@
     
     
     if ([role isEqualToString:@"1"]) {
-        return 4;
+        return 5;
     }
     
     
     else
     {
-        return 3;
+        return 4;
     }
     
 }
@@ -459,11 +460,17 @@
                 break;
             case 2:
                 cell.imageView.image = [UIImage imageNamed:@"help"];
-                cell.textLabel.text = @"意见反馈";
+                cell.textLabel.text = @"消息中心";
                 
                 
                 break;
             case 3:
+                
+                cell.imageView.image = [UIImage imageNamed:@"help"];
+                cell.textLabel.text = @"帮助与反馈";
+                
+                break;
+            case 4:
                 
                 cell.imageView.image = [UIImage imageNamed:@"set"];
                 cell.textLabel.text = @"设置";
@@ -479,18 +486,21 @@
         switch (indexPath.row)
         {
             case 0:
-                
                 cell.imageView.image = [UIImage imageNamed:@"Serviceidentification"];
                 cell.textLabel.text = @"服务方认证";
-                
                 
                 break;
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"help"];
-                cell.textLabel.text = @"意见反馈";
+                cell.textLabel.text = @"消息中心";
                 
                 break;
             case 2:
+                cell.imageView.image = [UIImage imageNamed:@"help"];
+                cell.textLabel.text = @"帮助与反馈";
+                
+                break;
+            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"set"];
                 cell.textLabel.text = @"设置";
                 
@@ -587,13 +597,26 @@
             case 2:
             {
                 
+                
+                
+                MessageListViewController *messageVC = [[MessageListViewController alloc]init];
+                
+                
+                [self.navigationController pushViewController:messageVC animated:YES];
+            }
+                break;
+            case 3:
+            {
+                
+
+                
                 CSBackMessageController *helpVC = [[CSBackMessageController alloc]init];
                 
                 
                 [self.navigationController pushViewController:helpVC animated:YES];
             }
                 break;
-            case 3:
+            case 4:
             {
                 MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
                 [self.navigationController pushViewController:setVc animated:YES];
@@ -653,6 +676,12 @@
             }
                 break;
             case 2:
+            {
+                MessageListViewController *messageVC = [[MessageListViewController alloc]initWithNibName:@"MySetController" bundle:nil];
+                [self.navigationController pushViewController:messageVC animated:YES];
+                
+            }
+            case 3:
             {
                 MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
                 [self.navigationController pushViewController:setVc animated:YES];

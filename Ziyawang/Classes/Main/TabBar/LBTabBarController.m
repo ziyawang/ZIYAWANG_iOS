@@ -20,7 +20,7 @@
 #import "MineViewController.h"
 #import "ZiyaMainController.h"
 #import "UserCenterController.h"
-
+#import "NewsController.h"
 #import "talkViewController.h"
 #import "MessageListViewController.h"
 #import "LBTabBar.h"
@@ -149,9 +149,12 @@
     
     UserCenterController *userCenterVC = [[UserCenterController alloc]initWithNibName:@"UserCenterController" bundle:nil];
     
+    NewsController *newsVC = [[NewsController alloc]init];
+    
+    
     [self setUpOneChildVcWithVc:MainVC Image:@"shouye" selectedImage:@"shouye-xuanzhong" title:@"首页"];
     [self setUpOneChildVcWithVc:FindVC Image:@"chakan" selectedImage:@"chakan-xuanzhong" title:@"查看"];
-    [self setUpOneChildVcWithVc:MessageVC Image:@"xiaoxi" selectedImage:@"xiaoxi-xuanzhong" title:@"消息"];
+    [self setUpOneChildVcWithVc:newsVC Image:@"xiaoxi" selectedImage:@"xiaoxi-xuanzhong" title:@"资讯"];
 //    [self setUpOneChildVcWithVc:MineVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
     [self setUpOneChildVcWithVc:userCenterVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
 

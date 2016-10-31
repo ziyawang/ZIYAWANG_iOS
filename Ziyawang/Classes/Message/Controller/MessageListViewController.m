@@ -31,11 +31,11 @@
 {
     [super viewWillAppear:animated];
 
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+//    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+//    
+//    self.navigationController.navigationBar.shadowImage=[UIImage new];
     
-    self.navigationController.navigationBar.shadowImage=[UIImage new];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
     UIColor *color = [UIColor blackColor];
     
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
