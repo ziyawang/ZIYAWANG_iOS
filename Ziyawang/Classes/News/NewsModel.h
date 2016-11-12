@@ -9,5 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface NewsModel : NSObject
+@property (nonatomic,strong) NSString *NewsTitle;
+@property (nonatomic,strong) NSString *NewsContent;
+@property (nonatomic,strong) NSString *NewsID;
+@property (nonatomic,strong) NSString *NewsLogo;
+@property (nonatomic,strong) NSString *PublishTime;
+@property (nonatomic,strong) NSString *ViewCount;
+@property (nonatomic,strong) NSString *Brief;
 
 @end

@@ -77,12 +77,13 @@
 
 #define StartCountURL [getDataURL stringByAppendingString:@"/app/start"]//启动次数统计
 #define NewsListURL [getDataURL stringByAppendingString:@"/news/list"]//新闻列表
+#define NewsDetailURL [getDataURL stringByAppendingString:@"/news/list/"]//新闻详情
 #define NewsCommentURL [getDataURL stringByAppendingString:@"/news/comment/create"]//新闻评论发布
 #define NewsCommentListURL [getDataURL stringByAppendingString:@"/news/comment/list"]//新闻评论列表
 
+#define TestQuestionURL [getDataURL stringByAppendingString:@"/test/paper"]//获取测试题
 
-
-
+#define TestResultURL [getDataURL stringByAppendingString:@"/test/result"] //获取测试结果
 
 
 

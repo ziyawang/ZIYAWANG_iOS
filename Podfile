@@ -15,5 +15,5 @@ pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
 pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 pod 'UMengAnalytics-NO-IDFA'
 pod 'HcdPopMenu'
-
+pod 'SDAutoLayout', '~> 2.1.3'
 end

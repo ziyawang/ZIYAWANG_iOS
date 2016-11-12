@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "NewsModel.h"
 @interface ZixunViewCell : UITableViewCell
+@property (nonatomic,strong) NewsModel *model;
++ (NSString *)getDateWithString:(NSString *)date;
 
 @end

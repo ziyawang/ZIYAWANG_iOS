@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SDAutoLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,7 +67,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD933A23740FB4B6833109AFFD7B8F8B</key>
+		<key>A1B8C4ABF13402AE411AF20E39518272</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B3B1F7B719100D32666679CD706533AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

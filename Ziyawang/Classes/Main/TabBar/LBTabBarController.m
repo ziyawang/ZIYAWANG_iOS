@@ -27,7 +27,8 @@
 #import "UIImage+Image.h"
 #import "UITabBar+CustomBadge.h"
 
-@interface LBTabBarController ()<LBTabBarDelegate>
+@interface LBTabBarController ()<LBTabBarDelegate,RCIMReceiveMessageDelegate>
+@property (nonatomic,strong) UserCenterController *userCenterVC;
 
 @end
 
@@ -48,9 +49,37 @@
 //{
 //    return [self.viewControllers.lastObject preferredInterfaceOrientationForPresentation];
 //}
+
+
+- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    //        [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d",left]];
+    //    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+    
+    //    UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:3];
+    //
+    //    item.badgeValue = [NSString stringWithFormat:@"%ld",unreadcount];
+    
+    [self.userCenterVC.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+    
+    //    NSArray *tabBarItems = self.navigationController.tabBarController.tabBar.items;
+    //    UITabBarItem *personCenterTabBarItem = [tabBarItems objectAtIndex:3];
+    //    personCenterTabBarItem.badgeValue = [NSString stringWithFormat:@"%ld",unreadcount];//显示消息条数为 2
+    
+    NSLog(@"%ld",unreadcount);
+    
+    //    [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d",left];
+    
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    [RCIM sharedRCIM].receiveMessageDelegate=self;
+
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(didReceiveMessageNotification2:)
@@ -112,14 +141,18 @@
     [[UITabBarItem appearance]setTitleTextAttributes:dictSelected forState:UIControlStateSelected];
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+//    [RCIM sharedRCIM].receiveMessageDelegate=self;
 
     [self setUpAllChildVc];
 
     //创建自己的tabbar，然后用kvc将自己的tabbar和系统的tabBar替换下
     LBTabBar *tabbar = [[LBTabBar alloc] init];
 
+    
     NSLog(@"%@",tabbar.items);
     
     tabbar.myDelegate = self;
@@ -147,16 +180,17 @@
 
     MineViewController *MineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
     
-    UserCenterController *userCenterVC = [[UserCenterController alloc]initWithNibName:@"UserCenterController" bundle:nil];
+     self.userCenterVC = [[UserCenterController alloc]initWithNibName:@"UserCenterController" bundle:nil];
     
     NewsController *newsVC = [[NewsController alloc]init];
     
+
     
     [self setUpOneChildVcWithVc:MainVC Image:@"shouye" selectedImage:@"shouye-xuanzhong" title:@"首页"];
     [self setUpOneChildVcWithVc:FindVC Image:@"chakan" selectedImage:@"chakan-xuanzhong" title:@"查看"];
-    [self setUpOneChildVcWithVc:newsVC Image:@"xiaoxi" selectedImage:@"xiaoxi-xuanzhong" title:@"资讯"];
+    [self setUpOneChildVcWithVc:newsVC Image:@"zixuntab" selectedImage:@"zixunxuanzhong" title:@"资讯"];
 //    [self setUpOneChildVcWithVc:MineVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
-    [self setUpOneChildVcWithVc:userCenterVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
+    [self setUpOneChildVcWithVc:self.userCenterVC Image:@"wode" selectedImage:@"wode-xuanzhong" title:@"我的"];
 
     
     //    LBHomeViewController *HomeVC = [[LBHomeViewController alloc] init];
@@ -170,8 +204,6 @@
 //
 //    LBMineViewController *MineVC = [[LBMineViewController alloc] init];
 //    [self setUpOneChildVcWithVc:MineVC Image:@"account_normal" selectedImage:@"account_highlight" title:@"我的"];
-
-
 }
 
 #pragma mark - 初始化设置tabBar上面单个按钮的方法
@@ -197,7 +229,14 @@
 
     //tabBarItem，是系统提供模型，专门负责tabbar上按钮的文字以及图片展示
     Vc.tabBarItem.image = myImage;
-
+    
+//    if ([[Vc class] isEqual:[UserCenterController class]]) {
+//        [Vc.tabBarItem setBadgeValue:@"2"];
+//        
+//        
+//    }
+    
+    
     UIImage *mySelectedImage = [UIImage imageNamed:selectedImage];
     mySelectedImage = [mySelectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     Vc.tabBarItem.selectedImage = mySelectedImage;

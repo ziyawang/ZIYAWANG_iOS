@@ -131,9 +131,15 @@
                  [defaults setObject:self.chooseArea forKey:@"企业所在"];
                 [defaults setObject:self.chooseArea forKey:self.selectCell];
             }
+            else if([self.type isEqualToString:@"测试"])
+            {
+                [defaults setObject:self.chooseArea forKey:@"债务人所在"];
+
+            }
             else
             {
-            [defaults setObject:self.chooseArea forKey:@"企业地区"];
+                [defaults setObject:self.chooseArea forKey:@"企业地区"];
+
             }
             
         }

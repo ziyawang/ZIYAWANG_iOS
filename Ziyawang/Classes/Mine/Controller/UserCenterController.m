@@ -23,7 +23,14 @@
 #import "MySetController.h"
 #import "MyYabiController.h"
 #import "MessageListViewController.h"
-@interface UserCenterController ()<UITableViewDelegate,UITableViewDataSource>
+
+#import "UITabBar+CustomBadge.h"
+
+#import "AppDelegate.h"
+
+#import <RongIMKit/RongIMKit.h>
+
+@interface UserCenterController ()<UITableViewDelegate,UITableViewDataSource,RCIMReceiveMessageDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *myPushView;
 @property (weak, nonatomic) IBOutlet UIView *myOperationView;
@@ -45,13 +52,102 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
 @property (nonatomic,strong) NSUserDefaults *defaults;
 
+
 @end
 
 @implementation UserCenterController
 
+
+- (void)tabBarBadgeValueNotiFication:(NSNotification *)sender
+{
+    NSString *value = sender.userInfo[@"BadgeValue"];
+    NSLog(@"%@",value);
+    UITabBarItem * item=[self.navigationController.tabBarController.tabBar.items objectAtIndex:3];
+    [item setValue:value forKeyPath:@"badgeValue"];
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+//    view.backgroundColor = [UIColor redColor];
+//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+//    label.text = @"12";
+//    label.textColor = [UIColor whiteColor];
+//    label.font = [UIFont systemFontOfSize:10];
+//    
+//    [self.tabBarController.tabBar addSubview:view];
+//    [self.tabBarController.tabBar addSubview:label];
+
+    
+//    item.badgeValue = value;
+//    item.badgeValue = @"2";
+
+//    item.badgeColor = [UIColor redColor];
+    
+    
+    NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
+    
+//    [self.tabBarItem setBadgeValue:@"2"];
+    
+}
+
+
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+
+[super viewWillDisappear:animated];
+//[[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+}
+
+- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+// NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+//    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+    
+}
+
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [RCIM sharedRCIM].receiveMessageDelegate=self;
+
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
+    
+    
+    if (unreadcount == 99 || unreadcount>99) {
+        unreadStr = @"99+";
+    }
+    if (unreadcount == 0) {
+        unreadStr = nil;
+        
+    }
+    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
+    
+    
+//    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    delegate.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
+//    NSString *value = delegate.tabarBageValue;
+    
+//    
+//    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
+//    
+//    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
+//    if (value == 0) {
+//     valueStr = @"";
+//        
+//        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
+//        
+//    }
+//    [self.tabBarItem setBadgeValue:valueStr];
+    
+    
+//    [self.tabBarItem setBadgeValue:@"2"];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+
+
+
     self.navigationItem.title = @"我的";
     UIColor *color = [UIColor clearColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
@@ -98,8 +194,36 @@
 
 //    [self setViews];
 }
+//- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+//{
+////    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d",left]];
+//    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:[NSString stringWithFormat:@"%d",left]];
+//    
+////    [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d",left];
+// 
+//    
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [RCIM sharedRCIM].receiveMessageDelegate=self;
+
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+    
+    
+//    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
+//    
+//    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
+//    if (value == 0) {
+//        valueStr = @"";
+//        
+//        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
+//    }
+//    [self.tabBarItem setBadgeValue:valueStr];
+//     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+//    [self.tabBarItem setBadgeValue:@"3"];
+
 //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
     self.userIconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *userIconGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userIconGestureAction:)];
@@ -459,7 +583,7 @@
                 
                 break;
             case 2:
-                cell.imageView.image = [UIImage imageNamed:@"help"];
+                cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
                 cell.textLabel.text = @"消息中心";
                 
                 
@@ -491,7 +615,7 @@
                 
                 break;
             case 1:
-                cell.imageView.image = [UIImage imageNamed:@"help"];
+                cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
                 cell.textLabel.text = @"消息中心";
                 
                 break;
@@ -670,14 +794,16 @@
                 }
                 else
                 {
-                CSBackMessageController *helpVC = [[CSBackMessageController alloc]init];
+                MessageListViewController *helpVC = [[MessageListViewController alloc]init];
                 [self.navigationController pushViewController:helpVC animated:YES];
                 }
             }
                 break;
             case 2:
             {
-                MessageListViewController *messageVC = [[MessageListViewController alloc]initWithNibName:@"MySetController" bundle:nil];
+                
+                CSBackMessageController *messageVC = [[CSBackMessageController alloc]init];
+                
                 [self.navigationController pushViewController:messageVC animated:YES];
                 
             }

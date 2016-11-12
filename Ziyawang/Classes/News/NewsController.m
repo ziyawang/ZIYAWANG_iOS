@@ -16,7 +16,10 @@
 
 #import "ScrollHeadView.h"
 #import "LunboModel.h"
+#import "NewsDetailController.h"
 
+#import "QuestionsController.h"
+#import "TestViewController.h"
 
 #define ScreeFrame [UIScreen mainScreen].bounds
 
@@ -43,21 +46,40 @@
 
 @implementation NewsController
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
     
     
-        self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    if (unreadcount == 99 || unreadcount>99) {
+        unreadStr = @"99+";
+    }
+    if (unreadcount == 0) {
+        unreadStr = nil;
+        
+    }
+    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
     
-        self.navigationController.navigationBar.shadowImage=[UIImage new];
-    
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
     UIColor *color = [UIColor blackColor];
     
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationAction:) name:@"NewsControllerpush" object:nil];
+    
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,7 +93,16 @@
     
     // Do any additional setup after loading the view.
 }
-
+- (void)notificationAction:(NSNotification *)sender
+{
+    NewsDetailController *detailVC = [[NewsDetailController alloc]init];
+    detailVC.NewsID = sender.userInfo[@"NewsID"];
+    detailVC.NewsTime = sender.userInfo[@"NewsTime"];
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
+    
+}
 
 /**
  *  获取轮播图
@@ -221,10 +252,21 @@
     self.flipView.delegate = self;
     [self.view addSubview:self.flipView];
 }
+
+- (void)didTapScrollHeadView
+{
+//    QuestionsController *QuesVC = [[QuestionsController alloc]init];
+//    [self.navigationController pushViewController:QuesVC animated:YES];
+    
+    TestViewController *TestVC = [[TestViewController alloc]init];
+    [self.navigationController pushViewController:TestVC animated:YES];
+}
 #pragma mark -------- select Index
 -(void)selectedIndex:(NSInteger)index
 {
     NSLog(@"%ld",index);
+
+    
     [self.flipView selectIndex:index];
     
 }

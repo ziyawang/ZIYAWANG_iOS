@@ -9,6 +9,7 @@
 #ifndef Header_h
 #define Header_h
 //判断机型
+
 #import "SDVersion.h"
 #import "SDiOSVersion.h"
 
@@ -21,6 +22,8 @@
 #import <RongIMKit/RongIMKit.h>
 #import "UIAlertViewShow.h"
 #import "UIView+Extension.h"
+
+#import "UIView+SDAutoLayout.h"
 
 #endif /* Header_h */
 

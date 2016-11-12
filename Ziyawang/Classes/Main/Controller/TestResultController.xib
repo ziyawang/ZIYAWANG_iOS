@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TestResultController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZsV-Z6-Wlf">
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="测评结束！" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skR-Yf-IO2">
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入电话号码以便为您提供更专业的服务" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0WP-Do-bo1">
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="2Px-tO-Nk5"/>
+                        <constraint firstItem="0WP-Do-bo1" firstAttribute="centerX" secondItem="ZsV-Z6-Wlf" secondAttribute="centerX" id="4cD-Jp-UKA"/>
+                        <constraint firstItem="0WP-Do-bo1" firstAttribute="top" secondItem="skR-Yf-IO2" secondAttribute="bottom" constant="15" id="KCl-Ks-yj6"/>
+                        <constraint firstItem="skR-Yf-IO2" firstAttribute="centerX" secondItem="ZsV-Z6-Wlf" secondAttribute="centerX" id="lDx-Tg-EeA"/>
+                        <constraint firstItem="skR-Yf-IO2" firstAttribute="top" secondItem="ZsV-Z6-Wlf" secondAttribute="top" constant="20" id="sVA-f7-hth"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uff-cF-fhf">
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="电话号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7EA-EI-aM9">
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="7EA-EI-aM9" secondAttribute="bottom" id="4sv-nb-QzS"/>
+                        <constraint firstItem="7EA-EI-aM9" firstAttribute="top" secondItem="Uff-cF-fhf" secondAttribute="top" id="5Hv-i0-OV1"/>
+                        <constraint firstAttribute="trailing" secondItem="7EA-EI-aM9" secondAttribute="trailing" id="Bb4-Xu-hSk"/>
+                        <constraint firstItem="7EA-EI-aM9" firstAttribute="leading" secondItem="Uff-cF-fhf" secondAttribute="leading" constant="15" id="pf0-uq-Ba8"/>
+                        <constraint firstAttribute="height" constant="50" id="yYG-kZ-dhG"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxV-K2-yv5">
+                    <color key="backgroundColor" red="1" green="0.82219387508591957" blue="0.32084181070002227" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="g7n-5O-eUY"/>
+                    </constraints>
+                    <state key="normal" title="发布债权">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Uff-cF-fhf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6SB-jW-Fov"/>
+                <constraint firstItem="cxV-K2-yv5" firstAttribute="top" secondItem="Uff-cF-fhf" secondAttribute="bottom" constant="40" id="7VY-Zh-xpx"/>
+                <constraint firstAttribute="trailing" secondItem="Uff-cF-fhf" secondAttribute="trailing" id="Ae2-tU-BYU"/>
+                <constraint firstItem="cxV-K2-yv5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="CnI-rR-7GJ"/>
+                <constraint firstAttribute="trailing" secondItem="cxV-K2-yv5" secondAttribute="trailing" constant="60" id="IFv-EZ-0aK"/>
+                <constraint firstItem="ZsV-Z6-Wlf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eJF-Lr-uTO"/>
+                <constraint firstItem="ZsV-Z6-Wlf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hvI-tX-Ndz"/>
+                <constraint firstItem="Uff-cF-fhf" firstAttribute="top" secondItem="ZsV-Z6-Wlf" secondAttribute="bottom" constant="10" id="wSG-wj-2no"/>
+                <constraint firstAttribute="trailing" secondItem="ZsV-Z6-Wlf" secondAttribute="trailing" id="xBA-1i-3GL"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

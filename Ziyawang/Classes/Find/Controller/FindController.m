@@ -24,9 +24,58 @@
 @end
 
 @implementation FindController
+- (void)tabBarBadgeValueNotiFication:(NSNotification *)sender
+{
+    NSString *value = sender.userInfo[@"BadgeValue"];
+    NSLog(@"%@",value);
+    UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
+    [item setValue:value forKeyPath:@"badgeValue"];
+    //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+    //    view.backgroundColor = [UIColor redColor];
+    //    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+    //    label.text = @"12";
+    //    label.textColor = [UIColor whiteColor];
+    //    label.font = [UIFont systemFontOfSize:10];
+    //
+    //    [self.tabBarController.tabBar addSubview:view];
+    //    [self.tabBarController.tabBar addSubview:label];
+    
+    
+    //    item.badgeValue = value;
+    //    item.badgeValue = @"2";
+    
+    //    item.badgeColor = [UIColor redColor];
+    
+    
+    NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
+    
+    //    [self.tabBarItem setBadgeValue:@"2"];
+    
+}
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    [super viewWillAppear:animated];
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
+    
+    
+    if (unreadcount == 99 || unreadcount>99) {
+        unreadStr = @"99+";
+    }
+    if (unreadcount == 0) {
+        unreadStr = nil;
+        
+    }
+    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 //    self.navigationController.navigationBar.translucent = NO;

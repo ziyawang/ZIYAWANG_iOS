@@ -696,8 +696,8 @@
                                             authType:SSDKAuthTypeBoth];
                  break;
              case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:@"wxcc011e353bdc805b"
-                                       appSecret:@"4913f06aac8d419c5ba0d971d529cdb3"];
+                 [appInfo SSDKSetupWeChatByAppId:@"wxd414950a5c59eded"
+                                       appSecret:@"57f1002133d3c239e660f2e925943306"];
                  break;
              case SSDKPlatformTypeQQ:
                  [appInfo SSDKSetupQQByAppId:@"1105620476"
@@ -863,6 +863,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
                                                                          @(ConversationType_GROUP)
                                                                          ]];
     application.applicationIconBadgeNumber = unreadMsgCount;
+    
+    
+    
+    
 //    UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:2];
 //    item.badgeValue = [NSString stringWithFormat:@"%d",unreadMsgCount];
     
@@ -919,7 +923,21 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         [UIApplication sharedApplication].applicationIconBadgeNumber =
         [UIApplication sharedApplication].applicationIconBadgeNumber + 1;
         
-//        [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
+//        self.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
+//        NSString *valueStr = [NSString stringWithFormat:@"%ld",self.tabarBageValue];
+        
+        NSMutableDictionary *userinfo = [NSMutableDictionary new];
+//        [userinfo setObject:valueStr forKey:@"BadgeValue"];
+//        userinfo[@"BadgeValue"] = valueStr;
+//        
+//        
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"tabBarBadgeValueNotifi" object:nil userInfo:userinfo];
+        
+        AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        delegate.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
+        
+        
+       //        [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
         
 //        [self.tabBarController.tabBar setTabIconWidth:29];
 //        [self.tabBarController.tabBar setBadgeTop:9];

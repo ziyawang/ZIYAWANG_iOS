@@ -38,9 +38,13 @@
 #import "UserInfoModel.h"
 #import "MyidentifiController.h"
 #import "RechargeController.h"
+#import <RongIMKit/RongIMKit.h>
+
+#import "WZLBadgeImport.h"
+
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
-@interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate>
+@interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate,RCIMReceiveMessageDelegate>
 
 /**
  *  三方属性
@@ -186,6 +190,49 @@
 
 @implementation ZiyaMainController
 #pragma mark----系统方法视图周期
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+}
+- (void)tabBarBadgeValueNotiFication:(NSNotification *)sender
+{
+//    NSString *value = sender.userInfo[@"BadgeValue"];
+//    NSLog(@"%@",value);
+//    UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
+//    [item setValue:value forKeyPath:@"badgeValue"];
+    
+    [[[[[self tabBarController]tabBar]items]objectAtIndex:0] showBadgeWithStyle:WBadgeStyleNumber value:1 animationType:WBadgeAnimTypeShake];
+    
+    
+    
+    NSString *value = [[[[self tabBarController]tabBar]items]objectAtIndex:0].badgeValue;
+    NSLog(@"%@",value);
+    
+    //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+    //    view.backgroundColor = [UIColor redColor];
+    //    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+    //    label.text = @"12";
+    //    label.textColor = [UIColor whiteColor];
+    //    label.font = [UIFont systemFontOfSize:10];
+    //
+    //    [self.tabBarController.tabBar addSubview:view];
+    //    [self.tabBarController.tabBar addSubview:label];
+    
+    
+    //    item.badgeValue = value;
+    //    item.badgeValue = @"2";
+    
+    //    item.badgeColor = [UIColor redColor];
+    
+    
+    NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
+    
+    //    [self.tabBarItem setBadgeValue:@"2"];
+    
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     self.navigationController.navigationBar.hidden = NO;
@@ -193,10 +240,32 @@
     self.navigationController.navigationBar.hidden = NO;
     //    [self.navigationController.navigationBar setBackgroundColor:[UIColor yellowColor]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
+    
+    
+    if (unreadcount == 99 || unreadcount>99) {
+      unreadStr = @"99+";
+    }
+    if (unreadcount == 0) {
+        unreadStr = nil;
+        
+    }
+    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
+
+    
+    [RCIM sharedRCIM].receiveMessageDelegate=self;
+
+
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+
     
     
 //    /**
@@ -289,10 +358,51 @@ self.navigationItem.title = @"首页";
 
 }
 
+- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
+{
+    NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    
+    
+//    [[NSNotificationCenter defaultCenter]postNotificationName:@"tabBarBadgeValueNotifi" object:nil];
+    
+    
+    
+//    NSString *title = [[[[self tabBarController]tabBar]items]objectAtIndex:3].title;
+    
+//    NSLog(@"%@",title);
+    
+//        [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d",left]];
+    
+//    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+//    [[[[[self tabBarController]tabBar]items]objectAtIndex:0]setBadgeValue:@"2"];
+    
+//    UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:3];
+//    
+//    item.badgeValue = [NSString stringWithFormat:@"%ld",unreadcount];
+//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 20, 30, 20)];
+////    label.text = [NSString stringWithFormat:@"%ld",unreadcount];
+//    label.text = @"dfsfsfsfsfsa";
+//    
+//    label.textColor = [UIColor whiteColor];
+//    [self.navigationController.tabBarController.tabBar addSubview:label];
+
+//    NSArray *tabBarItems = self.navigationController.tabBarController.tabBar.items;
+//    UITabBarItem *personCenterTabBarItem = [tabBarItems objectAtIndex:3];
+//    personCenterTabBarItem.badgeValue = [NSString stringWithFormat:@"%ld",unreadcount];//显示消息条数为 2
+    
+    NSLog(@"%ld",unreadcount);
+    
+    //    [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d",left];
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+//    [RCIM sharedRCIM].receiveMessageDelegate=self;
+
+//    [[[[[self tabBarController]tabBar]items]objectAtIndex:0]setBadgeValue:@"1"];
+
 //    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 //    //        });
     self.userModel = [[UserInfoModel alloc]init];
@@ -329,7 +439,7 @@ self.navigationItem.title = @"首页";
      *  @return NO
      */
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
             [self loadNewInfoData];

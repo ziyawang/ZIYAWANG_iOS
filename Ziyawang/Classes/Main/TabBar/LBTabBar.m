@@ -21,6 +21,16 @@
 
 @implementation LBTabBar
 
+//- (instancetype)init
+//{
+//    if (self = [super init]) {
+//        UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"好友" image:nil tag:0];
+//        [item1 setBadgeValue:@"1"];
+//    }
+//}
+
+
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
