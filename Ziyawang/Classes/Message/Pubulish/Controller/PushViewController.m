@@ -43,6 +43,8 @@ self.navigationItem.title = @"发布";
     self.navigationController.navigationBar.shadowImage=[UIImage new];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
+    
+    
     UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
     [leftButton addTarget:self action:@selector(pop) forControlEvents:(UIControlEventTouchUpInside)];
     

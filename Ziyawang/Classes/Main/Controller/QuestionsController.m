@@ -29,6 +29,8 @@
 
 @property (nonatomic,strong) NSMutableArray *allQuestionArray;
 @property (nonatomic,strong) NSMutableArray *firstQuestionArray;
+@property (nonatomic,strong) NSMutableArray *firstQuestionArray2;
+
 @property (nonatomic,strong) NSMutableArray *lastQuestionArray;
 @property (nonatomic,assign) NSInteger firstindex;
 @property (nonatomic,strong) QuestionModel *model;
@@ -51,12 +53,48 @@
 @property (nonatomic,strong) NSString *thirdType;
 
 
+@property (nonatomic,strong) NSString *questionType;
+
+@property (nonatomic,strong) NSMutableArray *manyChooseArray;
+
+@property (nonatomic,strong) NSMutableDictionary *indexPathDic;
+
+@property (nonatomic,strong) NSMutableArray *selectArray;
+
+@property (nonatomic,strong) UILabel *testResult;
+
+@property (nonatomic,assign) BOOL ifFinishAnswer;
+
+
+
+//@property (nonatomic,strong) 
+
 @end
 
 @implementation QuestionsController
 
+- (void)popAction:(UIButton *)button
+{
+    [self postAnswers];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    [leftButton addTarget:self action:@selector(popAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIImageView *buttonimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 6, 10, 18)];
+    buttonimage.image = [UIImage imageNamed:@"back3"];
+    UILabel *buttonLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 45, 20)];
+    buttonLabel.text = @"返回";
+    buttonLabel.font = [UIFont systemFontOfSize:15];
+    
+    [leftButton addSubview:buttonimage];
+    [leftButton addSubview:buttonLabel];
+    
+    
+    UIBarButtonItem *leftbutton = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftbutton;
     self.view.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     self.ScrollView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
@@ -74,6 +112,12 @@
     self.lastQuestionArray = [NSMutableArray new];
     self.selectedDic = [NSMutableDictionary new];
     self.AllSelectedDic = [NSMutableDictionary new];
+    self.manyChooseArray = [NSMutableArray new];
+    self.indexPathDic = [NSMutableDictionary new];
+    self.selectArray = [NSMutableArray new];
+    
+    
+    
     
     [self.lastButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     [self.nextButton                                                                                                                                                                                                                                                                                                                    setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
@@ -102,7 +146,6 @@ NSString *URL = TestQuestionURL;
     
     if ([self.Type isEqualToString:@"个人"]) {
         [dic setObject:@"1" forKey:@"Paper"];
-
     }
     else
     {
@@ -117,12 +160,18 @@ NSString *URL = TestQuestionURL;
         [self.model setValuesForKeysWithDictionary:self.allQuestionArray[self.firstindex]];
         
         NSArray *quesArray = self.allQuestionArray[self.firstindex][@"Choices"];
+        NSArray *quesArray2 = self.allQuestionArray[self.firstindex][@"Choicesno"];
+    
+     
         self.quesTitle.text = [[@"第" stringByAppendingString:self.allQuestionArray[self.firstindex][@"Sort"]] stringByAppendingString:@"道题"];
 //        self.quesDes.text = self.allQuestionArray[self.firstindex][@"Question"];
         self.quesDetail.text = self.allQuestionArray[self.firstindex][@"Question"];
+        self.questionType = self.allQuestionArray[self.firstindex][@"Type"];
         self.firstQuestionArray = [NSMutableArray arrayWithArray:quesArray];
+        self.firstQuestionArray2 = [NSMutableArray arrayWithArray:quesArray2];
+        
         self.tableViewHeight.constant = 50 * self.firstQuestionArray.count;
-        self.contentViewHeight.constant = self.tableViewHeight.constant + 340;
+        self.contentViewHeight.constant = self.tableViewHeight.constant + 370;
         self.inputViewHeight.constant = 0;
         self.tableTopTo.constant = 0;
         
@@ -130,6 +179,11 @@ NSString *URL = TestQuestionURL;
         
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       
+        NSLog(@"%@",error);
+//        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取数据失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
         
     }];
     
@@ -140,8 +194,10 @@ NSString *URL = TestQuestionURL;
     [self.inputTextfield resignFirstResponder];
     
 }
+
 - (IBAction)lastButtonAction:(id)sender {
     
+    self.selectArray = [NSMutableArray new];
     [self.inputTextfield resignFirstResponder];
     if (self.firstindex == 1) {
         self.inputTextfield.keyboardType = UIKeyboardTypeNumberPad;
@@ -162,25 +218,46 @@ NSString *URL = TestQuestionURL;
     if (self.firstindex == 1) {
         [self.lastButton setTitle:@"返回" forState:(UIControlStateNormal)];
     }
+    
+    NSInteger count = self.allQuestionArray.count;
+
+    if (self.firstindex != count) {
+        [self.nextButton setTitle:@"下一题" forState:(UIControlStateNormal)];
+        
+    }
     else
     {
     [self.lastButton setTitle:@"上一题" forState:(UIControlStateNormal)];
     }
     self.firstindex = self.firstindex - 1;
-    if (self.firstindex == 1) {
-        if ([self.secondType isEqualToString:@"选择"]==NO) {
-            NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
-            self.inputTextfield.text = self.AllSelectedDic[key];
+    
+    if ([self.Type isEqualToString:@"个人"]) {
+        if (self.firstindex == 1) {
+            if ([self.secondType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
         }
+        else if(self.firstindex == 2)
+        {
+            if ([self.thirdType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
+        }
+ 
     }
-    else if(self.firstindex == 2)
+    else
     {
-        if ([self.thirdType isEqualToString:@"选择"]==NO) {
-            NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
-            self.inputTextfield.text = self.AllSelectedDic[key];
+        if (self.firstindex == 1) {
+            if ([self.secondType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
         }
     }
-
+    
+    
     
 
     [self.model setValuesForKeysWithDictionary:self.allQuestionArray[self.firstindex]];
@@ -202,17 +279,32 @@ NSString *URL = TestQuestionURL;
     NSArray *quesArray = self.allQuestionArray[self.firstindex][@"Choices"];
     self.quesTitle.text = [[@"第" stringByAppendingString:self.allQuestionArray[self.firstindex][@"Sort"]] stringByAppendingString:@"道题"];
     self.quesDetail.text = self.allQuestionArray[self.firstindex][@"Question"];
+    self.questionType = self.allQuestionArray[self.firstindex][@"Type"];
+
     self.firstQuestionArray = [NSMutableArray arrayWithArray:quesArray];
+    
+    NSArray *quesArray2 = self.allQuestionArray[self.firstindex][@"Choicesno"];
+    self.firstQuestionArray2 = [NSMutableArray arrayWithArray:quesArray2];
+    
     self.tableViewHeight.constant = 50 * self.firstQuestionArray.count;
-    self.contentViewHeight.constant = self.tableViewHeight.constant + 340;
+    self.contentViewHeight.constant = self.tableViewHeight.constant + 370;
     
     
     [self.tableView reloadData];
     [self.ScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 - (IBAction)nextButtonAction:(id)sender {
+    self.selectArray = [NSMutableArray new];
     
     [self.inputTextfield resignFirstResponder];
+
+    NSArray *selectArray = self.AllSelectedDic[[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+    if (selectArray == nil) {
+        [self showAlertViewWithString:@"请先完成此题再进行下一题"];
+        return;
+        
+    }
+    
     if (self.firstindex == 1) {
         self.inputTextfield.keyboardType = UIKeyboardTypeNumberPad;
     }
@@ -229,20 +321,32 @@ NSString *URL = TestQuestionURL;
     self.firstindex = self.firstindex + 1;
     NSInteger count = self.allQuestionArray.count;
     
-    if (self.firstindex == 1) {
-        if ([self.secondType isEqualToString:@"选择"]==NO) {
-            NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
-            self.inputTextfield.text = self.AllSelectedDic[key];
+    if ([self.Type isEqualToString:@"个人"]) {
+        if (self.firstindex == 1) {
+            if ([self.secondType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
         }
+        else if(self.firstindex == 2)
+        {
+            if ([self.thirdType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
+        }
+        
     }
-    else if(self.firstindex == 2)
+   
+    else
     {
-        if ([self.thirdType isEqualToString:@"选择"]==NO) {
-            NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
-            self.inputTextfield.text = self.AllSelectedDic[key];
+        if (self.firstindex == 1) {
+            if ([self.secondType isEqualToString:@"选择"]==NO) {
+                NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex +1];
+                self.inputTextfield.text = self.AllSelectedDic[key][0];
+            }
         }
     }
-    
     
     if (self.firstindex == count - 1) {
         [self.nextButton setTitle:@"提交" forState:(UIControlStateNormal)];
@@ -326,13 +430,10 @@ NSString *URL = TestQuestionURL;
         
         topLabel.text = @"测评结束！";
         bottomLabel.text = @"请输入电话号码以便为您提供更专业的服务";
-        
         self.phoneNumber.placeholder = @"    电话号码";
         [surePhoneButton setTitle:@"确认" forState:(UIControlStateNormal)];
         [surePhoneButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
         [surePhoneButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-        
-        
         
     }
     else
@@ -354,12 +455,21 @@ NSString *URL = TestQuestionURL;
     NSArray *quesArray = self.allQuestionArray[self.firstindex][@"Choices"];
     self.quesTitle.text = [[@"第" stringByAppendingString:self.allQuestionArray[self.firstindex][@"Sort"]] stringByAppendingString:@"道题"];
     self.quesDetail.text = self.allQuestionArray[self.firstindex][@"Question"];
+        self.questionType = self.allQuestionArray[self.firstindex][@"Type"];
+
     self.firstQuestionArray = [NSMutableArray arrayWithArray:quesArray];
+        
+    NSArray *quesArray2 = self.allQuestionArray[self.firstindex][@"Choicesno"];
+    self.firstQuestionArray2 = [NSMutableArray arrayWithArray:quesArray2];
     self.tableViewHeight.constant = 50 * self.firstQuestionArray.count;
-    self.contentViewHeight.constant = self.tableViewHeight.constant + 340;
+    self.contentViewHeight.constant = self.tableViewHeight.constant + 370;
     [self.tableView reloadData];
     }
     [self.ScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+    
+    NSLog(@"%@",self.AllSelectedDic);
+    
+    
 }
 //正则判断
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
@@ -407,102 +517,52 @@ NSString *URL = TestQuestionURL;
 
 - (void)didClickSurePhoneButtonAction:(UIButton *)button
 {
+    
+    
+    
     [self checkMobilePhoneNumber:self.phoneNumber.text];
+    [self.view endEditing:YES];
     
-   
     if (self.isPhoneNumber == YES) {
-        self.resultView = [UIView new];
-        self.resultView.backgroundColor = [UIColor blueColor];
         
-        UIView *topView = [UIView new];
-        UIView *bottomView = [UIView new];
-        
-        UILabel *jieguoLabel = [UILabel new];
-        UILabel *testResult = [UILabel new];
-        self.resultDes = [UILabel new];
-        UIButton *fabuButton = [UIButton new];
-        UIButton *reTestButton = [UIButton new];
-        
-        [self.contentView addSubview:self.resultView];
-        [self.resultView addSubview:topView];
-        [self.resultView addSubview:bottomView];
-        [topView addSubview:jieguoLabel];
-        [topView addSubview:testResult];
-        [bottomView addSubview:self.resultDes];
-        [self.resultView addSubview:fabuButton];
-        [self.resultView addSubview:reTestButton];
-        
-        
-        
-        self.resultView.sd_layout.leftSpaceToView(self.contentView,0)
-        .rightSpaceToView(self.contentView,0)
-        .topSpaceToView(self.contentView,0)
-        .bottomSpaceToView(self.contentView,0);
-        
-        topView.sd_layout.leftEqualToView(self.resultView)
-        .rightEqualToView(self.resultView)
-        .heightIs(90)
-        .topSpaceToView(self.resultView,0);
-        topView.backgroundColor = [UIColor redColor];
-        
-        
-        bottomView.sd_layout.leftEqualToView(self.resultView)
-        .rightEqualToView(self.resultView)
-        .topSpaceToView(topView,10);
-        bottomView.backgroundColor = [UIColor redColor];
-        
-        
-        jieguoLabel.sd_layout.centerXEqualToView(topView)
-        .topSpaceToView(topView,20)
-        .heightIs(20);
-        
-        jieguoLabel.text = @"测评结果！";
-        jieguoLabel.textAlignment = NSTextAlignmentCenter;
-        [jieguoLabel setSingleLineAutoResizeWithMaxWidth:100];
-        
-        
-        testResult.sd_layout.centerXEqualToView(topView)
-        .topSpaceToView(jieguoLabel,10)
-        .heightIs(20);
-        
-        testResult.text = @"skdhfshdifhsid";
-        
-        [testResult setSingleLineAutoResizeWithMaxWidth:500];
-        
-        
-        
-        //        self.resultDes.text = @"dsfsdfasdfsfsdfsfsfsdfsdfsdhfksdhfihwiefhiwuehfiuehwoifheoirhoiewhrioewhtoiehwtoihewiothioehtoiewhtiowheiothweiotgeiowgtioewgtioegwiorhioewhoiwehitewiothiowethoiewhtoiwehtiohewiothewoihtioewhtioewhtioewhtiohewiothewoihteiowhtioewhtioewhtioewhtioewhtioewhtiowehtioewhtioewhtioew";
-        
-        self.resultDes.sd_layout.leftSpaceToView(bottomView,15)
-        .rightSpaceToView(bottomView,15)
-        .topSpaceToView(bottomView,15)
-        .autoHeightRatio(0);
-        
-        
-        
-        [bottomView setupAutoHeightWithBottomView:self.resultDes bottomMargin:15];
-        
-        fabuButton.sd_layout.leftSpaceToView(self.resultView,60)
-        .rightSpaceToView(self.resultView,60)
-        .topSpaceToView(bottomView,40)
-        .heightIs(50);
-        [fabuButton setTitle:@"发布债权" forState:(UIControlStateNormal)];
-        
-        
-        reTestButton.sd_layout.leftEqualToView(fabuButton)
-        .rightEqualToView(fabuButton)
-        .topSpaceToView(fabuButton,20)
-        .heightIs(50);
-        [reTestButton setTitle:@"重新测评" forState:(UIControlStateNormal)];
-        
-
-    }
+        _ifFinishAnswer = YES;
+        [self postAnswers];
+            }
     
 
+}
+- (void)didClickFabuButtonAction:(UIButton *)button
+{
+    
+}
+- (void)didClickRetestButtonAction:(UIButton *)button
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)postAnswers
 {
+//    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+//     self.manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    
+//    self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+    
+//    self.allSelected = [QuestionsController JsonModel:self.AllSelectedDic];
+    
+    NSArray *array = @[@"sdfs"];
+    
+    NSDictionary * Dic= @{@"2":array,@"3":array};
+    
+    NSString *str = [QuestionsController JsonModel:Dic];
+    NSLog(@"%@",Dic);
+    NSLog(@"%@",str);
+    
+    
+    self.allSelected = [QuestionsController JsonModel:self.AllSelectedDic];
+    NSLog(@"%@",self.allSelected);
+
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *URL = TestResultURL;
     if (token != nil) {
@@ -515,22 +575,135 @@ NSString *URL = TestQuestionURL;
     [dic setObject:self.area forKey:@"Area"];
     [dic setObject:self.Type forKey:@"AssetType"];
     [dic setObject:self.personType forKey:@"Type"];
-    [dic setObject:self.phoneNumber.text forKey:@"PhoneNumber"];
+    if (_ifFinishAnswer == YES) {
+        [dic setObject:self.phoneNumber.text forKey:@"PhoneNumber"];
+    }
+    
+    
+//    [dic setObject:self.allSelected forKey:@"Answer"];
+    
     [dic setObject:self.allSelected forKey:@"Answer"];
     [dic setObject:@"IOS" forKey:@"Channel"];
+    
+    
     
 [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
     
 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
     NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-    
+    [self setResultViews];
     NSString *result = resultDic[@"result"];
-    self.resultDes.text = result;
-
-
-} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     
+    NSString *Score = [NSString stringWithFormat:@"%@",resultDic[@"score"]];
+    
+    self.resultDes.text = result;
+    self.testResult.text = Score;
+    
+} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    NSLog(@"%@",error);
 }];
+    
+
+}
+
+- (void)setResultViews
+{
+
+    self.resultView = [UIView new];
+    self.resultView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    
+    UIView *topView = [UIView new];
+    UIView *bottomView = [UIView new];
+    
+    UILabel *jieguoLabel = [UILabel new];
+    self.testResult = [UILabel new];
+    
+    self.resultDes = [UILabel new];
+    UIButton *fabuButton = [UIButton new];
+    UIButton *reTestButton = [UIButton new];
+    
+    
+    [self.contentView addSubview:self.resultView];
+    [self.resultView addSubview:topView];
+    [self.resultView addSubview:bottomView];
+    [topView addSubview:jieguoLabel];
+    [topView addSubview:self.testResult];
+    [bottomView addSubview:self.resultDes];
+    [self.resultView addSubview:fabuButton];
+    [self.resultView addSubview:reTestButton];
+    
+    
+    
+    self.resultView.sd_layout.leftSpaceToView(self.contentView,0)
+    .rightSpaceToView(self.contentView,0)
+    .topSpaceToView(self.contentView,0)
+    .bottomSpaceToView(self.contentView,0);
+    
+    topView.sd_layout.leftEqualToView(self.resultView)
+    .rightEqualToView(self.resultView)
+    .heightIs(90)
+    .topSpaceToView(self.resultView,0);
+    topView.backgroundColor = [UIColor whiteColor];
+    
+    
+    bottomView.sd_layout.leftEqualToView(self.resultView)
+    .rightEqualToView(self.resultView)
+    .topSpaceToView(topView,10);
+    bottomView.backgroundColor = [UIColor whiteColor];
+    
+    
+    jieguoLabel.sd_layout.centerXEqualToView(topView)
+    .topSpaceToView(topView,20)
+    .heightIs(20);
+    
+    jieguoLabel.text = @"测评结果!";
+    jieguoLabel.textAlignment = NSTextAlignmentCenter;
+    [jieguoLabel setSingleLineAutoResizeWithMaxWidth:100];
+    
+    
+    self.testResult.sd_layout.centerXEqualToView(jieguoLabel)
+    .topSpaceToView(jieguoLabel,10)
+    .heightIs(20);
+    
+    
+    [self.testResult setSingleLineAutoResizeWithMaxWidth:100];
+    
+    
+    
+    //        self.resultDes.text = @"dsfsdfasdfsfsdfsfsfsdfsdfsdhfksdhfihwiefhiwuehfiuehwoifheoirhoiewhrioewhtoiehwtoihewiothioehtoiewhtiowheiothweiotgeiowgtioewgtioegwiorhioewhoiwehitewiothiowethoiewhtoiwehtiohewiothewoihtioewhtioewhtioewhtiohewiothewoihteiowhtioewhtioewhtioewhtioewhtioewhtiowehtioewhtioewhtioew";
+    
+    self.resultDes.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(bottomView,15)
+    .autoHeightRatio(0);
+    
+    self.resultDes.text = @"dfsihfiuhsuifguwgeufguywegfugeiugeuirgiuertertueht";
+    
+    
+    [bottomView setupAutoHeightWithBottomView:self.resultDes bottomMargin:15];
+    
+    fabuButton.sd_layout.leftSpaceToView(self.resultView,60)
+    .rightSpaceToView(self.resultView,60)
+    .topSpaceToView(bottomView,40)
+    .heightIs(50);
+    [fabuButton setTitle:@"发布债权" forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickFabuButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [fabuButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    
+    
+    reTestButton.sd_layout.leftEqualToView(fabuButton)
+    .rightEqualToView(fabuButton)
+    .topSpaceToView(fabuButton,20)
+    .heightIs(50);
+    
+    [reTestButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [reTestButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+    
+    [reTestButton addTarget:self action:@selector(didClickRetestButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [reTestButton setTitle:@"重新测评" forState:(UIControlStateNormal)];
     
 
 }
@@ -542,24 +715,53 @@ NSString *URL = TestQuestionURL;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-   UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.selectIndex];
+    NSString *firstKey = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:self.indexPathDic[firstKey][0]];
     selectedCell.accessoryType = UITableViewCellAccessoryNone;
+    
     if (self.firstindex == 1) {
         self.secondType = @"填空";
     }
     else if(self.firstindex == 2)
     {
         self.thirdType = @"填空";
-        
     }
     self.selectStatu = @"0";
-    [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
-    [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//    [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+//    [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+    NSArray *array = self.AllSelectedDic[firstKey];
+    
+    if (array.count != 0) {
+        [self.AllSelectedDic[firstKey] removeObjectAtIndex:0];
+    }
     
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [self.AllSelectedDic setObject:textField.text forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+    NSString *firstKey = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
+
+//    [self.AllSelectedDic setObject:textField.text forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+    if (self.selectArray.count != 0)
+    {
+        [self.selectArray replaceObjectAtIndex:0 withObject:textField.text];
+    }
+    else
+    {
+        [self.selectArray addObject:textField.text];
+    }
+    
+    [self.AllSelectedDic setObject:self.selectArray forKey:firstKey];
+    
+    
+    [self.selectedDic removeAllObjects];
+//    if ([self.Type isEqualToString:@"个人"]) {
+//        if (self.firstindex == 1 || self.firstindex == 2) {
+//            
+//            
+//        }
+//    }
+//    
+    
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -583,72 +785,47 @@ NSString *URL = TestQuestionURL;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex];
+    NSString *key = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
     NSString *index = [NSString stringWithFormat:@"%ld",indexPath.row];
 //    QuestionModel *model = [[QuestionModel alloc]init];
 //    model = self.firstQuestionArray[indexPath.row];
-    cell.textLabel.text = self.firstQuestionArray[indexPath.row];
+    cell.textLabel.text = self.firstQuestionArray2[indexPath.row];
     
-    if ([index isEqualToString:self.selectedDic[key]]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    else
+    for (NSIndexPath *indexP in self.indexPathDic[key])
     {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    [self.inputTextfield resignFirstResponder];
-    NSLog(@"%@",self.selectedDic);
-    
-    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:self.selectIndex];
-    selectedCell.accessoryType = UITableViewCellAccessoryNone;
-    
-    UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    NSString *selectStr = [NSString stringWithFormat:@"%ld",self.firstindex];
-    
-    if (indexPath.row == [self.selectedDic[selectStr] integerValue]) {
-        willSelectCell.accessoryType = UITableViewCellAccessoryNone;
-        if ([self.selectStatu isEqualToString:@"1"]) {
-            willSelectCell.accessoryType = UITableViewCellAccessoryNone;
-            self.selectStatu = @"0";
-            [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
-            [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+        if (indexPath == indexP) {
+            
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else
         {
-            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-            self.selectStatu = @"1";
-            self.selectIndex = indexPath;
-            
-            
-            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
-            if (self.firstindex == 1 || self.firstindex == 2) {
-                
-                if (self.firstindex == 1) {
-                    self.secondType = @"选择";
-                }
-                else if(self.firstindex == 2)
-                {
-                self.thirdType = @"选择";
-                    
-                }
-                
-                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
-            }
-            self.index = indexPath.row;
-            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     }
-    else
-    {
-    willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+    if (!self.indexPathDic[key]) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
+    }
+    
+      return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *firstKey = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
+    
+    
+    [self.inputTextfield resignFirstResponder];
+    if ([self.questionType isEqualToString:@"2"] == NO) {
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:self.indexPathDic[firstKey][0]];
+        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
+        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
         if (self.firstindex == 1 || self.firstindex == 2) {
             if (self.firstindex == 1) {
                 self.secondType = @"选择";
@@ -656,28 +833,515 @@ NSString *URL = TestQuestionURL;
             else if(self.firstindex == 2)
             {
                 self.thirdType = @"选择";
+            }
+        }
+        
+        if ([self.Type isEqualToString:@"个人"]) {
+            if (self.firstindex == 1 || self.firstindex == 2) {
+                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                [array addObject:self.firstQuestionArray[indexPath.row]];
+                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            }
+        }
+        else
+        {
+            if (self.firstindex == 1) {
+                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                [array addObject:self.firstQuestionArray[indexPath.row]];
+                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            }
+        }
+        
+        
+        NSMutableArray *indexArray = [NSMutableArray new];
+        [indexArray addObject:indexPath];
+        [self.indexPathDic setObject:indexArray forKey:firstKey];
+        
+        
+//        NSMutableArray *array = [NSMutableArray new];
+//        NSString *indStr = [NSString stringWithFormat:@"%ld",indexPath.row + 1];
+        NSString *indStr = self.firstQuestionArray[indexPath.row];
+        
+        if (self.selectArray.count != 0)
+        {
+        [self.selectArray replaceObjectAtIndex:0 withObject:indStr];
+        }
+        else
+        {
+            [self.selectArray addObject:indStr];
+        }
+        [self.AllSelectedDic setObject:self.selectArray forKey:firstKey];
+        
+        
+        
+        NSLog(@"%@",self.AllSelectedDic);
+    }
+    else
+    {
+        UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
+        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        NSMutableArray *indexArray = [NSMutableArray new];
+        [indexArray addObject:indexPath];
+        [self.indexPathDic setObject:indexArray forKey:firstKey];
+        
+//        NSMutableArray *array = [NSMutableArray new];
+//        NSString *indStr = [NSString stringWithFormat:@"%ld",indexPath.row + 1];
+        NSString *indStr = self.firstQuestionArray[indexPath.row];
+        [self.selectArray addObject:indStr];
+        [self.AllSelectedDic setObject:self.selectArray forKey:firstKey];
+        
+        NSLog(@"%@",self.AllSelectedDic);
+
+        
+    }
+
+}
+
+
+/*
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *selectRow = [NSString stringWithFormat:@"%ld",indexPath.row];
+
+        [self.inputTextfield resignFirstResponder];
+ 
+    if ([self.questionType isEqualToString:@"2"] == NO) {
+        NSLog(@"%@",self.selectedDic);
+
+        
+        NSArray *lastSelectArray = self.AllSelectedDic[[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:self.selectIndex];
+        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        NSString *selectStr = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
+        NSArray *selectArray = self.AllSelectedDic[[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+        if (selectArray == nil ) {
+            
+            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            //            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            NSMutableArray *array = [NSMutableArray new];
+            [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+            [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            
+            
+            if (self.firstindex == 1 || self.firstindex == 2) {
+                if (self.firstindex == 1) {
+                    self.secondType = @"选择";
+                }
+                else if(self.firstindex == 2)
+                {
+                    self.thirdType = @"选择";
+                    
+                }
+                
+                //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                NSMutableArray *array = [NSMutableArray new];
+                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            }
+            self.selectStatu = @"1";
+            self.selectIndex = indexPath;
+            self.index = indexPath.row;
+            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+            
+        }
+        
+        for (NSString *str in selectArray)
+        
+        {
+            if ([str isEqualToString:selectRow])
+            {
+                willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+                if ([self.selectStatu isEqualToString:@"1"])
+                {
+                    willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+                    self.selectStatu = @"0";
+                    
+                    [self.AllSelectedDic[selectStr] removeObject:str];
+                    
+//                    [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+//                    [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+                }
+                else
+                {
+                    willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.selectStatu = @"1";
+                    self.selectIndex = indexPath;
+                    
+                    //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    NSMutableArray *array = [NSMutableArray new];
+                    [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+                    [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    
+                    
+                    if (self.firstindex == 1 || self.firstindex == 2) {
+                        
+                        if (self.firstindex == 1) {
+                            self.secondType = @"选择";
+                        }
+                        else if(self.firstindex == 2)
+                        {
+                            self.thirdType = @"选择";
+                            
+                        }
+                        
+                        //                    [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                        NSMutableArray *array = [NSMutableArray new];
+                        [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                        [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    }
+                    //                self.index = indexPath.row;
+                    //                [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+                }
+
                 
             }
-            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            else
+            {
+         
+            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            //            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            NSMutableArray *array = [NSMutableArray new];
+            [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+            [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            
+            
+            if (self.firstindex == 1 || self.firstindex == 2) {
+                if (self.firstindex == 1) {
+                    self.secondType = @"选择";
+                }
+                else if(self.firstindex == 2)
+                {
+                    self.thirdType = @"选择";
+                    
+                }
+                
+                //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                NSMutableArray *array = [NSMutableArray new];
+                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            }
+            self.selectStatu = @"1";
+            self.selectIndex = indexPath;
+            self.index = indexPath.row;
+            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
         }
-        self.selectStatu = @"1";
-        self.selectIndex = indexPath;
-        self.index = indexPath.row;
-        [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
-    }
-    
-    NSLog(@"!!!!!!!!%@",self.AllSelectedDic);
-  self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
-    for (NSString *value in [self.AllSelectedDic allValues]) {
+        }
         
-//        self.allSelected =
-    }
-    NSLog(@"_____%@",self.allSelected);
+        NSLog(@"!!!!!!!!%@",self.AllSelectedDic);
+        self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+
+        }
+        
+//        
+//        if (indexPath.row == [self.AllSelectedDic[selectStr] integerValue]) {
+//            willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+//            if ([self.selectStatu isEqualToString:@"1"]) {
+//                willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+//                self.selectStatu = @"0";
+//                [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+//                [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//            }
+//            else
+//            {
+//                willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//                self.selectStatu = @"1";
+//                self.selectIndex = indexPath;
+//                
+//                
+////                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+//                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                
+//                
+//                if (self.firstindex == 1 || self.firstindex == 2) {
+//                    
+//                    if (self.firstindex == 1) {
+//                        self.secondType = @"选择";
+//                    }
+//                    else if(self.firstindex == 2)
+//                    {
+//                        self.thirdType = @"选择";
+//                        
+//                    }
+//                    
+////                    [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                    NSMutableArray *array = [NSMutableArray new];
+//                    [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+//                    [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                }
+////                self.index = indexPath.row;
+////                [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//            }
+//        }
+//        else
+//        {
+//            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//       //            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            NSMutableArray *array = [NSMutableArray new];
+//            [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+//            [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            
+//            
+//            if (self.firstindex == 1 || self.firstindex == 2) {
+//                if (self.firstindex == 1) {
+//                    self.secondType = @"选择";
+//                }
+//                else if(self.firstindex == 2)
+//                {
+//                    self.thirdType = @"选择";
+//                    
+//                }
+//                
+////                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+//                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            }
+//            self.selectStatu = @"1";
+//            self.selectIndex = indexPath;
+//            self.index = indexPath.row;
+//            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//        }
+//        
+//        NSLog(@"!!!!!!!!%@",self.AllSelectedDic);
+//        self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+//        
+//        
+//        for (NSString *value in [self.AllSelectedDic allValues]) {
+//            
+//            //        self.allSelected =
+//        }
+//        NSLog(@"_____%@",self.allSelected);
+//        
+//        self.inputTextfield.text = self.allSelected;
+//
+//    }
+    else
+    {
+//        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:self.selectIndex];
+//        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
+        NSString *selectStr = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
+        NSArray *selectArray = self.AllSelectedDic[[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+        if (selectArray == nil ) {
+            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            //            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            NSMutableArray *array = [NSMutableArray new];
+            [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+            [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+            
+            
+//            if (self.firstindex == 1 || self.firstindex == 2) {
+//                if (self.firstindex == 1) {
+//                    self.secondType = @"选择";
+//                }
+//                else if(self.firstindex == 2)
+//                {
+//                    self.thirdType = @"选择";
+//                    
+//                }
+            
+                //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+//                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            }
+            
+            
+            self.selectStatu = @"1";
+            self.selectIndex = indexPath;
+            self.index = indexPath.row;
+            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+            return;
+            
+        }
     
-    self.inputTextfield.text = self.allSelected;
+        for (NSString *str in selectArray)
+        {
+            if ([str isEqualToString:selectRow])
+            {
+                willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+                if ([self.selectStatu isEqualToString:@"1"])
+                {
+                    
+                    willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+                    self.selectStatu = @"0";
+                    
+                    [self.AllSelectedDic[selectStr] removeObject:str];
+                    
+                    //                    [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+                    //                    [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+                }
+                else
+                {
+                    willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.selectStatu = @"1";
+                    self.selectIndex = indexPath;
+                    
+                    //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    NSMutableArray *array = [NSMutableArray new];
+                    [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+                    [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    
+                    
+                    if (self.firstindex == 1 || self.firstindex == 2) {
+                        
+                        if (self.firstindex == 1) {
+                            self.secondType = @"选择";
+                        }
+                        else if(self.firstindex == 2)
+                        {
+                            self.thirdType = @"选择";
+                            
+                        }
+                        
+                        //                    [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                        NSMutableArray *array = [NSMutableArray new];
+                        [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                        [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    }
+                    //                self.index = indexPath.row;
+                    //                [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+                }
+                
+                
+            }
+            else
+            {
+                
+                willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                //            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                NSMutableArray *array = [NSMutableArray new];
+                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                
+                
+                if (self.firstindex == 1 || self.firstindex == 2) {
+                    if (self.firstindex == 1) {
+                        self.secondType = @"选择";
+                    }
+                    else if(self.firstindex == 2)
+                    {
+                        self.thirdType = @"选择";
+                    }
+                    
+                    //                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+2] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    NSMutableArray *array = [NSMutableArray new];
+                    [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+                    [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+                    
+                }
+                self.selectStatu = @"1";
+                self.selectIndex = indexPath;
+                self.index = indexPath.row;
+                [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+            }
+        }
+        
+        NSLog(@"!!!!!!!!%@",self.AllSelectedDic);
+        self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+
+        
+//        NSString *selectStr = [NSString stringWithFormat:@"%ld",self.firstindex];
+//        
+//        
+//        
+//        
+//        if (indexPath.row == [self.selectedDic[selectStr] integerValue]) {
+//            willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+//            if ([self.selectStatu isEqualToString:@"1"]) {
+//                willSelectCell.accessoryType = UITableViewCellAccessoryNone;
+//                self.selectStatu = @"0";
+//                [self.AllSelectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
+//                [self.selectedDic removeObjectForKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//            }
+//            else
+//            {
+//                willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//                self.selectStatu = @"1";
+////                self.selectIndex = indexPath;
+////                [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+////                self.index = indexPath.row;
+////                [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//               
+//                
+//                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+//                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//                
+//            }
+//        }
+//        else
+//        {
+//            willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//            
+//            NSMutableArray *array = [NSMutableArray new];
+//            [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 1]];
+//            [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+////            [self.AllSelectedDic setObject:[NSString stringWithFormat:@"%ld",indexPath.row+1] forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            
+//            
+//            if (self.firstindex == 1 || self.firstindex == 2)
+//            {
+//                if (self.firstindex == 1)
+//                {
+//                    self.secondType = @"选择";
+//                }
+//                else if(self.firstindex == 2)
+//                {
+//                    self.thirdType = @"选择";
+//                }
+//                
+//                NSMutableArray *array = [NSMutableArray new];
+//                [array addObject:[NSString stringWithFormat:@"%ld",indexPath.row + 2]];
+//                [self.AllSelectedDic setObject:array forKey:[NSString stringWithFormat:@"%ld",self.firstindex+1]];
+//            }
+//            self.selectStatu = @"1";
+//            
+//            
+////            self.selectIndex = indexPath;
+////            self.index = indexPath.row;
+////            [self.selectedDic setObject:[NSString stringWithFormat:@"%ld",self.index] forKey:[NSString stringWithFormat:@"%ld",self.firstindex]];
+//            
+//        }
+//        
+//        NSLog(@"!!!!!!!!%@",self.AllSelectedDic);
+//        self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+//        for (NSString *value in [self.AllSelectedDic allValues]) {
+//            
+//            //        self.allSelected =
+//        }
+
+        
+    
+    }
+    
     
     
 }
+
+*/
+
+
++(NSString *)JsonModel:(NSDictionary *)dictModel
+{
+    if ([NSJSONSerialization isValidJSONObject:dictModel])
+    {
+        NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dictModel options:nil error:nil];
+        NSString * jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        return jsonStr;
+    }
+    return nil;
+}
+
 - (NSString*)dictionaryToJson:(NSDictionary *)dic
 
 {

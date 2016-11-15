@@ -69,6 +69,8 @@
 
 @implementation AppDelegate
 
+
+
 /**
  *  系统方法
  *
@@ -78,6 +80,7 @@
  *  @return BOOL
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
 
     /**
      初始化window和网络请求manager等
@@ -103,7 +106,6 @@
      *  是否要重新发送订单验证
      */
     [self ifNeedSendReceiotToDomain];
-    
     
     
        /**
@@ -137,7 +139,6 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"]!=nil) {
          [self getUserInfoFromDomin];
     }
- 
     /**
      *  设置状态栏
      */

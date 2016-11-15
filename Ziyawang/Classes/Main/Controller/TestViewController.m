@@ -26,11 +26,11 @@
 @property (nonatomic,strong) UIView *pickerBackView;
 
 @property (nonatomic,strong) NSString *Type;
-@property (nonatomic,strong) NSArray *zhaiquanType;
+@property (nonatomic,strong) NSArray *zhaiquanType;@property (nonatomic,strong) NSString *selectStr;
+
 @property (nonatomic,strong) NSArray *perSonType;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 
-@property (nonatomic,strong) NSString *selectStr;
 @property (nonatomic,strong) UIView *mengbanView;
 
 
@@ -64,8 +64,8 @@
     
     
     [self.areaView addGestureRecognizer:getrure1];
-    [self.TypeView addGestureRecognizer:getrure2];
-    [self.personTypeView addGestureRecognizer:getrure3];
+    [self.TypeView addGestureRecognizer:getrure3];
+    [self.personTypeView addGestureRecognizer:getrure2];
     
     self.mengbanView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     self.mengbanView.backgroundColor = [UIColor blackColor];
@@ -117,12 +117,11 @@
     [self.mengbanView setHidden:YES];
     
     if ([self.Type isEqualToString:@"0"]) {
-        self.zhaiquanTypeLabel.text = @"";
-        
+        self.PersonTypeLabel.text = @"";
     }
     else
     {
-    self.PersonTypeLabel.text = @"";
+    self.zhaiquanTypeLabel.text = @"";
         
     }
     [UIView animateWithDuration:0.5 animations:^{
@@ -136,11 +135,11 @@
     [self.mengbanView setHidden:YES];
     
     if ([self.Type isEqualToString:@"0"]) {
-        self.zhaiquanTypeLabel.text = self.selectStr;
+        self.PersonTypeLabel.text = self.selectStr;
     }
     else
     {
-        self.PersonTypeLabel.text = self.selectStr;
+        self.zhaiquanTypeLabel.text = self.selectStr;
     }
     [UIView animateWithDuration:0.5 animations:^{
         self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height;

@@ -196,7 +196,6 @@
     self.model = [[LoginModel alloc]init];
 //    [self.navigationController setTitle:@"登录"];
     
-    
 //    UIColor *placeHoderColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.8];
 //        [self.userNnameTextField setValue:placeHoderColor forKeyPath:@"_placeholderLabel.textColor"];
 //    [self.passWordTextField setValue:placeHoderColor forKeyPath:@"_placeholderLabel.textColor"];

@@ -16,8 +16,7 @@
                 <frame key="frameInset" width="437" height="146.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="类型：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rYY-Aw-968">
-                        <frame key="frameInset" minX="30" minY="102" width="36" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rYY-Aw-968">
                         <constraints>
                             <constraint firstAttribute="width" constant="43" id="It5-kT-C5f"/>
                         </constraints>
@@ -30,8 +29,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="北京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4A-an-ggm">
-                        <frame key="frameInset" minX="66" minY="84" width="50" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4A-an-ggm">
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="LgT-bw-CWq"/>
                             <constraint firstAttribute="width" constant="50" id="O2o-7X-MNG"/>
@@ -45,8 +43,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="地区：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqj-dQ-lit">
-                        <frame key="frameInset" minX="30" minY="84" width="36" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地区：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqj-dQ-lit">
                         <constraints>
                             <constraint firstAttribute="width" constant="43" id="PC4-hM-UmM"/>
                         </constraints>
@@ -64,8 +61,7 @@
                             <constraint firstAttribute="width" constant="20" id="uOa-xi-8Ni"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="资产包转让" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="esK-uE-W2V">
-                        <frame key="frameInset" minX="30" minY="8" width="60" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资产包转让" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="esK-uE-W2V">
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.98052811620000002" green="0.61688757620000001" blue="0.1093943411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -75,8 +71,7 @@
                             <constraint firstAttribute="height" constant="10" id="0GA-eU-ptt"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="号码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofz-32-2kj">
-                        <frame key="frameInset" minX="95" minY="12" width="24" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="号码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofz-32-2kj">
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -93,8 +88,7 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="银行" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7Q-z2-i4o">
-                        <frame key="frameInset" minX="66" minY="67" width="30" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="银行" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7Q-z2-i4o">
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="O5Y-Iv-lP2"/>
                             <constraint firstAttribute="width" constant="80" id="clV-GN-OZY"/>
@@ -125,8 +119,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="来源：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6OA-MO-Mn7">
-                        <frame key="frameInset" minX="30" minY="67" width="36" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="来源：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6OA-MO-Mn7">
                         <constraints>
                             <constraint firstAttribute="width" constant="43" id="3YU-vJ-bIX"/>
                         </constraints>
@@ -167,8 +160,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="抵押" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t4F-aN-k2f">
-                        <frame key="frameInset" minX="66" minY="102" width="30" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="抵押" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t4F-aN-k2f">
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="HoF-6j-sJS"/>
                             <constraint firstAttribute="width" constant="30" id="oxt-PC-wov"/>
@@ -194,8 +186,7 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an2-Of-VnU">
-                        <frame key="frameInset" minX="30" minY="47" width="397" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an2-Of-VnU">
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Ipe-n7-Inj"/>
                         </constraints>
@@ -207,15 +198,13 @@
                             </mask>
                         </variation>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="VIP_resources.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-ri-GgJ">
-                        <frame key="frameInset" minX="129" minY="10" width="59" height="18"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VIP_resources.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-ri-GgJ">
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="3n7-Y9-RSQ"/>
                             <constraint firstAttribute="height" constant="18" id="ToU-fG-wbT"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvs-ZI-nU6">
-                        <frame key="frameInset" minX="361" minY="10" width="37" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvs-ZI-nU6">
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
@@ -226,8 +215,7 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="芽币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzA-Qh-K0s">
-                        <frame key="frameInset" minX="403" minY="11" width="24" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="芽币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzA-Qh-K0s">
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.41740976410000002" green="0.41143070030000001" blue="0.42582131410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -350,7 +338,24 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="HgD-va-DGh"/>
+                        <exclude reference="RET-nR-gb3"/>
+                        <exclude reference="fks-xN-sw5"/>
                         <exclude reference="bRY-ES-51E"/>
+                        <exclude reference="WtP-AI-T5y"/>
+                        <exclude reference="hYp-mI-4WY"/>
+                        <exclude reference="rzA-V9-af9"/>
+                        <exclude reference="v7A-hO-TfA"/>
+                        <exclude reference="yqx-pW-K7Q"/>
+                        <exclude reference="0yI-je-BKR"/>
+                        <exclude reference="KUw-Yz-EQ0"/>
+                        <exclude reference="Q7Y-Nh-xGj"/>
+                        <exclude reference="atZ-tb-MrT"/>
+                        <exclude reference="bdE-DS-bT5"/>
+                        <exclude reference="Hby-Wn-HUW"/>
+                        <exclude reference="UgM-OY-HMQ"/>
+                        <exclude reference="KaG-8N-S1S"/>
+                        <exclude reference="WUb-wd-dcV"/>
                         <exclude reference="OWw-Om-5XA"/>
                         <exclude reference="TPo-AV-x9I"/>
                         <exclude reference="Xpd-EY-Nqy"/>
@@ -385,23 +390,6 @@
                         <exclude reference="uui-eM-r2d"/>
                         <exclude reference="bPr-ui-Du7"/>
                         <exclude reference="cLP-NS-UjU"/>
-                        <exclude reference="0yI-je-BKR"/>
-                        <exclude reference="KUw-Yz-EQ0"/>
-                        <exclude reference="Q7Y-Nh-xGj"/>
-                        <exclude reference="atZ-tb-MrT"/>
-                        <exclude reference="bdE-DS-bT5"/>
-                        <exclude reference="Hby-Wn-HUW"/>
-                        <exclude reference="UgM-OY-HMQ"/>
-                        <exclude reference="WtP-AI-T5y"/>
-                        <exclude reference="hYp-mI-4WY"/>
-                        <exclude reference="rzA-V9-af9"/>
-                        <exclude reference="v7A-hO-TfA"/>
-                        <exclude reference="HgD-va-DGh"/>
-                        <exclude reference="RET-nR-gb3"/>
-                        <exclude reference="fks-xN-sw5"/>
-                        <exclude reference="yqx-pW-K7Q"/>
-                        <exclude reference="KaG-8N-S1S"/>
-                        <exclude reference="WUb-wd-dcV"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

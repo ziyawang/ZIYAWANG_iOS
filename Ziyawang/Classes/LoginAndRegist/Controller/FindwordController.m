@@ -151,9 +151,7 @@
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:String delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
-    
     NSLog(@"您输入的信息不完整");
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
