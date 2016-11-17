@@ -286,7 +286,6 @@
     [UIView setAnimationDuration:0.50];
     self.view.frame = CGRectOffset(self.view.frame, 0, movenment);
     [UIView commitAnimations];
-
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -516,7 +515,6 @@
     }
     else if([userId isEqualToString:[RCIM sharedRCIM].currentUserInfo.userId])
     {
-        
         //        NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
         NSLog(@"!!!!!%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"]);
         NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
@@ -565,7 +563,6 @@
             otherUserInfo.userId = userId;
             otherUserInfo.name = userInfoDic[@"UserName"];
             if(userInfoDic[@"UserName"] == nil)
-                
             {
                 otherUserInfo.name = @"资芽用户";
             }

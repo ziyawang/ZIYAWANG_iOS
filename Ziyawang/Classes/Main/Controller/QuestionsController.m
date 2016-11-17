@@ -9,8 +9,10 @@
 #import "QuestionsController.h"
 #import "QuestionModel.h"
 
-@interface QuestionsController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIScrollViewDelegate>
+@interface QuestionsController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+@property (nonatomic,strong) MBProgressHUD *HUD;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *inputView;
 @property (weak, nonatomic) IBOutlet UIButton *lastButton;
@@ -140,6 +142,9 @@
 
 - (void)getQuestionData
 {
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
 NSString *URL = TestQuestionURL;
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:@"token" forKey:@"access_token"];
@@ -178,12 +183,16 @@ NSString *URL = TestQuestionURL;
         [self.lastButton setTitle:@"返回" forState:(UIControlStateNormal)];
         
         [self.tableView reloadData];
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
        
+        [self.HUD removeFromSuperViewOnHide];
+        [self.HUD hideAnimated:YES];
         NSLog(@"%@",error);
 //        
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取数据失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取数据失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
         
     }];
     
@@ -257,8 +266,6 @@ NSString *URL = TestQuestionURL;
         }
     }
     
-    
-    
 
     [self.model setValuesForKeysWithDictionary:self.allQuestionArray[self.firstindex]];
     
@@ -300,7 +307,7 @@ NSString *URL = TestQuestionURL;
 
     NSArray *selectArray = self.AllSelectedDic[[NSString stringWithFormat:@"%ld",self.firstindex + 1]];
     if (selectArray == nil) {
-        [self showAlertViewWithString:@"请先完成此题再进行下一题"];
+        [self showAlertViewWithString:@"请先完成当前题目再进行下一题"];
         return;
         
     }
@@ -551,6 +558,10 @@ NSString *URL = TestQuestionURL;
     
 //    self.allSelected = [QuestionsController JsonModel:self.AllSelectedDic];
     
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    
     NSArray *array = @[@"sdfs"];
     
     NSDictionary * Dic= @{@"2":array,@"3":array};
@@ -598,12 +609,16 @@ NSString *URL = TestQuestionURL;
     
     self.resultDes.text = result;
     self.testResult.text = Score;
+    [self.HUD removeFromSuperViewOnHide];
+    [self.HUD hideAnimated:YES];
     
 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     NSLog(@"%@",error);
+    [self.HUD removeFromSuperViewOnHide];
+    [self.HUD hideAnimated:YES];
+    [self showAlertViewWithString:@"提交失败，请稍后重试"];
 }];
-    
-
+  
 }
 
 - (void)setResultViews
