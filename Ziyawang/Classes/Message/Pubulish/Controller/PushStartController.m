@@ -33,9 +33,13 @@
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+
+
 @property (nonatomic,strong) UIButton *recorderbutton;
 @property (nonatomic,strong) UIButton *playRecorderButton;
 @property (nonatomic,strong) UIButton *rerecorderButton;
+
+
 @property (nonatomic,strong) NSUserDefaults *defaults;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *audioView;
@@ -293,6 +297,9 @@
     [self.addImageView addSubview:self.addImageButton];
     //[self.addImageButton setTitle:@"添加" forState:(UIControlStateNormal)];
     [self.addImageButton addTarget:self action:@selector(didClickChooseImage:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    
     //录音与播放按钮
     self.recorderbutton =[UIButton buttonWithType:(UIButtonTypeSystem)];
     //        [self.recorderbutton setTitle:@"录音" forState:(UIControlStateNormal)];
@@ -351,7 +358,6 @@
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2-50, self.view.bounds.size.height/2-114, 100, 100)];
     view.layer.masksToBounds = YES;
     view.layer.cornerRadius = 50;
-    
     self.recordAnimationView = view;
 //    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.x, self.view.y, 100, 100 )];
     self.recordAnimationView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
@@ -500,6 +506,7 @@
  */
 - (void)showSelectedPhotos:(NSArray *)images
 {
+    
     self.x ++;
     NSLog(@"X的值未（（（（（（（（（（（%ld",self.x);
     
@@ -521,7 +528,6 @@
         }
         if (self.x != 3) {
             [self.addImageButton setFrame:CGRectMake(80 * self.x + 5 * (self.x +1), 5, 80, 80)];
-            
         }
     }
 }

@@ -102,8 +102,6 @@
     [self.AllArray addObject:array5];
     [self.AllArray addObject:array6];
     [self.AllArray addObject:array7];
-
-
 }
 /**
  *  初始化PickerView
@@ -151,6 +149,7 @@
 
 - (void)addGesturesForViews
 {
+    
 //    @property (weak, nonatomic) IBOutlet UIView *shenfengView;
 //    @property (weak, nonatomic) IBOutlet UIView *diquView;
 //    @property (weak, nonatomic) IBOutlet UIView *biaodiwuView;
@@ -218,8 +217,8 @@
             break;
         case 2:
         {
-            [self.mengbanView setHidden:NO];
             
+            [self.mengbanView setHidden:NO];
             [UIView animateWithDuration:0.5 animations:^{
                 self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
             }];
@@ -394,6 +393,13 @@
             break;
         case 2:
             self.biaodiwuLabel.text = self.selectStr;
+            if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
+                [self fangchanViews];
+            }
+            else
+            {
+                [self feiFangchanViews];
+            }
             break;
         case 3:
             self.leixingLabel.text = self.selectStr;

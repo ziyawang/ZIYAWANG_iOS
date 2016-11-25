@@ -8,6 +8,8 @@
 
 #import "CarFapaiController.h"
 #import "chooseView.h"
+#import "RecordManager.h"
+#import "AddImageManager.h"
 @interface CarFapaiController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIView *backView;
@@ -35,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *paimaijieduanLabel;
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+
+
 
 
 
@@ -71,6 +75,8 @@
 
 @property (nonatomic,strong) NSString *Type;
 
+@property (weak, nonatomic) IBOutlet UIView *recordView;
+@property (weak, nonatomic) IBOutlet UIView *ImageBackView;
 
 @end
 
@@ -89,6 +95,11 @@
     [self setPickerView];
     [self addGesturesForViews];
     [self setAllArray];
+    
+    [[RecordManager recordManager] setaudioWithView:self.view recordView:self.recordView];
+//    [[AddImageManager AddManager] setAddimageViewWithView:self.ImageBackView];
+    [[AddImageManager AddManager]setAddimageViewWithView:self.ImageBackView target:self];
+    
     
     
 }
@@ -332,7 +343,6 @@
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.row = 0;
-            
         }
             break;
         case 1:
@@ -347,7 +357,6 @@
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.row = 1;
-            
         }
             break;
         case 2:

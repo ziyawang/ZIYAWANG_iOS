@@ -51,19 +51,67 @@
 
 @property (nonatomic,strong) NSMutableArray *AllArray;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
+@property (weak, nonatomic) IBOutlet UIView *qixianView;
+@property (weak, nonatomic) IBOutlet UIView *guquanbiliView;
 
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *danbaoViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qixianViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *guquanbiliHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qiyexianzhuangHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *suoshuhangyeHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *zijinyongtuHeight;
 
 @end
 
 @implementation FinanCingController
 
+- (void)setZhaiquanView
+{
+    [self.danbaofangshiView setHidden:NO];
+    self.danbaoViewHeight.constant = 50;
+    
+    [self.qixianView setHidden:NO];
+    self.qixianViewHeight.constant = 50;
+    
+    [self.guquanbiliView setHidden:YES];
+    self.guquanbiliHeight.constant = 0;
+    
+    [self.qiyexianzhuangView setHidden:YES];
+    self.qiyexianzhuangHeight.constant = 0;
+    [self.suoshuhangyeView setHidden:YES];
+    self.suoshuhangyeHeight.constant = 0;
+    [self.zijinyongtuView setHidden:YES];
+    self.zijinyongtuHeight.constant = 0;
+    
+    
+}
+- (void)setGuquanView
+{
+    [self.danbaofangshiView setHidden:YES];
+    self.danbaoViewHeight.constant = 0;
+    
+    [self.qixianView setHidden:YES];
+    self.qixianViewHeight.constant = 0;
+    
+    [self.guquanbiliView setHidden:NO];
+    self.guquanbiliHeight.constant = 50;
+    
+    [self.qiyexianzhuangView setHidden:NO];
+    self.qiyexianzhuangHeight.constant = 50;
+    [self.suoshuhangyeView setHidden:NO];
+    self.suoshuhangyeHeight.constant = 50;
+    [self.zijinyongtuView setHidden:NO];
+    self.zijinyongtuHeight.constant = 50;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.viewArray = [NSMutableArray new];
     self.AllArray = [NSMutableArray new];
     self.sourceArray = [NSMutableArray new];
-    
+    [self setZhaiquanView];
     [self setPickerView];
     
     [self setViews];
@@ -302,6 +350,13 @@
             break;
         case 2:
             self.rongzifangshiLabel.text = self.selectStr;
+            if ([self.rongzifangshiLabel.text isEqualToString:@"债权融资"]) {
+                [self setZhaiquanView];
+            }
+            else
+            {
+                [self setGuquanView];
+            }
             break;
         case 3:
             self.danbaofangshiLabel.text = self.selectStr;

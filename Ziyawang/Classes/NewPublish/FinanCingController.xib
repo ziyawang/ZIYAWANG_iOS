@@ -10,9 +10,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FinanCingController">
             <connections>
                 <outlet property="addButton" destination="PUX-vR-dnz" id="neS-cE-3jo"/>
+                <outlet property="danbaoViewHeight" destination="wsj-Xy-PHZ" id="B4n-tj-7fF"/>
                 <outlet property="danbaofangshiLabel" destination="Ylj-io-58j" id="0YQ-Mi-Pyo"/>
                 <outlet property="danbaofangshiView" destination="bXt-Yd-Ute" id="rLM-98-gHb"/>
+                <outlet property="guquanbiliHeight" destination="ytY-rH-9GK" id="wcZ-Pu-jJh"/>
                 <outlet property="guquanbiliTextField" destination="Dmq-15-sQM" id="LIP-qZ-tpd"/>
+                <outlet property="guquanbiliView" destination="y01-0w-11j" id="I74-U3-CNa"/>
                 <outlet property="hangyeLabel" destination="FDJ-F3-1LY" id="mhX-WY-Ll6"/>
                 <outlet property="jineTextField" destination="a3J-eC-rtC" id="oeU-2Z-NBL"/>
                 <outlet property="liangdianView1" destination="89R-zA-zVf" id="QgG-os-rIu"/>
@@ -20,11 +23,15 @@
                 <outlet property="nameTextField" destination="wdf-zt-0Yx" id="xxa-bN-QHf"/>
                 <outlet property="phoneTextField" destination="6ft-VB-zef" id="jL7-II-aZ9"/>
                 <outlet property="qixianTextField" destination="qLE-ki-CFg" id="jvU-tv-Mro"/>
+                <outlet property="qixianView" destination="kRx-3X-xl7" id="mRw-op-2zC"/>
+                <outlet property="qixianViewHeight" destination="xKG-qd-Jpy" id="kcY-Lk-bJh"/>
+                <outlet property="qiyexianzhuangHeight" destination="jaf-du-5dn" id="bEF-6n-kam"/>
                 <outlet property="qiyexianzhuangView" destination="vU2-cS-Of6" id="tPe-T8-u1f"/>
                 <outlet property="rongzifangshiLabel" destination="VzZ-Yl-sfW" id="1z2-DJ-BkO"/>
                 <outlet property="rongzifangshiView" destination="MKn-9M-rgR" id="RZG-nS-Cjd"/>
                 <outlet property="shenfenLabel" destination="AYb-tU-36o" id="byY-OI-Q3R"/>
                 <outlet property="shenfenView" destination="WLl-ov-M7d" id="CDw-Al-sVJ"/>
+                <outlet property="suoshuhangyeHeight" destination="9fL-jQ-hsG" id="c7e-hr-MXS"/>
                 <outlet property="suoshuhangyeView" destination="CoX-uB-kmr" id="4XZ-H2-G5T"/>
                 <outlet property="suozaidLabel" destination="Ich-cA-euT" id="aNh-sa-lxN"/>
                 <outlet property="suozaidiView" destination="loR-QN-Fhj" id="Ekb-2z-UNO"/>
@@ -32,6 +39,7 @@
                 <outlet property="videoButton" destination="8bV-ND-yfn" id="9hx-ix-Dye"/>
                 <outlet property="view" destination="SUK-qE-9QG" id="S3R-TY-DRk"/>
                 <outlet property="xianzhaungLabel" destination="LVb-Rx-bcJ" id="ZiH-OF-xRo"/>
+                <outlet property="zijinyongtuHeight" destination="EEE-Vg-pYd" id="jO7-nM-MpQ"/>
                 <outlet property="zijinyongtuLabel" destination="xtW-YB-Uhh" id="6nb-e2-BG7"/>
                 <outlet property="zijinyongtuView" destination="xf3-q2-F8u" id="71y-1b-4oY"/>
             </connections>

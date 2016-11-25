@@ -8,8 +8,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CarFapaiController">
             <connections>
+                <outlet property="ImageBackView" destination="PFg-Be-1MK" id="lwN-pB-L8S"/>
                 <outlet property="VideoButton" destination="Cvf-kg-lft" id="jfc-fw-BoM"/>
-                <outlet property="addImageButton" destination="Psk-J0-pYm" id="9Vd-th-Ub2"/>
                 <outlet property="backView" destination="maN-bU-751" id="2eN-vW-R8f"/>
                 <outlet property="chuzhidanweiTextField" destination="npn-AX-aPZ" id="sS6-22-4jo"/>
                 <outlet property="mianjiTextField" destination="rab-3c-3lF" id="gWU-sI-sk3"/>
@@ -26,6 +26,7 @@
                 <outlet property="pinpaiView" destination="9ds-4J-lxZ" id="ry4-0d-SKH"/>
                 <outlet property="pinpaiViewHeight" destination="L3L-OO-jb4" id="cZ8-Xl-YPQ"/>
                 <outlet property="qipaijiaView" destination="fOv-Db-lFG" id="c7V-Ec-NEQ"/>
+                <outlet property="recordView" destination="BqY-4G-6ya" id="3pb-7J-aUE"/>
                 <outlet property="textView" destination="z1w-fH-yXa" id="uMZ-nE-uXn"/>
                 <outlet property="view" destination="maN-bU-751" id="7Y1-ue-n9y"/>
                 <outlet property="xingzhiLabel" destination="VUo-Jy-thL" id="7Ay-y8-atA"/>
@@ -310,19 +311,8 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PFg-Be-1MK">
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psk-J0-pYm">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="90" id="X4i-Z8-jzA"/>
-                                                <constraint firstAttribute="height" constant="90" id="bpv-C0-96y"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="Psk-J0-pYm" firstAttribute="centerY" secondItem="PFg-Be-1MK" secondAttribute="centerY" id="K6Q-CP-sl0"/>
-                                        <constraint firstItem="Psk-J0-pYm" firstAttribute="leading" secondItem="PFg-Be-1MK" secondAttribute="leading" constant="15" id="My9-3A-jtW"/>
                                         <constraint firstAttribute="height" constant="110" id="dC8-44-YxZ"/>
                                     </constraints>
                                 </view>

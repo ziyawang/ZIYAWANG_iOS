@@ -369,7 +369,6 @@ self.navigationItem.title = @"发布";
         NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
         identifiVC.role = role;
         [self.navigationController pushViewController:identifiVC animated:YES];
-        
     }];
     [alertVC addAction:action1];
     [alertVC addAction:action2];

@@ -646,6 +646,8 @@
 		78D960FF1D9D1F5E007ECABA /* fangdajing@.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FC1D9D1F5E007ECABA /* fangdajing@.png */; };
 		78D961001D9D1F5E007ECABA /* fangdajing@2x .png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FD1D9D1F5E007ECABA /* fangdajing@2x .png */; };
 		78D961011D9D1F5E007ECABA /* fangdajing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FE1D9D1F5E007ECABA /* fangdajing@3x.png */; };
+		78E2255D1DE8029900CB5D16 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255C1DE8029900CB5D16 /* RecordManager.m */; };
+		78E225601DE8149300CB5D16 /* AddImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255F1DE8149300CB5D16 /* AddImageManager.m */; };
 		78EA8B441DC832DD005658A1 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B411DC832DD005658A1 /* eye.png */; };
 		78EA8B451DC832DD005658A1 /* eye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B421DC832DD005658A1 /* eye@2x.png */; };
 		78EA8B461DC832DD005658A1 /* eye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B431DC832DD005658A1 /* eye@3x.png */; };
@@ -1616,6 +1618,10 @@
 		78D960FC1D9D1F5E007ECABA /* fangdajing@.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@.png"; sourceTree = "<group>"; };
 		78D960FD1D9D1F5E007ECABA /* fangdajing@2x .png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@2x .png"; sourceTree = "<group>"; };
 		78D960FE1D9D1F5E007ECABA /* fangdajing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@3x.png"; sourceTree = "<group>"; };
+		78E2255B1DE8029900CB5D16 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
+		78E2255C1DE8029900CB5D16 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
+		78E2255E1DE8149300CB5D16 /* AddImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImageManager.h; sourceTree = "<group>"; };
+		78E2255F1DE8149300CB5D16 /* AddImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddImageManager.m; sourceTree = "<group>"; };
 		78EA8B411DC832DD005658A1 /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		78EA8B421DC832DD005658A1 /* eye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@2x.png"; sourceTree = "<group>"; };
 		78EA8B431DC832DD005658A1 /* eye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@3x.png"; sourceTree = "<group>"; };
@@ -2122,6 +2128,10 @@
 				781E65831DE2D72200C13C2B /* AssetPackController.h */,
 				781E65841DE2D72200C13C2B /* AssetPackController.m */,
 				781E65851DE2D72200C13C2B /* AssetPackController.xib */,
+				78E2255B1DE8029900CB5D16 /* RecordManager.h */,
+				78E2255C1DE8029900CB5D16 /* RecordManager.m */,
+				78E2255E1DE8149300CB5D16 /* AddImageManager.h */,
+				78E2255F1DE8149300CB5D16 /* AddImageManager.m */,
 			);
 			path = NewPublish;
 			sourceTree = "<group>";
@@ -4337,6 +4347,7 @@
 				78A125AB1DB8B63B00D5E42F /* MyPushCell.m in Sources */,
 				788962771D86D0CF008DC681 /* ZiyaServiceCell.m in Sources */,
 				78A399261D491A3F0053FA7C /* SearchBar.m in Sources */,
+				78E2255D1DE8029900CB5D16 /* RecordManager.m in Sources */,
 				7836E85F1D5C41BD00187E41 /* UIScrollView+_DScrollView.m in Sources */,
 				78730E701D43096700A9A7F2 /* SDiOSVersion.m in Sources */,
 				78730E7F1D4365F200A9A7F2 /* PublishModel.m in Sources */,
@@ -4418,6 +4429,7 @@
 				78F3DD771D45ADB400C1E62E /* SuPhotoBaseController.m in Sources */,
 				78A125A41DB774CE00D5E42F /* UILabelFontTool.m in Sources */,
 				78F3DD761D45ADB400C1E62E /* SuPhotoAblumList.m in Sources */,
+				78E225601DE8149300CB5D16 /* AddImageManager.m in Sources */,
 				78F623BA1D55989A002E21B3 /* MyTogetherCell.m in Sources */,
 				783EB72D1D6DB4D700850523 /* ChangeWordViewController.m in Sources */,
 				781E65631DE2920F00C13C2B /* CarFapaiController.m in Sources */,
