@@ -12,6 +12,15 @@
 #import "LoginController.h"
 #import "UserInfoModel.h"
 
+
+#import "CarFapaiController.h"
+#import "PersonalDebtsController.h"
+#import "ProDuctController.h"
+#import "BusinessAccountController.h"
+#import "FinanCingController.h"
+#import "AssetPackController.h"
+
+
 #import "MyidentifiController.h"
 @interface PushViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) NSMutableArray *nameArray;
@@ -88,9 +97,9 @@ self.navigationItem.title = @"发布";
     
     self.imageArray = [NSMutableArray array];
     NSArray *imageNameArray = [NSArray new];
-    imageNameArray = @[@"1",@"2",@"3",@"4",@"11",@"6",@"10",@"7",@"9",@"8",@"13"];
+    imageNameArray = @[@"zi",@"rong",@"gu",@"zhang",@"fa",@"zhai"];
     
-        for (int i = 1; i < 12; i++)
+        for (int i = 1; i < 7; i++)
         {
             NSString *name = [NSString stringWithFormat:@"%d",i];
             
@@ -103,7 +112,7 @@ self.navigationItem.title = @"发布";
                  //NSLog(@"%@",self.imageArray);
         }
 
-        NSArray *array = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];
+        NSArray *array = @[@"资产包",@"融资信息",@"固定资产",@"企业商账",@"法拍资产",@"个人债权"];
     self.nameArray = [NSMutableArray arrayWithArray:array];
     
     
@@ -183,6 +192,8 @@ self.navigationItem.title = @"发布";
 //返回cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     //    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     PushViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
@@ -195,121 +206,6 @@ self.navigationItem.title = @"发布";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"选中 section:%ld,item:%ld",indexPath.section,indexPath.item);
-    PushStartController *PusVc = [[UIStoryboard storyboardWithName:@"Publish" bundle:nil] instantiateViewControllerWithIdentifier:@"PushStartController"];
-//    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
-//    NSArray *level = @[@"VIP1"];
-    
-    
-    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-    
-    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
-    switch (indexPath.row) {
-        case 0:
-            PusVc.typeName = @"资产包转让";
-            PusVc.TypeID = TypeID[0];
-            
-            break;
-        case 1:
-            PusVc.typeName = @"债权转让";
-            PusVc.TypeID = TypeID[1];
-
-            break;
-        case 2:
-            PusVc.typeName = @"固产转让";
-            PusVc.TypeID = TypeID[2];
-
-            break;
-        case 3:
-            PusVc.typeName = @"商业保理";
-            PusVc.TypeID = TypeID[3];
-
-            break;
-        case 4:
-        {
-            PusVc.typeName = @"资产求购";
-            PusVc.TypeID = TypeID[4];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *isLogin = [defaults objectForKey:@"登录状态"];
-            if ([isLogin isEqualToString:@"已登录"] && [role isEqualToString:@"1"])
-            {
-                [self.navigationController pushViewController:PusVc animated:YES];
-                return;
-            }
-            else if([isLogin isEqualToString:@"已登录"] == NO)
-            {
-                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-                [self presentViewController:loginVC animated:YES completion:nil];
-                return;
-            }
-            else if([role isEqualToString:@"1"] == NO)
-            {
-//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未通过服务方认证，无法发布此类信息,请到个人中心进行服务方认证" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//                [alert show];
-                [self ShowAlertViewController];
-                return;
-                
-            }
-        }
-            
-            break;
-        case 5:
-            PusVc.typeName = @"融资需求";
-            PusVc.TypeID = TypeID[5];
-
-            break;
-        case 6:
-            PusVc.typeName = @"法律服务";
-            PusVc.TypeID = TypeID[6];
-
-            break;
-        case 7:
-            PusVc.typeName = @"悬赏信息";
-            PusVc.TypeID = TypeID[7];
-
-            break;
-        case 8:
-            PusVc.typeName = @"尽职调查";
-            PusVc.TypeID = TypeID[8];
-
-            break;
-        case 9:
-            PusVc.typeName = @"委外催收";
-            PusVc.TypeID = TypeID[9];
-            break;
-        case 10:
-        {
-            PusVc.typeName = @"投资需求";
-            NSLog(@"---------------%@",PusVc.typeName);
-            PusVc.TypeID = TypeID[10];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *isLogin = [defaults objectForKey:@"登录状态"];
-            if ([isLogin isEqualToString:@"已登录"] && [role isEqualToString:@"1"])
-            {
-                [self.navigationController pushViewController:PusVc animated:YES];
-                return;
-            }
-            else if([isLogin isEqualToString:@"已登录"] == NO)
-            {
-                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-                [self presentViewController:loginVC animated:YES completion:nil];
-                return;
-            }
-            else if([role isEqualToString:@"1"] == NO)
-            {
-//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未通过服务方认证，无法发布此类信息,请到个人中心进行服务方认证" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//                [alert show];
-                [self ShowAlertViewController];
-                return;
-                
-            }
-        }
-
-            break;
- 
-        default:
-            break;
-    }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"0"];
     [defaults removeObjectForKey:@"1"];
@@ -321,15 +217,133 @@ self.navigationItem.title = @"发布";
     [defaults setObject:@"请选择" forKey:@"折扣"];
     NSString *isLogin = [defaults objectForKey:@"登录状态"];
     NSLog(@"***************登录状态：%@",isLogin);
+    NSLog(@"选中 section:%ld,item:%ld",indexPath.section,indexPath.item);
+    PushStartController *PusVc = [[UIStoryboard storyboardWithName:@"Publish" bundle:nil] instantiateViewControllerWithIdentifier:@"PushStartController"];
+//    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"固产求购",@"融资借贷",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"典当担保"];
+//    NSArray *level = @[@"VIP1"];
+    CarFapaiController *carVC = [[CarFapaiController alloc]init];
+    PersonalDebtsController *PersonVC = [[PersonalDebtsController alloc]init];
+    ProDuctController *proVC = [[ProDuctController alloc]init];
+    BusinessAccountController *busVC = [[BusinessAccountController alloc]init];
+    FinanCingController *finaVC = [[FinanCingController alloc]init];
+    AssetPackController *asetVC = [[AssetPackController alloc]init];
     
-    if ([isLogin isEqualToString:@"已登录"]) {
-        [self.navigationController pushViewController:PusVc animated:YES];
+    
+    
+    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
+    NSArray *TypeID = @[@"01",@"14",@"12",@"04",@"13",@"06",@"03",@"09",@"10",@"02",@"15"];
+    
+    switch (indexPath.row) {
+        case 0:
+//            PusVc.typeName = @"资产包转让";
+//            PusVc.TypeID = TypeID[0];
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:asetVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+
+            
+            break;
+        case 1:
+//            PusVc.typeName = @"债权转让";
+//            PusVc.TypeID = TypeID[1];
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:finaVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+
+
+            break;
+        case 2:
+//            PusVc.typeName = @"固产转让";
+//            PusVc.TypeID = TypeID[2];
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:proVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+
+
+            break;
+        case 3:
+//            PusVc.typeName = @"商业保理";
+//            PusVc.TypeID = TypeID[3];
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:busVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+
+
+            break;
+        case 4:
+        {
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:carVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+
+        }
+            
+            break;
+        case 5:
+//            PusVc.typeName = @"融资需求";
+//            PusVc.TypeID = TypeID[5];
+            if ([isLogin isEqualToString:@"已登录"]) {
+                //        [self.navigationController pushViewController:PusVc animated:YES];
+                [self.navigationController pushViewController:PersonVC animated:YES];
+                
+            }
+            else
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+            break;
+        default:
+            break;
     }
-    else
-    {
-        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-        [self presentViewController:loginVC animated:YES completion:nil];
-    }
+   
+//    
+//    if ([isLogin isEqualToString:@"已登录"]) {
+////        [self.navigationController pushViewController:PusVc animated:YES];
+//        [self.navigationController pushViewController:asetVC animated:YES];
+//        
+//    }
+//    else
+//    {
+//        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+//        [self presentViewController:loginVC animated:YES completion:nil];
+//    }
     
 //    [self presentViewController:PusVc animated:YES completion:nil];
 }

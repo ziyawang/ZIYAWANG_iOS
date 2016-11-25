@@ -40,6 +40,7 @@
     _chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanweixuanzhong"] forState:UIControlStateNormal];
     [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanzhong"] forState:UIControlStateSelected];
+    
     _chooseBtn.frame = CGRectMake(20 * kWidthScale, 5 * kHeightScale, 40 * kWidthScale, 40 * kWidthScale);
     [self.contentView addSubview:_chooseBtn];
     
@@ -59,10 +60,9 @@
 
 #pragma mark - 子控件布局
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
-    
-    
 }
 
 #pragma mark - getter setter方法

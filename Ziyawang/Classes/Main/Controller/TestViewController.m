@@ -26,7 +26,8 @@
 @property (nonatomic,strong) UIView *pickerBackView;
 
 @property (nonatomic,strong) NSString *Type;
-@property (nonatomic,strong) NSArray *zhaiquanType;@property (nonatomic,strong) NSString *selectStr;
+@property (nonatomic,strong) NSArray *zhaiquanType;
+@property (nonatomic,strong) NSString *selectStr;
 
 @property (nonatomic,strong) NSArray *perSonType;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
