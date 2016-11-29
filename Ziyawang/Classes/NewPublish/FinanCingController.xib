@@ -9,7 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FinanCingController">
             <connections>
-                <outlet property="addButton" destination="PUX-vR-dnz" id="neS-cE-3jo"/>
+                <outlet property="ContentView" destination="Qfb-rw-Suc" id="9qm-vC-b1I"/>
+                <outlet property="ImageBackView" destination="yUp-gY-O6O" id="dw5-8G-mkc"/>
                 <outlet property="danbaoViewHeight" destination="wsj-Xy-PHZ" id="B4n-tj-7fF"/>
                 <outlet property="danbaofangshiLabel" destination="Ylj-io-58j" id="0YQ-Mi-Pyo"/>
                 <outlet property="danbaofangshiView" destination="bXt-Yd-Ute" id="rLM-98-gHb"/>
@@ -27,6 +28,7 @@
                 <outlet property="qixianViewHeight" destination="xKG-qd-Jpy" id="kcY-Lk-bJh"/>
                 <outlet property="qiyexianzhuangHeight" destination="jaf-du-5dn" id="bEF-6n-kam"/>
                 <outlet property="qiyexianzhuangView" destination="vU2-cS-Of6" id="tPe-T8-u1f"/>
+                <outlet property="recordView" destination="3Bp-o4-QY2" id="dVU-Mu-6pf"/>
                 <outlet property="rongzifangshiLabel" destination="VzZ-Yl-sfW" id="1z2-DJ-BkO"/>
                 <outlet property="rongzifangshiView" destination="MKn-9M-rgR" id="RZG-nS-Cjd"/>
                 <outlet property="shenfenLabel" destination="AYb-tU-36o" id="byY-OI-Q3R"/>
@@ -36,7 +38,6 @@
                 <outlet property="suozaidLabel" destination="Ich-cA-euT" id="aNh-sa-lxN"/>
                 <outlet property="suozaidiView" destination="loR-QN-Fhj" id="Ekb-2z-UNO"/>
                 <outlet property="textView" destination="lMz-aW-dHb" id="d6T-dB-p6g"/>
-                <outlet property="videoButton" destination="8bV-ND-yfn" id="9hx-ix-Dye"/>
                 <outlet property="view" destination="SUK-qE-9QG" id="S3R-TY-DRk"/>
                 <outlet property="xianzhaungLabel" destination="LVb-Rx-bcJ" id="ZiH-OF-xRo"/>
                 <outlet property="zijinyongtuHeight" destination="EEE-Vg-pYd" id="jO7-nM-MpQ"/>
@@ -307,34 +308,18 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bV-ND-yfn">
-                                            <state key="normal" title="Button"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="DFd-8H-yQG"/>
                                         <constraint firstItem="WhV-ec-dxp" firstAttribute="centerY" secondItem="3Bp-o4-QY2" secondAttribute="centerY" id="TTi-B6-gG8"/>
-                                        <constraint firstItem="8bV-ND-yfn" firstAttribute="leading" secondItem="WhV-ec-dxp" secondAttribute="trailing" constant="10" id="aEE-F6-npe"/>
                                         <constraint firstItem="WhV-ec-dxp" firstAttribute="leading" secondItem="3Bp-o4-QY2" secondAttribute="leading" constant="15" id="aEl-6O-m7b"/>
-                                        <constraint firstItem="8bV-ND-yfn" firstAttribute="centerY" secondItem="3Bp-o4-QY2" secondAttribute="centerY" id="bzd-DG-8nk"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUp-gY-O6O">
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUX-vR-dnz">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="90" id="HOo-vx-AMf"/>
-                                                <constraint firstAttribute="height" constant="90" id="LH8-Lv-8lb"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="PUX-vR-dnz" firstAttribute="leading" secondItem="yUp-gY-O6O" secondAttribute="leading" constant="15" id="Afo-SQ-HPK"/>
                                         <constraint firstAttribute="height" constant="110" id="KyP-Xm-Fuf"/>
-                                        <constraint firstItem="PUX-vR-dnz" firstAttribute="centerY" secondItem="yUp-gY-O6O" secondAttribute="centerY" id="kd4-cB-tBu"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZPO-IS-x5J">

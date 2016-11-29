@@ -8,10 +8,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CarFapaiController">
             <connections>
+                <outlet property="ContentView" destination="YO3-uZ-ywB" id="KlK-Xb-8VO"/>
                 <outlet property="ImageBackView" destination="PFg-Be-1MK" id="lwN-pB-L8S"/>
-                <outlet property="VideoButton" destination="Cvf-kg-lft" id="jfc-fw-BoM"/>
                 <outlet property="backView" destination="maN-bU-751" id="2eN-vW-R8f"/>
                 <outlet property="chuzhidanweiTextField" destination="npn-AX-aPZ" id="sS6-22-4jo"/>
+                <outlet property="connectPersonTextField" destination="KgN-Rv-eHk" id="ACb-Ec-Rmq"/>
                 <outlet property="mianjiTextField" destination="rab-3c-3lF" id="gWU-sI-sk3"/>
                 <outlet property="mianjiView" destination="0cD-9X-Ou1" id="L3L-kA-H3l"/>
                 <outlet property="mianjiViewHeight" destination="xeu-TW-Rni" id="2L6-wR-NNp"/>
@@ -25,6 +26,7 @@
                 <outlet property="pinpaiTextField" destination="Tip-Pd-qoi" id="w1R-o9-bUk"/>
                 <outlet property="pinpaiView" destination="9ds-4J-lxZ" id="ry4-0d-SKH"/>
                 <outlet property="pinpaiViewHeight" destination="L3L-OO-jb4" id="cZ8-Xl-YPQ"/>
+                <outlet property="qipaijiaTextField" destination="GMK-Vz-WiK" id="4K5-YP-QuA"/>
                 <outlet property="qipaijiaView" destination="fOv-Db-lFG" id="c7V-Ec-NEQ"/>
                 <outlet property="recordView" destination="BqY-4G-6ya" id="3pb-7J-aUE"/>
                 <outlet property="textView" destination="z1w-fH-yXa" id="uMZ-nE-uXn"/>
@@ -297,16 +299,11 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvf-kg-lft">
-                                            <state key="normal" title="Button"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="6mF-lc-f1s"/>
                                         <constraint firstItem="T20-ih-IaA" firstAttribute="centerY" secondItem="BqY-4G-6ya" secondAttribute="centerY" id="C3J-2e-cZ4"/>
-                                        <constraint firstItem="Cvf-kg-lft" firstAttribute="leading" secondItem="T20-ih-IaA" secondAttribute="trailing" constant="10" id="Nfk-pf-H63"/>
-                                        <constraint firstItem="Cvf-kg-lft" firstAttribute="centerY" secondItem="BqY-4G-6ya" secondAttribute="centerY" id="mg6-OS-V1y"/>
                                         <constraint firstItem="T20-ih-IaA" firstAttribute="leading" secondItem="BqY-4G-6ya" secondAttribute="leading" constant="15" id="n8X-gv-hWE"/>
                                     </constraints>
                                 </view>
@@ -494,6 +491,9 @@
                                         <constraint firstAttribute="height" constant="50" id="hEq-PN-KvB"/>
                                     </constraints>
                                     <state key="normal" title="确认发布"/>
+                                    <connections>
+                                        <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="eIi-M2-Yjy"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

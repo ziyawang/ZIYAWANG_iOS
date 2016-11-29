@@ -10,12 +10,12 @@
 #import "chooseView.h"
 #import "RecordManager.h"
 #import "AddImageManager.h"
+#import "HttpManager.h"
 @interface CarFapaiController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet UIView *zichanView;
 @property (weak, nonatomic) IBOutlet UIView *pinpaiView;
-@property (weak, nonatomic) IBOutlet UITextField *pinpaiTextField;
 
 @property (weak, nonatomic) IBOutlet UIView *mianjiView;
 @property (weak, nonatomic) IBOutlet UIView *xingzhiView;
@@ -23,12 +23,16 @@
 @property (weak, nonatomic) IBOutlet UIView *paimaididianView;
 @property (weak, nonatomic) IBOutlet UIView *paimaishijianView;
 @property (weak, nonatomic) IBOutlet UIView *paimaijieduanView;
-@property (weak, nonatomic) IBOutlet UITextField *mianjiTextField;
 
+@property (weak, nonatomic) IBOutlet UITextField *pinpaiTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *mianjiTextField;
 @property (weak, nonatomic) IBOutlet UITextField *chuzhidanweiTextField;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UIButton *VideoButton;
-@property (weak, nonatomic) IBOutlet UIButton *addImageButton;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+@property (weak, nonatomic) IBOutlet UITextField *connectPersonTextField;
+@property (weak, nonatomic) IBOutlet UITextField *qipaijiaTextField;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *zichanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *xingzhiLabel;
@@ -36,8 +40,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *paimaishijianLabel;
 @property (weak, nonatomic) IBOutlet UILabel *paimaijieduanLabel;
 
-@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 
+
+@property (weak, nonatomic) IBOutlet UIButton *VideoButton;
+@property (weak, nonatomic) IBOutlet UIButton *addImageButton;
+
+
+
+
+@property (weak, nonatomic) IBOutlet UIView *ContentView;
 
 
 
@@ -78,12 +89,34 @@
 @property (weak, nonatomic) IBOutlet UIView *recordView;
 @property (weak, nonatomic) IBOutlet UIView *ImageBackView;
 
+
+@property (nonatomic,strong) UIView *weituoView;
+@property (nonatomic,strong) UITextField *lianxirenTextField;
+@property (nonatomic,strong) UITextField *lianxifangshiTextfield;
+
+@property (nonatomic,strong) AFHTTPSessionManager *manager;
+
+@property (nonatomic,strong) NSMutableArray *SelectedButtonsArray;
+
+
 @end
 
 @implementation CarFapaiController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"法拍资产";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"委托发布" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
+    
+    self.SelectedButtonsArray = [NSMutableArray new];
+    
+    self.manager = [AFHTTPSessionManager manager];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    
     self.AllArray = [NSMutableArray new];
     self.mianjiViewHeight.constant = 0;
     self.xingzhiViewHeight.constant = 0;
@@ -95,12 +128,210 @@
     [self setPickerView];
     [self addGesturesForViews];
     [self setAllArray];
+    [self setWeituoView];
     
     [[RecordManager recordManager] setaudioWithView:self.view recordView:self.recordView];
 //    [[AddImageManager AddManager] setAddimageViewWithView:self.ImageBackView];
     [[AddImageManager AddManager]setAddimageViewWithView:self.ImageBackView target:self];
     
     
+    
+}
+- (void)setWeituoView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *pleaseLabel = [UILabel new];
+    UILabel *kefuPhoneLabel = [UILabel new];
+    
+    UILabel *lianxiren = [UILabel new];
+    UILabel *lianxifangshi = [UILabel new];
+    
+    self.lianxirenTextField = [UITextField new];
+    self.lianxifangshiTextfield = [UITextField new];
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIView *line1 = [UIView new];
+    UIView *line2 = [UIView new];
+    UIView *line3 = [UIView new];
+    
+    
+    
+    [self.ContentView addSubview:mengbanView];
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    [bottomView addSubview:pleaseLabel];
+    [bottomView addSubview:kefuPhoneLabel];
+    [bottomView addSubview:lianxiren];
+    [bottomView addSubview:line1];
+    [bottomView addSubview:line2];
+    [bottomView addSubview:line3];
+    [bottomView addSubview:lianxiren];
+    [bottomView addSubview:lianxifangshi];
+    [bottomView addSubview:self.lianxirenTextField];
+    [bottomView addSubview:self.lianxifangshiTextfield];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(self.ContentView,0)
+    .rightSpaceToView(self.ContentView,0)
+    .topSpaceToView(self.ContentView,0)
+    .bottomSpaceToView(self.ContentView,0);
+    
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYEqualToView(self.view)
+    .widthIs(285 * kWidthScale)
+    .heightIs(460 * kHeightScale);
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    pleaseLabel.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .heightIs(20)
+    .topSpaceToView(bottomView,15)
+    .autoHeightRatio(0);
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    
+    kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
+    .rightEqualToView(pleaseLabel)
+    .heightIs(20)
+    .topSpaceToView(pleaseLabel,10);
+    
+    kefuPhoneLabel.text = @"客服电话：400-898-8557";
+    
+    lianxiren.sd_layout.leftEqualToView(kefuPhoneLabel)
+    .topSpaceToView(kefuPhoneLabel,30)
+    .heightIs(20);
+    
+    lianxiren.text = @"联系人姓名：";
+    
+    
+    line1.sd_layout.topSpaceToView(kefuPhoneLabel,15)
+    .leftEqualToView(kefuPhoneLabel)
+    .rightEqualToView(kefuPhoneLabel)
+    .heightIs(1);
+    
+    [lianxiren setSingleLineAutoResizeWithMaxWidth:200];
+    
+    lianxifangshi.sd_layout.leftEqualToView(kefuPhoneLabel)
+    .topSpaceToView(lianxiren,30)
+    .heightIs(20);
+    
+    lianxifangshi.text = @"联系方式：";
+    
+    
+    [lianxifangshi setSingleLineAutoResizeWithMaxWidth:200];
+    
+
+    line2.sd_layout.topSpaceToView(lianxiren,15)
+    .leftEqualToView(kefuPhoneLabel)
+    .rightEqualToView(kefuPhoneLabel)
+    .heightIs(1);
+    
+    line3.sd_layout.topSpaceToView(lianxifangshi,15)
+    .leftEqualToView(kefuPhoneLabel)
+    .rightEqualToView(kefuPhoneLabel)
+    .heightIs(1);
+    
+    line1.backgroundColor = [UIColor lightGrayColor];
+    line2.backgroundColor = [UIColor lightGrayColor];
+    line3.backgroundColor = [UIColor lightGrayColor];
+
+    
+    
+    fabuButton.sd_layout.leftEqualToView(kefuPhoneLabel)
+    .rightEqualToView(kefuPhoneLabel)
+    .topSpaceToView(line3,20)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"委托发布" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    fanhuiButton.sd_layout.leftEqualToView(kefuPhoneLabel)
+    .rightEqualToView(kefuPhoneLabel)
+    .topSpaceToView(fabuButton,20)
+    .heightIs(40*kHeightScale);
+    fanhuiButton.layer.borderWidth = 1.5;
+    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    self.lianxirenTextField.sd_layout.leftSpaceToView(lianxiren,0)
+    .rightSpaceToView(bottomView,15)
+    .centerYEqualToView(lianxiren)
+    .heightIs(20);
+    
+    self.lianxifangshiTextfield.sd_layout.leftSpaceToView(lianxifangshi,0)
+    .rightSpaceToView(bottomView,15)
+    .centerYEqualToView(lianxifangshi)
+    .heightIs(20);
+    
+    
+    line1.alpha = 0.3;
+    line2.alpha = 0.3;
+    line3.alpha = 0.3;
+
+    _lianxirenTextField.placeholder = @"请输入联系人姓名";
+    _lianxifangshiTextfield.placeholder = @"请输入联系方式";
+    
+    _lianxirenTextField.textAlignment = NSTextAlignmentRight;
+    _lianxifangshiTextfield.textAlignment = NSTextAlignmentRight;
+
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(weituoCancelAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fanhuiButton setTitle:@"返回" forState:(UIControlStateNormal)];
+    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickWeituoFabuAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+//    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.weituoView = mengbanView;
+    [self.weituoView setHidden:YES];
     
 }
 - (void)setAllArray
@@ -189,6 +420,43 @@
 
 }
 
+- (void)weituoFabu
+{
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@"token" forKey:@"access_token"];
+    [param setObject:@"22" forKey:@"TypeID"];
+    [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
+    [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
+    [param setObject:@"IOS" forKey:@"Channel"];
+    
+    
+    
+[self.manager POST:URL parameters:param progress:^(NSProgress * _Nonnull uploadProgress) {
+    
+} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSLog(@"发布成功");
+    
+    [self.weituoView setHidden:YES];
+    
+    
+} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    NSLog(@"发布失败%@",error);
+    [self.weituoView setHidden:YES];
+
+    
+}];
+    
+}
+
+
+
+
+
+
+
 - (void)datePickerAction:(UIDatePicker *)sender
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -197,6 +465,32 @@
     NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
     
     self.paimaishijianLabel.text = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
+}
+
+
+- (void)didClickWeituoFabuAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    [self weituoFabu];
+    
+}
+- (void)didClickFanhuiButtonAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    [self.weituoView setHidden:YES];
+    
+}
+- (void)weituoCancelAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    
+    [self.weituoView setHidden:YES];
+}
+
+- (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
+{
+    [self.weituoView setHidden:NO];
+    
 }
 
 #pragma mark----pickerView Button Action
@@ -234,7 +528,6 @@
                 [self.mianjiView setHidden:NO];
                 [self.xingzhiView setHidden:NO];
                 [self.pinpaiView setHidden:YES];
-                
             }
             else if([self.zichanLabel.text isEqualToString:@"房产"])
             {
@@ -244,7 +537,6 @@
                 [self.mianjiView setHidden:NO];
                 [self.xingzhiView setHidden:NO];
                 [self.pinpaiView setHidden:YES];
-                
             }
             else
             {
@@ -256,10 +548,7 @@
                 [self.pinpaiView setHidden:NO];
             
             }
-                
-                     
-            
-            break;
+              break;
         case 1:
             self.xingzhiLabel.text = self.selectStr;
             if (self.selectStr == nil) {
@@ -292,7 +581,6 @@
         self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height;
     }];
     
-    
 }
 - (void)didClickSureDateButtonAction:(UIButton *)sender
 {
@@ -304,6 +592,67 @@
     }];    
 }
 
+
+- (IBAction)sendButtonAction:(id)sender
+{
+    
+ 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+//    http://apitest.ziyawang.com/v1/test/project/create
+//    http://apitest.ziyawang.com/v1/v2/uploadfile
+     NSString *url1= getDataURL;
+//    NSString *url2 = @"/uploadfile?token=";
+    NSString *url2 = @"/v2/uploadfile?token=";
+
+    NSString *url = [url1 stringByAppendingString:url2];
+    NSString *URL = [url stringByAppendingString:token];
+    
+    NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    NSLog(@"%@",urlStr);
+    NSString *fileName = @"lll.wav";
+    NSString *urlpath = [urlStr stringByAppendingString:fileName];
+    NSURL *urla = [NSURL URLWithString:urlpath];
+    
+    NSURL *audiourl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
+    
+    self.Type = @"汽车";
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:@"22" forKey:@"TypeID"];
+    
+    
+    [dic setObject:self.zichanLabel.text forKey:@"AssetType"];
+    [dic setObject:self.qipaijiaTextField.text forKey:@"Money"];
+    [dic setObject:self.paimaididianLabel.text forKey:@"ProArea"];
+    [dic setObject:self.paimaishijianLabel.text forKey:@"Year"];
+    [dic setObject:self.paimaijieduanLabel.text forKey:@"State"];
+    [dic setObject:self.chuzhidanweiTextField.text forKey:@"Court"];
+    [dic setObject:self.connectPersonTextField.text forKey:@"ConnectPerson"];
+    [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
+    [dic setObject:self.textView.text forKey:@"WordDes"];
+    [dic setObject:@"IOS" forKey:@"Channel"];
+    
+    
+    
+    if ([self.Type isEqualToString:@"汽车"])
+    {
+        [dic setObject:self.pinpaiTextField.text forKey:@"Brand"];
+    }
+    else
+    {
+        [dic setObject:self.mianjiTextField.text forKey:@"Area"];
+        [dic setObject:self.xingzhiLabel.text forKey:@"Nature"];
+    }
+    
+    NSLog(@"%@",dic);
+    
+    NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
+    [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
+    
+}
 
 
 /**

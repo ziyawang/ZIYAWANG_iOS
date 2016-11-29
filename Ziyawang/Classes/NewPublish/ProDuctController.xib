@@ -9,7 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProDuctController">
             <connections>
-                <outlet property="addButton" destination="9Rh-1B-Kow" id="qaj-t0-Kto"/>
+                <outlet property="ContentView" destination="rfL-YX-DWh" id="n8L-ql-EGX"/>
+                <outlet property="ImageBackView" destination="EEa-6Y-o11" id="7ip-Iw-pG0"/>
                 <outlet property="biaodiwuLabel" destination="pNS-LH-0Iu" id="p9c-2f-5pZ"/>
                 <outlet property="biaodiwuView" destination="24K-Ba-tIe" id="K7K-qy-iaa"/>
                 <outlet property="button1" destination="O1D-M6-JL5" id="dXK-96-7Kc"/>
@@ -34,13 +35,13 @@
                 <outlet property="nameTextField" destination="O5E-mb-dcg" id="OWl-UM-Vgo"/>
                 <outlet property="phoneTextField" destination="Qsg-Sg-Y8b" id="B9z-1D-WNS"/>
                 <outlet property="quanbucaichanView" destination="eZh-gK-Hl7" id="Kda-zE-vGu"/>
+                <outlet property="recordView" destination="rYr-am-DHf" id="NYb-2x-Vew"/>
                 <outlet property="shenfenLabel" destination="aIg-BE-r0p" id="Wyx-rD-Sag"/>
                 <outlet property="shenfengView" destination="E1C-4x-wm3" id="GvW-W7-oaF"/>
                 <outlet property="shichangjiageHeight" destination="utO-vI-AkE" id="Vhn-j1-xUn"/>
                 <outlet property="shichangjiageTextField" destination="ive-ph-gh0" id="Y5E-Oy-k5i"/>
                 <outlet property="shichangjiageView" destination="cfZ-Tg-nqm" id="VrM-xa-wsp"/>
                 <outlet property="textView" destination="5C3-xH-dQI" id="6Ca-4B-EQ4"/>
-                <outlet property="videoButton" destination="xtK-wM-Yyi" id="DvM-2n-pAp"/>
                 <outlet property="view" destination="fA5-oK-QsK" id="Qer-WN-1wB"/>
                 <outlet property="yearTextField" destination="1g2-Zl-LSJ" id="WaL-ay-ZqK"/>
                 <outlet property="zhengjianLabel" destination="Ysr-RV-mdZ" id="5Nc-Ug-I7D"/>
@@ -586,34 +587,18 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xtK-wM-Yyi">
-                                            <state key="normal" title="Button"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="iO0-o0-orR" firstAttribute="leading" secondItem="rYr-am-DHf" secondAttribute="leading" constant="15" id="8VE-0o-VFB"/>
                                         <constraint firstItem="iO0-o0-orR" firstAttribute="centerY" secondItem="rYr-am-DHf" secondAttribute="centerY" id="IG0-7C-9Cj"/>
-                                        <constraint firstItem="xtK-wM-Yyi" firstAttribute="centerY" secondItem="rYr-am-DHf" secondAttribute="centerY" id="Vbq-gt-TUY"/>
                                         <constraint firstAttribute="height" constant="50" id="X0Q-TD-ay9"/>
-                                        <constraint firstItem="xtK-wM-Yyi" firstAttribute="leading" secondItem="iO0-o0-orR" secondAttribute="trailing" constant="10" id="aIj-nq-y97"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EEa-6Y-o11">
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Rh-1B-Kow">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="90" id="7ty-j0-DSg"/>
-                                                <constraint firstAttribute="width" constant="90" id="Do1-sW-K2j"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="9Rh-1B-Kow" firstAttribute="centerY" secondItem="EEa-6Y-o11" secondAttribute="centerY" id="DIA-hk-TDW"/>
                                         <constraint firstAttribute="height" constant="110" id="KFa-NJ-jFm"/>
-                                        <constraint firstItem="9Rh-1B-Kow" firstAttribute="leading" secondItem="EEa-6Y-o11" secondAttribute="leading" constant="15" id="mAh-gd-Uvf"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7H-dU-3Qu">
@@ -750,6 +735,9 @@
                                         <constraint firstAttribute="height" constant="50" id="TxV-RX-o1D"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="iEC-8N-kzS"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

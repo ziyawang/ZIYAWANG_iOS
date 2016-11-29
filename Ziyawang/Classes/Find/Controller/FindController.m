@@ -15,8 +15,8 @@
 #import "VideosListController.h"
 
 
-#define kWidthScale ([UIScreen mainScreen].bounds.size.width/414)
-#define kHeightScale ([UIScreen mainScreen].bounds.size.height/736)
+#define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
+#define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 
 @interface FindController ()
 

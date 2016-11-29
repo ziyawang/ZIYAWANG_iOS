@@ -9,6 +9,13 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 #import "Header.h"
+
+
+#define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
+#define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
+
+
+
 /**
  *  正式服API
  *
@@ -29,6 +36,9 @@
 //#define IfHadPayMessageURL @"http://api.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
 //#define ServiceConnectCountURL @"http://api.ziyawang.com/v1/count/service"//联系服务方次数
 
+//#define WeituoFabuURL @"http://api.ziyawang.com/v1/v2/entrust"//委托发布
+
+
 /**
  *  测试服API
  *
@@ -48,6 +58,8 @@
 #define TipURL @"http://apitest.ziyawang.com/v1/report"//举报
 #define IfHadPayMessageURL @"http://apitest.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
 #define ServiceConnectCountURL @"http://apitest.ziyawang.com/v1/count/service"//联系服务方次数
+
+#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/v2/entrust"//委托发布
 
 
 
@@ -84,6 +96,8 @@
 #define TestQuestionURL [getDataURL stringByAppendingString:@"/test/paper"]//获取测试题
 
 #define TestResultURL [getDataURL stringByAppendingString:@"/test/result"] //获取测试结果
+
+
 
 
 

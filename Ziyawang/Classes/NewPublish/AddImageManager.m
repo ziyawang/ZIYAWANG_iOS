@@ -178,5 +178,10 @@
     [self.VC dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (NSMutableArray *)getImageArray
+{
+    return self.imageArray;
+}
+
 
 @end

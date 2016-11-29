@@ -31,7 +31,7 @@
     //        [self.recorderbutton setTitle:@"录音" forState:(UIControlStateNormal)];
     [self.recorderbutton setBackgroundImage:[UIImage imageNamed:@"changluyin"] forState:(UIControlStateNormal)];
     
-    [self.recorderbutton setFrame:CGRectMake(75, 5, 150, 30)];
+    [self.recorderbutton setFrame:CGRectMake(100, 8, 150, 30)];
     [recordView addSubview:self.recorderbutton];
     /**
      *  添加录音按钮的事件
@@ -45,7 +45,7 @@
     [self.recorderbutton addTarget:self action:@selector(dragRecorder) forControlEvents:UIControlEventTouchDragExit];
     
     self.playRecorderButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [self.playRecorderButton setFrame:CGRectMake(75, 5, 120, 30)];
+    [self.playRecorderButton setFrame:CGRectMake(100, 8, 120, 30)];
     [self.playRecorderButton setTitle:@"播放" forState:(UIControlStateNormal)];
     [self.playRecorderButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
     

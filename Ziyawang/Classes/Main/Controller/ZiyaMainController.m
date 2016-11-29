@@ -42,6 +42,8 @@
 
 #import "WZLBadgeImport.h"
 
+#import "DetailOfInfoController.h"
+
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate,RCIMReceiveMessageDelegate>
@@ -1484,16 +1486,23 @@ self.navigationItem.title = @"首页";
     NSString *type = @"找信息";
     
     
+    
+    DetailOfInfoController *detailVC = [[DetailOfInfoController alloc]init];
+    
     switch (sender.tag)
     
     {
         case 1:
-            NSLog(@"1");
             
-            searchVC.type = @"资产包转让";
-            searchVC.searchValue = @"01";
-            searchVC.navigationItem.title = @"资产包转让";
-            [self.navigationController pushViewController:searchVC animated:YES];
+            
+//            NSLog(@"1");
+//            
+//            searchVC.type = @"资产包转让";
+//            searchVC.searchValue = @"01";
+//            searchVC.navigationItem.title = @"资产包转让";
+//            [self.navigationController pushViewController:searchVC animated:YES];
+            [self.navigationController pushViewController:detailVC animated:YES];
+
             
             break;
         case 2:

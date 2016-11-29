@@ -9,24 +9,30 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssetPackController">
             <connections>
-                <outlet property="addButton" destination="G7e-v9-Y78" id="WMq-Dq-3s5"/>
+                <outlet property="ContentView" destination="Vnr-KK-ccC" id="KHu-aA-tRD"/>
+                <outlet property="ImageBackView" destination="SJj-bs-xrA" id="5bB-to-dsb"/>
                 <outlet property="baogaoLabel" destination="52J-xn-UEZ" id="KWm-vP-ZX5"/>
                 <outlet property="baogaoView" destination="fLe-gw-BiX" id="LU9-ND-QeP"/>
+                <outlet property="benjiTextField" destination="NlS-9l-SjB" id="hnZ-E4-RDr"/>
                 <outlet property="diquLabel" destination="52x-Fo-638" id="pBV-jo-IOf"/>
                 <outlet property="diquView" destination="E06-gc-YKB" id="nMK-Cb-ZRP"/>
                 <outlet property="diyawuleixingLabel" destination="pwn-Ql-fTR" id="1Wq-rQ-Vbz"/>
                 <outlet property="diyawuleixingView" destination="K9t-s9-egG" id="xrO-LS-phM"/>
+                <outlet property="hushuTextField" destination="CAK-5a-aM3" id="C47-EZ-M22"/>
                 <outlet property="laiyuanLabel" destination="Eey-na-wua" id="ght-Ad-UFP"/>
                 <outlet property="laiyuanView" destination="jL6-d0-FNe" id="JrM-jS-lG2"/>
+                <outlet property="lixiTextField" destination="mAk-4r-2qT" id="LIN-3G-2WV"/>
+                <outlet property="recordView" destination="nEd-bo-9RW" id="voO-dE-wrW"/>
                 <outlet property="shenfenLabel" destination="BYD-08-MeF" id="XmL-VD-n6L"/>
                 <outlet property="shenfenView" destination="I21-o4-6Fj" id="pIe-EY-6BS"/>
                 <outlet property="shijianLabel" destination="efE-M7-AJj" id="agw-eo-rAi"/>
                 <outlet property="shijianView" destination="uYF-TJ-SWV" id="LHX-BS-XQ3"/>
                 <outlet property="textView" destination="ymw-Iy-WZ0" id="BaT-QJ-FNZ"/>
-                <outlet property="videoButton" destination="LuS-Hu-6XL" id="m1Y-v6-ckK"/>
                 <outlet property="view" destination="JDF-2g-mOw" id="uxG-ae-NO9"/>
+                <outlet property="zhuanrangjiaTextField" destination="sfW-gr-cKg" id="x23-sK-EbQ"/>
                 <outlet property="zichanleixingLabel" destination="Hd0-h5-aO8" id="Mh3-nC-9px"/>
                 <outlet property="zichanleixingView" destination="dGV-sA-m1O" id="192-tk-2BB"/>
+                <outlet property="zongjineTextField" destination="0s0-lF-Lpq" id="BXx-zX-KG3"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -382,34 +388,18 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LuS-Hu-6XL">
-                                            <state key="normal" title="Button"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="ogr-Kh-H25" firstAttribute="centerY" secondItem="nEd-bo-9RW" secondAttribute="centerY" id="6nl-va-tm4"/>
-                                        <constraint firstItem="LuS-Hu-6XL" firstAttribute="leading" secondItem="ogr-Kh-H25" secondAttribute="trailing" constant="10" id="LQk-mD-vaH"/>
                                         <constraint firstAttribute="height" constant="50" id="OeK-d3-6Hg"/>
                                         <constraint firstItem="ogr-Kh-H25" firstAttribute="leading" secondItem="nEd-bo-9RW" secondAttribute="leading" constant="15" id="hM3-no-OvX"/>
-                                        <constraint firstItem="LuS-Hu-6XL" firstAttribute="centerY" secondItem="nEd-bo-9RW" secondAttribute="centerY" id="rl8-fr-SrK"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJj-bs-xrA">
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G7e-v9-Y78">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="90" id="GrX-Bb-BRq"/>
-                                                <constraint firstAttribute="width" constant="90" id="ber-FH-Laq"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="110" id="E7F-yz-0FW"/>
-                                        <constraint firstItem="G7e-v9-Y78" firstAttribute="leading" secondItem="SJj-bs-xrA" secondAttribute="leading" constant="15" id="os6-VO-RC5"/>
-                                        <constraint firstItem="G7e-v9-Y78" firstAttribute="centerY" secondItem="SJj-bs-xrA" secondAttribute="centerY" id="vE6-IF-SkR"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KE8-GU-EbR">
@@ -596,6 +586,9 @@
                                         <constraint firstAttribute="height" constant="50" id="UQ0-OB-V33"/>
                                     </constraints>
                                     <state key="normal" title="确认发布"/>
+                                    <connections>
+                                        <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="N5b-VX-XAY"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

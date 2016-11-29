@@ -1156,6 +1156,8 @@
     NSString *url2 = @"/uploadfile?token=";
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [url stringByAppendingString:token];
+    
+    
     NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
     NSLog(@"%@",urlStr);
     NSString *fileNameStr = @"/lll.wav";
@@ -1211,6 +1213,7 @@
         if (self.imagearray.count == 1) {
             
             if (self.haveVideo == YES) {
+
             }
             
             [self.manager POST:URL parameters:pushDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {

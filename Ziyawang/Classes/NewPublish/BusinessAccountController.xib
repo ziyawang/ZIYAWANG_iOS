@@ -9,7 +9,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessAccountController">
             <connections>
-                <outlet property="addButton" destination="D0M-wa-uad" id="joE-PY-lrJ"/>
+                <outlet property="ContentView" destination="cwX-QU-gGX" id="lHq-lE-ZFu"/>
+                <outlet property="ImageBackView" destination="LGE-gi-2pi" id="rnF-ua-lJ7"/>
                 <outlet property="button1" destination="cSY-R6-Z6f" id="I0V-Ie-OIb"/>
                 <outlet property="button2" destination="zDk-WJ-bP0" id="2fe-Vo-xwM"/>
                 <outlet property="chooseImage1" destination="Ef5-1K-mVW" id="wmK-b1-6hc"/>
@@ -27,6 +28,7 @@
                 <outlet property="pingzhengLabel" destination="frA-II-jZ5" id="8Hw-yb-bo2"/>
                 <outlet property="pingzhengView" destination="KBO-1Z-2cQ" id="KSv-Nt-9ha"/>
                 <outlet property="qiyexingzhiLabel" destination="gfP-fR-Sme" id="oRi-xM-2A5"/>
+                <outlet property="recordView" destination="qzy-4K-Jc3" id="50P-Iq-ffH"/>
                 <outlet property="sendButton" destination="PAW-GV-dLT" id="LJU-KC-TqI"/>
                 <outlet property="shangzhangLabel" destination="hgi-xB-jVh" id="Mgx-qO-0Fc"/>
                 <outlet property="shangzhangleixingView" destination="rdf-bg-Bxu" id="82Q-iv-1P5"/>
@@ -37,7 +39,6 @@
                 <outlet property="susongLabel" destination="bek-3J-C6c" id="u3L-oX-kHn"/>
                 <outlet property="susongView" destination="nxC-aZ-ThR" id="dv3-CQ-L2a"/>
                 <outlet property="textView" destination="3bP-v1-96g" id="ehm-5Q-Esz"/>
-                <outlet property="videoButton" destination="se4-0k-RwI" id="DGI-Rb-A4X"/>
                 <outlet property="view" destination="4SJ-i4-5Y9" id="OZN-Wy-nR4"/>
                 <outlet property="yuqiTextField" destination="MN3-nR-Jrs" id="Hd0-Tf-4dl"/>
                 <outlet property="zhaiwufanghangyeView" destination="28d-Ho-qUT" id="m8U-HH-q27"/>
@@ -297,34 +298,18 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="se4-0k-RwI">
-                                            <state key="normal" title="Button"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="De8-0l-kja"/>
-                                        <constraint firstItem="se4-0k-RwI" firstAttribute="centerY" secondItem="qzy-4K-Jc3" secondAttribute="centerY" id="T5k-AR-LBr"/>
                                         <constraint firstItem="kuN-dG-fy7" firstAttribute="centerY" secondItem="qzy-4K-Jc3" secondAttribute="centerY" id="Xpu-Qa-nXu"/>
                                         <constraint firstItem="kuN-dG-fy7" firstAttribute="leading" secondItem="qzy-4K-Jc3" secondAttribute="leading" constant="15" id="YZp-1w-lzl"/>
-                                        <constraint firstItem="se4-0k-RwI" firstAttribute="leading" secondItem="kuN-dG-fy7" secondAttribute="trailing" constant="10" id="xzt-Qh-xXE"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LGE-gi-2pi">
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0M-wa-uad">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="90" id="55N-W9-8l5"/>
-                                                <constraint firstAttribute="width" constant="90" id="LTI-W3-ndC"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                    </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="D0M-wa-uad" firstAttribute="leading" secondItem="LGE-gi-2pi" secondAttribute="leading" constant="15" id="SvR-15-dzp"/>
                                         <constraint firstAttribute="height" constant="110" id="akU-Tg-P3g"/>
-                                        <constraint firstItem="D0M-wa-uad" firstAttribute="centerY" secondItem="LGE-gi-2pi" secondAttribute="centerY" id="hSD-Xs-rHQ"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mj0-90-Pnm">
@@ -568,6 +553,9 @@
                                         <constraint firstAttribute="height" constant="50" id="8GD-KC-Ye0"/>
                                     </constraints>
                                     <state key="normal" title="确认发布"/>
+                                    <connections>
+                                        <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="koT-2a-t1Z"/>
+                                    </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-bg-Bxu">
                                     <subviews>

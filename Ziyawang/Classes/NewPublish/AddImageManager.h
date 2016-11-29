@@ -10,7 +10,6 @@
 
 @interface AddImageManager : NSObject
 @property (nonatomic,strong) UIImageView *addImageView;
-
 @property (nonatomic,strong) UIImageView *imageOne;
 @property (nonatomic,strong) UIImageView *imageTwo;
 @property (nonatomic,strong) UIImageView *imageThree;
@@ -22,4 +21,6 @@
 + (AddImageManager *)AddManager;
 
 - (void)setAddimageViewWithView:(UIView *)imageBackView target:(id)target;
+- (NSMutableArray *)getImageArray;
+
 @end
