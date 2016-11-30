@@ -36,6 +36,8 @@
                 <outlet property="phoneTextField" destination="Qsg-Sg-Y8b" id="B9z-1D-WNS"/>
                 <outlet property="quanbucaichanView" destination="eZh-gK-Hl7" id="Kda-zE-vGu"/>
                 <outlet property="recordView" destination="rYr-am-DHf" id="NYb-2x-Vew"/>
+                <outlet property="scrollView" destination="d3O-IS-mpR" id="8Yu-1o-08x"/>
+                <outlet property="sendButton" destination="x7q-BO-3E0" id="qXb-8n-LWR"/>
                 <outlet property="shenfenLabel" destination="aIg-BE-r0p" id="Wyx-rD-Sag"/>
                 <outlet property="shenfengView" destination="E1C-4x-wm3" id="GvW-W7-oaF"/>
                 <outlet property="shichangjiageHeight" destination="utO-vI-AkE" id="Vhn-j1-xUn"/>
@@ -574,7 +576,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5C3-xH-dQI">
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="9Vx-0O-7DK"/>
+                                        <constraint firstAttribute="height" constant="90" id="9Vx-0O-7DK"/>
                                     </constraints>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -734,7 +736,9 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="TxV-RX-o1D"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
+                                    <state key="normal" title="确认发布">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="iEC-8N-kzS"/>
                                     </connections>

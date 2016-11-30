@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,6 +28,7 @@
                 <outlet property="pingzhengView" destination="KBO-1Z-2cQ" id="KSv-Nt-9ha"/>
                 <outlet property="qiyexingzhiLabel" destination="gfP-fR-Sme" id="oRi-xM-2A5"/>
                 <outlet property="recordView" destination="qzy-4K-Jc3" id="50P-Iq-ffH"/>
+                <outlet property="scrollView" destination="SrY-cn-Zcl" id="Svi-w5-Ixx"/>
                 <outlet property="sendButton" destination="PAW-GV-dLT" id="LJU-KC-TqI"/>
                 <outlet property="shangzhangLabel" destination="hgi-xB-jVh" id="Mgx-qO-0Fc"/>
                 <outlet property="shangzhangleixingView" destination="rdf-bg-Bxu" id="82Q-iv-1P5"/>
@@ -259,12 +259,10 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="cSY-R6-Z6f" firstAttribute="leading" secondItem="8rQ-8U-vUK" secondAttribute="leading" constant="15" id="AIM-vn-Qa7"/>
-                                        <constraint firstItem="cSY-R6-Z6f" firstAttribute="width" secondItem="zDk-WJ-bP0" secondAttribute="width" id="HVc-1a-fff"/>
                                         <constraint firstItem="cSY-R6-Z6f" firstAttribute="top" secondItem="zDk-WJ-bP0" secondAttribute="top" id="I0h-dI-Eqt"/>
                                         <constraint firstItem="zDk-WJ-bP0" firstAttribute="centerX" secondItem="8rQ-8U-vUK" secondAttribute="centerX" id="cCO-Xj-g1u"/>
                                         <constraint firstAttribute="height" constant="100" id="duR-bc-kVC"/>
                                         <constraint firstItem="zDk-WJ-bP0" firstAttribute="top" secondItem="8rQ-8U-vUK" secondAttribute="top" constant="13" id="hC7-3q-IhN"/>
-                                        <constraint firstItem="zDk-WJ-bP0" firstAttribute="width" secondItem="8rQ-8U-vUK" secondAttribute="width" multiplier="1:3" constant="-20" id="tpB-sT-1zN"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fuC-v6-fz9">
@@ -285,7 +283,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3bP-v1-96g">
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="bbx-wQ-qhy"/>
+                                        <constraint firstAttribute="height" constant="90" id="bbx-wQ-qhy"/>
                                     </constraints>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -552,7 +550,9 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="8GD-KC-Ye0"/>
                                     </constraints>
-                                    <state key="normal" title="确认发布"/>
+                                    <state key="normal" title="确认发布">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="koT-2a-t1Z"/>
                                     </connections>

@@ -251,7 +251,7 @@
             [self.TransferMoney setHidden:YES];
             self.
             self.downLabel.text = @"买方性质：";
-            self.AssetTypeLabel.text = self.model.BuyerNature;
+//            self.AssetTypeLabel.text = self.model.BuyerNature;
             [self.TransMoneyImage setHidden:YES];
             
             self.TotalMoneyImage.image = [UIImage imageNamed:@"hetongjine"];
@@ -309,7 +309,7 @@
     }
     else if ([self.model.TypeName isEqualToString:@"法律服务"])
     {
-        self.TotalMoney.text = self.model.Requirement;
+//        self.TotalMoney.text = self.model.Requirement;
         self.diquLabel.text = @"地区：";
         self.leftChangeLabel.text = @"需求";
 //        self.downLabel.text = @"类型";
@@ -387,7 +387,7 @@
     }
     else if ([self.model.TypeName isEqualToString:@"尽职调查"])
     {
-        self.TotalMoney.text = self.model.Informant;
+//        self.TotalMoney.text = self.model.Informant;
       self.leftChangeLabel.text = @"被调查方";
         self.downLabel.text = @"类型：";
         self.TotalMoneyImage.image = [UIImage imageNamed:@"beidiaochafang"];
@@ -430,7 +430,7 @@
 //        [self.TotalMoney.frame.size.width = 100];
         [self.rightChangeLabel setHidden:YES];
         [self.TransferMoney setHidden:YES];
-        self.TotalMoney.text = self.model.Buyer;
+//        self.TotalMoney.text = self.model.Buyer;
         self.leftChangeLabel.text = @"求购方";
         
         [self.TransMoneyImage setHidden:YES];
@@ -459,7 +459,7 @@
   else if([self.model.TypeName isEqualToString:@"投资需求"])
   {
       [self.midLabel setHidden:NO];
-      self.ProAreaLabel.text = self.model.investType;
+//      self.ProAreaLabel.text = self.model.investType;
       self.FromWhere.text = self.model.ProArea;
       [self.TotalMoney setHidden:NO];
       [self.TransferMoney setHidden:NO];

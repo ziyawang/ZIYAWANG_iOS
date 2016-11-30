@@ -7,7 +7,7 @@
 //
 
 #import "CancelTogetherController.h"
-
+#import "NewPublishCell.h"
 @interface CancelTogetherController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 
@@ -22,7 +22,7 @@
     self.tableView.dataSource = self;
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width,self.view.bounds.size.height ) style:(UITableViewStylePlain)];
     [self.view addSubview:self.tableView];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
 
     self.sourceArray = [NSMutableArray array];
 }

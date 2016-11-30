@@ -11,6 +11,7 @@
 #import "PublishModel.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "LookUpMyRushCell.h"
 #import "InfoDetailsController.h"
 @interface LookupMyRushController ()<UITableViewDelegate,UITableViewDataSource>

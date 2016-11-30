@@ -8,6 +8,7 @@
 
 #import "MyPushController.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "AFNetWorking.h"
 #import "MBProgressHUD.h"
 #import "PublishModel.h"

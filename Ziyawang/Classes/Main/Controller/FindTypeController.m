@@ -12,6 +12,7 @@
 #import "AFNetWorking.h"
 #import "MBProgressHUD.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "PublishModel.h"
 #import "FindModel.h"
 #import "MJRefresh.h"
@@ -209,7 +210,7 @@
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource =self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -1856,13 +1857,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (nib == nil) {
-        nib = [UINib nibWithNibName:@"PublishCell" bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:@"PublishCell"];
+        nib = [UINib nibWithNibName:@"NewPublishCell" bundle:nil];
+        [tableView registerNib:nib forCellReuseIdentifier:@"NewPublishCell"];
         NSLog(@"我是从nib过来的");
         
     }
     
-    PublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+    NewPublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
     
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

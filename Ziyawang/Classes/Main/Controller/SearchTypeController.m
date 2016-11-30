@@ -9,6 +9,7 @@
 #import "SearchTypeController.h"
 #import "FindServiceViewCell.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "PublishModel.h"
 #import "FindServiceModel.h"
 #import "InfoDetailsController.h"
@@ -48,7 +49,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
     self.tableView.separatorStyle = NO;
     
@@ -281,10 +282,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([self.type isEqualToString:@"找信息"]) {
-        PublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
         if (cell == nil)
         {
-            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];
+            cell = [[NewPublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"NewPublishCell"];
         }
         cell.model = self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

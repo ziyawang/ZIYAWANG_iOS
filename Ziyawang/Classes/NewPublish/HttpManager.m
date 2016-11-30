@@ -35,7 +35,6 @@
             [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"PictureDes%d",i+1] fileName:[NSString stringWithFormat:@"image%d",i+1] mimeType:@"image/jpg/png/jpeg"];
         }
     }
-   
      if (url != nil) {
          [formData appendPartWithFileURL:url name:@"VoiceDes" error:nil];
      }

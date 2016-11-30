@@ -58,7 +58,7 @@
     self.rerecorderButton.titleLabel.font = [UIFont systemFontOfSize:8];
     
     //    [self.rerecorderButton setTitle:@"重录" forState:(UIControlStateNormal)];
-    [self.rerecorderButton setFrame:CGRectMake(85 + self.playRecorderButton.bounds.size.width, 5, 30, 30)];
+    [self.rerecorderButton setFrame:CGRectMake(105 + self.playRecorderButton.bounds.size.width, 8, 30, 30)];
     ;
     [self.rerecorderButton setBackgroundImage:[UIImage imageNamed:@"rerecord"] forState:(UIControlStateNormal)];
     [recordView addSubview:self.rerecorderButton];

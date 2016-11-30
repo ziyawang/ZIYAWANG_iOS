@@ -17,6 +17,8 @@
                 <outlet property="chooseImage2" destination="R17-qK-bdS" id="wmZ-b6-qNG"/>
                 <outlet property="chooseShenfenLabel" destination="6CX-fB-gOj" id="zVz-Ft-EPD"/>
                 <outlet property="chooseShenfenView" destination="cNH-96-uHI" id="jaP-qK-4eH"/>
+                <outlet property="connectPersong" destination="kM9-bG-Inf" id="AxI-Sy-360"/>
+                <outlet property="connectPhone" destination="E32-9U-yyV" id="ArN-1q-Q3Y"/>
                 <outlet property="danbaoLAbel" destination="wet-dR-2eG" id="5fK-t8-vcD"/>
                 <outlet property="danbaoView" destination="YEG-1N-931" id="0bx-wq-tvb"/>
                 <outlet property="diyaLabel" destination="bIi-3U-8zU" id="c3e-mg-DQ3"/>
@@ -27,6 +29,7 @@
                 <outlet property="pingzhengLabel" destination="aM8-nT-XOC" id="oZz-pk-bN5"/>
                 <outlet property="pingzhengView" destination="pNv-F0-uq4" id="OuX-Ay-ABm"/>
                 <outlet property="recordView" destination="y6b-BB-swU" id="0tU-RI-nC5"/>
+                <outlet property="scrollView" destination="2Wk-9x-HMr" id="W4J-T1-nVH"/>
                 <outlet property="sendButton" destination="EDO-VZ-VSE" id="BCq-qk-K3p"/>
                 <outlet property="shilianLabel" destination="RcF-h4-xd4" id="RxD-Sk-men"/>
                 <outlet property="shilianView" destination="DW8-6x-p4v" id="u6U-V9-LW9"/>
@@ -311,9 +314,15 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UXL-XM-WHu">
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFh-Uo-Gze">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="LVp-D2-SQT"/>
+                                            </constraints>
                                             <state key="normal" title="佣金比例高"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJ5-HK-pTq">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="6Of-pK-zGu"/>
+                                            </constraints>
                                             <state key="normal" title="法律关系明确"/>
                                         </button>
                                     </subviews>
@@ -346,7 +355,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2m9-hg-e6K">
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="kss-0s-i4P"/>
+                                        <constraint firstAttribute="height" constant="90" id="kss-0s-i4P"/>
                                     </constraints>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -624,7 +633,9 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="1eF-fk-An5"/>
                                     </constraints>
-                                    <state key="normal" title="确认发布"/>
+                                    <state key="normal" title="确认发布">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="cBM-Og-Hve"/>
                                     </connections>

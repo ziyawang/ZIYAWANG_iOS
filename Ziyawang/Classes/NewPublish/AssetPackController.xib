@@ -14,6 +14,9 @@
                 <outlet property="baogaoLabel" destination="52J-xn-UEZ" id="KWm-vP-ZX5"/>
                 <outlet property="baogaoView" destination="fLe-gw-BiX" id="LU9-ND-QeP"/>
                 <outlet property="benjiTextField" destination="NlS-9l-SjB" id="hnZ-E4-RDr"/>
+                <outlet property="button1" destination="bTx-qL-zJJ" id="Q8c-Ch-19R"/>
+                <outlet property="button2" destination="KKF-S7-VjF" id="f5D-rc-z9m"/>
+                <outlet property="button3" destination="NWW-rz-LXR" id="Caa-jr-vda"/>
                 <outlet property="diquLabel" destination="52x-Fo-638" id="pBV-jo-IOf"/>
                 <outlet property="diquView" destination="E06-gc-YKB" id="nMK-Cb-ZRP"/>
                 <outlet property="diyawuleixingLabel" destination="pwn-Ql-fTR" id="1Wq-rQ-Vbz"/>
@@ -23,6 +26,8 @@
                 <outlet property="laiyuanView" destination="jL6-d0-FNe" id="JrM-jS-lG2"/>
                 <outlet property="lixiTextField" destination="mAk-4r-2qT" id="LIN-3G-2WV"/>
                 <outlet property="recordView" destination="nEd-bo-9RW" id="voO-dE-wrW"/>
+                <outlet property="scrollView" destination="oGs-xa-8Y3" id="bUB-b8-W8H"/>
+                <outlet property="sendButton" destination="oxR-iE-4dy" id="Vsi-o5-dOu"/>
                 <outlet property="shenfenLabel" destination="BYD-08-MeF" id="XmL-VD-n6L"/>
                 <outlet property="shenfenView" destination="I21-o4-6Fj" id="pIe-EY-6BS"/>
                 <outlet property="shijianLabel" destination="efE-M7-AJj" id="agw-eo-rAi"/>
@@ -375,7 +380,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ymw-Iy-WZ0">
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="H0J-gc-5Kz"/>
+                                        <constraint firstAttribute="height" constant="90" id="H0J-gc-5Kz"/>
                                     </constraints>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -585,7 +590,9 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="UQ0-OB-V33"/>
                                     </constraints>
-                                    <state key="normal" title="确认发布"/>
+                                    <state key="normal" title="确认发布">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="N5b-VX-XAY"/>
                                     </connections>

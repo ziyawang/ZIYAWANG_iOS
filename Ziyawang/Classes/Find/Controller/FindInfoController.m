@@ -12,6 +12,7 @@
 #import "AFNetWorking.h"
 #import "MBProgressHUD.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "PublishModel.h"
 #import "FindModel.h"
 #import "MJRefresh.h"
@@ -212,7 +213,7 @@
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource =self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
 
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -1406,12 +1407,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        NSLog(@"--------%@",dic);
-        
+        NSLog(@"--------%@",dic);
         
         NSMutableArray *sourceArray = dic[@"data"];
         for (NSDictionary *dic in sourceArray) {
-            
             PublishModel *model = [[PublishModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
@@ -1567,7 +1566,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+    NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
     //        if (cell == nil)
     //        {
     //            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];

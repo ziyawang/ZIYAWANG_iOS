@@ -12,6 +12,7 @@
 #import "SDiOSVersion.h"
 #import "SearchBar.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "AFNetWorking.h"
 #import "PublishModel.h"
 
@@ -494,7 +495,7 @@ self.navigationItem.title = @"首页";
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
     self.tableView.separatorStyle = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 58, 0);
@@ -2041,7 +2042,7 @@ self.navigationItem.title = @"首页";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([self.findType isEqualToString:@"找信息"]) {
-        PublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
         
         
         //        if (cell == nil)
@@ -2055,8 +2056,9 @@ self.navigationItem.title = @"首页";
     }
     else
     {
-        FindServiceViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
+     
         
+    FindServiceViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
         //        if (cell == nil)
         //        {
         //            cell = [[FindServiceViewCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"FindServiceViewCell"];
@@ -2064,7 +2066,6 @@ self.navigationItem.title = @"首页";
 //        if (self.sourceArray.count==0) {
 //            self.sourceArray = self.lastSourceArray1;
 //        }
-        
         cell.model = self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;

@@ -25,10 +25,12 @@
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
+    
+    
     self.Type = @"2";
+    
     [self getInfoData];
     
-
     
 }
 
@@ -291,7 +293,7 @@
     {
         [self HouseProductionView];
     }
-    else if([self.Type isEqualToString:@""])
+    else if([self.Type isEqualToString:@"2"])
     {
         [self landProductionView];
     }
@@ -307,7 +309,7 @@
     {
         [self finaCingZhaiquanView];
     }
-    else if([self.Type isEqualToString:@"2"])
+    else if([self.Type isEqualToString:@""])
     {
         [self asetBackView];
     }
@@ -893,18 +895,694 @@
 }
 - (void)HouseProductionView
 {
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    UILabel *label3 = [UILabel new];
+    
+    UILabel *label4 = [UILabel new];
+    UILabel *label5 = [UILabel new];
+    UILabel *label6 = [UILabel new];
+    UILabel *label7 = [UILabel new];
+    UILabel *label8 = [UILabel new];
+    UILabel *label9 = [UILabel new];
+    UILabel *label10 = [UILabel new];
+    UILabel *label11 = [UILabel new];
+    UILabel *label12 = [UILabel new];
+    UILabel *label13 = [UILabel new];
+    UILabel *label14 = [UILabel new];
+    UILabel *label15 = [UILabel new];
+    
+    UILabel *label16 = [UILabel new];
+    UILabel *label17 = [UILabel new];
+    UILabel *label18 = [UILabel new];
+    UILabel *label19 = [UILabel new];
+    UILabel *label20 = [UILabel new];
 
-}
+    [self.changeView addSubview:label1];
+    [self.changeView addSubview:label2];
+    [self.changeView addSubview:label3];
+    [self.changeView addSubview:label4];
+    [self.changeView addSubview:label5];
+    [self.changeView addSubview:label6];
+    [self.changeView addSubview:label7];
+    [self.changeView addSubview:label8];
+    [self.changeView addSubview:label9];
+    [self.changeView addSubview:label10];
+    [self.changeView addSubview:label11];
+    [self.changeView addSubview:label12];
+    [self.changeView addSubview:label13];
+    [self.changeView addSubview:label14];
+    [self.changeView addSubview:label15];
+    [self.changeView addSubview:label16];
+    [self.changeView addSubview:label17];
+    [self.changeView addSubview:label18];
+    [self.changeView addSubview:label19];
+    [self.changeView addSubview:label20];
+
+    
+
+    label1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(self.changeView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label2.sd_layout.leftSpaceToView(label1,0)
+    .topEqualToView(label1)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label3.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label1,15)
+    .heightIs(20);
+    
+    label4.sd_layout.leftSpaceToView(label3,0)
+    .topEqualToView(label3)
+    .heightIs(20);
+    
+    label5.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label3,15)
+    .heightIs(20);
+    
+    label6.sd_layout.leftSpaceToView(label5,0)
+    .topEqualToView(label5)
+    .heightIs(20);
+    
+    label7.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label6,15)
+    .heightIs(20);
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label8.sd_layout.leftSpaceToView(label7,0)
+    .topEqualToView(label7)
+    .heightIs(20);
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label9.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label7,15)
+    .heightIs(20);
+    
+    label10.sd_layout.leftSpaceToView(label9,0)
+    .topEqualToView(label9)
+    .heightIs(20);
+    
+    label11.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(20);
+    
+    label12.sd_layout.leftSpaceToView(label11,0)
+    .topEqualToView(label11)
+    .heightIs(20);
+    
+    
+    label13.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label11,15)
+    .heightIs(20);
+    
+    label14.sd_layout.leftSpaceToView(label13,0)
+    .topEqualToView(label13)
+    .heightIs(20);
+    
+    label15.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label13,15)
+    .heightIs(20);
+    
+    label16.sd_layout.leftSpaceToView(label15,0)
+    .topEqualToView(label15)
+    .heightIs(20);
+    
+    
+    label17.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label15,15)
+    .heightIs(20);
+    
+    label18.sd_layout.leftSpaceToView(label17,0)
+    .topEqualToView(label17)
+    .heightIs(20);
+    
+    label19.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label17,15)
+    .heightIs(20);
+    
+    label20.sd_layout.leftSpaceToView(label19,0)
+    .topEqualToView(label19)
+    .heightIs(20);
+    
+    
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    [label2 setSingleLineAutoResizeWithMaxWidth:200];
+    [label3 setSingleLineAutoResizeWithMaxWidth:200];
+    [label4 setSingleLineAutoResizeWithMaxWidth:200];
+    [label5 setSingleLineAutoResizeWithMaxWidth:200];
+    [label6 setSingleLineAutoResizeWithMaxWidth:200];
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    [label9 setSingleLineAutoResizeWithMaxWidth:200];
+    [label10 setSingleLineAutoResizeWithMaxWidth:200];
+    [label11 setSingleLineAutoResizeWithMaxWidth:200];
+    [label12 setSingleLineAutoResizeWithMaxWidth:200];
+    [label13 setSingleLineAutoResizeWithMaxWidth:200];
+    [label14 setSingleLineAutoResizeWithMaxWidth:200];
+    [label15 setSingleLineAutoResizeWithMaxWidth:200];
+    [label16 setSingleLineAutoResizeWithMaxWidth:200];
+    [label17 setSingleLineAutoResizeWithMaxWidth:200];
+    [label18 setSingleLineAutoResizeWithMaxWidth:200];
+    [label19 setSingleLineAutoResizeWithMaxWidth:200];
+    [label20 setSingleLineAutoResizeWithMaxWidth:200];
+
+    
+    label1.text = @"身份：";
+    label2.text = @"身份：";
+    
+    label3.text = @"地区：";
+    label4.text = @"身份：";
+    
+    label5.text = @"标的物类型：";
+    label6.text = @"身份：";
+    
+    label7.text = @"房产类型：";
+    
+    label8.text = @"诉讼：";
+    label9.text = @"规划用途：";
+    
+    label10.text = @"非诉催收：";
+    label11.text = @"面积：";
+    
+    label12.text = @"债权人所在地：";
+    label13.text = @"剩余使用年限：";
+    
+    label14.text = @"债务人所在地：";
+    label15.text = @"转让方式：";
+    
+    label16.text = @"身份：";
+    
+    label17.text = @"市场价：";
+    label18.text = @"身份：";
+    
+    label19.text = @"转让价：";
+    label20.text = @"身份：";
+
+    UIView *line1 = [UIView new];
+    UIView *line2 = [UIView new];
+    UIView *line3 = [UIView new];
+    line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+
+    
+    //    line1.backgroundColor = [UIColor redColor];
+    //    line2.backgroundColor = [UIColor blueColor];
+    //    line3.backgroundColor = [UIColor blackColor];
+    UIView *qitaView = [UIView new];
+    UILabel *qitaLabel = [UILabel new];
+    qitaLabel.text = @"其他信息";
+    qitaView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *qitaBottView = [UIView new];
+    qitaBottView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *danbaoLabel = [UILabel new];
+    UILabel *changhuanLabel = [UILabel new];
+    UILabel *diyaLabel = [UILabel new];
+    UILabel *pingzhenLabel = [UILabel new];
+    UILabel *zhaiwurenLabel = [UILabel new];
+    
+    [qitaView addSubview:qitaLabel];
+    
+    [self.changeView addSubview:qitaView];
+    [self.changeView addSubview:qitaBottView];
+    
+    [self.changeView addSubview:line1];
+    [self.changeView addSubview:line2];
+    [self.changeView addSubview:line3];
+    
+    [qitaBottView addSubview:danbaoLabel];
+    [qitaBottView addSubview:changhuanLabel];
+    [qitaBottView addSubview:diyaLabel];
+    [qitaBottView addSubview:pingzhenLabel];
+    [qitaBottView addSubview:zhaiwurenLabel];
+    
+    
+    qitaBottView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(line2,0);
+    [qitaBottView setupAutoHeightWithBottomView:zhaiwurenLabel bottomMargin:15];
+    
+    
+    line1.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(label19,15)
+    .heightIs(10);
+    
+    qitaView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
+    .heightIs(50);
+    
+    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    .centerYEqualToView(qitaView)
+    .heightIs(20);
+    [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    line2.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(qitaView,0)
+    .heightIs(1);
+    
+    line3.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .heightIs(10)
+    .topSpaceToView(qitaBottView,15);
+    
+    danbaoLabel.sd_layout.leftSpaceToView(qitaBottView,15)
+    .topSpaceToView(qitaBottView,15)
+    .heightIs(20);
+    [danbaoLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    changhuanLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    .topEqualToView(danbaoLabel)
+    .heightIs(20);
+    [changhuanLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    diyaLabel.sd_layout.leftEqualToView(danbaoLabel)
+    .topSpaceToView(danbaoLabel,15)
+    .heightIs(20);
+    [diyaLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    pingzhenLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    .topEqualToView(diyaLabel)
+    .heightIs(20);
+    [pingzhenLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    zhaiwurenLabel.sd_layout.leftEqualToView(diyaLabel)
+    .topSpaceToView(diyaLabel,15)
+    .heightIs(20);
+    [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    danbaoLabel.text = @"有无相关证件：";
+    changhuanLabel.text = @"有无担保抵押：";
+    diyaLabel.text = @"有无法律纠纷：";
+    pingzhenLabel.text = @"是否拥有全部产权：";
+    zhaiwurenLabel.text = @"有无负债：";
+    
+    UIView *liangdianTopView = [UIView new];
+    UILabel *liandianLabel = [UILabel new];
+    UIView *liangdianBottomView = [UIView new];
+    UILabel *button1 = [UILabel new];
+    UILabel *button2 = [UILabel new];
+    UIView *line4 = [UIView new];
+    
+    
+    [self.changeView addSubview:liangdianTopView];
+    [self.changeView addSubview:liangdianBottomView];
+    [self.changeView addSubview:line4];
+    [liangdianTopView addSubview:liandianLabel];
+    [liangdianBottomView addSubview:button1];
+    [liangdianBottomView addSubview:button2];
+    
+    liangdianTopView.sd_layout.leftEqualToView(line3)
+    .rightEqualToView(line3)
+    .topSpaceToView(line3,0)
+    .heightIs(50);
+    
+    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    .centerYEqualToView(liangdianTopView)
+    .heightIs(20);
+    [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
+    liandianLabel.text = @"项目亮点";
+    
+    line4.sd_layout.leftEqualToView(liangdianTopView)
+    .rightEqualToView(liangdianTopView)
+    .heightIs(1)
+    .topSpaceToView(liangdianTopView,0);
+    
+    line4.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    
+    liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .heightIs(60)
+    .topSpaceToView(line4,0);
+    
+    
+    button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button2.sd_layout.leftSpaceToView(button1,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button2 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button1.text = @"佣金比例高";
+    button2.text = @"法律关系明确";
+
+
+    }
 - (void)landProductionView
 {
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    UILabel *label3 = [UILabel new];
     
+    UILabel *label4 = [UILabel new];
+    UILabel *label5 = [UILabel new];
+    UILabel *label6 = [UILabel new];
+    UILabel *label7 = [UILabel new];
+    UILabel *label8 = [UILabel new];
+    UILabel *label9 = [UILabel new];
+    UILabel *label10 = [UILabel new];
+    UILabel *label11 = [UILabel new];
+    UILabel *label12 = [UILabel new];
+    UILabel *label13 = [UILabel new];
+    UILabel *label14 = [UILabel new];
+    UILabel *label15 = [UILabel new];
+    
+    UILabel *label16 = [UILabel new];
+    
+    [self.changeView addSubview:label1];
+    [self.changeView addSubview:label2];
+    [self.changeView addSubview:label3];
+    [self.changeView addSubview:label4];
+    [self.changeView addSubview:label5];
+    [self.changeView addSubview:label6];
+    [self.changeView addSubview:label7];
+    [self.changeView addSubview:label8];
+    [self.changeView addSubview:label9];
+    [self.changeView addSubview:label10];
+    [self.changeView addSubview:label11];
+    [self.changeView addSubview:label12];
+    [self.changeView addSubview:label13];
+    [self.changeView addSubview:label14];
+    [self.changeView addSubview:label15];
+    [self.changeView addSubview:label16];
+ 
+    
+    
+    
+    label1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(self.changeView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label2.sd_layout.leftSpaceToView(label1,0)
+    .topEqualToView(label1)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label3.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label1,15)
+    .heightIs(20);
+    
+    label4.sd_layout.leftSpaceToView(label3,0)
+    .topEqualToView(label3)
+    .heightIs(20);
+    
+    label5.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label3,15)
+    .heightIs(20);
+    
+    label6.sd_layout.leftSpaceToView(label5,0)
+    .topEqualToView(label5)
+    .heightIs(20);
+    
+    label7.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label6,15)
+    .heightIs(20);
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label8.sd_layout.leftSpaceToView(label7,0)
+    .topEqualToView(label7)
+    .heightIs(20);
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label9.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label7,15)
+    .heightIs(20);
+    
+    label10.sd_layout.leftSpaceToView(label9,0)
+    .topEqualToView(label9)
+    .heightIs(20);
+    
+    label11.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(20);
+    
+    label12.sd_layout.leftSpaceToView(label11,0)
+    .topEqualToView(label11)
+    .heightIs(20);
+    
+    
+    label13.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label11,15)
+    .heightIs(20);
+    
+    label14.sd_layout.leftSpaceToView(label13,0)
+    .topEqualToView(label13)
+    .heightIs(20);
+    
+    label15.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label13,15)
+    .heightIs(20);
+    
+    label16.sd_layout.leftSpaceToView(label15,0)
+    .topEqualToView(label15)
+    .heightIs(20);
+    
+    
+ 
+    
+    
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    [label2 setSingleLineAutoResizeWithMaxWidth:200];
+    [label3 setSingleLineAutoResizeWithMaxWidth:200];
+    [label4 setSingleLineAutoResizeWithMaxWidth:200];
+    [label5 setSingleLineAutoResizeWithMaxWidth:200];
+    [label6 setSingleLineAutoResizeWithMaxWidth:200];
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    [label9 setSingleLineAutoResizeWithMaxWidth:200];
+    [label10 setSingleLineAutoResizeWithMaxWidth:200];
+    [label11 setSingleLineAutoResizeWithMaxWidth:200];
+    [label12 setSingleLineAutoResizeWithMaxWidth:200];
+    [label13 setSingleLineAutoResizeWithMaxWidth:200];
+    [label14 setSingleLineAutoResizeWithMaxWidth:200];
+    [label15 setSingleLineAutoResizeWithMaxWidth:200];
+    [label16 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label1.text = @"身份：";
+    label2.text = @"身份：";
+    
+    label3.text = @"地区：";
+    label4.text = @"身份：";
+    
+    label5.text = @"标的物类型：";
+    label6.text = @"身份：";
+    
+    label7.text = @"房产类型：";
+    
+    label8.text = @"诉讼：";
+    label9.text = @"规划用途：";
+    
+    label10.text = @"非诉催收：";
+    label11.text = @"面积：";
+    
+    label12.text = @"债权人所在地：";
+    label13.text = @"剩余使用年限：";
+    
+    label14.text = @"债务人所在地：";
+    label15.text = @"转让方式：";
+    
+    label16.text = @"身份：";
+    
+    
+    UIView *line1 = [UIView new];
+    UIView *line2 = [UIView new];
+    UIView *line3 = [UIView new];
+    line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    
+    
+    //    line1.backgroundColor = [UIColor redColor];
+    //    line2.backgroundColor = [UIColor blueColor];
+    //    line3.backgroundColor = [UIColor blackColor];
+    UIView *qitaView = [UIView new];
+    UILabel *qitaLabel = [UILabel new];
+    qitaLabel.text = @"其他信息";
+    qitaView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *qitaBottView = [UIView new];
+    qitaBottView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *danbaoLabel = [UILabel new];
+    UILabel *changhuanLabel = [UILabel new];
+    UILabel *diyaLabel = [UILabel new];
+    UILabel *pingzhenLabel = [UILabel new];
+    UILabel *zhaiwurenLabel = [UILabel new];
+    
+    [qitaView addSubview:qitaLabel];
+    
+    [self.changeView addSubview:qitaView];
+    [self.changeView addSubview:qitaBottView];
+    
+    [self.changeView addSubview:line1];
+    [self.changeView addSubview:line2];
+    [self.changeView addSubview:line3];
+    
+    [qitaBottView addSubview:danbaoLabel];
+    [qitaBottView addSubview:changhuanLabel];
+    [qitaBottView addSubview:diyaLabel];
+    [qitaBottView addSubview:pingzhenLabel];
+    [qitaBottView addSubview:zhaiwurenLabel];
+    
+    
+    
+    qitaBottView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(line2,0);
+    [qitaBottView setupAutoHeightWithBottomView:zhaiwurenLabel bottomMargin:15];
+    
+    
+    line1.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(label15,15)
+    .heightIs(10);
+    
+    qitaView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
+    .heightIs(50);
+    
+    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    .centerYEqualToView(qitaView)
+    .heightIs(20);
+    [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    line2.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(qitaView,0)
+    .heightIs(1);
+    
+    line3.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .heightIs(10)
+    .topSpaceToView(qitaBottView,15);
+    
+    danbaoLabel.sd_layout.leftSpaceToView(qitaBottView,15)
+    .topSpaceToView(qitaBottView,15)
+    .heightIs(20);
+    [danbaoLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    changhuanLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    .topEqualToView(danbaoLabel)
+    .heightIs(20);
+    [changhuanLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    diyaLabel.sd_layout.leftEqualToView(danbaoLabel)
+    .topSpaceToView(danbaoLabel,15)
+    .heightIs(20);
+    [diyaLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    pingzhenLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    .topEqualToView(diyaLabel)
+    .heightIs(20);
+    [pingzhenLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    zhaiwurenLabel.sd_layout.leftEqualToView(diyaLabel)
+    .topSpaceToView(diyaLabel,15)
+    .heightIs(20);
+    [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    danbaoLabel.text = @"有无相关证件：";
+    changhuanLabel.text = @"有无担保抵押：";
+    diyaLabel.text = @"有无法律纠纷：";
+    pingzhenLabel.text = @"是否拥有全部产权：";
+    zhaiwurenLabel.text = @"有无负债：";
+    
+    UIView *liangdianTopView = [UIView new];
+    UILabel *liandianLabel = [UILabel new];
+    UIView *liangdianBottomView = [UIView new];
+    UILabel *button1 = [UILabel new];
+    UILabel *button2 = [UILabel new];
+    
+    UILabel *button3 = [UILabel new];
+    UILabel *button4 = [UILabel new];
+    
+    UIView *line4 = [UIView new];
+    
+    
+    [self.changeView addSubview:liangdianTopView];
+    [self.changeView addSubview:liangdianBottomView];
+    [self.changeView addSubview:line4];
+    [liangdianTopView addSubview:liandianLabel];
+    [liangdianBottomView addSubview:button1];
+    [liangdianBottomView addSubview:button2];
+    [liangdianBottomView addSubview:button3];
+    [liangdianBottomView addSubview:button4];
+    
+    liangdianTopView.sd_layout.leftEqualToView(line3)
+    .rightEqualToView(line3)
+    .topSpaceToView(line3,0)
+    .heightIs(50);
+    
+    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    .centerYEqualToView(liangdianTopView)
+    .heightIs(20);
+    [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
+    liandianLabel.text = @"项目亮点";
+    
+    line4.sd_layout.leftEqualToView(liangdianTopView)
+    .rightEqualToView(liangdianTopView)
+    .heightIs(1)
+    .topSpaceToView(liangdianTopView,0);
+    
+    line4.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    
+    liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .heightIs(60)
+    .topSpaceToView(line4,0);
+    
+    
+    button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
+    .topSpaceToView(liangdianBottomView,15)
+    .heightIs(20);
+    [button1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button2.sd_layout.leftSpaceToView(button1,15)
+    .topSpaceToView(liangdianBottomView,15)
+    .heightIs(20);
+    [button2 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button3.sd_layout.leftSpaceToView(button2,15)
+    .topSpaceToView(liangdianBottomView,15)
+    .heightIs(20);
+    [button3 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button4.sd_layout.leftSpaceToView(liangdianBottomView,15)
+    .topSpaceToView(button1,15)
+    .heightIs(20);
+    [button4 setSingleLineAutoResizeWithMaxWidth:200];
+
+    button1.text = @"可议价";
+    button2.text = @"位置优越";
+    button3.text = @"折扣空间大";
+    button4.text = @"有评估报告";
+    
+ 
 }
 - (void)businesssView
 {
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
-    
     UILabel *label4 = [UILabel new];
     UILabel *label5 = [UILabel new];
     UILabel *label6 = [UILabel new];
@@ -1219,9 +1897,433 @@
 
 - (void)finanCingGuquanView
 {
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    UILabel *label3 = [UILabel new];
+    
+    UILabel *label4 = [UILabel new];
+    UILabel *label5 = [UILabel new];
+    UILabel *label6 = [UILabel new];
+    UILabel *label7 = [UILabel new];
+    UILabel *label8 = [UILabel new];
+    UILabel *label9 = [UILabel new];
+    UILabel *label10 = [UILabel new];
+    UILabel *label11 = [UILabel new];
+    UILabel *label12 = [UILabel new];
+    UILabel *label13 = [UILabel new];
+    UILabel *label14 = [UILabel new];
+    UILabel *label15 = [UILabel new];
+    UILabel *label16 = [UILabel new];
+    
+    
+    [self.changeView addSubview:label1];
+    [self.changeView addSubview:label2];
+    [self.changeView addSubview:label3];
+    [self.changeView addSubview:label4];
+    [self.changeView addSubview:label5];
+    [self.changeView addSubview:label6];
+    [self.changeView addSubview:label7];
+    [self.changeView addSubview:label8];
+    [self.changeView addSubview:label9];
+    [self.changeView addSubview:label10];
+    [self.changeView addSubview:label11];
+    [self.changeView addSubview:label12];
+    
+    [self.changeView addSubview:label13];
+    [self.changeView addSubview:label14];
+    [self.changeView addSubview:label15];
+    [self.changeView addSubview:label16];
+    
+    label1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(self.changeView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label2.sd_layout.leftSpaceToView(label1,0)
+    .topEqualToView(label1)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label3.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label1,15)
+    .heightIs(20);
+    
+    label4.sd_layout.leftSpaceToView(label3,0)
+    .topEqualToView(label3)
+    .heightIs(20);
+    
+    label5.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label3,15)
+    .heightIs(20);
+    
+    label6.sd_layout.leftSpaceToView(label5,0)
+    .topEqualToView(label5)
+    .heightIs(20);
+    
+    label7.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label6,15)
+    .heightIs(20);
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label8.sd_layout.leftSpaceToView(label7,0)
+    .topEqualToView(label7)
+    .heightIs(20);
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label9.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label7,15)
+    .heightIs(20);
+    
+    label10.sd_layout.leftSpaceToView(label9,0)
+    .topEqualToView(label9)
+    .heightIs(20);
+    
+    label11.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(20);
+    
+    label12.sd_layout.leftSpaceToView(label11,0)
+    .topEqualToView(label11)
+    .heightIs(20);
+    
+    
+    label13.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label11,15)
+    .heightIs(20);
+    
+    label14.sd_layout.leftSpaceToView(label13,0)
+    .topEqualToView(label13)
+    .heightIs(20);
+    
+    label15.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label13,15)
+    .heightIs(20);
+    
+    label16.sd_layout.leftSpaceToView(label15,0)
+    .topEqualToView(label15)
+    .heightIs(20);
+
+    
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    [label2 setSingleLineAutoResizeWithMaxWidth:200];
+    [label3 setSingleLineAutoResizeWithMaxWidth:200];
+    [label4 setSingleLineAutoResizeWithMaxWidth:200];
+    [label5 setSingleLineAutoResizeWithMaxWidth:200];
+    [label6 setSingleLineAutoResizeWithMaxWidth:200];
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    [label9 setSingleLineAutoResizeWithMaxWidth:200];
+    [label10 setSingleLineAutoResizeWithMaxWidth:200];
+    [label11 setSingleLineAutoResizeWithMaxWidth:200];
+    [label12 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    [label13 setSingleLineAutoResizeWithMaxWidth:200];
+    [label14 setSingleLineAutoResizeWithMaxWidth:200];
+    [label15 setSingleLineAutoResizeWithMaxWidth:200];
+    [label16 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label1.text = @"身份：";
+    label2.text = @"身份：";
+    label3.text = @"项目所在地：";
+    label4.text = @"身份：";
+    label5.text = @"融资方式：";
+    label6.text = @"身份：";
+    label7.text = @"融资金额：";
+    label8.text = @"身份：";
+    label9.text = @"出让股权比例：";
+    label10.text = @"诉讼：";
+    label11.text = @"企业现状：";
+    label12.text = @"非诉催收：";
+    label13.text = @"所属行业：";
+    label14.text = @"诉讼：";
+    label15.text = @"资金用途：";
+    label16.text = @"非诉催收：";
+    
+    UIView *line1 = [UIView new];
+    UIView *line2 = [UIView new];
+    UIView *line3 = [UIView new];
+    line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    
+    //    line1.backgroundColor = [UIColor redColor];
+    //    line2.backgroundColor = [UIColor blueColor];
+    //    line3.backgroundColor = [UIColor blackColor];
+    
+ 
+    [self.changeView addSubview:line1];
+    [self.changeView addSubview:line2];
+    [self.changeView addSubview:line3];
+    
+    
+    
+    line1.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(label15,15)
+    .heightIs(10);
+    
+    
+  
+    
+    
+    UIView *liangdianTopView = [UIView new];
+    UILabel *liandianLabel = [UILabel new];
+    UIView *liangdianBottomView = [UIView new];
+    UILabel *button1 = [UILabel new];
+    UILabel *button2 = [UILabel new];
+    UILabel *button3 = [UILabel new];
+    UIView *line4 = [UIView new];
+    
+    line2.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(liangdianTopView,0)
+    .heightIs(1);
+
+    
+    [self.changeView addSubview:liangdianTopView];
+    [self.changeView addSubview:liangdianBottomView];
+    [self.changeView addSubview:line4];
+    [liangdianTopView addSubview:liandianLabel];
+    [liangdianBottomView addSubview:button1];
+    [liangdianBottomView addSubview:button2];
+    [liangdianBottomView addSubview:button3];
+    
+    
+    liangdianTopView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
+    .heightIs(50);
+    
+    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    .centerYEqualToView(liangdianTopView)
+    .heightIs(20);
+    [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
+    liandianLabel.text = @"项目亮点";
+    
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    
+    liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .heightIs(60)
+    .topSpaceToView(line2,0);
+    
+    
+    button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button2.sd_layout.leftSpaceToView(button1,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button2 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button3.sd_layout.leftSpaceToView(button2,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button3 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button1.text = @"抵押物足值";
+    button2.text = @"回报率高";
 }
 - (void)finaCingZhaiquanView
 {
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    UILabel *label3 = [UILabel new];
+    
+    UILabel *label4 = [UILabel new];
+    UILabel *label5 = [UILabel new];
+    UILabel *label6 = [UILabel new];
+    UILabel *label7 = [UILabel new];
+    UILabel *label8 = [UILabel new];
+    UILabel *label9 = [UILabel new];
+    UILabel *label10 = [UILabel new];
+    UILabel *label11 = [UILabel new];
+    UILabel *label12 = [UILabel new];
+    
+    [self.changeView addSubview:label1];
+    [self.changeView addSubview:label2];
+    [self.changeView addSubview:label3];
+    [self.changeView addSubview:label4];
+    [self.changeView addSubview:label5];
+    [self.changeView addSubview:label6];
+    [self.changeView addSubview:label7];
+    [self.changeView addSubview:label8];
+    [self.changeView addSubview:label9];
+    [self.changeView addSubview:label10];
+    [self.changeView addSubview:label11];
+    [self.changeView addSubview:label12];
+    
+    label1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(self.changeView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label2.sd_layout.leftSpaceToView(label1,0)
+    .topEqualToView(label1)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label3.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label1,15)
+    .heightIs(20);
+    
+    label4.sd_layout.leftSpaceToView(label3,0)
+    .topEqualToView(label3)
+    .heightIs(20);
+    
+    label5.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label3,15)
+    .heightIs(20);
+    
+    label6.sd_layout.leftSpaceToView(label5,0)
+    .topEqualToView(label5)
+    .heightIs(20);
+    
+    label7.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label6,15)
+    .heightIs(20);
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    label8.sd_layout.leftSpaceToView(label7,0)
+    .topEqualToView(label7)
+    .heightIs(20);
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    label9.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label7,15)
+    .heightIs(20);
+    
+    label10.sd_layout.leftSpaceToView(label9,0)
+    .topEqualToView(label9)
+    .heightIs(20);
+    
+    label11.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(20);
+    
+    label12.sd_layout.leftSpaceToView(label11,0)
+    .topEqualToView(label11)
+    .heightIs(20);
+    
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    [label2 setSingleLineAutoResizeWithMaxWidth:200];
+    [label3 setSingleLineAutoResizeWithMaxWidth:200];
+    [label4 setSingleLineAutoResizeWithMaxWidth:200];
+    [label5 setSingleLineAutoResizeWithMaxWidth:200];
+    [label6 setSingleLineAutoResizeWithMaxWidth:200];
+    [label7 setSingleLineAutoResizeWithMaxWidth:200];
+    [label8 setSingleLineAutoResizeWithMaxWidth:200];
+    [label9 setSingleLineAutoResizeWithMaxWidth:200];
+    [label10 setSingleLineAutoResizeWithMaxWidth:200];
+    [label11 setSingleLineAutoResizeWithMaxWidth:200];
+    [label12 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    
+    label1.text = @"身份：";
+    label2.text = @"身份：";
+    label3.text = @"项目所在地：";
+    label4.text = @"身份：";
+    label5.text = @"融资方式：";
+    label6.text = @"身份：";
+    label7.text = @"担保方式：";
+    label8.text = @"身份：";
+    label9.text = @"融资金额：";
+    label10.text = @"诉讼：";
+    label11.text = @"使用期限：";
+    label12.text = @"非诉催收：";
+    
+    
+    UIView *line1 = [UIView new];
+    UIView *line2 = [UIView new];
+    UIView *line3 = [UIView new];
+    line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    
+    //    line1.backgroundColor = [UIColor redColor];
+    //    line2.backgroundColor = [UIColor blueColor];
+    //    line3.backgroundColor = [UIColor blackColor];
+  
+    
+    
+    [self.changeView addSubview:line1];
+    [self.changeView addSubview:line2];
+    [self.changeView addSubview:line3];
+  
+    
+    line1.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .topSpaceToView(label11,15)
+    .heightIs(10);
+    
+  
+    
+    
+    UIView *liangdianTopView = [UIView new];
+    UILabel *liandianLabel = [UILabel new];
+    UIView *liangdianBottomView = [UIView new];
+    UILabel *button1 = [UILabel new];
+    UILabel *button2 = [UILabel new];
+    UILabel *button3 = [UILabel new];
+    UIView *line4 = [UIView new];
+    
+    line2.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(liangdianTopView,0)
+    .heightIs(1);
+    
+    
+    [self.changeView addSubview:liangdianTopView];
+    [self.changeView addSubview:liangdianBottomView];
+    [self.changeView addSubview:line4];
+    [liangdianTopView addSubview:liandianLabel];
+    [liangdianBottomView addSubview:button1];
+    [liangdianBottomView addSubview:button2];
+    [liangdianBottomView addSubview:button3];
+    
+    
+    liangdianTopView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
+    .heightIs(50);
+    
+    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    .centerYEqualToView(liangdianTopView)
+    .heightIs(20);
+    [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
+    liandianLabel.text = @"项目亮点";
+
+    
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    
+    liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+    .rightSpaceToView(self.changeView,0)
+    .heightIs(60)
+    .topSpaceToView(line2,0);
+    
+    
+    button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button1 setSingleLineAutoResizeWithMaxWidth:200];
+    
+    button2.sd_layout.leftSpaceToView(button1,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button2 setSingleLineAutoResizeWithMaxWidth:200];
+    
+ 
+    
+    button1.text = @"抵押物足值";
+    button2.text = @"回报率高";
 }
 - (void)asetBackView
 {
@@ -1454,7 +2556,6 @@
     UILabel *button1 = [UILabel new];
     UILabel *button2 = [UILabel new];
     UILabel *button3 = [UILabel new];
-    
     UIView *line4 = [UIView new];
     
     

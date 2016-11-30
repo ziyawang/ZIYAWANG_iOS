@@ -170,6 +170,10 @@
 
 
 #pragma mark----视图周期
+
+
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -674,7 +678,7 @@
 //    [self.imageurlArray addObject:self.model.PictureDes3];
     
     
-    self.phoneNumber = self.model.PhoneNumber;
+//    self.phoneNumber = self.model.PhoneNumber;
     
     
     
@@ -849,7 +853,7 @@
         self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
         self.label5.text = @"买方性质：";
-        self.label12.text = self.model.BuyerNature;
+//        self.label12.text = self.model.BuyerNature;
         [self.label7 setHidden:YES];
         [self.label8 setHidden:YES];
         [self.label9 setHidden:YES];
@@ -932,7 +936,7 @@
     else if([self.typeName isEqualToString:@"尽职调查"])
     {
         self.label1.text = @"被调查方：";
-        self.label2.text = self.model.Informant;
+//        self.label2.text = self.model.Informant;
         self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
         self.label5.text = @"类型：";
@@ -948,7 +952,7 @@
     else if([self.typeName isEqualToString:@"法律服务"])
     {
         self.label1.text = @"需求：";
-        self.label2.text = self.model.Requirement;
+//        self.label2.text = self.model.Requirement;
         self.label3.text = @"地区：";
         self.label4.text = self.model.ProArea;
         self.label5.text = @"类型：";
@@ -963,7 +967,7 @@
     else if([self.typeName isEqualToString:@"资产求购"])
     {
         self.label1.text = @"求购方：";
-        self.label2.text = self.model.Buyer;
+//        self.label2.text = self.model.Buyer;
         [self.label3 setHidden:YES];
         [self.label4 setHidden:YES];
         
@@ -984,7 +988,7 @@
         self.label3.text = @"投资期限：";
         self.label4.text = [self.model.Year stringByAppendingString:@"年"];
         self.label7.text = @"投资方式：";
-        self.label8.text = self.model.investType;
+//        self.label8.text = self.model.investType;
         self.label11.text = @"投资类型：";
         self.label12.text = self.model.AssetType;
         [self.label9 setHidden:NO];

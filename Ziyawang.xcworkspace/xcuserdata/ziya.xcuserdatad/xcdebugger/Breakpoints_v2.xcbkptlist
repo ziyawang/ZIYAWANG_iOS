@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Ziyawang/Classes/NewPublish/AssetPackController.m"
-            timestampString = "502082231.329193"
+            filePath = "Ziyawang/Classes/Find/Controller/FindInfoController.m"
+            timestampString = "502187376.392169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
-            landmarkName = "-sendButtonAction:"
+            startingLineNumber = "1410"
+            endingLineNumber = "1410"
+            landmarkName = "-findInfomationsWithDic:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

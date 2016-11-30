@@ -107,7 +107,7 @@
     }
     else if ([self.model.TypeName isEqualToString:@"法律服务"])
     {
-        self.TotalMoney.text = self.model.Requirement;
+//        self.TotalMoney.text = self.model.Requirement;
         self.leftChangeLabel.text = @"需求";
         
         [self.TransferMoney setHidden:YES];
@@ -166,7 +166,7 @@
     }
     else if ([self.model.TypeName isEqualToString:@"尽职调查"])
     {
-        self.TotalMoney.text = self.model.Informant;
+//        self.TotalMoney.text = self.model.Informant;
         self.leftChangeLabel.text = @"被调查方";
         
         [self.TransferMoney setHidden:YES];
@@ -193,7 +193,7 @@
         //        [self.TotalMoney.frame.size.width = 100];
         [self.rightChangeLabel setHidden:YES];
         [self.TransferMoney setHidden:YES];
-        self.TotalMoney.text = self.model.Buyer;
+//        self.TotalMoney.text = self.model.Buyer;
         self.leftChangeLabel.text = @"求购方";
         [self.TransMoneyImage setHidden:YES];
         self.TotalMoneyImage.image = [UIImage imageNamed:@"qiugou"];

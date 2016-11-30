@@ -129,7 +129,12 @@
         if (self.chooseArea != nil) {
             if ([self.type isEqualToString:@"信息"]) {
                  [defaults setObject:self.chooseArea forKey:@"企业所在"];
-                [defaults setObject:self.chooseArea forKey:self.selectCell];
+//                [defaults setObject:self.chooseArea forKey:self.selectCell];
+            }
+            else if ([self.type isEqualToString:@"信息1"])
+            {
+                [defaults setObject:self.chooseArea forKey:@"企业所在1"];
+
             }
             else if([self.type isEqualToString:@"测试"])
             {

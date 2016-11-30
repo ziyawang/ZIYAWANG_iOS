@@ -11,6 +11,13 @@
             <connections>
                 <outlet property="ContentView" destination="Qfb-rw-Suc" id="9qm-vC-b1I"/>
                 <outlet property="ImageBackView" destination="yUp-gY-O6O" id="dw5-8G-mkc"/>
+                <outlet property="button1" destination="WHQ-VG-Lm9" id="9Nh-Zw-SKf"/>
+                <outlet property="button2" destination="KK3-2F-NwL" id="tdh-EG-uC0"/>
+                <outlet property="button3" destination="zim-7T-L3F" id="kru-Wz-RuQ"/>
+                <outlet property="button4" destination="rzy-bU-N6d" id="bVX-lv-i3d"/>
+                <outlet property="button5" destination="PQa-h2-PNj" id="nBj-xA-5BS"/>
+                <outlet property="button6" destination="Wu5-VV-GtJ" id="IuJ-uq-Guf"/>
+                <outlet property="button7" destination="pFM-b9-4D8" id="BqS-g0-g9G"/>
                 <outlet property="danbaoViewHeight" destination="wsj-Xy-PHZ" id="B4n-tj-7fF"/>
                 <outlet property="danbaofangshiLabel" destination="Ylj-io-58j" id="0YQ-Mi-Pyo"/>
                 <outlet property="danbaofangshiView" destination="bXt-Yd-Ute" id="rLM-98-gHb"/>
@@ -19,6 +26,8 @@
                 <outlet property="guquanbiliView" destination="y01-0w-11j" id="I74-U3-CNa"/>
                 <outlet property="hangyeLabel" destination="FDJ-F3-1LY" id="mhX-WY-Ll6"/>
                 <outlet property="jineTextField" destination="a3J-eC-rtC" id="oeU-2Z-NBL"/>
+                <outlet property="liangdianHeight1" destination="NFB-RS-cut" id="7Aa-Zw-mvG"/>
+                <outlet property="liangdianHeight2" destination="un9-bA-FVq" id="GPP-Gx-y8U"/>
                 <outlet property="liangdianView1" destination="89R-zA-zVf" id="QgG-os-rIu"/>
                 <outlet property="liangdianView2" destination="N7I-jE-5Sp" id="qVh-dE-4Ri"/>
                 <outlet property="nameTextField" destination="wdf-zt-0Yx" id="xxa-bN-QHf"/>
@@ -31,6 +40,8 @@
                 <outlet property="recordView" destination="3Bp-o4-QY2" id="dVU-Mu-6pf"/>
                 <outlet property="rongzifangshiLabel" destination="VzZ-Yl-sfW" id="1z2-DJ-BkO"/>
                 <outlet property="rongzifangshiView" destination="MKn-9M-rgR" id="RZG-nS-Cjd"/>
+                <outlet property="scrollView" destination="7pk-mV-fAT" id="3QY-SI-v6x"/>
+                <outlet property="sendButton" destination="LEg-ed-thq" id="KcK-Xm-Doa"/>
                 <outlet property="shenfenLabel" destination="AYb-tU-36o" id="byY-OI-Q3R"/>
                 <outlet property="shenfenView" destination="WLl-ov-M7d" id="CDw-Al-sVJ"/>
                 <outlet property="suoshuhangyeHeight" destination="9fL-jQ-hsG" id="c7e-hr-MXS"/>
@@ -295,7 +306,7 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lMz-aW-dHb">
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="0C3-2R-QG5"/>
+                                        <constraint firstAttribute="height" constant="90" id="0C3-2R-QG5"/>
                                     </constraints>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -624,7 +635,12 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="dHk-3j-Yke"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
+                                    <state key="normal" title="确认发布">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="sendButtonAction:" destination="-1" eventType="touchUpInside" id="nQT-rf-44m"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

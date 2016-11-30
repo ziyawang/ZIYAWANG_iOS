@@ -10,7 +10,9 @@
 #import "RecordManager.h"
 #import "AddImageManager.h"
 #import "HttpManager.h"
-@interface AssetPackController ()<UIPickerViewDelegate,UIPickerViewDataSource>
+#import "ChooseAreaController.h"
+@interface AssetPackController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *shenfenView;
 @property (weak, nonatomic) IBOutlet UIView *zichanleixingView;
 @property (weak, nonatomic) IBOutlet UIView *laiyuanView;
@@ -54,6 +56,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *benjiTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lixiTextField;
 @property (weak, nonatomic) IBOutlet UITextField *hushuTextField;
+@property (weak, nonatomic) IBOutlet UIButton *button1;
+@property (weak, nonatomic) IBOutlet UIButton *button2;
+@property (weak, nonatomic) IBOutlet UIButton *button3;
 
 
 @property (nonatomic,strong) NSMutableArray *SelectedButtonsArray;
@@ -64,21 +69,42 @@
 @property (nonatomic,strong) UITextField *lianxifangshiTextfield;
 @property (weak, nonatomic) IBOutlet UIView *ContentView;
 
+@property (nonatomic,strong) NSMutableArray *liangdianArray;
+@property (nonatomic,strong) NSString *liangdianStr;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (nonatomic,assign) BOOL isHave;
+@property (nonatomic,strong) UIView *PromiseView;
+
 @end
 
 @implementation AssetPackController
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSString *suozai = [[NSUserDefaults standardUserDefaults]objectForKey:@"企业所在"];
+    if (suozai == nil) {
+        
+    }
+    else
+    {
+        self.diquLabel.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"企业所在"];
+    }
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.scrollView.delegate = self;
+    self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+
     self.navigationItem.title = @"固产转让";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"委托发布" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
     self.SelectedButtonsArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
-    [self setWeituoView];
     
     
     self.viewArray = [NSMutableArray new];
@@ -92,7 +118,223 @@
     [[RecordManager recordManager] setaudioWithView:self.view recordView:self.recordView];
     //    [[AddImageManager AddManager] setAddimageViewWithView:self.ImageBackView];
     [[AddImageManager AddManager]setAddimageViewWithView:self.ImageBackView target:self];
+    self.SelectedButtonsArray = [NSMutableArray new];
+    UIButton *button = [UIButton new];
+    button.tag = 3;
+    [self.SelectedButtonsArray addObject:button];
+    self.liangdianArray = [NSMutableArray new];
+    self.liangdianStr = [NSString string];
+    
+    [self setstatuForButtonsWithType:@"0" button:self.button1];
+    [self setstatuForButtonsWithType:@"0" button:self.button2];
+    [self setstatuForButtonsWithType:@"0" button:self.button3];
+    [self.button1 addTarget:self action:@selector(selectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.button2 addTarget:self action:@selector(selectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.button3 addTarget:self action:@selector(selectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.isHave = NO;
+    self.textView.text = @"请输入文字描述";
+    self.textView.textColor = [UIColor grayColor];
+    self.textView.delegate = self;
 
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+    
+}
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    textView.textColor = [UIColor blackColor];
+    textView.text = nil;
+}
+
+- (void)findButtonWithButton:(UIButton *)button
+{
+    
+    NSMutableArray *addArray = [NSMutableArray new];
+    
+    for (UIButton *btn in self.SelectedButtonsArray)
+    {
+        
+        if (button == btn) {
+            
+            self.isHave = YES;
+            return;
+        }
+        else
+        {
+            
+            self.isHave = NO;
+            [addArray addObject:button];
+        }
+    }
+
+}
+- (void)selectButtonAction:(UIButton *)button
+{
+    
+    [self findButtonWithButton:button];
+    
+    if (self.isHave == YES)
+    {
+        [self setstatuForButtonsWithType:@"0" button:button];
+
+        [self.SelectedButtonsArray removeObject:button];
+        [self.liangdianArray removeObject:button.titleLabel.text];
+        NSLog(@"%@",button.titleLabel.text);
+        NSLog(@"%@",self.liangdianArray);
+    }
+    else
+    {
+        
+        [self setstatuForButtonsWithType:@"1" button:button];
+        [self.SelectedButtonsArray addObject:button];
+        [self.liangdianArray addObject:button.titleLabel.text];
+        NSLog(@"%@",button.titleLabel.text);
+        NSLog(@"%@",self.liangdianArray);
+        
+    }
+}
+- (void)setstatuForButtonsWithType:(NSString *)type button:(UIButton *)button
+{
+    if ([type isEqualToString:@"0"]) {
+        button.layer.cornerRadius = 15;
+        button.layer.masksToBounds = YES;
+        button.layer.borderWidth = 1;
+        button.layer.borderColor = [UIColor blackColor].CGColor;
+        [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    }
+    else
+    {
+        button.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+        [button setTitleColor:[UIColor colorWithHexString:@"fdd000"] forState:(UIControlStateNormal)];
+    }
+    
+}
+- (void)setPromiseView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
+    
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    
+    [bottomView addSubview:label1];
+    [bottomView addSubview:label2];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYIs(self.view.centerY)
+    .widthIs(285 * kWidthScale)
+    .heightIs(440 * kHeightScale);
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    
+    label1.sd_layout.centerXEqualToView(bottomView)
+    .topSpaceToView(bottomView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    label1.text = @"重要提示";
+    
+    label2.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(label1,15)
+    .autoHeightRatio(0);
+    
+    label2.text = @"您是否对您发布的信息进行真实性承诺，承诺后更能吸引服务方主动联系您，更有助于达成您的需求。无论承诺与否都不影响您的正常发布。";
+    
+    
+    
+    
+    fabuButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(label2,20)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"承诺" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    fanhuiButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(fabuButton,20)
+    .heightIs(40*kHeightScale);
+    fanhuiButton.layer.borderWidth = 1.5;
+    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(weituoCancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickWeituoFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    //    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.PromiseView = mengbanView;
+    //    [self.PromiseView setHidden:YES];
+    
+    
 }
 - (void)setWeituoView
 {
@@ -120,9 +362,10 @@
     UIView *line2 = [UIView new];
     UIView *line3 = [UIView new];
     
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
     
-    
-    [self.ContentView addSubview:mengbanView];
+    //    [self.ContentView addSubview:mengbanView];
     [mengbanView addSubview:weituoView];
     [weituoView addSubview:imageBackView];
     [imageBackView addSubview:tuziImage];
@@ -148,14 +391,14 @@
     weituoView.backgroundColor = [UIColor whiteColor];
     
     
-    mengbanView.sd_layout.leftSpaceToView(self.ContentView,0)
-    .rightSpaceToView(self.ContentView,0)
-    .topSpaceToView(self.ContentView,0)
-    .bottomSpaceToView(self.ContentView,0);
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
     
     
     weituoView.sd_layout.centerXEqualToView(mengbanView)
-    .centerYEqualToView(self.view)
+    .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
     .heightIs(460 * kHeightScale);
     
@@ -288,9 +531,112 @@
     weituoView.layer.cornerRadius = 10;
     weituoView.layer.masksToBounds = YES;
     self.weituoView = mengbanView;
+    //    [self.weituoView setHidden:YES];
+    
+}
+
+- (void)didClickWeituoFabuAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+    [self postDataToDomainWithPromise:@"承诺"];
+    
+}
+- (void)didClickFanhuiButtonAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+    [self postDataToDomainWithPromise:@"不承诺"];
+}
+
+- (void)postDataToDomainWithPromise:(NSString *)promise
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+    //    http://apitest.ziyawang.com/v1/test/project/create
+    //    http://apitest.ziyawang.com/v1/v2/uploadfile
+    NSString *url1= getDataURL;
+    //    NSString *url2 = @"/uploadfile?token=";
+    NSString *url2 = @"/v2/uploadfile?token=";
+    
+    NSString *url = [url1 stringByAppendingString:url2];
+    NSString *URL = [url stringByAppendingString:token];
+    
+    NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    NSLog(@"%@",urlStr);
+    NSString *fileName = @"lll.wav";
+    NSString *urlpath = [urlStr stringByAppendingString:fileName];
+    NSURL *urla = [NSURL URLWithString:urlpath];
+    
+    NSURL *audiourl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
+    for (NSString *str in self.liangdianArray) {
+        self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
+        ;
+    }
+    self.liangdianStr = [self.liangdianStr substringFromIndex:1];
+    NSLog(@"%@",self.liangdianStr);
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    [dic setObject:promise forKey:@"Promise"];
+    
+    [dic setObject:self.liangdianStr forKey:@"ProLabel"];
+    
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
+    
+    [dic setObject:self.diquLabel.text forKey:@"ProArea"];
+    [dic setObject:self.zichanleixingLabel.text forKey:@"AssetType"];
+    [dic setObject:@"IOS" forKey:@"Channel"];
+    [dic setObject:self.textView.text forKey:@"WordDes"];
+    
+    
+    [dic setObject:self.laiyuanLabel.text forKey:@"FromWhere"];
+    [dic setObject:self.zongjineTextField.text forKey:@"TotalMoney"];
+    [dic setObject:self.zhuanrangjiaTextField.text forKey:@"TransferMoney"];
+    [dic setObject:self.benjiTextField.text forKey:@"Money"];
+    [dic setObject:self.lixiTextField.text forKey:@"Rate"];
+    [dic setObject:self.hushuTextField.text forKey:@"Counts"];
+    [dic setObject:self.baogaoLabel.text forKey:@"Report"];
+    
+    
+    [dic setObject:self.shijianLabel.text forKey:@"Time"];
+    [dic setObject:self.diyawuleixingLabel.text forKey:@"Pawn"];
+    [dic setObject:@"1" forKey:@"TypeID"];
+    
+    NSLog(@"%@",dic);
+    NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
+    [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
+
+}
+- (void)weituoCancelAction2:(UIButton *)button
+{
+    
+    [self.PromiseView removeFromSuperview];
+}
+
+- (void)didClickWeituoFabuAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    [self weituoFabu];
+    
+}
+- (void)didClickFanhuiButtonAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
     [self.weituoView setHidden:YES];
     
 }
+- (void)weituoCancelAction:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    
+    [self.weituoView setHidden:YES];
+}
+
+- (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
+{
+    //    [self.weituoView setHidden:NO];
+    [self setWeituoView];
+}
+
 - (void)weituoFabu
 {
     
@@ -319,81 +665,12 @@
     }];
     
 }
-- (IBAction)sendButtonAction:(id)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *token = [defaults objectForKey:@"token"];
-    //    http://apitest.ziyawang.com/v1/test/project/create
-    //    http://apitest.ziyawang.com/v1/v2/uploadfile
-    NSString *url1= getDataURL;
-    //    NSString *url2 = @"/uploadfile?token=";
-    NSString *url2 = @"/v2/uploadfile?token=";
+- (IBAction)sendButtonAction:(id)sender
+{
+    [self setPromiseView];
     
-    NSString *url = [url1 stringByAppendingString:url2];
-    NSString *URL = [url stringByAppendingString:token];
-    
-    NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
-    NSLog(@"%@",urlStr);
-    NSString *fileName = @"lll.wav";
-    NSString *urlpath = [urlStr stringByAppendingString:fileName];
-    NSURL *urla = [NSURL URLWithString:urlpath];
-    
-    NSURL *audiourl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
-    
-    
-    NSMutableDictionary *dic = [NSMutableDictionary new];
-    
-    [dic setObject:@"token" forKey:@"access_token"];
-    [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
-    
-    [dic setObject:self.diquLabel.text forKey:@"ProArea"];
-    [dic setObject:self.zichanleixingLabel.text forKey:@"AssetType"];
-    [dic setObject:@"IOS" forKey:@"Channel"];
-    [dic setObject:self.textView.text forKey:@"WordDes"];
-    
-    
-    [dic setObject:self.laiyuanLabel.text forKey:@"FromWhere"];
-    [dic setObject:self.zongjineTextField.text forKey:@"TotalMoney"];
-    [dic setObject:self.zhuanrangjiaTextField.text forKey:@"TransferMoney"];
-    [dic setObject:self.benjiTextField.text forKey:@"Money"];
-    [dic setObject:self.lixiTextField.text forKey:@"Rate"];
-    [dic setObject:self.hushuTextField.text forKey:@"Counts"];
-    [dic setObject:self.baogaoLabel.text forKey:@"Report"];
-    
-    
-    [dic setObject:self.shijianLabel.text forKey:@"Time"];
-    [dic setObject:self.diyawuleixingLabel.text forKey:@"Pawn"];
-    [dic setObject:@"1" forKey:@"TypeID"];
-    
-    
-    NSLog(@"%@",dic);
-    
-    NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
-    [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
 }
 
-- (void)didClickWeituoFabuAction:(UIButton *)button
-{
-    [self.view endEditing:YES];
-    [self weituoFabu];
-    
-}
-- (void)didClickFanhuiButtonAction:(UIButton *)button
-{
-    [self.view endEditing:YES];
-    [self.weituoView setHidden:YES];
-    
-}
-- (void)weituoCancelAction:(UIButton *)button
-{
-    [self.view endEditing:YES];
-    
-    [self.weituoView setHidden:YES];
-}
-
-- (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
-{
-    [self.weituoView setHidden:NO];
-}
 
 - (void)setAllArray
 {
@@ -612,6 +889,9 @@
 }
 - (void)gestureAction:(UITapGestureRecognizer *)gesture
 {
+    
+    [self.view endEditing:YES];
+    
     switch (gesture.view.tag) {
         case 0:
         {
@@ -665,18 +945,24 @@
             break;
         case 3:
         {
-            [self.mengbanView setHidden:NO];
-            
-            [UIView animateWithDuration:0.5 animations:^{
-                self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
-            }];
-            
-            self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[3]];
-            [self.pickerView reloadAllComponents];
-            [self.pickerView selectRow:0 inComponent:0 animated:NO];
-            self.row = 3;
-            self.selectStr = self.AllArray[3][0];
-            
+//            [self.mengbanView setHidden:NO];
+//            
+//            [UIView animateWithDuration:0.5 animations:^{
+//                self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
+//            }];
+//            
+//            self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[3]];
+//            [self.pickerView reloadAllComponents];
+//            [self.pickerView selectRow:0 inComponent:0 animated:NO];
+//            self.row = 3;
+//            self.selectStr = self.AllArray[3][0];
+            {
+                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
+                chooseVC.type = @"信息";
+                [self.navigationController pushViewController:chooseVC animated:YES];
+                
+                
+            }
         }
             break;
         case 4:

@@ -52,13 +52,17 @@
     
     [imageBackView addSubview:deleteButton];
     
-    self.imageOne.backgroundColor = [UIColor redColor];
-    self.imageTwo.backgroundColor = [UIColor redColor];
-    self.imageThree.backgroundColor = [UIColor redColor];
+//    self.imageOne.backgroundColor = [UIColor redColor];
+//    self.imageTwo.backgroundColor = [UIColor redColor];
+//    self.imageThree.backgroundColor = [UIColor redColor];
     
     self.imageOne.userInteractionEnabled = YES;
     self.imageTwo.userInteractionEnabled = YES;
     self.imageThree.userInteractionEnabled = YES;
+
+    self.imageOne.image = [UIImage imageNamed:@"shangchuan"];
+    self.imageTwo.image = [UIImage imageNamed:@"shangchuan"];
+    self.imageThree.image = [UIImage imageNamed:@"shangchuan"];
 
    
     [imageBackView addSubview:self.imageOne];

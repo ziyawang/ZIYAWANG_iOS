@@ -12,6 +12,7 @@
 #import "SDiOSVersion.h"
 #import "SearchBar.h"
 #import "PublishCell.h"
+#import "NewPublishCell.h"
 #import "AFNetWorking.h"
 #import "PublishModel.h"
 @interface MainController ()<UIScrollViewDelegate,UISearchBarDelegate>
@@ -45,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"PublishCell" bundle:nil] forCellReuseIdentifier:@"PublishCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     
 
     self.sourceArray = [[NSMutableArray alloc]init];
@@ -599,10 +600,10 @@
     
  
 
-        PublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PublishCell" forIndexPath:indexPath];
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
         if (cell == nil)
         {
-            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];
+            cell = [[NewPublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"NewPublishCell"];
         }
         cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
