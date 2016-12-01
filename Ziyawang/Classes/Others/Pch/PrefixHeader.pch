@@ -74,7 +74,7 @@
 #define changePaswordURL [getDataURL stringByAppendingString:@"/auth/resetpwd"]//忘记密码
 
 #define FindInformationURL [getDataURL stringByAppendingString:@"/v2/project/list"]//找信息
-#define InformationDetailURL [getDataURL stringByAppendingString:@"/project/list/"]//信息详情
+#define InformationDetailURL [getDataURL stringByAppendingString:@"/v2/project/list/"]//信息详情
 #define FindServiceURL [getDataURL stringByAppendingString:@"/service/list"]//找服务
 #define ServiceDetailURL [getDataURL stringByAppendingString:@"/service/list/"]//服务详情
 

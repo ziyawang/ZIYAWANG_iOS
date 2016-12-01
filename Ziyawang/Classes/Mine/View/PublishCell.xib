@@ -429,7 +429,7 @@
         <image name="bottom.jpg" width="720" height="16"/>
         <image name="jiantou-r.png" width="20" height="21"/>
         <image name="left.jpg" width="30" height="194"/>
-        <image name="zhuanrangjia.png" width="39" height="20"/>
-        <image name="zongjine.png" width="40" height="20"/>
+        <image name="zhuanrangjia.png" width="39" height="14"/>
+        <image name="zongjine.png" width="39" height="14"/>
     </resources>
 </document>

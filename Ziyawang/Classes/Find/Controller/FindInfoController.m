@@ -25,6 +25,9 @@
 #import "UserInfoModel.h"
 #import "MyidentifiController.h"
 #import "RechargeController.h"
+
+#import "DetailOfInfoController.h"
+
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface FindInfoController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
@@ -75,7 +78,7 @@
 @property (nonatomic,strong) UserInfoModel *userModel;
 @property (nonatomic,strong) NSString *USERID;
 
-@property (nonatomic,strong) InfoDetailsController *infoDetailsVC;
+@property (nonatomic,strong) DetailOfInfoController *infoDetailsVC;
 @property (nonatomic,strong) PublishModel *pubModel;
 
 @end
@@ -1580,7 +1583,12 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+    
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
+    
+//    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+    
+    
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     self.pubModel = model;

@@ -378,6 +378,8 @@
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
     self.HUD.mode = MBProgressHUDModeIndeterminate;
+    
+    
     NSString *url = InformationDetailURL;
     //    NSString *accesstoken = @"?&access_token=token";
     NSLog(@"!!!!!!!!!!!!!!!!%@",self.ProjectID);

@@ -10,4 +10,9 @@
 
 @interface DetailOfInfoController : UIViewController
 @property (nonatomic,strong) NSString *Type;
+
+@property (nonatomic,strong) NSString *typeName;
+@property (nonatomic,strong) NSString *ProjectID;
+@property (nonatomic,strong) NSString *userid;
+@property (nonatomic,strong) NSString *targetID;
 @end

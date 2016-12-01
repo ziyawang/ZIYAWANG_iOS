@@ -7,7 +7,7 @@
 //
 
 #import "DetailOfInfoController.h"
-
+#import "PublishModel.h"
 @interface DetailOfInfoController ()
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UIScrollView *scrollView;
@@ -15,6 +15,7 @@
 @property (nonatomic,strong) UIView *changeView;
 
 @property (nonatomic,strong) UIView *ContentView;
+@property (nonatomic,strong) PublishModel *model;
 
 @end
 
@@ -24,11 +25,7 @@
     [super viewDidLoad];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
-    
-    self.Type = @"2";
-    
+    self.model = [[PublishModel alloc]init];
     [self getInfoData];
     
     
@@ -36,8 +33,46 @@
 
 - (void)getInfoData
 {
+    
 //成功
-    [self setViews];
+    NSString *url = InformationDetailURL;
+    //    NSString *accesstoken = @"?&access_token=token";
+    NSLog(@"!!!!!!!!!!!!!!!!%@",self.ProjectID);
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *URL = [[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"];
+    if(token == nil)
+    {
+        URL = [[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"];
+    }
+    else{
+        URL = [[[[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"]stringByAppendingString:@"&token="]stringByAppendingString:token];
+    }
+    NSString *getURL = URL;
+    //    NSString *gfetURL = @"http://api.ziyawang.com/v1/project/list/5?&access_token=token";
+    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
+    NSString *access_token = @"token";
+    [getdic setObject:access_token forKey:@"access_token"];
+    //    [getdic setObject:token forKey:@"token"];
+    
+    [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        
+        dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [self.model setValuesForKeysWithDictionary:dic];
+        NSLog(@"%@",dic);
+        [self setViews];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+        NSLog(@"请求失败：%@",error);
+    }];
+    
 }
 - (void)setViews
 {
@@ -274,46 +309,198 @@
     .topSpaceToView(xiangguanView,1)
     .heightIs(110);
     
-    [self.scrollView setupAutoContentSizeWithBottomView:self.imageBackView bottomMargin:10];
+    [self.scrollView setupAutoContentSizeWithBottomView:self.imageBackView bottomMargin:50];
 
+    //判断是自己还是别人
+    NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    
+    if ([self.model.UserID isEqualToString:userID]) {
+        [self MySelfView];
+    }
+    else
+    {
+    [self otherView];
+    }
     
     
-    if ([self.Type isEqualToString:@"1"]) {
-        [self carFapaiView];
+    switch (self.model.TypeID.integerValue) {
+            case 1:
+            [self asetBackView];
+            break;
+            //融资信息股权
+        case 6:
+            [self finanCingGuquanView];
+            break;
+            //固定资产房产
+        case 12:
+            [self HouseProductionView];
+            break;
+            //固定资产土地
+        case 16:
+            [self landProductionView];
+            break;
+            //融资信息债权
+        case 17:
+            [self finaCingZhaiquanView];
+            break;
+            //企业商账
+        case 18:
+            [self businesssView];
+            break;
+            
+            //个人债权
+        case 19:
+            [self personZhaiquanView];
+            break;
+            //法拍资产
+        case 20:
+            [self houseFapaiView];
+            break;
+        case 21:
+            [self houseFapaiView];
+            break;
+        case 22:
+            [self carFapaiView];
+            break;
+        default:
+            break;
     }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self houseFapaiView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self personZhaiquanView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self HouseProductionView];
-    }
-    else if([self.Type isEqualToString:@"2"])
-    {
-        [self landProductionView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self businesssView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self finanCingGuquanView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self finaCingZhaiquanView];
-    }
-    else if([self.Type isEqualToString:@""])
-    {
-        [self asetBackView];
-    }
+    
+   }
+
+- (void)otherView
+{
+    UIView *connectBackView = [UIView new];
+    UIView *talkBackView = [UIView new];
+    
+    UIView *connectView = [UIView new];
+    UIView *talkView = [UIView new];
+    
+    UIImageView *connectIma = [UIImageView new];
+    UILabel *connectLabel = [UILabel new];
+    
+    UIImageView *talkIma = [UIImageView new];
+    UILabel *talkLabel = [UILabel new];
+    
+    [self.view addSubview:connectBackView];
+    [self.view addSubview:talkBackView];
+    [connectBackView addSubview:connectView];
+    [talkBackView addSubview:talkView];
+    
+    [connectView addSubview:connectIma];
+    [connectView addSubview:connectLabel];
+    
+    [talkView addSubview:talkIma];
+    [talkView addSubview:talkLabel];
+    
+    connectBackView.sd_layout.bottomSpaceToView(self.view,0)
+    .leftSpaceToView(self.view,0)
+    .widthIs(self.view.bounds.size.width/2)
+    .heightIs(50);
+    
+    connectBackView.backgroundColor = [UIColor whiteColor];
+    talkBackView.sd_layout.bottomSpaceToView(self.view,0)
+    .leftSpaceToView(connectBackView,0)
+    .rightSpaceToView(self.view,0)
+    .heightIs(50);
+    talkBackView.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    connectView.sd_layout.centerXEqualToView(connectBackView)
+    .centerYEqualToView(connectBackView)
+    .heightIs(50);
+    
+    [connectView setupAutoWidthWithRightView:connectLabel rightMargin:0];
+    
+    
+    talkView.sd_layout.centerYEqualToView(talkBackView)
+    .centerXEqualToView(talkBackView)
+    .heightIs(50);
+    [talkView setupAutoWidthWithRightView:talkLabel rightMargin:0];
+    
+    connectIma.sd_layout.leftSpaceToView(connectView,0)
+    .centerYEqualToView(connectView)
+    .heightIs(20)
+    .widthIs(20);
+    connectLabel.sd_layout.leftSpaceToView(connectIma,10)
+    .centerYEqualToView(connectView)
+    .heightIs(20)
+    .widthIs(40);
+    
+    talkIma.sd_layout.leftSpaceToView(talkView,0)
+    .centerYEqualToView(connectView)
+    .heightIs(20)
+    .widthIs(20);
+    talkLabel.sd_layout.leftSpaceToView(talkIma,10)
+    .centerYEqualToView(talkView)
+    .heightIs(20)
+    .widthIs(40);
+    
+    connectIma.image = [UIImage imageNamed:@"wodeyuetan"];
+    talkIma.image = [UIImage imageNamed:@"siliao3"];
+    
+    connectLabel.text = @"约谈";
+    talkLabel.text = @"私聊";
+    connectView.userInteractionEnabled = NO;
+    talkView.userInteractionEnabled = NO;
+    
+    UIGestureRecognizer *connectGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(connectViewAction:)];
+    
+    UIGestureRecognizer *talkGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(talkViewAction:)];
+    
+    [connectBackView addGestureRecognizer:connectGesture];
+    [talkBackView addGestureRecognizer:talkGesture];
+
 }
+
+- (void)MySelfView
+{
+    UIView *lookBackView = [UIView new];
+    UIView *lookView = [UIView new];
+    
+    [self.view addSubview:lookBackView];
+    [lookBackView addSubview:lookView];
+    
+    UIImageView *imv = [UIImageView new];
+    UILabel *lookLabel = [UILabel new];
+    
+    [lookView addSubview:imv];
+    [lookView addSubview:lookLabel];
+    
+    lookBackView.sd_layout.leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0)
+    .heightIs(50)
+    .bottomSpaceToView(self.view,0);
+    
+    lookView.sd_layout.centerYEqualToView(lookView)
+    .centerXEqualToView(lookView)
+    .heightIs(50);
+    [lookView setupAutoWidthWithRightView:lookLabel rightMargin:0];
+    
+    imv.sd_layout.leftSpaceToView(lookView,0)
+    .centerYEqualToView(lookView)
+    .heightIs(20)
+    .widthIs(20);
+    
+    lookLabel.sd_layout.leftSpaceToView(imv,10)
+    .centerYEqualToView(lookView)
+    .heightIs(20);
+    [lookLabel setSingleLineAutoResizeWithMaxWidth:200];
+    lookLabel.text = @"查看约谈人";
+    imv.image = [UIImage imageNamed:@"fangdajing"];
+    lookBackView.backgroundColor = [UIColor colorWithHexString:@"#ea6155"];
+    
+    
+}
+
+- (void)connectViewAction:(UITapGestureRecognizer *)gesture
+{
+
+}
+- (void)talkViewAction:(UITapGestureRecognizer *)gesture
+{
+
+}
+
 
 - (void)carFapaiView
 {
