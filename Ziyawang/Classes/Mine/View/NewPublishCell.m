@@ -16,14 +16,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *otherTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yabiCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *LiangdianLabel1;
-@property (weak, nonatomic) IBOutlet UILabel *liangdianLabel2;
-@property (weak, nonatomic) IBOutlet UILabel *liangdianLabel3;
+@property (weak, nonatomic) IBOutlet UIButton *liangdianLabel1;
+@property (weak, nonatomic) IBOutlet UIButton *liangdianLabel2;
+@property (weak, nonatomic) IBOutlet UIButton *liangdianLabel3;
+
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 @property (weak, nonatomic) IBOutlet UILabel *leftMoneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightMoneyLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *specialImageWidth;
+
 
 @end
 
@@ -51,9 +53,13 @@
     [self.imageview sd_setImageWithURL:[NSURL URLWithString:ImageURL]];
     
     
-    [self setLabelWithLabel:self.LiangdianLabel1];
+    [self setLabelWithLabel:self.liangdianLabel1];
     [self setLabelWithLabel:self.liangdianLabel2];
     [self setLabelWithLabel:self.liangdianLabel3];
+    
+    [self.liangdianLabel1 setHidden:YES];
+    [self.liangdianLabel2 setHidden:YES];
+    [self.liangdianLabel3 setHidden:YES];
     
     self.yabiCountLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
     self.leftMoneyLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
@@ -195,54 +201,134 @@
     
     
     
-    
+    if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+        [self.liangdianLabel1 setHidden:YES];
+        [self.liangdianLabel2 setHidden:YES];
+        [self.liangdianLabel3 setHidden:YES];
+        
+    }
+    else
+    {
     //亮点布局
     NSArray *liangdianArray = [self.model.ProLabel componentsSeparatedByString:@","];
     switch (liangdianArray.count) {
         case 0:
-            [self.LiangdianLabel1 setHidden:YES];
+            [self.liangdianLabel1 setHidden:YES];
             [self.liangdianLabel2 setHidden:YES];
             [self.liangdianLabel3 setHidden:YES];
             
             break;
         case 1:
-            [self.LiangdianLabel1 setHidden:NO];
+        {
+            [self.liangdianLabel1 setHidden:NO];
             [self.liangdianLabel2 setHidden:YES];
             [self.liangdianLabel3 setHidden:YES];
-            self.LiangdianLabel1.text = liangdianArray[0];
+            
+            NSString *liangdian1 = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+            [self.liangdianLabel1 setTitle:liangdian1 forState:(UIControlStateNormal)];
+
+//            self.liangdianLabel1.titleLabel.text = liangdianArray[0];
+          
+//            self.LiangdianLabel1.text = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+        }
             break;
         case 2:
-            [self.LiangdianLabel1 setHidden:NO];
+        {
+            NSLog(@"%@",self.model.ProLabel);
+            
+            [self.liangdianLabel1 setHidden:NO];
             [self.liangdianLabel2 setHidden:NO];
             [self.liangdianLabel3 setHidden:YES];
-            self.LiangdianLabel1.text = liangdianArray[0];
-            self.liangdianLabel2.text = liangdianArray[1];
+//            self.liangdianLabel1.titleLabel.text = liangdianArray[0];
+//            self.liangdianLabel2.titleLabel.text = liangdianArray[1];
+            
+            NSString *liangdian1 = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+              [self.liangdianLabel1 setTitle:liangdian1 forState:(UIControlStateNormal)];
+            
+            NSString *liangdian2 = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+            [self.liangdianLabel2 setTitle:liangdian2 forState:(UIControlStateNormal)];
+//            self.LiangdianLabel1.text = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+//            self.liangdianLabel2.text = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+        }
             break;
         case 3:
-            [self.LiangdianLabel1 setHidden:NO];
+        {
+            NSLog(@"%@",self.model.ProLabel);
+
+            [self.liangdianLabel1 setHidden:NO];
             [self.liangdianLabel2 setHidden:NO];
             [self.liangdianLabel3 setHidden:NO];
-            self.LiangdianLabel1.text = liangdianArray[0];
-            self.liangdianLabel2.text = liangdianArray[1];
-            self.liangdianLabel3.text = liangdianArray[2];
+            
+            NSString *liangdian1 = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+            [self.liangdianLabel1 setTitle:liangdian1 forState:(UIControlStateNormal)];
+            
+            NSString *liangdian2 = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+            [self.liangdianLabel2 setTitle:liangdian2 forState:(UIControlStateNormal)];
+            
+            NSString *liangdian3 = [[@" "stringByAppendingString:liangdianArray[2]]stringByAppendingString:@" "];
+            [self.liangdianLabel3 setTitle:liangdian3 forState:(UIControlStateNormal)];
+            
+          //            self.liangdianLabel1.titleLabel.text = liangdianArray[0];
+//            self.liangdianLabel2.titleLabel.text = liangdianArray[1];
+//            self.liangdianLabel3.titleLabel.text = liangdianArray[2];
+//            
+//            self.LiangdianLabel1.text = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+//            self.liangdianLabel2.text = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+//            self.liangdianLabel3.text = [[@" "stringByAppendingString:liangdianArray[2]]stringByAppendingString:@" "];
+        }
             
             break;
+        case 4:
+        {
+            [self.liangdianLabel1 setHidden:NO];
+            [self.liangdianLabel2 setHidden:NO];
+            [self.liangdianLabel3 setHidden:NO];
+            
+            
+            [self.liangdianLabel1 setTitle:liangdianArray[0] forState:(UIControlStateNormal)];
+            [self.liangdianLabel2 setTitle:liangdianArray[1] forState:(UIControlStateNormal)];
+            [self.liangdianLabel3 setTitle:liangdianArray[2] forState:(UIControlStateNormal)];
+            
+            NSString *liangdian1 = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+            [self.liangdianLabel1 setTitle:liangdian1 forState:(UIControlStateNormal)];
+            
+            NSString *liangdian2 = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+            [self.liangdianLabel2 setTitle:liangdian2 forState:(UIControlStateNormal)];
+            
+            NSString *liangdian3 = [[@" "stringByAppendingString:liangdianArray[2]]stringByAppendingString:@" "];
+            [self.liangdianLabel3 setTitle:liangdian3 forState:(UIControlStateNormal)];
+            //            self.liangdianLabel1.titleLabel.text = liangdianArray[0];
+            //            self.liangdianLabel2.titleLabel.text = liangdianArray[1];
+            //            self.liangdianLabel3.titleLabel.text = liangdianArray[2];
+            //
+            //            self.LiangdianLabel1.text = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
+            //            self.liangdianLabel2.text = [[@" "stringByAppendingString:liangdianArray[1]]stringByAppendingString:@" "];
+            //            self.liangdianLabel3.text = [[@" "stringByAppendingString:liangdianArray[2]]stringByAppendingString:@" "];
+        }
+            
+            break;
+
   
         default:
             break;
     }
-  
+    }
     
     
     
 }
-- (void)setLabelWithLabel:(UILabel *)label
+- (void)setLabelWithLabel:(UIButton *)label
 {
     label.layer.cornerRadius = 8;
     label.layer.masksToBounds = YES;
     label.layer.borderWidth = 1;
     label.layer.borderColor = [UIColor grayColor].CGColor;
-    label.textColor = [UIColor grayColor];
+    [label setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+    
+    
+//    [label setTitleEdgeInsets:UIEdgeInsetsMake(2, 3, 2, 3)];
+    
+    
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

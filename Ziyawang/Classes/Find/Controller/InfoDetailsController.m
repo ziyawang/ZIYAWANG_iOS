@@ -219,14 +219,8 @@
         [self.shoucangLabel setHidden:YES];
        
     }
-    
-   
     [self setController];
-   
-   
     }
-
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -281,7 +275,6 @@
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor lightGrayColor];
     
     __weak typeof(self) weakSelf = self;
-    
     self.callcenter = [[CTCallCenter alloc] init];
     self.callcenter.callEventHandler = ^(CTCall* call) {
         if ([call.callState isEqualToString:CTCallStateDisconnected])

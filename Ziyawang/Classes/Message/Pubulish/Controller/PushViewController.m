@@ -192,14 +192,15 @@ self.navigationItem.title = @"发布";
 //返回cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     //    CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     PushViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     NSLog(@"%ld",(long)indexPath.item);
     cell.typeNameLable.text = self.nameArray[indexPath.row];
     cell.imageVeiw.image = self.imageArray[indexPath.row];
+    [cell.imageVeiw setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    cell.imageVeiw.contentMode = UIViewContentModeScaleAspectFill;
+    cell.imageVeiw.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     return cell;
 }
 

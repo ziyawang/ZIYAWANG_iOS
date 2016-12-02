@@ -8,7 +8,24 @@
 
 #import "DetailOfInfoController.h"
 #import "PublishModel.h"
-@interface DetailOfInfoController ()
+
+#import "KNPhotoBrowerImageView.h"
+#import "KNPhotoBrower.h"
+#import "LoginController.h"
+#import "MyidentifiController.h"
+#import "UserInfoModel.h"
+#import "talkViewController.h"
+#import "LookupRushPeopleController.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import <AVFoundation/AVFoundation.h>
+@interface DetailOfInfoController ()<KNPhotoBrowerDelegate>
+{
+  
+        BOOL     _ApplicationStatusIsHidden;
+        
+}
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIView *imageBackView;
@@ -17,23 +34,295 @@
 @property (nonatomic,strong) UIView *ContentView;
 @property (nonatomic,strong) PublishModel *model;
 
+@property (nonatomic,strong) NSMutableArray *itemsArray;
+@property (nonatomic, strong) KNPhotoBrower *photoBrower;
+
+@property (nonatomic,strong) UIImageView *imageView1;
+@property (nonatomic,strong) UIImageView *imageView2;
+@property (nonatomic,strong) UIImageView *imageView3;
+@property (nonatomic,strong) UserInfoModel *userModel;
+@property (nonatomic,strong) NSString *role;
+
+@property (nonatomic,assign) BOOL isCollected;
+
+@property (nonatomic,strong) UIButton *collectButton;
+@property (nonatomic,strong) UIButton *shareButton;
+@property (nonatomic,strong) AVPlayer *player;
+
+
 @end
 
 @implementation DetailOfInfoController
+- (void)videoButtonAction:(UIButton *)button
+{
+    NSString *url = AudioURL;
+//    NSLog(@"333######################%@",self.VideoDes);
+    if ([self.model.VoiceDes isEqualToString:@""])
+    {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"该条信息没有语音描述" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    else
+    {
+        NSString *playURL = [url stringByAppendingString:self.model.VoiceDes];
+        self.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:playURL]];
+        [self.player play];
+        
+        /**
+         *  判断是否正在播放，点击暂停
+         *
+         *  @param self.isPlaying YES正在播放
+         *
+         *  @return NO
+         */
+        //    if (self.isPlaying == NO) {
+        //        [self.player play];
+        //        self.isPlaying =YES;
+        //    }
+        //    if (self.isPlaying == YES) {
+        //        [self.player pause];
+        //        self.isPlaying = NO;
+        //    }
+        //
+        //        NSURL *url = [[NSURL alloc]initWithString:playURL];
+        //        NSData * audioData = [NSData dataWithContentsOfURL:url];
+        //
+        //        //将数据保存到本地指定位置
+        //        NSString *docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        //        NSString *filePath = [NSString stringWithFormat:@"%@/%@.amr", docDirPath , @"temp"];
+        //        [audioData writeToFile:filePath atomically:YES];
+        //        //播放本地音乐
+        //        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        //      AVAudioPlayer  *player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+        //        [player play];
+        
+    }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[PublishModel alloc]init];
+    self.itemsArray = [NSMutableArray new];
+    self.photoBrower = [[KNPhotoBrower alloc]init];
+    self.userModel = [[UserInfoModel alloc]init];
+    [self getUserInfoFromDomin];
     [self getInfoData];
+
+    
+    self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 70, 50)];
+    UIButton *collectButton = [UIButton new];
+    UIButton *shareButton = [UIButton new];
+    
+    [rightBarView addSubview:collectButton];
+    [rightBarView addSubview:shareButton];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBarView];
+   
+    [collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+    [shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
+    
+    
+    shareButton.sd_layout.rightSpaceToView(rightBarView,0)
+    .centerYEqualToView(rightBarView)
+    .heightIs(25)
+    .widthIs(19);
+    collectButton.sd_layout.rightSpaceToView(shareButton,15)
+    .centerYEqualToView(rightBarView)
+    .heightIs(30)
+    .widthIs(25);
+    
+    [collectButton addTarget:self action:@selector(collectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [shareButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.collectButton = collectButton;
+    self.shareButton = shareButton;
     
     
 }
+- (void)collectButtonAction:(UIButton *)button
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+    if (token == nil) {
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }
+    else
+    {
+        NSString *Token = @"?token=";
+        NSString *url = getDataURL;
+        NSString *url2 = @"/collect";
+        NSString *access_token = @"token";
+        
+        NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
+        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
+        [postdic setObject:access_token forKey:@"access_token"];
+        //    [postdic setObject:token forKey:@"token"];
+        
+        [postdic setObject:self.ProjectID forKey:@"itemID"];
+        [postdic setObject:@"1" forKey:@"type"];
+        if ([self.model.CollectFlag isEqualToString:@"0"])
+        {
+            NSLog(@"未收藏过,改变button的状态,调用收藏接口");
+            [self.manager POST:URL parameters:postdic progress:^(NSProgress * _Nonnull uploadProgress)
+             {
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 NSLog(@"收藏成功");
+//                 [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
+                 //                 收藏按钮状态改变
+                 [button setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
+                 self.model.CollectFlag = @"1";
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+                 //                 [self MBProgressWithString:@"收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 
+                 NSLog(@"收藏失败");
+             }];
+        }
+        else
+        {
+            [self.manager POST:URL parameters:postdic progress:^(NSProgress * _Nonnull uploadProgress)
+             {
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 NSLog(@"取消收藏成功");
+                 [button setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+                 
+//                 [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
+                 
+                 //收藏按钮状态改变
+                 //            self.saveButton.imageView.image = [UIImage imageNamed:<#(nonnull NSString *)#>]
+                 self.model.CollectFlag = @"0";
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+                 //                 [self MBProgressWithString:@"取消收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 NSLog(@"取消收藏失败");
+             }];
+        }
+    }
+
+}
+- (void)shareButtonAction:(UIButton *)button
+{
+    //1、创建分享参数
+    //    NSArray* imageArray = @[[UIImage imageNamed:@"shareImg.png"]];
+    //    （注意：图片必须要在Xcode左边目录里面，名称必须要传正确，如果要分享网络图片，可以这样传iamge参数 images:@[@"http://mob.com/Assets/images/logo.png?v=20150320"]）
+    //    NSString *url = @"http://ziyawang.com/project/";
+    NSString *url = @"http://api.ziyawang.com/v1/";
+    self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
+    NSString *URL = [url stringByAppendingString:self.model.ProjectID];
+    NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!%@",URL);
+    UIImage *image = [UIImage imageNamed:@"morentouxiang"];
+    NSArray *imageArray = @[image];
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    //    [shareParams SSDKSetupWeChatParamsByText:@"aaaaa"
+    //                                       title:@"wefwvw"
+    //                                         url:[NSURL URLWithString:@"http://www.baidu.com"]
+    //                                  thumbImage:imageArray//传一张小于32k 的图
+    //                                       image:[NSURL URLWithString:@"http://www.baidu.com"]
+    //                                musicFileURL:nil
+    //                                     extInfo:@"dwefwef"
+    //                                    fileData:nil
+    //                                emoticonData:nil
+    //                                        type:SSDKContentTypeAuto
+    //                          forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+    //    http://ziyawang.com/project/
+    NSString *str1 = self.model.WordDes;
+    //    if (self.model.WordDes.length < 40) {
+    //        str1 = self.model.WordDes;
+    //    }
+    //   else
+    //   {
+    //   str1 = [[self.model.WordDes substringToIndex:40]stringByAppendingString:@"..."];
+    //   }
+    NSString *str2 = self.model.WordDes;
+    //    if (self.model.WordDes.length > 40) {
+    //        str2 = [[self.model.WordDes substringToIndex:40]stringByAppendingString:@"..."];
+    //    }
+    
+    NSString *shareURL1 = @"http://ziyawang.com/project/";
+    NSString *shareURL = [shareURL1 stringByAppendingString:self.model.ProjectID];
+    [shareParams SSDKSetupShareParamsByText:str2
+                                     images:imageArray
+                                        url:[NSURL URLWithString:shareURL]
+                                      title:str1
+                                       type:SSDKContentTypeAuto];
+    //        //2、分享（可以弹出我们的分享菜单和编辑界面）
+    [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+                             items:@[@(SSDKPlatformTypeWechat),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeSinaWeibo)]
+                       shareParams:shareParams
+               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                   
+                   switch (state)
+                   {
+                       case SSDKResponseStateSuccess:
+                       {
+                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                               message:nil
+                                                                              delegate:nil
+                                                                     cancelButtonTitle:@"确定"
+                                                                     otherButtonTitles:nil];
+                           [alertView show];
+                           break;
+                       }
+                       case SSDKResponseStateFail:
+                       {
+                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                           message:[NSString stringWithFormat:@"%@",error]
+                                                                          delegate:nil
+                                                                 cancelButtonTitle:@"OK"
+                                                                 otherButtonTitles:nil, nil];
+                           [alert show];
+                           break;
+                       }
+                       default:
+                           break;
+                   }
+               }];
+
+}
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
+            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
+            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
+            NSLog(@"%@",dic[@"role"]);
+            //            self.role =dic[@"role"];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            NSLog(@"获取用户信息失败");
+        }];
+    }
+}
+
 
 - (void)getInfoData
 {
-    
 //成功
     NSString *url = InformationDetailURL;
     //    NSString *accesstoken = @"?&access_token=token";
@@ -62,6 +351,16 @@
         
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [self.model setValuesForKeysWithDictionary:dic];
+        self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
+        if ([self.model.CollectFlag isEqualToString:@"1"]) {
+            [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
+            
+        }
+        else
+        {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+        }
+        
         NSLog(@"%@",dic);
         [self setViews];
         
@@ -76,9 +375,9 @@
 }
 - (void)setViews
 {
+    
     self.scrollView = [UIScrollView new];
     self.ContentView = [UIView new];
-    
     [self.view addSubview:self.scrollView];
 //    [self.scrollView addSubview:self.ContentView];
     self.scrollView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
@@ -95,6 +394,8 @@
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = @"dfhiasuhfiuewhiugweuigweiugtiuewgt";
     
+    titleLabel.text = self.model.Title;
+    
     [self.scrollView addSubview:titleView];
     [titleView addSubview:titleLabel];
     
@@ -102,12 +403,15 @@
     .rightSpaceToView(self.scrollView,0)
     .topSpaceToView(self.scrollView,0);
     
+    
+    
     [titleView setupAutoHeightWithBottomView:titleLabel bottomMargin:15];
     titleLabel.sd_layout.leftSpaceToView(titleView,15)
     .rightSpaceToView(titleView,15)
     .heightIs(20)
     .topSpaceToView(titleView,20)
     .autoHeightRatio(0);
+    
     
     
     UIView *infoView = [UIView new];
@@ -128,12 +432,29 @@
     [infoView addSubview:timeLabel];
     [infoView addSubview:jubaoButton];
     
-    nameLabel.text = @"aaaa";
-    imageview.backgroundColor = [UIColor redColor];
-    numberLabel.text = @"efwefwe";
-    viewCountLabel.text = @"22423";
-    timeLabel.text = @"sdfsfsfs";
+    nameLabel.text = self.model.username;
+    if (self.model.username == nil || [self.model.username isEqualToString:@""]) {
+        nameLabel.text = self.model.phonenumber;
+    }
+    numberLabel.text = self.model.ProjectNumber;
     
+    numberLabel.font = [UIFont systemFontOfSize:14];
+    
+    viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
+    timeLabel.text = self.model.created_at;
+    
+    
+    [imageview sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
+    
+    [imageview setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    imageview.contentMode = UIViewContentModeScaleAspectFill;
+    imageview.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    imageview.clipsToBounds = YES;
+    
+    imageview.layer.cornerRadius = 25;
+    imageview.layer.masksToBounds = YES;
+    
+ 
     
     infoView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -224,7 +545,8 @@
     .topSpaceToView(wordDesView,15)
     .autoHeightRatio(0);
     
-    desLabel.text = @"sdfoiheirheihtie4htihweoitheihtoiehtoierhtiohewrtoiheroitho";
+    desLabel.text = self.model.WordDes;
+    
     
     
     UIView *audioView = [UIView new];
@@ -253,6 +575,21 @@
     .heightIs(30)
     .widthIs(120);
     
+    [recordButton addTarget:self action:@selector(videoButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    if ([self.model.VoiceDes isEqualToString:@""]||self.model.VoiceDes == nil)
+    {
+//        [recordButton setBackgroundImage:[UIImage new] forState:(UIControlStateNormal)];
+//        recordButton.backgroundColor = [UIColor redColor];
+        [recordButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+        
+        [recordButton setTitle:@"无语音" forState:(UIControlStateNormal)];
+    }
+    else
+    {
+        [recordButton setBackgroundImage:[UIImage imageNamed:@"yuyin"] forState:(UIControlStateNormal)];
+
+    }
     UIView *xiangguanView = [UIView new];
     xiangguanView.backgroundColor = [UIColor whiteColor];
 
@@ -268,10 +605,72 @@
     UIImageView *imageView2 = [UIImageView new];
     UIImageView *imageView3 = [UIImageView new];
     
-    imageView1.backgroundColor = [UIColor redColor];
-    imageView2.backgroundColor = [UIColor redColor];
-    imageView3.backgroundColor = [UIColor redColor];
+    [imageView1 setHidden:YES];
+    [imageView2 setHidden:YES];
+    [imageView3 setHidden:YES];
     
+    self.imageView1 = imageView1;
+    self.imageView2 = imageView2;
+    self.imageView3 = imageView3;
+    
+    KNPhotoItems *items1 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items2 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items3 = [[KNPhotoItems alloc] init];
+    NSString *imageURL1 = @"1";
+    NSString *imageURL2 = @"2";
+    NSString *imageURL3 = @"3";
+    if ([self.model.PictureDes1 isEqualToString:@""] == NO && self.model.PictureDes1 != nil) {
+        [self.imageView1 setHidden:NO];
+        imageURL1 = [getImageURL stringByAppendingString:self.model.PictureDes1];
+        [imageView1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
+        items1.url = imageURL1;
+        items1.sourceView =imageView1;
+
+        [self.itemsArray addObject:items1];
+    }
+    if ([self.model.PictureDes2 isEqualToString:@""] == NO && self.model.PictureDes2 != nil) {
+         imageURL2 = [getImageURL stringByAppendingString:self.model.PictureDes2];
+        [imageView2 setHidden:NO];
+        [imageView2 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes2]]];
+        items2.url = imageURL2;
+        items2.sourceView =imageView2;
+        [self.itemsArray addObject:items2];
+    }
+    if ([self.model.PictureDes3 isEqualToString:@""] == NO && self.model.PictureDes3 != nil) {
+        imageURL3 = [getImageURL stringByAppendingString:self.model.PictureDes3];
+
+        [imageView3 setHidden:NO];
+        [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes3]]];
+        items3.url = imageURL3;
+        items3.sourceView =imageView3;
+        [self.itemsArray addObject:items3];
+    }
+    
+//    imageView1.backgroundColor = [UIColor redColor];
+//    imageView2.backgroundColor = [UIColor redColor];
+//    imageView3.backgroundColor = [UIColor redColor];
+    
+    imageView1.userInteractionEnabled = YES;
+    imageView2.userInteractionEnabled = YES;
+    imageView3.userInteractionEnabled = YES;
+    
+ 
+    
+    
+    UITapGestureRecognizer *ImageTapGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *ImageTapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *ImageTapGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+   
+    imageView1.tag = 0;
+    imageView2.tag = 1;
+    imageView3.tag = 2;
+    
+    
+    [imageView1 addGestureRecognizer:ImageTapGesture1];
+    [imageView2 addGestureRecognizer:ImageTapGesture2];
+    [imageView3 addGestureRecognizer:ImageTapGesture3];
+
+
     
     [self.scrollView addSubview:self.imageBackView];
     [self.imageBackView addSubview:imageView1];
@@ -471,8 +870,8 @@
     .heightIs(50)
     .bottomSpaceToView(self.view,0);
     
-    lookView.sd_layout.centerYEqualToView(lookView)
-    .centerXEqualToView(lookView)
+    lookView.sd_layout.centerYEqualToView(lookBackView)
+    .centerXEqualToView(lookBackView)
     .heightIs(50);
     [lookView setupAutoWidthWithRightView:lookLabel rightMargin:0];
     
@@ -489,23 +888,108 @@
     imv.image = [UIImage imageNamed:@"fangdajing"];
     lookBackView.backgroundColor = [UIColor colorWithHexString:@"#ea6155"];
     
+    lookView.userInteractionEnabled = NO;
+    
+    UITapGestureRecognizer *lookGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(lookBackViewAction:)];
+    [lookBackView addGestureRecognizer:lookGesture];
     
 }
 
 - (void)connectViewAction:(UITapGestureRecognizer *)gesture
 {
-
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token == nil) {
+        NSLog(@"未登录,提示登录");
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }
+    else if([role isEqualToString:@"1"])
+    {
+            UIWebView *webView = [[UIWebView alloc]init];
+            NSString *telString = [@"tel:"stringByAppendingString:self.model.phonenumber];
+            NSURL *url = [NSURL URLWithString:telString];
+            [webView loadRequest:[NSURLRequest requestWithURL:url]];
+            [self.view addSubview:webView];
+            NSLog(@"认证过的服务方，调用打电话");
+    }
+    else
+    {
+        [self ShowAlertViewController];
+        
+    }
+    
 }
 - (void)talkViewAction:(UITapGestureRecognizer *)gesture
 {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
+    if (token == nil) {
+        NSLog(@"未登录,提示登录");
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }
+    else if([role isEqualToString:@"1"])
+    {
+        talkViewController *talkVC = [[talkViewController alloc]init];
+        talkVC.targetId = self.model.userid;
+        NSLog(@"~~~~~~~~~~~~~~~~~TargetID%@",self.targetID);
+        talkVC.title = @"私聊";//self.userid;
+        talkVC.conversationType = ConversationType_PRIVATE;
+        [self.navigationController pushViewController:talkVC animated:YES];
+        NSLog(@"认证过的服务方，调用私聊界面");
+ 
+    }
+    else
+    {
+        [self ShowAlertViewController];
+        
+    }
 
+}
+
+- (void)lookBackViewAction:(UITapGestureRecognizer *)gesture
+{
+    NSLog(@"是自己，调用抢单人列表");
+    
+    LookupRushPeopleController *lookVC = [[LookupRushPeopleController alloc]init];
+    lookVC.ProjectID = self.ProjectID;
+    self.model.PublishState = [NSString stringWithFormat:@"%@",self.model.PublishState];
+    lookVC.PublishState = self.model.PublishState;
+    [self.navigationController pushViewController:lookVC animated:YES];
+}
+- (void)ShowAlertViewController
+{
+    
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"通过认证的服务方才可以进行约谈或私聊" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+        identifiVC.ConnectPhone = self.userModel.ConnectPhone;
+        identifiVC.ServiceName = self.userModel.ServiceName;
+        identifiVC.ServiceLocation = self.userModel.ServiceLocation;
+        identifiVC.ServiceType = self.userModel.ServiceType;
+        identifiVC.ServiceIntroduction = self.userModel.ServiceIntroduction;
+        identifiVC.ConnectPerson = self.userModel.ConnectPerson;
+        identifiVC.ServiceArea = self.userModel.ServiceArea;
+        identifiVC.ConfirmationP1 = self.userModel.ConfirmationP1;
+        identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
+        identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
+        identifiVC.ViewType = @"服务";
+        identifiVC.role = self.role;
+        [self.navigationController pushViewController:identifiVC animated:YES];
+    }];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    [self presentViewController:alertVC animated:YES completion:nil];
 }
 
 
 - (void)carFapaiView
 {
     
-    self.imageBackView.backgroundColor = [UIColor blueColor];
 
 //    addView = self.changeView;
     
@@ -513,28 +997,41 @@
     
     UILabel *zichanLabel = [UILabel new];
     UILabel *zichanTypeLabel = [UILabel new];
+    zichanLabel.textColor = [UIColor grayColor];
+    
     
     UILabel *pinpaiLabel = [UILabel new];
     UILabel *pinpaiNumber = [UILabel new];
+    pinpaiLabel.textColor = [UIColor grayColor];
+    
     
     UILabel *qipaiLabel = [UILabel new];
     UILabel *qipaiMoney = [UILabel new];
+    qipaiLabel.textColor = [UIColor grayColor];
+    
     
     UILabel *didianLabel = [UILabel new];
     UILabel *areaLabel = [UILabel new];
+    didianLabel.textColor = [UIColor grayColor];
     
     UILabel *shijianLabel = [UILabel new];
     UILabel *timeLabel = [UILabel new];
+    shijianLabel.textColor = [UIColor grayColor];
+    
     
     UILabel *paimaijieduan = [UILabel new];
     UILabel *jieduanLabel = [UILabel new];
+    paimaijieduan.textColor = [UIColor grayColor];
+    
     
     UILabel *chuzhidanwei = [UILabel new];
     UILabel *chuzhiLabel = [UILabel new];
+    chuzhiLabel.textColor = [UIColor grayColor];
+    
     
     [self.changeView addSubview:zichanLabel];
     [self.changeView addSubview:zichanTypeLabel];
-    [self.changeView addSubview:pinpaiLabel];
+       [self.changeView addSubview:pinpaiLabel];
     [self.changeView addSubview:pinpaiNumber];
     [self.changeView addSubview:qipaiLabel];
     [self.changeView addSubview:qipaiMoney];
@@ -546,6 +1043,15 @@
     [self.changeView addSubview:jieduanLabel];
     [self.changeView addSubview:chuzhidanwei];
     [self.changeView addSubview:chuzhiLabel];
+    zichanTypeLabel.text = self.model.AssetType;
+    pinpaiNumber.text = self.model.Brand;
+    qipaiMoney.text = [self.model.Money stringByAppendingString:@"万"];
+    areaLabel.text = self.model.ProArea;
+    timeLabel.text = self.model.Year;
+    jieduanLabel.text = self.model.State;
+    chuzhiLabel.text = self.model.Court;
+    
+
     zichanLabel.text = @"资产类型：";
     pinpaiLabel.text = @"品牌型号：";
     qipaiLabel.text = @"起拍价：";
@@ -553,6 +1059,7 @@
     shijianLabel.text = @"拍卖时间：";
     paimaijieduan.text = @"拍卖阶段：";
     chuzhidanwei.text = @"处置单位：";
+    
     
     
    
@@ -642,34 +1149,47 @@
 {
     UILabel *zichanLabel = [UILabel new];
     UILabel *zichanTypeLabel = [UILabel new];
+    zichanLabel.textColor = [UIColor grayColor];
     
     UILabel *mianjiLabel = [UILabel new];
     UILabel *mianjishuLabel = [UILabel new];
+    mianjiLabel.textColor = [UIColor grayColor];
+    
     UILabel *xingzhiLabel = [UILabel new];
     UILabel *xingzhiLabel2 = [UILabel new];
+    xingzhiLabel.textColor = [UIColor grayColor];
     
 
     UILabel *qipaiLabel = [UILabel new];
     UILabel *qipaiMoney = [UILabel new];
+    qipaiLabel.textColor = [UIColor grayColor];
     
     UILabel *didianLabel = [UILabel new];
     UILabel *areaLabel = [UILabel new];
+    didianLabel.textColor = [UIColor grayColor];
     
     UILabel *shijianLabel = [UILabel new];
     UILabel *timeLabel = [UILabel new];
+    shijianLabel.textColor = [UIColor grayColor];
     
     UILabel *paimaijieduan = [UILabel new];
     UILabel *jieduanLabel = [UILabel new];
+    paimaijieduan.textColor = [UIColor grayColor];
     
     UILabel *chuzhidanwei = [UILabel new];
     UILabel *chuzhiLabel = [UILabel new];
+    chuzhidanwei.textColor = [UIColor grayColor];
+    
     
     [self.changeView addSubview:zichanLabel];
     [self.changeView addSubview:zichanTypeLabel];
     [self.changeView addSubview:mianjiLabel];
-    [self.changeView addSubview:xingzhiLabel];
-    
     [self.changeView addSubview:mianjishuLabel];
+
+    [self.changeView addSubview:xingzhiLabel];
+    [self.changeView addSubview:xingzhiLabel2];
+    
+    
     [self.changeView addSubview:qipaiLabel];
     [self.changeView addSubview:qipaiMoney];
     [self.changeView addSubview:didianLabel];
@@ -683,7 +1203,6 @@
     zichanLabel.text = @"资产类型：";
     mianjiLabel.text = @"面积：";
     xingzhiLabel.text = @"性质：";
-    
     qipaiLabel.text = @"起拍价：";
     didianLabel.text = @"拍卖地点：";
     shijianLabel.text = @"拍卖时间：";
@@ -691,6 +1210,14 @@
     chuzhidanwei.text = @"处置单位：";
     
     
+    zichanTypeLabel.text = self.model.AssetType;
+    mianjishuLabel.text = self.model.Area;
+    xingzhiLabel2.text = self.model.Nature;
+    qipaiMoney.text = [self.model.Money stringByAppendingString:@"万"];
+    areaLabel.text = self.model.ProArea;
+    timeLabel.text = self.model.Year;
+    jieduanLabel.text = self.model.State;
+    chuzhiLabel.text = self.model.Court;
     
     zichanLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -798,6 +1325,18 @@
     UILabel *label14 = [UILabel new];
     UILabel *label15 = [UILabel new];
     
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    
+    label8.textColor = [UIColor grayColor];
+    label10.textColor = [UIColor grayColor];
+    label12.textColor = [UIColor grayColor];
+    label14.textColor = [UIColor grayColor];
+
+    
+    
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
     [self.changeView addSubview:label3];
@@ -846,22 +1385,65 @@
     .topSpaceToView(label5,15)
     .heightIs(20);
     
-    label8.sd_layout.leftEqualToView(label1)
-    .topSpaceToView(label7,15)
-    .heightIs(20);
+    if (self.model.Law != nil || self.model.UnLaw != nil) {
+        label8.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label7,15)
+        .heightIs(20);
+        
+        label9.sd_layout.leftSpaceToView(label8,0)
+        .topEqualToView(label8)
+        .heightIs(20);
+        
+        
+        label10.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label8,15)
+        .heightIs(20);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(20);
+
+    }
+    if (self.model.Law != nil && self.model.UnLaw == nil) {
+        label8.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label7,15)
+        .heightIs(20);
+        
+        label9.sd_layout.leftSpaceToView(label8,0)
+        .topEqualToView(label8)
+        .heightIs(20);
+        
+        
+        label10.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label8,0)
+        .heightIs(0);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(0);
+    }
     
-    label9.sd_layout.leftSpaceToView(label8,0)
-    .topEqualToView(label8)
-    .heightIs(20);
+    if (self.model.Law == nil && self.model.UnLaw != nil) {
+        label8.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label7,0)
+        .heightIs(0);
+        
+        label9.sd_layout.leftSpaceToView(label8,0)
+        .topEqualToView(label8)
+        .heightIs(0);
+        
+        
+        label10.sd_layout.leftEqualToView(label1)
+        .topSpaceToView(label7,15)
+        .heightIs(20);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(20);
+ 
+    }
     
     
-    label10.sd_layout.leftEqualToView(label1)
-    .topSpaceToView(label8,15)
-    .heightIs(20);
-    
-    label11.sd_layout.leftSpaceToView(label10,0)
-    .topEqualToView(label10)
-    .heightIs(20);
     
     label12.sd_layout.leftEqualToView(label1)
     .topSpaceToView(label10,15)
@@ -899,27 +1481,33 @@
 
 
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     
     label3.text = @"总金额：";
-    label4.text = @"身份：";
+    label4.text = [self.model.TotalMoney stringByAppendingString:@"万"];
     
     label5.text = @"逾期时间：";
-    label6.text = @"身份：";
+    label6.text = [self.model.Month stringByAppendingString:@"月"];
     
-    label7.text = @"处置方式：";
+    label7.text = @"处置方式";
     
     label8.text = @"诉讼：";
-    label9.text = @"身份：";
+    if (self.model.Law != nil) {
+        label9.text = [@"佣金比例：" stringByAppendingString:self.model.Law];
+
+    }
     
     label10.text = @"非诉催收：";
-    label11.text = @"身份：";
+    if (self.model.UnLaw != nil) {
+        label11.text = [@"佣金比例：" stringByAppendingString:self.model.UnLaw];
+
+    }
     
     label12.text = @"债权人所在地：";
-    label13.text = @"身份：";
+    label13.text = self.model.DebteeLocation;
     
     label14.text = @"债务人所在地：";
-    label15.text = @"身份：";
+    label15.text = self.model.ProArea;
     
     
     UIView *line1 = [UIView new];
@@ -1019,11 +1607,12 @@
     .heightIs(20);
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
-    danbaoLabel.text = @"有无担保：";
-    changhuanLabel.text = @"债务人有偿还能力：";
-    diyaLabel.text = @"有无抵押：";
-    pingzhenLabel.text = @"相关凭证齐是否全：";
-    zhaiwurenLabel.text = @"债务人是否失联：";
+//    NSString *text =[@"a" stringByAppendingString:self.model.Connect];
+    danbaoLabel.text = [@"有无担保：" stringByAppendingString:self.model.Guaranty];
+    changhuanLabel.text = [@"债务人有偿还能力："stringByAppendingString:self.model.Pay];
+    diyaLabel.text = [@"有无抵押："stringByAppendingString:self.model.Property];
+    pingzhenLabel.text = [@"相关凭证齐是否全："stringByAppendingString:self.model.Credentials];
+    zhaiwurenLabel.text = [@"债务人是否失联："stringByAppendingString:self.model.Connect];
     
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
@@ -1075,9 +1664,26 @@
     .heightIs(20);
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
-    button1.text = @"佣金比例高";
-    button2.text = @"法律关系明确";
+  
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
     
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        
+    }
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
     
 }
 - (void)HouseProductionView
@@ -1085,7 +1691,6 @@
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
-    
     UILabel *label4 = [UILabel new];
     UILabel *label5 = [UILabel new];
     UILabel *label6 = [UILabel new];
@@ -1098,12 +1703,24 @@
     UILabel *label13 = [UILabel new];
     UILabel *label14 = [UILabel new];
     UILabel *label15 = [UILabel new];
-    
     UILabel *label16 = [UILabel new];
     UILabel *label17 = [UILabel new];
     UILabel *label18 = [UILabel new];
     UILabel *label19 = [UILabel new];
     UILabel *label20 = [UILabel new];
+    
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    label9.textColor = [UIColor grayColor];
+    label11.textColor = [UIColor grayColor];
+    label13.textColor = [UIColor grayColor];
+    label15.textColor = [UIColor grayColor];
+    label17.textColor = [UIColor grayColor];
+    label19.textColor = [UIColor grayColor];
+
+    
 
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
@@ -1132,7 +1749,6 @@
     .topSpaceToView(self.changeView,15)
     .heightIs(20);
     [label1 setSingleLineAutoResizeWithMaxWidth:200];
-    
     
     label2.sd_layout.leftSpaceToView(label1,0)
     .topEqualToView(label1)
@@ -1240,35 +1856,35 @@
 
     
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     
     label3.text = @"地区：";
-    label4.text = @"身份：";
+    label4.text =self.model.ProArea;
     
     label5.text = @"标的物类型：";
-    label6.text = @"身份：";
+    label6.text = self.model.AssetType;
     
     label7.text = @"房产类型：";
+    label8.text = self.model.Type;
     
-    label8.text = @"诉讼：";
     label9.text = @"规划用途：";
+    label10.text = self.model.Usefor;
     
-    label10.text = @"非诉催收：";
     label11.text = @"面积：";
+    label12.text = self.model.Area;
     
-    label12.text = @"债权人所在地：";
     label13.text = @"剩余使用年限：";
+    label14.text = [self.model.Year stringByAppendingString:@"年"];
     
-    label14.text = @"债务人所在地：";
     label15.text = @"转让方式：";
-    
-    label16.text = @"身份：";
+    label16.text = self.model.TransferType;
     
     label17.text = @"市场价：";
-    label18.text = @"身份：";
+    label18.text = [self.model.MarketPrice stringByAppendingString:@"万"];
     
     label19.text = @"转让价：";
-    label20.text = @"身份：";
+    label20.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+    
 
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -1367,17 +1983,21 @@
     .heightIs(20);
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
-    danbaoLabel.text = @"有无相关证件：";
-    changhuanLabel.text = @"有无担保抵押：";
-    diyaLabel.text = @"有无法律纠纷：";
-    pingzhenLabel.text = @"是否拥有全部产权：";
-    zhaiwurenLabel.text = @"有无负债：";
+//    NSString *teon = [@"aa" stringByAppendingString:self.model.Dispute];
+    danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
+    changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
+    diyaLabel.text = [@"有无法律纠纷："stringByAppendingString:self.model.Dispute];
+    pingzhenLabel.text = [@"是否拥有全部产权："stringByAppendingString:self.model.Property];
+    zhaiwurenLabel.text = [@"有无负债："stringByAppendingString:self.model.Debt];
     
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
     UIView *liangdianBottomView = [UIView new];
     UILabel *button1 = [UILabel new];
     UILabel *button2 = [UILabel new];
+    UILabel *button3 = [UILabel new];
+    UILabel *button4 = [UILabel new];
+    
     UIView *line4 = [UIView new];
     
     
@@ -1423,8 +2043,59 @@
     .heightIs(20);
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
-    button1.text = @"佣金比例高";
-    button2.text = @"法律关系明确";
+    button3.sd_layout.leftSpaceToView(button2,15)
+    .centerYEqualToView(liangdianBottomView)
+    .heightIs(20);
+    [button3 setSingleLineAutoResizeWithMaxWidth:200];
+
+    button4.sd_layout.topSpaceToView(button1,15)
+    .centerYEqualToView(liangdianBottomView)
+    .leftEqualToView(button1)
+    .heightIs(20);
+    [button4 setSingleLineAutoResizeWithMaxWidth:200];
+
+    
+   
+    
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    NSLog(@"%ld",proArr.count);
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
+    
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+    
+        
+    }
+    else if(proArr.count == 3)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+    }
+
+    else if(proArr.count == 4)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+        button4.text = proArr[3];
+        
+    }
+
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    [self setliangdianLabel:button3];
+    [self setliangdianLabel:button4];
 
 
     }
@@ -1446,8 +2117,19 @@
     UILabel *label13 = [UILabel new];
     UILabel *label14 = [UILabel new];
     UILabel *label15 = [UILabel new];
-    
     UILabel *label16 = [UILabel new];
+    
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label6.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    label9.textColor = [UIColor grayColor];
+    label11.textColor = [UIColor grayColor];
+    label13.textColor = [UIColor grayColor];
+    label15.textColor = [UIColor grayColor];
+    
+    
     
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
@@ -1562,29 +2244,28 @@
     [label16 setSingleLineAutoResizeWithMaxWidth:200];
     
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     
     label3.text = @"地区：";
-    label4.text = @"身份：";
+    label4.text = self.model.ProArea;
     
     label5.text = @"标的物类型：";
-    label6.text = @"身份：";
+    label6.text = self.model.AssetType;
     
     label7.text = @"房产类型：";
+    label8.text = self.model.Type;
     
-    label8.text = @"诉讼：";
     label9.text = @"规划用途：";
+    label10.text = self.model.Usefor;
     
-    label10.text = @"非诉催收：";
     label11.text = @"面积：";
+    label12.text = self.model.Area;
     
-    label12.text = @"债权人所在地：";
     label13.text = @"剩余使用年限：";
+    label14.text = [self.model.Year stringByAppendingString:@"年"];
     
-    label14.text = @"债务人所在地：";
     label15.text = @"转让方式：";
-    
-    label16.text = @"身份：";
+    label16.text = self.model.TransferType;
     
     
     UIView *line1 = [UIView new];
@@ -1686,11 +2367,13 @@
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     
-    danbaoLabel.text = @"有无相关证件：";
-    changhuanLabel.text = @"有无担保抵押：";
-    diyaLabel.text = @"有无法律纠纷：";
-    pingzhenLabel.text = @"是否拥有全部产权：";
-    zhaiwurenLabel.text = @"有无负债：";
+    danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
+    changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
+    diyaLabel.text = [@"有无法律纠纷："stringByAppendingString:self.model.Dispute];
+    pingzhenLabel.text = [@"是否拥有全部产权："stringByAppendingString:self.model.Property];
+    zhaiwurenLabel.text = [@"有无负债："stringByAppendingString:self.model.Debt];
+    
+
     
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
@@ -1758,11 +2441,48 @@
     .heightIs(20);
     [button4 setSingleLineAutoResizeWithMaxWidth:200];
 
-    button1.text = @"可议价";
-    button2.text = @"位置优越";
-    button3.text = @"折扣空间大";
-    button4.text = @"有评估报告";
+   
     
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    NSLog(@"%ld",proArr.count);
+    
+    
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+//        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+//        [button2 setHidden:YES];
+    }
+    
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        
+    }
+    else if(proArr.count == 3)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+
+    }
+    else if(proArr.count == 4)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+        button4.text = proArr[3];
+        
+    }
+    
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    [self setliangdianLabel:button3];
+    [self setliangdianLabel:button4];
  
 }
 - (void)businesssView
@@ -1788,6 +2508,17 @@
     UILabel *label18 = [UILabel new];
     UILabel *label19 = [UILabel new];
 
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    
+    label9.textColor = [UIColor grayColor];
+    label10.textColor = [UIColor grayColor];
+    label12.textColor = [UIColor grayColor];
+    label14.textColor = [UIColor grayColor];
+    label16.textColor = [UIColor grayColor];
+    label18.textColor = [UIColor grayColor];
     
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
@@ -1853,23 +2584,57 @@
     .topSpaceToView(label7,15)
     .heightIs(20);
     
-    label10.sd_layout.leftSpaceToView(self.changeView,15)
-    .topSpaceToView(label9,15)
-    .heightIs(20);
-    
-    label11.sd_layout.leftSpaceToView(label10,0)
-    .topEqualToView(label10)
-    .heightIs(20);
-    
-    label12.sd_layout.leftSpaceToView(self.changeView,15)
-    .topSpaceToView(label10,15)
-    .heightIs(20);
-    
-    label13.sd_layout.leftSpaceToView(label12,0)
-    .topEqualToView(label12)
-    .heightIs(20);
-    
-    
+    if (self.model.Law != nil && self.model.UnLaw != nil) {
+        label10.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label9,15)
+        .heightIs(20);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(20);
+        
+        label12.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label10,15)
+        .heightIs(20);
+        
+        label13.sd_layout.leftSpaceToView(label12,0)
+        .topEqualToView(label12)
+        .heightIs(20);
+    }
+    if (self.model.Law != nil && self.model.UnLaw == nil) {
+        label10.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label9,15)
+        .heightIs(20);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(20);
+        
+        label12.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label10,0)
+        .heightIs(0);
+        
+        label13.sd_layout.leftSpaceToView(label12,0)
+        .topEqualToView(label12)
+        .heightIs(0);
+    }
+    if (self.model.Law == nil && self.model.UnLaw != nil) {
+        label10.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label9,0)
+        .heightIs(0);
+        
+        label11.sd_layout.leftSpaceToView(label10,0)
+        .topEqualToView(label10)
+        .heightIs(0);
+        
+        label12.sd_layout.leftSpaceToView(self.changeView,15)
+        .topSpaceToView(label10,15)
+        .heightIs(20);
+        
+        label13.sd_layout.leftSpaceToView(label12,0)
+        .topEqualToView(label12)
+        .heightIs(20);
+    }
     label14.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label12,15)
     .heightIs(20);
@@ -1916,24 +2681,33 @@
  
 
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     label3.text = @"商账类型：";
-    label4.text = @"身份：";
+    label4.text = self.model.AssetType;
     label5.text = @"债权金额：";
-    label6.text = @"身份：";
+    label6.text = [self.model.Money stringByAppendingString:@"万"];
     label7.text = @"逾期时间：";
-    label8.text = @"身份：";
-    label9.text = @"处置方式：";
+    label8.text = [self.model.Month stringByAppendingString:@"月"];
+    label9.text = @"处置方式";
+    
+    
     label10.text = @"诉讼：";
-    label11.text = @"身份：";
+    if (self.model.Law != nil) {
+    label11.text = [@"佣金比例：" stringByAppendingString:self.model.Law];
+
+    }
+    
     label12.text = @"非诉催收：";
-    label13.text = @"身份：";
+    if (self.model.UnLaw != nil) {
+        label13.text = [@"佣金比例：" stringByAppendingString:self.model.UnLaw];
+
+    }
     label14.text = @"债务方地区：";
-    label15.text = @"身份：";
+    label15.text = self.model.ProArea;
     label16.text = @"债务方企业性质：";
-    label17.text = @"身份：";
+    label17.text = self.model.Nature;
     label18.text = @"债务方经营状况：";
-    label19.text = @"身份：";
+    label19.text = self.model.Status;
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -1969,7 +2743,6 @@
     [qitaBottView addSubview:hangyeLabel];
     [qitaBottView addSubview:shesuLabel];
    
-    
     
     qitaBottView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
@@ -2017,10 +2790,9 @@
     .heightIs(20);
     [shesuLabel setSingleLineAutoResizeWithMaxWidth:200];
     
-    
-    pingzheng.text = @"有无债权相关凭证：";
-    hangyeLabel.text = @"债务方行业：";
-    shesuLabel.text = @"债权涉诉情况：";
+    pingzheng.text = [@"有无债权相关凭证：" stringByAppendingString:self.model.Guaranty];
+    hangyeLabel.text = [@"债务方行业："stringByAppendingString:self.model.Industry];
+    shesuLabel.text = [@"债权涉诉情况："stringByAppendingString:self.model.State];
 
     
     UIView *liangdianTopView = [UIView new];
@@ -2073,13 +2845,30 @@
     .heightIs(20);
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
-    button1.text = @"债务方有还款能力";
-    button2.text = @"法律关系明确";
+   
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
+    
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        
+    }
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    
 
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:15];
-    
-    
-    
+ 
 }
 
 - (void)finanCingGuquanView
@@ -2087,7 +2876,6 @@
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
-    
     UILabel *label4 = [UILabel new];
     UILabel *label5 = [UILabel new];
     UILabel *label6 = [UILabel new];
@@ -2101,6 +2889,16 @@
     UILabel *label14 = [UILabel new];
     UILabel *label15 = [UILabel new];
     UILabel *label16 = [UILabel new];
+    
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    label9.textColor = [UIColor grayColor];
+    label11.textColor = [UIColor grayColor];
+    label13.textColor = [UIColor grayColor];
+    label15.textColor = [UIColor grayColor];
+    
     
     
     [self.changeView addSubview:label1];
@@ -2213,21 +3011,21 @@
     
     
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     label3.text = @"项目所在地：";
-    label4.text = @"身份：";
+    label4.text = self.model.ProArea;
     label5.text = @"融资方式：";
-    label6.text = @"身份：";
+    label6.text = self.model.AssetType;
     label7.text = @"融资金额：";
-    label8.text = @"身份：";
+    label8.text = [self.model.TotalMoney stringByAppendingString:@"万"];
     label9.text = @"出让股权比例：";
-    label10.text = @"诉讼：";
+    label10.text = self.model.Rate;
     label11.text = @"企业现状：";
-    label12.text = @"非诉催收：";
+    label12.text = self.model.Status;
     label13.text = @"所属行业：";
-    label14.text = @"诉讼：";
+    label14.text = self.model.Belong;
     label15.text = @"资金用途：";
-    label16.text = @"非诉催收：";
+    label16.text = self.model.Usefor;
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -2313,8 +3111,35 @@
     .heightIs(20);
     [button3 setSingleLineAutoResizeWithMaxWidth:200];
     
-    button1.text = @"抵押物足值";
-    button2.text = @"回报率高";
+    
+
+    
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
+    
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        
+    }
+    else if(proArr.count == 3)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+    }
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    [self setliangdianLabel:button3];
 }
 - (void)finaCingZhaiquanView
 {
@@ -2331,6 +3156,12 @@
     UILabel *label10 = [UILabel new];
     UILabel *label11 = [UILabel new];
     UILabel *label12 = [UILabel new];
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+    label7.textColor = [UIColor grayColor];
+    label9.textColor = [UIColor grayColor];
+    label11.textColor = [UIColor grayColor];
     
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
@@ -2415,17 +3246,17 @@
     
     
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     label3.text = @"项目所在地：";
-    label4.text = @"身份：";
+    label4.text = self.model.ProArea;
     label5.text = @"融资方式：";
-    label6.text = @"身份：";
+    label6.text = self.model.AssetType;
     label7.text = @"担保方式：";
-    label8.text = @"身份：";
+    label8.text = self.model.Type;
     label9.text = @"融资金额：";
-    label10.text = @"诉讼：";
+    label10.text = self.model.Money;
     label11.text = @"使用期限：";
-    label12.text = @"非诉催收：";
+    label12.text = [self.model.Month stringByAppendingString:@"月"];
     
     
     UIView *line1 = [UIView new];
@@ -2508,9 +3339,27 @@
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
  
+        NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
     
-    button1.text = @"抵押物足值";
-    button2.text = @"回报率高";
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+    }
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    
+
+
 }
 - (void)asetBackView
 {
@@ -2611,17 +3460,17 @@
 
     
     label1.text = @"身份：";
-    label2.text = @"身份：";
+    label2.text = self.model.Identity;
     label3.text = @"资产包类型：";
-    label4.text = @"身份：";
+    label4.text = self.model.AssetType;
     label5.text = @"来源：";
-    label6.text = @"身份：";
+    label6.text = self.model.FromWhere;
     label7.text = @"地区：";
-    label8.text = @"身份：";
+    label8.text = self.model.ProArea;
     label9.text = @"总金额：";
-    label10.text = @"诉讼：";
+    label10.text = [self.model.TotalMoney stringByAppendingString:@"万"];
     label11.text = @"转让价：";
-    label12.text = @"非诉催收：";
+    label12.text = [self.model.TransferMoney stringByAppendingString:@"万"];
     
     
     UIView *line1 = [UIView new];
@@ -2730,12 +3579,12 @@
     .heightIs(20);
     [diyawuLeiXing setSingleLineAutoResizeWithMaxWidth:200];
     
-    danbaoLabel.text = @"本金：";
-    changhuanLabel.text = @"是否有尽调报告：";
-    diyaLabel.text = @"利息：";
-    pingzhenLabel.text = @"出表时间：";
-    zhaiwurenLabel.text = @"户数：";
-    diyawuLeiXing.text = @"抵押物类型：";
+    danbaoLabel.text = [@"本金："stringByAppendingString:self.model.Money];
+    changhuanLabel.text = [@"是否有尽调报告："stringByAppendingString:self.model.Report];
+    diyaLabel.text = [@"利息："stringByAppendingString:self.model.Rate];
+    pingzhenLabel.text = [@"出表时间："stringByAppendingString:self.model.Time];
+    zhaiwurenLabel.text = [@"户数："stringByAppendingString:self.model.Time];
+    diyawuLeiXing.text = [@"抵押物类型："stringByAppendingString:self.model.Pawn];
     
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
@@ -2779,7 +3628,6 @@
     .heightIs(60)
     .topSpaceToView(line4,0);
     
-    
     button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
     .centerYEqualToView(liangdianBottomView)
     .heightIs(20);
@@ -2795,11 +3643,98 @@
     .heightIs(20);
     [button3 setSingleLineAutoResizeWithMaxWidth:200];
     
-    button1.text = @"抵押物足值";
-    button2.text = @"可拆包";
-    button3.text = @"一手包";
+   
+    
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (proArr.count == 0) {
+        button1.text = @"暂无项目亮点";
+        [button2 setHidden:YES];
+    }
+    else if(proArr.count == 1)
+    {
+        button1.text = proArr[0];
+        [button2 setHidden:YES];
+    }
+    
+    else if(proArr.count == 2)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        
+    }
+    else if(proArr.count == 3)
+    {
+        button1.text = proArr[0];
+        button2.text = proArr[1];
+        button3.text = proArr[2];
+        
+    }
+    [self setliangdianLabel:button1];
+    [self setliangdianLabel:button2];
+    [self setliangdianLabel:button3];
 
 }
+
+- (void)setliangdianLabel:(UILabel *)label
+{
+    if (label.text != nil && [label.text isEqualToString:@""]==NO) {
+        label.text = [[@" "stringByAppendingString:label.text]stringByAppendingString:@" "];
+    }
+    label.layer.borderWidth = 1;
+    label.textColor = [UIColor colorWithHexString:@"fdd000"];
+    label.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    label.layer.cornerRadius = 10;
+    label.layer.masksToBounds = YES;
+}
+
+#pragma mark----查看图片手势方法以及代理
+- (void)imageTapGestureAction:(UITapGestureRecognizer *)imageTapGesture
+{
+    KNPhotoBrower *photoBrower = [[KNPhotoBrower alloc] init];
+    photoBrower.itemsArr = self.itemsArray;
+    photoBrower.currentIndex = imageTapGesture.view.tag;
+    // 如果设置了 photoBrower中的 actionSheetArr 属性. 那么 isNeedRightTopBtn 就应该是默认 YES, 如果设置成NO, 这个actionSheetArr 属性就没有意义了
+    //    photoBrower.actionSheetArr = [self.actionSheetArray mutableCopy];
+    
+    [photoBrower present];
+    
+    _photoBrower = photoBrower;
+    
+    // 设置代理方法 --->可不写
+    [photoBrower setDelegate:self];
+    
+    // 这里是 设置 状态栏的 隐藏 ---> 可不写
+    _ApplicationStatusIsHidden = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+// 下面方法 是让 '状态栏' 在 PhotoBrower 显示的时候 消失, 消失的时候 显示 ---> 根据项目需求而定
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+- (BOOL)prefersStatusBarHidden{
+    if(_ApplicationStatusIsHidden){
+        return YES;
+    }
+    return NO;
+}
+
+/* PhotoBrower 即将消失 */
+- (void)photoBrowerWillDismiss{
+    NSLog(@"Will Dismiss");
+    _ApplicationStatusIsHidden = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+/* PhotoBrower 右上角按钮的点击 */
+- (void)photoBrowerRightOperationActionWithIndex:(NSInteger)index{
+    NSLog(@"operation:%zd",index);
+}
+
+/* PhotoBrower 保存图片是否成功 */
+- (void)photoBrowerWriteToSavedPhotosAlbumStatus:(BOOL)success{
+    NSLog(@"saveImage:%zd",success);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

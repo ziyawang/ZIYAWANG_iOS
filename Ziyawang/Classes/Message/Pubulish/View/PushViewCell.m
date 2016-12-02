@@ -19,6 +19,9 @@
 
 @implementation PushViewCell
 
+
+
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

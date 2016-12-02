@@ -549,15 +549,17 @@
     self.imageView2.userInteractionEnabled = YES;
     self.imageView3.userInteractionEnabled = YES;
     
+    self.imageView1.tag = 0;
+    self.imageView2.tag = 1;
+    self.imageView3.tag = 2;
+    
     //给每个图片添加手势，放大图片查看
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView1 addGestureRecognizer:gesture1];
-    
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView2 addGestureRecognizer:gesture2];
     UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     [self.imageView3 addGestureRecognizer:gesture3];
-    
 }
 
 //判断用户类型显示下方视图

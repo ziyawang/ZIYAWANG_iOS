@@ -250,6 +250,7 @@
     self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:array];
     self.menuView.cornerMarkLocationType = CornerMarkLocationTypeRight;
     NSString *path =  [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
+    
     NSArray *arr = [NSArray arrayWithContentsOfFile:path];
     self.shengArray = [NSMutableArray array];
     for (NSDictionary *dic in arr) {
@@ -266,20 +267,28 @@
         }
         [self.allshiArray addObject:self.shiArray];
     }
-    NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];
-    NSArray *informationTypeID = @[@"1",@"14",@"12",@"4",@"13",@"6",@"3",@"9",@"10",@"2",@"15"];
+    NSArray *infonmationType = @[@"资产包",@"融资信息",@"固定资产",@"企业商账",@"法拍资产",@"个人债权",@"处置公告"];
     
+    NSArray *informationTypeID = @[@"1",@"rzxx",@"gdzc",@"18",@"fpzc",@"19",@"czgg"];
     
     
     
     
     NSArray *level = @[@""];
+    //资产包
     NSArray *typearray1 = @[@"类型",@"来源"];
-    NSArray *typearray2 = @[@"类型"];
-    NSArray *typearray3 = @[@"类型",@"标的物"];
-    NSArray *typearray4 = @[@"买方性质"];
-    NSArray *typearray5 = @[@"类型",@"求购方"];
-    NSArray *typearray6 = @[@"方式"];
+    //融资信息
+    NSArray *typearray2 = @[@"融资方式"];
+    //固定资产
+    NSArray *typearray3 = @[@"标的物类型"];
+    //企业商账
+    NSArray *typearray4 = @[@"企业商账"];
+    //法拍资产
+    NSArray *typearray5 = @[@"资产类型"];
+    //个人债权
+    NSArray *typearray6 = @[@"处置方式"];
+    
+    //处置公告
     NSArray *typearray7 = @[@"类型",@"需求"];
     NSArray *typearray8 = @[@"类型"];
     NSArray *typearray9 = @[@"类型",@"被调查方"];
@@ -288,40 +297,40 @@
     //投资需求
     NSArray *typearray12 = @[@"投资类型",@"投资方式",@"投资期限"];
     
-    //资产包转让
-    NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类"];
-    NSArray *Stypearray2 = @[@"银行",@"非银行金融机构",@"企业"];
+    
+    //资产包
+    NSArray *Stypearray1 = @[@"抵押",@"信用",@"综合类",@"其他"];
+    NSArray *Stypearray2 = @[@"银行",@"非银行机构",@"企业",@"其他"];
     NSMutableArray *zichan = [NSMutableArray new];
     [zichan addObject:Stypearray1];
     [zichan addObject:Stypearray2];
-    //债权转让
-    NSArray *Stypearray3 = @[@"个人债权",@"企业商账",@"其他"];
+    //融资信息
+    NSArray *Stypearray3 = @[@"债权融资",@"股权融资"];
     NSMutableArray *zhaiquan = [NSMutableArray new];
     [zhaiquan addObject:Stypearray3];
     
-    //固产转让
-    NSArray *Stypearray4 = @[@"土地",@"房产",@"汽车",@"项目",@"其他"];
-    NSArray *Stypearray_4 = @[@"个人资产",@"企业资产",@"法拍资产"];
+    //固定资产
+    NSArray *Stypearray4 = @[@"土地",@"房产"];
     NSMutableArray *guchan = [NSMutableArray new];
-    [guchan addObject:Stypearray_4];
     [guchan addObject:Stypearray4];
-    //商业保理
-    NSArray *Stypearray5 = @[@"国企",@"民企",@"上市公司",@"其他"];
+    
+    //企业商账
+    NSArray *Stypearray5 = @[@"诉讼催收",@"非诉讼催收"];
     NSMutableArray *shangye = [NSMutableArray new];
     [shangye addObject:Stypearray5];
     
-    //固产求购
-    NSArray *Stypearray6 = @[@"土地",@"房产",@"汽车",@"其他"];
-    NSArray *Stypearray7 = @[@"个人",@"企业"];
+    //法拍资产
+    NSArray *Stypearray6 = @[@"土地",@"房产",@"汽车"];
     NSMutableArray *qiugou = [NSMutableArray new];
     [qiugou addObject:Stypearray6];
-    [qiugou addObject:Stypearray7];
     
-    //融资借贷
-    NSArray *Stypearray8 = @[@"抵押",@"质押",@"租赁",@"过桥",@"信用",@"担保",@"股权",@"其他"];
+    //个人债权
+    NSArray *Stypearray8 = @[@"诉讼催收",@"非诉讼催收"];
     NSMutableArray *rongzi = [NSMutableArray new];
     [rongzi addObject:Stypearray8];
     
+    
+    //不需要的删除的。。。。。。。。。。。。。。。。。。。。。。。、、、、、、///////////////
     //法律服务
     NSArray *Stypearray9 = @[@"民事",@"刑事",@"经济",@"公司"];
     NSArray *Stypearray10 = @[@"咨询",@"诉讼",@"其他"];
@@ -354,7 +363,6 @@
     NSArray *Stypearray17 = @[@"典当",@"担保"];
     NSMutableArray *diandang = [NSMutableArray new];
     [diandang addObject:Stypearray17];
-
     
     //投资需求
     NSArray *Stypearray18 = @[@"个人",@"企业",@"机构",@"其他"];
@@ -366,6 +374,7 @@
     [touzi addObject:Stypearray20];
     
     NSMutableArray *allTypeArray = [NSMutableArray new];
+    
     [allTypeArray addObject:zichan];
     [allTypeArray addObject:zhaiquan];
     [allTypeArray addObject:guchan];
@@ -378,6 +387,8 @@
     [allTypeArray addObject:weiwai];
     [allTypeArray addObject:diandang];
     [allTypeArray addObject:touzi];
+    
+    
     self.menuView.indexsOneFist = infonmationType;
     self.menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
@@ -413,7 +424,6 @@
                 [self.dataDic removeObjectForKey:@"FromWhere"];
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
-                
                 [self findInfomationsWithDic:self.dataDic];
             }
             else if([substr isEqualToString:@"来源"])
@@ -421,7 +431,6 @@
                 [self.dataDic removeObjectForKey:@"AssetType"];
                 NSString *findValue = [string substringFromIndex:2];
                 [self.dataDic setObject:findValue forKey:@"FromWhere"];
-                
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
@@ -430,13 +439,24 @@
         else if([self.lastChoose isEqualToString:informationTypeID[1]])
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+            NSString *substr = [string substringFromIndex:2];
+            if ([substr isEqualToString:@"方式"])
+            {
                 NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
+                if ([findValue isEqualToString:@"债权"]) {
+                    [self.dataDic setObject:@"17" forKey:@"TypeID"];
+                    [self findInfomationsWithDic:self.dataDic];
+                }
+                else
+                {
+                    [self.dataDic setObject:@"6" forKey:@"TypeID"];
+                    [self findInfomationsWithDic:self.dataDic];
+                    
+                }
+                
             }
+            
+            
         }
         
         //---------------
@@ -444,20 +464,18 @@
         {              NSString *substr = [string substringToIndex:2];
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic removeObjectForKey:@"Corpore"];
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
+            if ([substr isEqualToString:@"标的"]) {
                 
-            }
-            else if ([substr isEqualToString:@"标的"])
-            {
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:3];
-                [self.dataDic setObject:findValue forKey:@"Corpore"];
+                NSString *findValue = [string substringFromIndex:2];
+                if ([findValue isEqualToString:@"土地"]) {
+                    [self.dataDic setObject:@"16" forKey:@"TypeID"];
+                    
+                }
+                else
+                {
+                    [self.dataDic setObject:@"12" forKey:@"TypeID"];
+                }
+                
                 [self findInfomationsWithDic:self.dataDic];
                 
             }
@@ -470,11 +488,18 @@
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
             NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"买方"])
+            if ([substr isEqualToString:@"处置"])
             {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic setObject:findValue forKey:@"BuyerNature"];
+                NSString *findValue = [string substringToIndex:2];
+                if ([findValue isEqualToString:@"诉讼"]) {
+                    [self.dataDic removeObjectForKey:@"UnLaw"];
+                    [self.dataDic setObject:@"1" forKey:@"Law"];
+                }
+                else
+                {
+                    [self.dataDic removeObjectForKey:@"Law"];
+                    [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+                }
                 [self findInfomationsWithDic:self.dataDic];
             }
             
@@ -486,19 +511,23 @@
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
             NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
+            if ([substr isEqualToString:@"资产"]) {
+                NSString *findValue = [string substringToIndex:2];
+                
+                if ([findValue isEqualToString:@"土地"]) {
+                    [self.dataDic setObject:@"21" forKey:@"TypeID"];
+                }
+                else if ([findValue isEqualToString:@"房产"])
+                {
+                    [self.dataDic setObject:@"20" forKey:@"TypeID"];
+                }
+                else
+                {
+                    [self.dataDic setObject:@"22" forKey:@"TypeID"];
+                }
                 [self findInfomationsWithDic:self.dataDic];
             }
-            else if([substr isEqualToString:@"求购"])
-            {
-                NSString *findValue = [string substringFromIndex:3];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic setObject:findValue forKey:@"Buyer"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
+            
             
         }
         //---------------
@@ -506,158 +535,27 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             //类型 求购方
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"方式"]) {
-                NSString *findValue = [string substringFromIndex:2];
-              
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-        }
-    
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[6]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic removeObjectForKey:@"Requirement"];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-            else if([Str isEqualToString:@"需求"])
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"处置"])
             {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic setObject:findValue forKey:@"Requirement"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-            
-        }
-        
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[7]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            
-            NSString *Str = [string substringToIndex:2];
-            
-            if ([Str isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-            
-        }
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[8]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self.dataDic removeObjectForKey:@"Informant"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-            else if([string isEqualToString:@"被调"])
-            {
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                
-                [self.dataDic setObject:findValue forKey:@"Informant"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-        }
-        
-        
-        
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[9]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic removeObjectForKey:@"Rate"];
-                [self.dataDic removeObjectForKey:@"Status"];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-            else if([Str isEqualToString:@"佣金"])
-            {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic removeObjectForKey:@"Status"];
-                [self.dataDic setObject:findValue forKey:@"Rate"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-            
-            else if ([Str isEqualToString:@"状态"])
-            {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic removeObjectForKey:@"Rate"];
-                [self.dataDic setObject:findValue forKey:@"Status"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-        }
-        
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[10]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            
-            NSString *Str = @"a";
-            if (string.length > 4) {
-                Str = [string substringToIndex:4];
-            }
-            if ([Str isEqualToString:@"投资类型"]) {
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic removeObjectForKey:@"Year"];
-                [self.dataDic removeObjectForKey:@"investType"];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-            else if([Str isEqualToString:@"投资期限"])
-            {
-                NSString *findValue = [string substringFromIndex:4];
-                if (findValue.length == 3) {
-                    findValue = [findValue substringToIndex:2];
+                NSString *findValue = [string substringToIndex:2];
+                if ([findValue isEqualToString:@"诉讼"]) {
+                    [self.dataDic removeObjectForKey:@"UnLaw"];
+                    [self.dataDic setObject:@"1" forKey:@"Law"];
+                    
                 }
                 else
                 {
-                    findValue = [findValue substringToIndex:1];
+                    [self.dataDic removeObjectForKey:@"Law"];
+                    [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+                    
                 }
-                [self.dataDic setObject:findValue forKey:@"Year"];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic removeObjectForKey:@"investType"];
                 [self findInfomationsWithDic:self.dataDic];
-                
             }
-            else if([Str isEqualToString:@"投资方式"])
-            {
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic removeObjectForKey:@"AssetType"];
-                [self.dataDic removeObjectForKey:@"Year"];
-                [self.dataDic setObject:findValue forKey:@"investType"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
+            
         }
         
+        //---------------
         for (NSString *sstr in infonmationType) {
             if ([sstr isEqualToString:string]) {
                 
@@ -830,8 +728,8 @@
         
         
     };
+    
 }
-
 - (void)createNewHeadViewWithType
 {
     NSArray *infonmationType = @[@"资产包转让",@"债权转让",@"固产转让",@"商业保理",@"资产求购",@"融资需求",@"法律服务",@"悬赏信息",@"尽职调查",@"委外催收",@"投资需求"];

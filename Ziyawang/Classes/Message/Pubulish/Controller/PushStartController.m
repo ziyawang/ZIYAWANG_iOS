@@ -1741,7 +1741,6 @@
                 chooseVC.touqixian = @"投资期限";
                 chooseVC.soucreArray = touziqixianArray;
                  chooseVC.navigationItem.title = @"投资期限";
-                
             }
         }
         

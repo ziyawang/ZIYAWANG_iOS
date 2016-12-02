@@ -608,7 +608,7 @@
     //    http://apitest.ziyawang.com/v1/v2/uploadfile
     NSString *url1= getDataURL;
     //    NSString *url2 = @"/uploadfile?token=";
-    NSString *url2 = @"/v2/uploadfile?token=";
+    NSString *url2 = @"/uploadfile?token=";
     
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [url stringByAppendingString:token];

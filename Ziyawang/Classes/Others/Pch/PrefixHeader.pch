@@ -44,8 +44,12 @@
  *
  *  @return
  */
+
+
+//#define getDataURL @"http://ziyaapi.ngrok.cc/v1"//获取本服务器
+
 #define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
-#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
+//#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
 #define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
 #define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
 
@@ -113,7 +117,7 @@
 //#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
 //#define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
 //#define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
-//#define getImageURL @"http://images.ziyawang.com"//获取图片
+#define getImageURL @"http://images.ziyawang.com"//获取图片
 //// public static final String FileIP =  "http://images.ziyawang.com"
 //#define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
 //#define videoPlayerURL @"http://videos.ziyawang.com"

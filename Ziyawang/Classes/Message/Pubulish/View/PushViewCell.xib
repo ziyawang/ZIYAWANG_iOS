@@ -16,8 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="107" height="95"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drK-cv-dag">
-                        <frame key="frameInset" width="107" height="148"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drK-cv-dag">
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="呵呵哒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Id-ti-q1z">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -26,7 +25,7 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsi-eR-mBS">
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Xsi-eR-mBS" secondAttribute="height" multiplier="25:24" constant="5" id="mJU-wz-X8N"/>
+                                    <constraint firstAttribute="width" secondItem="Xsi-eR-mBS" secondAttribute="height" multiplier="1:1" constant="5" id="mJU-wz-X8N"/>
                                 </constraints>
                             </imageView>
                         </subviews>

@@ -110,9 +110,9 @@ static NSString *indefier = @"UITableViewCell";
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 1)];
     view.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:view];
-    
     self.titles = [titles mutableCopy];
   return self;
+    
 }
 
 #pragma mark -layoutSubViews
@@ -131,10 +131,10 @@ static NSString *indefier = @"UITableViewCell";
     CGFloat button_width = self.bounds.size.width / self.titles.count;
     CGFloat button_height = CGRectGetHeight(self.bounds);
     
+    
     for (int i = 0; i < self.titles.count; i ++) {
         //创建按钮
         SegmentButton *segmentButton = [[SegmentButton alloc]initWithFrame:CGRectMake(button_width * i, 1, button_width, button_height - 2) With:self.cornerMarkLocationType];
-        [self addSubview:segmentButton];
         
         [segmentButton setTitle:self.titles[i] forState:UIControlStateNormal];
         [segmentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -144,7 +144,20 @@ static NSString *indefier = @"UITableViewCell";
         segmentButton.backgroundColor = [UIColor whiteColor];
         segmentButton.tag = 100 + i;
         
+        if ([self.titles[0] isEqualToString:@"处置公告"]) {
+            if(i==1||i==2)
+            {
+//                [segmentButton setBackgroundColor:[UIColor lightGrayColor]];
+                [segmentButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+                segmentButton.userInteractionEnabled = NO;
+//                [segmentButton.imgView setImage:[UIImage new]];
+                
+            }
+                
+        }
         
+        [self addSubview:segmentButton];
+
         //最后一个移除掉划线
         if (i == self.titles.count - 1) {
             [segmentButton.shaperLayer removeFromSuperlayer];
