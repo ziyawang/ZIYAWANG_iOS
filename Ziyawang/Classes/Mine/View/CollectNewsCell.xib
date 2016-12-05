@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CollectNewsCell" rowHeight="124" id="znx-4a-Mwr" customClass="CollectNewsCell">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="124"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="znx-4a-Mwr" id="CQG-LE-Uon">
+                <frame key="frameInset" width="350" height="123.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q3W-mg-3aj">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="90" id="ivj-yK-0Zd"/>
+                            <constraint firstAttribute="width" constant="148" id="u2D-JF-PhT"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ZO0-BV-Apv">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="PJF-Dq-fP8"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kC-UM-tdT">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNP-d7-jOJ">
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="left.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="BS0-en-dru">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="H1z-fs-77E"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="q3W-mg-3aj" firstAttribute="top" secondItem="CQG-LE-Uon" secondAttribute="top" constant="10" id="4Qk-jB-xVS"/>
+                    <constraint firstItem="4kC-UM-tdT" firstAttribute="leading" secondItem="q3W-mg-3aj" secondAttribute="trailing" constant="5" id="6V0-Lo-iMr"/>
+                    <constraint firstItem="BS0-en-dru" firstAttribute="leading" secondItem="CQG-LE-Uon" secondAttribute="leading" id="7O1-ro-YaW"/>
+                    <constraint firstAttribute="bottom" secondItem="BS0-en-dru" secondAttribute="bottom" id="7zS-PS-x16"/>
+                    <constraint firstItem="q3W-mg-3aj" firstAttribute="leading" secondItem="CQG-LE-Uon" secondAttribute="leading" constant="20" id="ESX-u9-YFp"/>
+                    <constraint firstAttribute="bottom" secondItem="ZO0-BV-Apv" secondAttribute="bottom" id="EyC-zY-ubE"/>
+                    <constraint firstItem="4kC-UM-tdT" firstAttribute="leading" secondItem="q3W-mg-3aj" secondAttribute="trailing" constant="5" id="HDj-o3-yxM"/>
+                    <constraint firstItem="4kC-UM-tdT" firstAttribute="top" secondItem="nNP-d7-jOJ" secondAttribute="bottom" constant="5" id="Q3t-h3-mIq"/>
+                    <constraint firstAttribute="trailing" secondItem="nNP-d7-jOJ" secondAttribute="trailing" constant="20" id="QXg-Pr-rzT"/>
+                    <constraint firstAttribute="trailing" secondItem="4kC-UM-tdT" secondAttribute="trailing" constant="10" id="R51-sb-bPe"/>
+                    <constraint firstItem="q3W-mg-3aj" firstAttribute="leading" secondItem="CQG-LE-Uon" secondAttribute="leading" constant="10" id="Sj9-jN-nsX"/>
+                    <constraint firstItem="nNP-d7-jOJ" firstAttribute="leading" secondItem="q3W-mg-3aj" secondAttribute="trailing" constant="5" id="WeX-Im-KSD"/>
+                    <constraint firstAttribute="trailing" secondItem="4kC-UM-tdT" secondAttribute="trailing" constant="10" id="ZcQ-XL-mLO"/>
+                    <constraint firstAttribute="trailing" secondItem="4kC-UM-tdT" secondAttribute="trailing" constant="20" id="f1M-Fr-1c6"/>
+                    <constraint firstItem="BS0-en-dru" firstAttribute="top" secondItem="CQG-LE-Uon" secondAttribute="top" id="g4q-lq-VG1"/>
+                    <constraint firstItem="ZO0-BV-Apv" firstAttribute="leading" secondItem="BS0-en-dru" secondAttribute="trailing" id="pkm-ho-Lna"/>
+                    <constraint firstAttribute="trailing" secondItem="ZO0-BV-Apv" secondAttribute="trailing" id="rLY-mc-v1r"/>
+                    <constraint firstItem="nNP-d7-jOJ" firstAttribute="top" secondItem="CQG-LE-Uon" secondAttribute="top" constant="10" id="tzu-zv-W6Q"/>
+                    <constraint firstItem="q3W-mg-3aj" firstAttribute="leading" secondItem="BS0-en-dru" secondAttribute="trailing" constant="10" id="usQ-8v-yqD"/>
+                    <constraint firstItem="4kC-UM-tdT" firstAttribute="top" secondItem="nNP-d7-jOJ" secondAttribute="bottom" constant="5" id="wTA-pj-huV"/>
+                    <constraint firstItem="nNP-d7-jOJ" firstAttribute="leading" secondItem="q3W-mg-3aj" secondAttribute="trailing" constant="5" id="wUt-Nq-Vgc"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="6V0-Lo-iMr"/>
+                        <exclude reference="R51-sb-bPe"/>
+                        <exclude reference="wTA-pj-huV"/>
+                        <exclude reference="ZcQ-XL-mLO"/>
+                        <exclude reference="Sj9-jN-nsX"/>
+                        <exclude reference="usQ-8v-yqD"/>
+                        <exclude reference="WeX-Im-KSD"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="BriefLabel" destination="4kC-UM-tdT" id="c4p-pP-kHy"/>
+                <outlet property="NewsLogo" destination="q3W-mg-3aj" id="vvL-pf-E6L"/>
+                <outlet property="titleLabel" destination="nNP-d7-jOJ" id="eKg-HR-W1S"/>
+            </connections>
+            <point key="canvasLocation" x="217" y="202"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bottom.jpg" width="720" height="16"/>
+        <image name="left.jpg" width="30" height="194"/>
+    </resources>
+</document>

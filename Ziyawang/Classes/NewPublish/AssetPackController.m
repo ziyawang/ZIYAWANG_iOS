@@ -11,7 +11,7 @@
 #import "AddImageManager.h"
 #import "HttpManager.h"
 #import "ChooseAreaController.h"
-@interface AssetPackController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate>
+@interface AssetPackController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *shenfenView;
 @property (weak, nonatomic) IBOutlet UIView *zichanleixingView;
@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIView *baogaoView;
 @property (weak, nonatomic) IBOutlet UIView *shijianView;
 @property (weak, nonatomic) IBOutlet UIView *diyawuleixingView;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 
 @property (weak, nonatomic) IBOutlet UILabel *shenfenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zichanleixingLabel;
@@ -32,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *videoButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (weak, nonatomic) IBOutlet UITextField *connectPersonTextfield;
 
 
 @property (nonatomic,strong) UIPickerView *pickerView;
@@ -96,11 +98,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.scrollView.delegate = self;
+    self.zongjineTextField.delegate = self;
+    self.zhuanrangjiaTextField.delegate = self;
+    self.benjiTextField.delegate = self;
+    
     self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
-
-    self.navigationItem.title = @"固产转让";
+    self.navigationItem.title = @"资产包";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"委托发布" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
     self.SelectedButtonsArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
@@ -138,15 +142,21 @@
     self.textView.delegate = self;
 
 }
+#pragma mark----scrollview delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.view endEditing:YES];
     
 }
+
+#pragma mark----textView Delegate
+
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    textView.textColor = [UIColor blackColor];
-    textView.text = nil;
+    if ([textView.text isEqualToString:@"请输入文字描述"]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+    }
 }
 
 - (void)findButtonWithButton:(UIButton *)button
@@ -515,6 +525,12 @@
     _lianxirenTextField.textAlignment = NSTextAlignmentRight;
     _lianxifangshiTextfield.textAlignment = NSTextAlignmentRight;
     
+    _lianxirenTextField.tag = 11;
+    _lianxifangshiTextfield.tag = 12;
+    
+    _lianxifangshiTextfield.delegate = self;
+    _lianxirenTextField.delegate = self;
+
     
     [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
     [cancelButton addTarget:self action:@selector(weituoCancelAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -560,7 +576,6 @@
     
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [url stringByAppendingString:token];
-    
     NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
     NSLog(@"%@",urlStr);
     NSString *fileName = @"lll.wav";
@@ -568,11 +583,15 @@
     NSURL *urla = [NSURL URLWithString:urlpath];
     
     NSURL *audiourl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
-    for (NSString *str in self.liangdianArray) {
-        self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
-        ;
+    if (self.liangdianArray.count != 0) {
+        for (NSString *str in self.liangdianArray) {
+            self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
+            ;
+        }
+        self.liangdianStr = [self.liangdianStr substringFromIndex:1];
     }
-    self.liangdianStr = [self.liangdianStr substringFromIndex:1];
+    
+   
     NSLog(@"%@",self.liangdianStr);
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
@@ -582,29 +601,50 @@
     
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
-    
     [dic setObject:self.diquLabel.text forKey:@"ProArea"];
     [dic setObject:self.zichanleixingLabel.text forKey:@"AssetType"];
     [dic setObject:@"IOS" forKey:@"Channel"];
     [dic setObject:self.textView.text forKey:@"WordDes"];
-    
-    
+    [dic setObject:self.connectPersonTextfield.text forKey:@"ConnectPerson"];
+    [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
     [dic setObject:self.laiyuanLabel.text forKey:@"FromWhere"];
     [dic setObject:self.zongjineTextField.text forKey:@"TotalMoney"];
     [dic setObject:self.zhuanrangjiaTextField.text forKey:@"TransferMoney"];
-    [dic setObject:self.benjiTextField.text forKey:@"Money"];
-    [dic setObject:self.lixiTextField.text forKey:@"Rate"];
-    [dic setObject:self.hushuTextField.text forKey:@"Counts"];
-    [dic setObject:self.baogaoLabel.text forKey:@"Report"];
     
     
-    [dic setObject:self.shijianLabel.text forKey:@"Time"];
+    
+    if (self.benjiTextField.text != nil) {
+        [dic setObject:self.benjiTextField.text forKey:@"Money"];
+    }
+    if (self.lixiTextField.text != nil) {
+        [dic setObject:self.lixiTextField.text forKey:@"Rate"];
+    }
+    if (self.hushuTextField.text != nil) {
+        [dic setObject:self.hushuTextField.text forKey:@"Counts"];
+    }
+    if ([self.baogaoLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.baogaoLabel.text forKey:@"Report"];
+    }
+    if ([self.shijianLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.shijianLabel.text forKey:@"Time"];
+    }
+    if ([self.diyawuleixingLabel.text isEqualToString:@"请选择"] == NO) {
     [dic setObject:self.diyawuleixingLabel.text forKey:@"Pawn"];
+
+    }
+    
+    
+    
+ 
     [dic setObject:@"1" forKey:@"TypeID"];
     
     NSLog(@"%@",dic);
     NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
+    [HttpManager httpManager].ifpop = ^(NSString *statu)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    };
 
 }
 - (void)weituoCancelAction2:(UIButton *)button
@@ -622,14 +662,15 @@
 - (void)didClickFanhuiButtonAction:(UIButton *)button
 {
     [self.view endEditing:YES];
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
     
 }
 - (void)weituoCancelAction:(UIButton *)button
 {
-    [self.view endEditing:YES];
+    [_lianxirenTextField resignFirstResponder];
+    [_lianxifangshiTextfield resignFirstResponder];
     
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
 }
 
 - (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
@@ -657,17 +698,68 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"发布成功");
         
-        [self.weituoView setHidden:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.weituoView removeFromSuperview];
+        [MyMBHud MBProgressWithString:@"发布成功，请耐心等待客服人员与您联系" timer:2 mode:(MBProgressHUDModeText) target:self];
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"发布失败%@",error);
-        [self.weituoView setHidden:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+
+        [MyMBHud MBProgressWithString:@"发布失败，请稍后重试" timer:2 mode:(MBProgressHUDModeText) target:self];
+
+        [self.weituoView removeFromSuperview];
     }];
     
 }
 - (IBAction)sendButtonAction:(id)sender
 {
+    
+    [self.view endEditing:YES];
+    
+    if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.shenfenLabel] == NO) {
+        [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.zichanleixingLabel] == NO) {
+        [MyMBHud MBProgressWithString:@"请选择资产包类型" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.laiyuanLabel] == NO) {
+        [MyMBHud MBProgressWithString:@"请选择来源" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.diquLabel] == NO) {
+        [MyMBHud MBProgressWithString:@"请选择地区" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.zongjineTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入总金额" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.zhuanrangjiaTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入转让价" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if (self.textView.text == nil || [self.textView.text isEqualToString:@"请输入文字描述"] ||[self.textView.text isEqualToString:@""]) {
+        [MyMBHud MBProgressWithString:@"请输入文字描述" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([[AddImageManager AddManager]getImageArray].count == 0) {
+        [MyMBHud MBProgressWithString:@"请上传至少一张图片" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.connectPersonTextfield] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系人姓名" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.phoneTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系方式" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+ 
     [self setPromiseView];
     
 }
@@ -1030,77 +1122,96 @@
 
 #pragma mark - UITextField delegate
 //textField.text 输入之前的值 string 输入的字符
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:YES];
+    }
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:NO];
+    }
+}
+//textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    
-    NSInteger value = [textField.text integerValue];
-    if (value > 999999.9) {
-        textField.text = [textField.text substringToIndex:6];
-        //            [self showError:@"您输入的位数过多"];
-    }
-    
-    if ([textField.text rangeOfString:@"."].location == NSNotFound) {
-        self.isHaveDian = NO;
-    }
-    if ([string length] > 0) {
+    if (textField.tag != 11 && textField.tag != 12)
+    {
+        NSInteger value = [textField.text integerValue];
+        if (value > 999999.9) {
+            textField.text = [textField.text substringToIndex:6];
+            //            [self showError:@"您输入的位数过多"];
+        }
         
-        unichar single = [string characterAtIndex:0];//当前输入的字符
-        if ((single >= '0' && single <= '9') || single == '.') {//数据格式正确
+        if ([textField.text rangeOfString:@"."].location == NSNotFound) {
+            self.isHaveDian = NO;
+        }
+        if ([string length] > 0) {
             
-            //首字母不能为0和小数点
-            if([textField.text length] == 0){
-                if(single == '.') {
-                    [self showError:@"亲，第一个数字不能为小数点"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
+            unichar single = [string characterAtIndex:0];//当前输入的字符
+            if ((single >= '0' && single <= '9') || single == '.') {//数据格式正确
+                
+                //首字母不能为0和小数点
+                if([textField.text length] == 0){
+                    if(single == '.') {
+                        [self showError:@"亲，第一个数字不能为小数点"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
+                    if (single == '0') {
+                        [self showError:@"亲，第一个数字不能为0"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
                 }
-                if (single == '0') {
-                    [self showError:@"亲，第一个数字不能为0"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
-                }
-            }
-            //输入的字符是否是小数点
-            if (single == '.') {
-                if(self.isHaveDian==NO)//text中还没有小数点
-                {
-                    self.isHaveDian = YES;
-                    return YES;
-                    
-                }else{
-                    [self showError:@"亲，您已经输入过小数点了"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
-                }
-            }else{
-                if (self.isHaveDian) {//存在小数点
-                    
-                    //判断小数点的位数
-                    NSRange ran = [textField.text rangeOfString:@"."];
-                    if (range.location - ran.location <= 2) {
+                //输入的字符是否是小数点
+                if (single == '.') {
+                    if(self.isHaveDian==NO)//text中还没有小数点
+                    {
+                        self.isHaveDian = YES;
                         return YES;
+                        
                     }else{
-                        //                        [self showError:@"亲，您最多输入两位小数"];
+                        [self showError:@"亲，您已经输入过小数点了"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
                         return NO;
                     }
                 }else{
-                    return YES;
+                    if (self.isHaveDian) {//存在小数点
+                        
+                        //判断小数点的位数
+                        NSRange ran = [textField.text rangeOfString:@"."];
+                        if (range.location - ran.location <= 2) {
+                            return YES;
+                        }else{
+                            //                        [self showError:@"亲，您最多输入两位小数"];
+                            return NO;
+                        }
+                    }else{
+                        return YES;
+                    }
                 }
+            }else{//输入的数据格式不正确
+                [self showError:@"亲，您输入的格式不正确"];
+                NSLog(@"%lu",(unsigned long)range.length);
+                if (range.length != 0) {
+                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                    
+                }
+                return NO;
             }
-        }else{//输入的数据格式不正确
-            [self showError:@"亲，您输入的格式不正确"];
-            NSLog(@"%lu",(unsigned long)range.length);
-            if (range.length != 0) {
-                [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                
-            }
-            return NO;
         }
+        else
+        {
+            return YES;
+        }
+        
     }
-    else
-    {
-        return YES;
-    }
+    return YES;
+    
 }
 
 - (void)showError:(NSString *)errorString

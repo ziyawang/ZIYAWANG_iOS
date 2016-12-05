@@ -260,10 +260,13 @@
     }
     [self.collectButton addTarget:self action:@selector(didClickCollectbutton:) forControlEvents:(UIControlEventTouchUpInside)];
     
-    [self.contentView addSubview:fenxiang];
-    [self.contentView addSubview:shoucang];
-    [self.contentView addSubview:self.collectButton];
-    [self.contentView addSubview:button2];
+//    [self.contentView addSubview:fenxiang];
+//    [self.contentView addSubview:shoucang];
+    
+    
+//    [self.contentView addSubview:self.collectButton];
+//    [self.contentView addSubview:button2];
+    
     [self.contentView addSubview:videoTitle];
     [self.contentView addSubview:viewCount];
     [self.contentView addSubview:commentTime];
@@ -467,13 +470,14 @@
     
     sharebutton.sd_layout.centerYEqualToView(touchView)
     .rightSpaceToView(self.commentBackView,20)
-    .heightIs(25)
+    .heightIs(20)
     .widthIs(15);
     
     self.collectButton.sd_layout.centerYEqualToView(touchView)
     .rightSpaceToView(sharebutton,30)
-    .heightIs(25)
+    .heightIs(20)
     .widthIs(25);
+
     
 //    commCountButton.sd_layout.centerYEqualToView(touchView)
 //    .rightSpaceToView(self.collectButton,30)

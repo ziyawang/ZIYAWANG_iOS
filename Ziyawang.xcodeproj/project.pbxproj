@@ -650,6 +650,12 @@
 		78DB14371DF5092A0051F73A /* commentCount@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB14341DF5092A0051F73A /* commentCount@2x.png */; };
 		78DB14381DF5092A0051F73A /* commentCount@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB14351DF5092A0051F73A /* commentCount@3x.png */; };
 		78DB143B1DF511390051F73A /* LimitForTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB143A1DF511390051F73A /* LimitForTextField.m */; };
+		78DB143E1DF53DB60051F73A /* CheckPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB143D1DF53DB60051F73A /* CheckPhoneNumber.m */; };
+		78DB14411DF542AE0051F73A /* TextFieldViewAnimate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB14401DF542AE0051F73A /* TextFieldViewAnimate.m */; };
+		78DB14441DF54A150051F73A /* MyMBHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB14431DF54A150051F73A /* MyMBHud.m */; };
+		78DB14471DF561570051F73A /* CheckTextFieldAndLabelText.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB14461DF561570051F73A /* CheckTextFieldAndLabelText.m */; };
+		78DB144B1DF581030051F73A /* CollectNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB14491DF581030051F73A /* CollectNewsCell.m */; };
+		78DB144C1DF581030051F73A /* CollectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78DB144A1DF581030051F73A /* CollectNewsCell.xib */; };
 		78E2255D1DE8029900CB5D16 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255C1DE8029900CB5D16 /* RecordManager.m */; };
 		78E225601DE8149300CB5D16 /* AddImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255F1DE8149300CB5D16 /* AddImageManager.m */; };
 		78EA8B441DC832DD005658A1 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B411DC832DD005658A1 /* eye.png */; };
@@ -1688,6 +1694,17 @@
 		78DB14351DF5092A0051F73A /* commentCount@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commentCount@3x.png"; sourceTree = "<group>"; };
 		78DB14391DF511390051F73A /* LimitForTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimitForTextField.h; sourceTree = "<group>"; };
 		78DB143A1DF511390051F73A /* LimitForTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimitForTextField.m; sourceTree = "<group>"; };
+		78DB143C1DF53DB60051F73A /* CheckPhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPhoneNumber.h; sourceTree = "<group>"; };
+		78DB143D1DF53DB60051F73A /* CheckPhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckPhoneNumber.m; sourceTree = "<group>"; };
+		78DB143F1DF542AE0051F73A /* TextFieldViewAnimate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldViewAnimate.h; sourceTree = "<group>"; };
+		78DB14401DF542AE0051F73A /* TextFieldViewAnimate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldViewAnimate.m; sourceTree = "<group>"; };
+		78DB14421DF54A150051F73A /* MyMBHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMBHud.h; sourceTree = "<group>"; };
+		78DB14431DF54A150051F73A /* MyMBHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMBHud.m; sourceTree = "<group>"; };
+		78DB14451DF561570051F73A /* CheckTextFieldAndLabelText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckTextFieldAndLabelText.h; sourceTree = "<group>"; };
+		78DB14461DF561570051F73A /* CheckTextFieldAndLabelText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckTextFieldAndLabelText.m; sourceTree = "<group>"; };
+		78DB14481DF581030051F73A /* CollectNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectNewsCell.h; sourceTree = "<group>"; };
+		78DB14491DF581030051F73A /* CollectNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectNewsCell.m; sourceTree = "<group>"; };
+		78DB144A1DF581030051F73A /* CollectNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectNewsCell.xib; sourceTree = "<group>"; };
 		78E2255B1DE8029900CB5D16 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		78E2255C1DE8029900CB5D16 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		78E2255E1DE8149300CB5D16 /* AddImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImageManager.h; sourceTree = "<group>"; };
@@ -2279,6 +2296,14 @@
 				78FD6D091DF027CE001F69BB /* ChuzhiCell.xib */,
 				78DB14391DF511390051F73A /* LimitForTextField.h */,
 				78DB143A1DF511390051F73A /* LimitForTextField.m */,
+				78DB143C1DF53DB60051F73A /* CheckPhoneNumber.h */,
+				78DB143D1DF53DB60051F73A /* CheckPhoneNumber.m */,
+				78DB143F1DF542AE0051F73A /* TextFieldViewAnimate.h */,
+				78DB14401DF542AE0051F73A /* TextFieldViewAnimate.m */,
+				78DB14421DF54A150051F73A /* MyMBHud.h */,
+				78DB14431DF54A150051F73A /* MyMBHud.m */,
+				78DB14451DF561570051F73A /* CheckTextFieldAndLabelText.h */,
+				78DB14461DF561570051F73A /* CheckTextFieldAndLabelText.m */,
 			);
 			path = NewPublish;
 			sourceTree = "<group>";
@@ -3340,6 +3365,9 @@
 				780B5BB81D65B4A00005E123 /* CollectServiceViewCell.h */,
 				780B5BB91D65B4A00005E123 /* CollectServiceViewCell.m */,
 				780B5BBA1D65B4A00005E123 /* CollectServiceViewCell.xib */,
+				78DB14481DF581030051F73A /* CollectNewsCell.h */,
+				78DB14491DF581030051F73A /* CollectNewsCell.m */,
+				78DB144A1DF581030051F73A /* CollectNewsCell.xib */,
 				78F623B71D55989A002E21B3 /* MyTogetherCell.h */,
 				78F623B81D55989A002E21B3 /* MyTogetherCell.m */,
 				78F623B91D55989A002E21B3 /* MyTogetherCell.xib */,
@@ -4259,6 +4287,7 @@
 				782522A81D77DE5300F2C0A2 /* changluyin.png in Resources */,
 				78F3DD801D45ADB400C1E62E /* SuPhoto_selected@2x.png in Resources */,
 				78FD6CF71DEFC0DB001F69BB /* rongzie.png in Resources */,
+				78DB144C1DF581030051F73A /* CollectNewsCell.xib in Resources */,
 				782523271D7D72E500F2C0A2 /* publish@3x.png in Resources */,
 				7825225F1D77DE5300F2C0A2 /* header_back_icon.png in Resources */,
 				78A125C81DB9F87600D5E42F /* Collection@2x.png in Resources */,
@@ -4563,6 +4592,7 @@
 			files = (
 				7836E7F61D5AF65B00187E41 /* VideosListController.m in Sources */,
 				78B41CD41DC7171F0089B46A /* YanjiuController.m in Sources */,
+				78DB14411DF542AE0051F73A /* TextFieldViewAnimate.m in Sources */,
 				782523911D801A2400F2C0A2 /* CommentsCell.m in Sources */,
 				781E65771DE2D65C00C13C2B /* BusinessAccountController.m in Sources */,
 				78F624561D5AC13E002E21B3 /* NSArray+MASAdditions.m in Sources */,
@@ -4623,6 +4653,7 @@
 				7889627B1D86D0DA008DC681 /* ZiyaServiceModel.m in Sources */,
 				78F624501D5AC13E002E21B3 /* MASCompositeConstraint.m in Sources */,
 				78469B181D54B2A600F3DE4C /* MyPushController.m in Sources */,
+				78DB144B1DF581030051F73A /* CollectNewsCell.m in Sources */,
 				7836E7F31D5AF51800187E41 /* SegmentTapView.m in Sources */,
 				78F3DDEB1D461D5C00C1E62E /* VideoPlayViewController.m in Sources */,
 				7836E8441D5B47DC00187E41 /* LBNavigationController.m in Sources */,
@@ -4659,6 +4690,7 @@
 				78469B211D54B34500F3DE4C /* MyCollectController.m in Sources */,
 				78F3DD751D45ADB400C1E62E /* UIView+SuLine.m in Sources */,
 				786BD3741DD2C06900C6AF9F /* UIBarButtonItem+WZLBadge.m in Sources */,
+				78DB143E1DF53DB60051F73A /* CheckPhoneNumber.m in Sources */,
 				7813DDEF1D4B387F001590EF /* ZiyaMainController.m in Sources */,
 				7813DD8B1D4A06D2001590EF /* PushController.m in Sources */,
 				7825239A1D801A2400F2C0A2 /* TableViewCell.m in Sources */,
@@ -4667,6 +4699,7 @@
 				78F3DD841D45ADB400C1E62E /* SuPhotoCenter.m in Sources */,
 				7813DE5C1D4C85A9001590EF /* InfoDetailsController.m in Sources */,
 				78469B1B1D54B2E000F3DE4C /* MyTogetherController.m in Sources */,
+				78DB14441DF54A150051F73A /* MyMBHud.m in Sources */,
 				78A125A71DB7769300D5E42F /* UILabel+UIFonts.m in Sources */,
 				78730E781D43201F00A9A7F2 /* PublishCell.m in Sources */,
 				78F3DD3C1D45AD4300C1E62E /* publishViewController.m in Sources */,
@@ -4713,6 +4746,7 @@
 				78F3DD851D45ADB400C1E62E /* SuPhotoManager.m in Sources */,
 				780B5BB61D65B47A0005E123 /* CollectVideoViewCell.m in Sources */,
 				782523961D801A2400F2C0A2 /* LookUpMyRushCell.m in Sources */,
+				78DB14471DF561570051F73A /* CheckTextFieldAndLabelText.m in Sources */,
 				7836E8141D5B0A0C00187E41 /* CSBackMessageController.m in Sources */,
 				781E65861DE2D72200C13C2B /* AssetPackController.m in Sources */,
 				78F3DDE81D461B2C00C1E62E /* ZXVideoPlayerVolumeView.m in Sources */,

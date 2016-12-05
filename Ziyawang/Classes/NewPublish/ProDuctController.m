@@ -170,9 +170,12 @@
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    textView.textColor = [UIColor blackColor];
-    textView.text = nil;
+    if ([textView.text isEqualToString:@"请输入文字描述"]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+    }
 }
+
 - (void)findButtonWithButton:(UIButton *)button
 {
     
@@ -540,6 +543,12 @@
     _lianxirenTextField.textAlignment = NSTextAlignmentRight;
     _lianxifangshiTextfield.textAlignment = NSTextAlignmentRight;
     
+    _lianxirenTextField.tag = 11;
+    _lianxifangshiTextfield.tag = 12;
+    
+    _lianxifangshiTextfield.delegate = self;
+    _lianxirenTextField.delegate = self;
+
     
     [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
     [cancelButton addTarget:self action:@selector(weituoCancelAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -588,14 +597,15 @@
 - (void)didClickFanhuiButtonAction:(UIButton *)button
 {
     [self.view endEditing:YES];
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
     
 }
 - (void)weituoCancelAction:(UIButton *)button
 {
-    [self.view endEditing:YES];
+    [_lianxirenTextField resignFirstResponder];
+    [_lianxifangshiTextfield resignFirstResponder];
     
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
 }
 
 - (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
@@ -626,16 +636,16 @@
     NSURL *audiourl = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
     
     
-    for (NSString *str in self.liangdianArray) {
-        self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
-        ;
+    if (self.liangdianArray.count != 0) {
+        for (NSString *str in self.liangdianArray) {
+            self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
+            ;
+        }
+        self.liangdianStr = [self.liangdianStr substringFromIndex:1];
     }
-    NSLog(@"%@",self.liangdianStr);
-    self.liangdianStr = [self.liangdianStr substringFromIndex:1];
+    
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
-    
-    
     [dic setObject:promise forKey:@"Promise"];
 
     [dic setObject:self.liangdianStr forKey:@"ProLabel"];
@@ -652,13 +662,36 @@
     [dic setObject:self.yearTextField.text forKey:@"Year"];
     [dic setObject:self.zhuanrangfangshiLabel.text forKey:@"TransferType"];
     [dic setObject:self.zhuanrangjiageTextField.text forKey:@"TransferMoney"];
-    [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
-    [dic setObject:self.jiufenLabel.text forKey:@"Dispute"];
-    [dic setObject:self.fuzhaiLabel.text forKey:@"Debt"];
-    [dic setObject:self.danbaoLabel.text forKey:@"Guaranty"];
-    [dic setObject:self.caichanLabel.text forKey:@"Property"];
+    
+    if ([self.zhengjianLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
+
+    }
+    if ([self.jiufenLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.jiufenLabel.text forKey:@"Dispute"];
+
+    }
+    if ([self.fuzhaiLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.fuzhaiLabel.text forKey:@"Debt"];
+
+    }
+    if ([self.danbaoLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.danbaoLabel.text forKey:@"Guaranty"];
+
+    }
+    if ([self.caichanLabel.text isEqualToString:@"请选择"] == NO) {
+        [dic setObject:self.caichanLabel.text forKey:@"Property"];
+
+    }
+    
+    
+    
+    
     [dic setObject:self.textView.text forKey:@"WordDes"];
     
+    
+    [dic setObject:self.nameTextField.text forKey:@"ConnectPerson"];
+    [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
     
     if ([self.biaodiwuLabel.text isEqualToString:@"土地"])
     {
@@ -692,10 +725,82 @@
     
     NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
+    [HttpManager httpManager].ifpop = ^(NSString *statu)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    };
     
-
 }
 - (IBAction)sendButtonAction:(id)sender {
+    [self.view endEditing:YES];
+    
+    if ([self.shenfenLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([self.diquLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择地区" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([self.biaodiwuLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择标的物类型" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    
+    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+        if ([self.leixingLabel.text isEqualToString:@"请选择"]) {
+            [MyMBHud MBProgressWithString:@"请选择类型" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+    }
+   
+    if ([self.guihuaLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请输入规划用途" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.mianjiTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入面积" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.yearTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入剩余使用年限" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    
+    if ([self.zhuanrangfangshiLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择转让方式" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.shichangjiageTextField] == NO) {
+            [MyMBHud MBProgressWithString:@"请输入市场价格" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.zhuanrangjiageTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入转让价格" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+
+    }
+    if (self.textView.text == nil || [self.textView.text isEqualToString:@"请输入文字描述"] ||[self.textView.text isEqualToString:@""]) {
+        [MyMBHud MBProgressWithString:@"请输入文字描述" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([[AddImageManager AddManager]getImageArray].count == 0) {
+        [MyMBHud MBProgressWithString:@"请上传至少一张图片" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.nameTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系人姓名" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.phoneTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系方式" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    
+
+    
     [self setPromiseView];
     
 }
@@ -718,13 +823,18 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"发布成功");
         
-        [self.weituoView setHidden:YES];
         
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.weituoView removeFromSuperview];
+        [MyMBHud MBProgressWithString:@"发布成功，请耐心等待客服人员与您联系" timer:2 mode:(MBProgressHUDModeText) target:self];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"发布失败%@",error);
-        [self.weituoView setHidden:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         
+        [MyMBHud MBProgressWithString:@"发布失败，请稍后重试" timer:2 mode:(MBProgressHUDModeText) target:self];
+        
+        [self.weituoView removeFromSuperview];
         
     }];
     

@@ -463,18 +463,19 @@
     
     sharebutton.sd_layout.centerYEqualToView(touchView)
     .rightSpaceToView(self.commentBackView,20)
-    .heightIs(25)
+    .heightIs(20)
     .widthIs(15);
     
     self.collectButton.sd_layout.centerYEqualToView(touchView)
     .rightSpaceToView(sharebutton,30)
-    .heightIs(25)
+    .heightIs(20)
     .widthIs(25);
+
     
     commCountButton.sd_layout.centerYEqualToView(touchView)
     .rightSpaceToView(self.collectButton,30)
-    .widthIs(25)
-    .heightIs(25);
+    .widthIs(20)
+    .heightIs(20);
     
     
     touchView.layer.borderWidth = 1;
@@ -899,6 +900,7 @@
 
 }
 
+
 #pragma mark----TextView代理方法
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -1028,7 +1030,7 @@
     {
     [self.mengban setHidden:NO];
         [UIView animateWithDuration:duration animations:^{
-            self.textBackView.y = keyboardF.origin.y - 210;
+            self.textBackView.y = keyboardF.origin.y - 220;
         }];
     }
    

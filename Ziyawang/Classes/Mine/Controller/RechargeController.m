@@ -79,11 +79,10 @@
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.120"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.500"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.1080"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.3880"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.2880"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.5880"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.12980"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.39980"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.64980"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.10980"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.19980"];
     
 }
 - (void)setamountArray
@@ -93,11 +92,10 @@
     [self.amountArray addObject:@"1200"];
     [self.amountArray addObject:@"5000"];
     [self.amountArray addObject:@"10800"];
-    [self.amountArray addObject:@"38800"];
+    [self.amountArray addObject:@"28800"];
     [self.amountArray addObject:@"58800"];
-    [self.amountArray addObject:@"129800"];
-    [self.amountArray addObject:@"399800"];
-    [self.amountArray addObject:@"649800"];
+    [self.amountArray addObject:@"109800"];
+    [self.amountArray addObject:@"199800"];
 
 }
 - (void)confirmViewAction:(UITapGestureRecognizer *)gesture
@@ -324,16 +322,17 @@
         self.realMoneyArray = [NSMutableArray arrayWithArray:RealMoneyArray];
         
         
-        [self addViewToButtonsWithButton:self.buttonOne labelText:RealMoneyArray[0] longLabelText:dataArray[0][@"YBCount"] defaultFlag:dataArray[0][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonTwo labelText:RealMoneyArray[1]  longLabelText:dataArray[1][@"YBCount"] defaultFlag:dataArray[1][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonThree labelText:RealMoneyArray[2]  longLabelText:dataArray[2][@"YBCount"] defaultFlag:dataArray[2][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonFour labelText:RealMoneyArray[3]  longLabelText:dataArray[3][@"YBCount"] defaultFlag:dataArray[3][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonFive labelText:RealMoneyArray[4]  longLabelText:dataArray[4][@"YBCount"] defaultFlag:dataArray[4][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonSix labelText:RealMoneyArray[5]  longLabelText:dataArray[5][@"YBCount"] defaultFlag:dataArray[5][@"selected"]];
         
-        [self addViewToButtonsWithButton:self.buttonSeven labelText:RealMoneyArray[6]  longLabelText:dataArray[6][@"YBCount"] defaultFlag:dataArray[6][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonEight labelText:RealMoneyArray[7]  longLabelText:dataArray[7][@"YBCount"] defaultFlag:dataArray[7][@"selected"]];
-        [self addViewToButtonsWithButton:self.buttonNine labelText:RealMoneyArray[8]  longLabelText:dataArray[8][@"YBCount"] defaultFlag:dataArray[8][@"selected"]];
+        [self addViewToButtonsWithButton:self.buttonOne labelText:RealMoneyArray[0] longLabelText:dataArray[0][@"YBCount"] defaultFlag:dataArray[0][@"selected"] add:dataArray[0][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonTwo labelText:RealMoneyArray[1]  longLabelText:dataArray[1][@"YBCount"] defaultFlag:dataArray[1][@"selected"] add:dataArray[1][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonThree labelText:RealMoneyArray[2]  longLabelText:dataArray[2][@"YBCount"] defaultFlag:dataArray[2][@"selected"] add:dataArray[2][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonFour labelText:RealMoneyArray[3]  longLabelText:dataArray[3][@"YBCount"] defaultFlag:dataArray[3][@"selected"] add:dataArray[3][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonFive labelText:RealMoneyArray[4]  longLabelText:dataArray[4][@"YBCount"] defaultFlag:dataArray[4][@"selected"] add:dataArray[4][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonSix labelText:RealMoneyArray[5]  longLabelText:dataArray[5][@"YBCount"] defaultFlag:dataArray[5][@"selected"] add:dataArray[5][@"add"]];
+        
+        [self addViewToButtonsWithButton:self.buttonSeven labelText:RealMoneyArray[6]  longLabelText:dataArray[6][@"YBCount"] defaultFlag:dataArray[6][@"selected"] add:dataArray[6][@"add"]];
+        [self addViewToButtonsWithButton:self.buttonEight labelText:RealMoneyArray[7]  longLabelText:dataArray[7][@"YBCount"] defaultFlag:dataArray[7][@"selected"] add:dataArray[7][@"add"]];
+//        [self addViewToButtonsWithButton:self.buttonNine labelText:RealMoneyArray[8]  longLabelText:dataArray[8][@"YBCount"] defaultFlag:dataArray[8][@"selected"]];
 //
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     
@@ -391,7 +390,7 @@
     [self.buttonNine addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
 }
-- (void)addViewToButtonsWithButton:(UIButton *)button labelText:(NSString *)text longLabelText:(NSString *)longText defaultFlag:(NSString *)defaultFlag
+- (void)addViewToButtonsWithButton:(UIButton *)button labelText:(NSString *)text longLabelText:(NSString *)longText defaultFlag:(NSString *)defaultFlag add:(NSString *)add
 {
 
     defaultFlag = [NSString stringWithFormat:@"%@",defaultFlag];
@@ -403,9 +402,60 @@
     }
     [button setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     [button setBackgroundImage:[UIImage imageNamed:@"dahuangkuang"] forState:(UIControlStateNormal)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, [self constansForlabel], [self widthForlabel], 15)];
+//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, [self constansForlabel], [self widthForlabel], 15)];
 //    label.backgroundColor = [UIColor redColor];
-    UILabel *longLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, [self constansForlabel2], [self widthForlabel], 11)];
+//    UILabel *longLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, [self constansForlabel2], [self widthForlabel], 11)];
+    UILabel *label = [UILabel new];
+    UILabel *longLabel = [UILabel new];
+    UILabel *middleLabel = [UILabel new];
+    
+    
+    [button addSubview:label];
+    [button addSubview:longLabel];
+    [button addSubview:middleLabel];
+
+    
+    if (button.tag != 0 && button.tag != 1) {
+
+        label.sd_layout.bottomSpaceToView(middleLabel,5)
+        .centerXEqualToView(button)
+        .heightIs(15);
+        [label setSingleLineAutoResizeWithMaxWidth:200];
+        
+        middleLabel.sd_layout.centerYEqualToView(button)
+        .centerXEqualToView(button)
+        .heightIs(11);
+        [middleLabel setSingleLineAutoResizeWithMaxWidth:300];
+        
+        longLabel.sd_layout.topSpaceToView(middleLabel,5)
+        .centerXEqualToView(button)
+        .heightIs(11);
+        [longLabel setSingleLineAutoResizeWithMaxWidth:300];
+
+    }
+    else
+    {
+        label.sd_layout.bottomSpaceToView(middleLabel,3)
+        .centerXEqualToView(button)
+        .heightIs(15);
+        [label setSingleLineAutoResizeWithMaxWidth:200];
+        
+        middleLabel.sd_layout.centerYEqualToView(button)
+        .centerXEqualToView(button)
+        .heightIs(1);
+        [middleLabel setSingleLineAutoResizeWithMaxWidth:300];
+
+        
+        longLabel.sd_layout.topSpaceToView(middleLabel,3)
+        .centerXEqualToView(button)
+        .heightIs(11);
+        [longLabel setSingleLineAutoResizeWithMaxWidth:300];
+        [middleLabel setHidden:YES];
+        
+    }
+    
+    
+    
 //    longLabel.backgroundColor = [UIColor blueColor];
 //    label.centerX = button.centerX;
 //    longLabel.centerX = button.centerX;
@@ -416,10 +466,16 @@
     label.text = [longText stringByAppendingString:@"芽币"];
     longLabel.text = [[@"充值:"stringByAppendingString:text]stringByAppendingString:@"元"];
     label.font = [UIFont systemFontOfSize:15];
-    longLabel.font = [UIFont systemFontOfSize:10];
+    longLabel.font = [UIFont systemFontOfSize:12];
     longLabel.textColor = [UIColor grayColor];
-    [button addSubview:label];
-    [button addSubview:longLabel];
+    
+    middleLabel.font = [UIFont systemFontOfSize:12];
+    middleLabel.textColor = [UIColor colorWithHexString:@"#ff2f2f"];
+    middleLabel.text = [[[[@"("stringByAppendingString:@"赠送"]stringByAppendingString:add]stringByAppendingString:@"芽币"]stringByAppendingString:@")"];
+    
+    
+    
+    
     
     
 //    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width, button.bounds.size.height - 5)];

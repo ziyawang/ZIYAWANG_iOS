@@ -47,6 +47,8 @@
       NSLog(@"%@",dic);
       UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
       [alert show];
+      NSString *statu = @"成功";
+      self.ifpop(statu);
 
   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
       
@@ -54,6 +56,8 @@
       
       UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布失败，请稍后重试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
       [alert show];
+      NSString *statu = @"失败";
+      self.ifpop(statu);
       
   }];
     

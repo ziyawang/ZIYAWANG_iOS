@@ -24,6 +24,8 @@
 #import "UIView+Extension.h"
 
 #import "UIView+SDAutoLayout.h"
-
+#import "TextFieldViewAnimate.h"
+#import "MyMBHud.h"
+#import "CheckTextFieldAndLabelText.h"
 #endif /* Header_h */
 

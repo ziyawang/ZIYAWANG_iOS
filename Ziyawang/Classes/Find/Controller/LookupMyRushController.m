@@ -14,6 +14,7 @@
 #import "NewPublishCell.h"
 #import "LookUpMyRushCell.h"
 #import "InfoDetailsController.h"
+#import "DetailOfInfoController.h"
 @interface LookupMyRushController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
@@ -65,8 +66,9 @@
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
  self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
-    [self.tableView registerNib:[UINib nibWithNibName:@"LookUpMyRushCell" bundle:nil] forCellReuseIdentifier:@"LookUpMyRushCell"];
-
+//    [self.tableView registerNib:[UINib nibWithNibName:@"LookUpMyRushCell" bundle:nil] forCellReuseIdentifier:@"LookUpMyRushCell"];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     self.tableView.separatorStyle = NO;
     
     
@@ -197,26 +199,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
-    {
-        
-        return 128;
-    }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
-    {
-        return 130;
-    }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
-    {
-        return 132;
-        
-    }
-    
-    return 162;
+//    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+//    {
+//        
+//        return 128;
+//    }
+//    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+//    {
+//        return 130;
+//    }
+//    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+//    {
+//        return 132;
+//        
+//    }
+//    
+    return 105;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LookUpMyRushCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LookUpMyRushCell" forIndexPath:indexPath];
+    NewPublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -227,7 +229,7 @@
 {
 
     
-    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];

@@ -16,6 +16,7 @@
 #import "SDVersion.h"
 #import "SDiOSVersion.h"
 #import "InfoDetailsController.h"
+#import "DetailOfInfoController.h"
 @interface MyPushController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -191,7 +192,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self getRowHight];
+    return 105;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -214,7 +215,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     infoDetailsVC.ProjectID = [NSString stringWithFormat:@"%@",model.ProjectID];

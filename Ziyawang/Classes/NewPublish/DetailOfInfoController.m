@@ -20,6 +20,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <AVFoundation/AVFoundation.h>
+
+#import "TipTableViewController.h"
 @interface DetailOfInfoController ()<KNPhotoBrowerDelegate>
 {
   
@@ -59,7 +61,6 @@
 //    NSLog(@"333######################%@",self.VideoDes);
     if ([self.model.VoiceDes isEqualToString:@""])
     {
-        
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"该条信息没有语音描述" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
@@ -68,7 +69,6 @@
         NSString *playURL = [url stringByAppendingString:self.model.VoiceDes];
         self.player = [[AVPlayer alloc]initWithURL:[NSURL URLWithString:playURL]];
         [self.player play];
-        
         /**
          *  判断是否正在播放，点击暂停
          *
@@ -135,11 +135,11 @@
     [shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
     shareButton.sd_layout.rightSpaceToView(rightBarView,0)
     .centerYEqualToView(rightBarView)
-    .heightIs(25)
-    .widthIs(19);
+    .heightIs(20)
+    .widthIs(15);
     collectButton.sd_layout.rightSpaceToView(shareButton,15)
     .centerYEqualToView(rightBarView)
-    .heightIs(30)
+    .heightIs(20)
     .widthIs(25);
     
     [collectButton addTarget:self action:@selector(collectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -318,7 +318,6 @@
     }
 }
 
-
 - (void)getInfoData
 {
 //成功
@@ -409,7 +408,6 @@
     .heightIs(20)
     .topSpaceToView(titleView,20)
     .autoHeightRatio(0);
-    
     
     
     UIView *infoView = [UIView new];
@@ -1041,6 +1039,8 @@
     [self.changeView addSubview:jieduanLabel];
     [self.changeView addSubview:chuzhidanwei];
     [self.changeView addSubview:chuzhiLabel];
+    
+ 
     zichanTypeLabel.text = self.model.AssetType;
     pinpaiNumber.text = self.model.Brand;
     qipaiMoney.text = [self.model.Money stringByAppendingString:@"万"];
@@ -1048,8 +1048,8 @@
     timeLabel.text = self.model.Year;
     jieduanLabel.text = self.model.State;
     chuzhiLabel.text = self.model.Court;
-    
 
+    
     zichanLabel.text = @"资产类型：";
     pinpaiLabel.text = @"品牌型号：";
     qipaiLabel.text = @"起拍价：";
@@ -1605,6 +1605,24 @@
     .heightIs(20);
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
+    
+    
+    if ([self.model.Guaranty isEqualToString:@""]) {
+        self.model.Guaranty = @"未填写";
+    }
+    if ([self.model.Pay isEqualToString:@""]) {
+        self.model.Pay = @"未填写";
+    }
+    if ([self.model.Property isEqualToString:@""]) {
+        self.model.Brand = @"未填写";
+    }
+    if ([self.model.Credentials isEqualToString:@""]) {
+        self.model.Credentials = @"未填写";
+    }
+    if ([self.model.Connect isEqualToString:@""]) {
+        self.model.Connect = @"未填写";
+    }
+
 //    NSString *text =[@"a" stringByAppendingString:self.model.Connect];
     danbaoLabel.text = [@"有无担保：" stringByAppendingString:self.model.Guaranty];
     changhuanLabel.text = [@"债务人有偿还能力："stringByAppendingString:self.model.Pay];
@@ -1981,6 +1999,23 @@
     .heightIs(20);
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
+    
+    if ([self.model.Credentials isEqualToString:@""]) {
+        self.model.Credentials = @"未填写";
+    }
+    if ([self.model.Guaranty isEqualToString:@""]) {
+        self.model.Guaranty = @"未填写";
+    }
+    if ([self.model.Dispute isEqualToString:@""]) {
+        self.model.Dispute = @"未填写";
+    }
+    if ([self.model.Property isEqualToString:@""]) {
+        self.model.Property = @"未填写";
+    }
+    if ([self.model.Debt isEqualToString:@""]) {
+        self.model.Debt = @"未填写";
+    }
+  
 //    NSString *teon = [@"aa" stringByAppendingString:self.model.Dispute];
     danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
     changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
@@ -2365,6 +2400,22 @@
     [zhaiwurenLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     
+    if ([self.model.Credentials isEqualToString:@""]) {
+        self.model.Credentials = @"未填写";
+    }
+    if ([self.model.Guaranty isEqualToString:@""]) {
+        self.model.Guaranty = @"未填写";
+    }
+    if ([self.model.Dispute isEqualToString:@""]) {
+        self.model.Dispute = @"未填写";
+    }
+    if ([self.model.Property isEqualToString:@""]) {
+        self.model.Property = @"未填写";
+    }
+    if ([self.model.Debt isEqualToString:@""]) {
+        self.model.Debt = @"未填写";
+    }
+
     danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
     changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
     diyaLabel.text = [@"有无法律纠纷："stringByAppendingString:self.model.Dispute];
@@ -2688,7 +2739,6 @@
     label8.text = [self.model.Month stringByAppendingString:@"月"];
     label9.text = @"处置方式";
     
-    
     label10.text = @"诉讼：";
     if (self.model.Law != nil) {
     label11.text = [@"佣金比例：" stringByAppendingString:self.model.Law];
@@ -2745,7 +2795,8 @@
     qitaBottView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
     .topSpaceToView(line2,0);
-    [qitaBottView setupAutoHeightWithBottomView:shesuLabel bottomMargin:15];
+    [qitaBottView setupAutoHeightWithBottomView:hangyeLabel bottomMargin:15];
+    
     
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
@@ -2778,9 +2829,11 @@
     .heightIs(20);
     [pingzheng setSingleLineAutoResizeWithMaxWidth:200];
     
-    hangyeLabel.sd_layout.rightSpaceToView(qitaBottView,15)
-    .topEqualToView(pingzheng)
-    .heightIs(20);
+    hangyeLabel.sd_layout.leftEqualToView(pingzheng)
+    .topSpaceToView(shesuLabel,15)
+    .heightIs(20)
+    .autoHeightRatio(0);
+    
     [hangyeLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     shesuLabel.sd_layout.leftEqualToView(pingzheng)
@@ -2788,18 +2841,29 @@
     .heightIs(20);
     [shesuLabel setSingleLineAutoResizeWithMaxWidth:200];
     
+    
+    if ([self.model.Guaranty isEqualToString:@""]) {
+        self.model.Guaranty = @"未填写";
+        
+    }
+    if ([self.model.Industry isEqualToString:@""]) {
+        self.model.Industry = @"未填写";
+        
+    }
+    if ([self.model.State isEqualToString:@""]) {
+        self.model.State = @"未填写";
+        
+    }
     pingzheng.text = [@"有无债权相关凭证：" stringByAppendingString:self.model.Guaranty];
     hangyeLabel.text = [@"债务方行业："stringByAppendingString:self.model.Industry];
     shesuLabel.text = [@"债权涉诉情况："stringByAppendingString:self.model.State];
 
-    
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
     UIView *liangdianBottomView = [UIView new];
     UILabel *button1 = [UILabel new];
     UILabel *button2 = [UILabel new];
     UIView *line4 = [UIView new];
-    
     
     [self.changeView addSubview:liangdianTopView];
     [self.changeView addSubview:liangdianBottomView];
@@ -2859,12 +2923,10 @@
     {
         button1.text = proArr[0];
         button2.text = proArr[1];
-        
     }
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     
-
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:15];
  
 }
@@ -3577,6 +3639,27 @@
     .heightIs(20);
     [diyawuLeiXing setSingleLineAutoResizeWithMaxWidth:200];
     
+    if ([self.model.Money isEqualToString:@""]) {
+        self.model.Money = @"未填写";
+        
+    }
+    if ([self.model.Report isEqualToString:@""]) {
+        self.model.Report = @"未填写";
+        
+    }
+    if ([self.model.Rate isEqualToString:@""]) {
+        self.model.Rate = @"未填写";
+        
+    }
+    if ([self.model.Time isEqualToString:@""]) {
+        self.model.Time = @"未填写";
+        
+    }
+    if ([self.model.Pawn isEqualToString:@""]) {
+        self.model.Pawn = @"未填写";
+        
+    }
+
     danbaoLabel.text = [@"本金："stringByAppendingString:self.model.Money];
     changhuanLabel.text = [@"是否有尽调报告："stringByAppendingString:self.model.Report];
     diyaLabel.text = [@"利息："stringByAppendingString:self.model.Rate];
@@ -3685,6 +3768,25 @@
     label.layer.masksToBounds = YES;
 }
 
+- (void)jubaoButtonAction:(UIButton *)button
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    if (token == nil) {
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+        
+    }
+    else
+    {
+        TipTableViewController *tipVc = [[TipTableViewController alloc]init];
+        tipVc.Type = @"1";
+        self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
+        tipVc.ItemID = self.model.ProjectID;
+        [self.navigationController pushViewController:tipVc animated:YES];
+    }
+
+}
+
 #pragma mark----查看图片手势方法以及代理
 - (void)imageTapGestureAction:(UITapGestureRecognizer *)imageTapGesture
 {
@@ -3737,7 +3839,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

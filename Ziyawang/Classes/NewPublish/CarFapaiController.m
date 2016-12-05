@@ -12,7 +12,7 @@
 #import "AddImageManager.h"
 #import "HttpManager.h"
 #import "ChooseAreaController.h"
-@interface CarFapaiController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate>
+@interface CarFapaiController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
@@ -98,7 +98,7 @@
 @property (nonatomic,strong) UITextField *lianxifangshiTextfield;
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
-
+@property (nonatomic,strong) MBProgressHUD *HUD;
 @property (nonatomic,strong) NSMutableArray *SelectedButtonsArray;
 
 @property (nonatomic,strong) UIView *PromiseView;
@@ -183,9 +183,10 @@
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    textView.textColor = [UIColor blackColor];
-    textView.text = nil;
-    
+    if ([textView.text isEqualToString:@"请输入文字描述"]) {
+        textView.text = nil;
+        textView.textColor = [UIColor blackColor];
+    }
 }
 - (void)setPromiseView
 {
@@ -490,6 +491,15 @@
     _lianxirenTextField.textAlignment = NSTextAlignmentRight;
     _lianxifangshiTextfield.textAlignment = NSTextAlignmentRight;
 
+    _lianxirenTextField.tag = 11;
+    _lianxifangshiTextfield.tag = 12;
+    
+    _lianxifangshiTextfield.delegate = self;
+    _lianxirenTextField.delegate = self;
+    
+    
+    
+    
     
     [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
     [cancelButton addTarget:self action:@selector(weituoCancelAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -527,6 +537,7 @@
 {
     
     [self.PromiseView removeFromSuperview];
+    
 }
 
 - (void)didClickWeituoFabuAction:(UIButton *)button
@@ -538,14 +549,16 @@
 - (void)didClickFanhuiButtonAction:(UIButton *)button
 {
     [self.view endEditing:YES];
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
     
 }
 - (void)weituoCancelAction:(UIButton *)button
 {
-    [self.view endEditing:YES];
+//    [self.view endEditing:YES];
+    [_lianxirenTextField resignFirstResponder];
+    [_lianxifangshiTextfield resignFirstResponder];
     
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
 }
 
 - (void)rightBarButtonItemAction:(UIBarButtonItem *)buttonItem
@@ -662,18 +675,160 @@
 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
     NSLog(@"发布成功");
     
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
+    [self MBProgressWithString:@"发布成功，请耐心等待客服人员与您联系" timer:2 mode:MBProgressHUDModeText];
+
+    [self.navigationController popViewControllerAnimated:YES];
+    
     
     
 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     NSLog(@"发布失败%@",error);
-    [self.weituoView setHidden:YES];
+    [self.weituoView removeFromSuperview];
+    [self MBProgressWithString:@"发布失败，请稍后重试" timer:2 mode:MBProgressHUDModeText];
 
     
 }];
     
 }
+//显示菊花
+- (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
+{
+    self.HUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication]keyWindow] animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = mode;
+    self.HUD.labelText = lableText;
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.HUD hideAnimated:YES afterDelay:timer];
+}
+
+
+- (void)setWeituoSuccessView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
+    
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    
+    [bottomView addSubview:label1];
+    [bottomView addSubview:label2];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYIs(self.view.centerY)
+    .widthIs(285 * kWidthScale)
+    .heightIs(440 * kHeightScale);
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    
+    label1.sd_layout.centerXEqualToView(bottomView)
+    .topSpaceToView(bottomView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    label1.text = @"信息已提交";
+    
+    label2.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(label1,15)
+    .autoHeightRatio(0);
+    
+    label2.text = @"请耐心等待资芽网客服人员进行确认";
+    
+    
+    
+    
+    fabuButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(label2,20)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"承诺" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    fanhuiButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(fabuButton,20)
+    .heightIs(40*kHeightScale);
+    fanhuiButton.layer.borderWidth = 1.5;
+    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(weituoCancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickWeituoFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    //    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.PromiseView = mengbanView;
+    //    [self.PromiseView setHidden:YES];
+    
+    
+}
 
 
 
@@ -796,7 +951,8 @@
 
 - (void)postDataToDomainWithPromise:(NSString *)promise
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
     //    http://apitest.ziyawang.com/v1/v2/uploadfile
@@ -819,10 +975,8 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:promise forKey:@"Promise"];
-
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:@"22" forKey:@"TypeID"];
-    
     [dic setObject:self.zichanLabel.text forKey:@"AssetType"];
     [dic setObject:self.qipaijiaTextField.text forKey:@"Money"];
     [dic setObject:self.paimaididianLabel.text forKey:@"ProArea"];
@@ -832,13 +986,13 @@
     [dic setObject:self.connectPersonTextField.text forKey:@"ConnectPerson"];
     [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
     [dic setObject:self.textView.text forKey:@"WordDes"];
-    //    [dic setObject:@"IOS" forKey:@"Channel"];
-    
-    
+    [dic setObject:@"IOS" forKey:@"Channel"];
     
     if ([self.Type isEqualToString:@"汽车"])
     {
         [dic setObject:self.pinpaiTextField.text forKey:@"Brand"];
+        
+        
     }
     else
     {
@@ -850,13 +1004,88 @@
     
     NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
+    
+     [HttpManager httpManager].ifpop = ^(NSString *statu)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    
 }
 - (IBAction)sendButtonAction:(id)sender
 {
-//    self.PromiseView.centerY = self.view.centerY + self.scrollY;
+    [self.view endEditing:YES];
+    
+    if ([self.zichanLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择资产类型" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    else if([self.zichanLabel.text isEqualToString:@"汽车"])
+    {
+    if([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.pinpaiTextField] == NO)
+    {
+        [MyMBHud MBProgressWithString:@"请输入品牌型号" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+        
+    
+    }
+    else
+    {
+        if([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.mianjiTextField] == NO)
+        {
+            [MyMBHud MBProgressWithString:@"请输入面积" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+        if([self.xingzhiLabel.text isEqualToString:@"请选择"])
+        {
+            [MyMBHud MBProgressWithString:@"请选择性质" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+        
+        
+    }
+    
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.qipaijiaTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入起拍价" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if([self.paimaididianLabel.text isEqualToString:@"请选择"])
+    {
+        [MyMBHud MBProgressWithString:@"请选择拍卖地点" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if([self.paimaishijianLabel.text isEqualToString:@"请选择"])
+    {
+        [MyMBHud MBProgressWithString:@"请选择拍卖时间" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if([self.paimaijieduanLabel.text isEqualToString:@"请选择"])
+    {
+        [MyMBHud MBProgressWithString:@"请选择拍卖阶段" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:_chuzhidanweiTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入处置单位" timer:1 mode:(MBProgressHUDModeText) target:self];
+    }
+    if (self.textView.text == nil || [self.textView.text isEqualToString:@"请输入文字描述"] ||[self.textView.text isEqualToString:@""]) {
+        [MyMBHud MBProgressWithString:@"请输入文字描述" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([[AddImageManager AddManager]getImageArray].count == 0) {
+        [MyMBHud MBProgressWithString:@"请上传至少一张图片" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.connectPersonTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系人姓名" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.phoneTextField] == NO) {
+        [MyMBHud MBProgressWithString:@"请输入联系方式" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+    
     [self setPromiseView];
     
-//    [self.PromiseView setHidden:NO];
 }
 
 
@@ -1000,10 +1229,26 @@
 }
 
 #pragma mark - UITextField delegate
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:YES];
+    }
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:NO];
+    }
+}
 //textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    
+    if (textField.tag != 11 && textField.tag != 12)
+    {
     NSInteger value = [textField.text integerValue];
     if (value > 999999.9) {
         textField.text = [textField.text substringToIndex:6];
@@ -1072,16 +1317,18 @@
     {
         return YES;
     }
+        
+    }
+    return YES;
+    
 }
 
 - (void)showError:(NSString *)errorString
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
-    
     //    [(AppDelegate *)[UIApplication sharedApplication].delegate showErrorView:errorString];
     //    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(removeErrorView2) userInfo:nil repeats:NO];
-    
     //    [self.moneyTf resignFirstResponder];
 }
 

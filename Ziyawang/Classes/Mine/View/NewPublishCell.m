@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftMoneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rightMoneyLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *specialImageWidth;
+@property (weak, nonatomic) IBOutlet UILabel *yabi;
 
 
 @end
@@ -95,6 +96,12 @@
         [self.specialImage setHidden:YES];
         
     }
+    
+    if ([self.model.Price isEqualToString:@"0"]) {
+        [self.yabiCountLabel setHidden:YES];
+        [self.yabi setHidden:YES];
+    }
+    
     //维度信息布局
     NSInteger typeid = self.model.TypeID.integerValue;
     

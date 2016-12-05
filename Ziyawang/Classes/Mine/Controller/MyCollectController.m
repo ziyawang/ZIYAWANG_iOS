@@ -18,6 +18,9 @@
 #import "CollectInfoViewCell.h"
 #import "CollectServiceViewCell.h"
 #import "CollectVideoViewCell.h"
+#import "CollectNewsCell.h"
+#import "NewsDetailController.h"
+#import "DetailOfInfoController.h"
 //#import "CollectInfomationCell.h"
 @interface MyCollectController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -29,6 +32,7 @@
 @property (nonatomic,strong) MBProgressHUD *HUD;
 @property (nonatomic,strong) ZXVideo *zvideo;
 @property (nonatomic,assign) NSInteger startpage;
+@property (nonatomic,strong) UIView *PromiseView;
 @end
 
 @implementation MyCollectController
@@ -59,6 +63,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"CollectInfoViewCell" bundle:nil] forCellReuseIdentifier:@"CollectInfoViewCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"CollectServiceViewCell" bundle:nil] forCellReuseIdentifier:@"CollectServiceViewCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"CollectVideoViewCell" bundle:nil] forCellReuseIdentifier:@"CollectVideoViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"CollectNewsCell" bundle:nil] forCellReuseIdentifier:@"CollectNewsCell"];
+    
     self.tableView.separatorStyle = NO;
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
@@ -106,7 +112,6 @@
     if (self.sourceArray.count == 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未收藏任何信息" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-        
         
     }
     self.startpage ++;
@@ -197,6 +202,145 @@
     
 
 }
+
+- (void)setPromiseView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
+    
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    
+    [bottomView addSubview:label1];
+    [bottomView addSubview:label2];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYIs(self.view.centerY)
+    .widthIs(285 * kWidthScale)
+    .heightIs(350 * kHeightScale);
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    
+    label1.sd_layout.centerXEqualToView(bottomView)
+    .topSpaceToView(bottomView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    label1.text = @"温馨提示";
+    
+    label2.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(label1,15)
+    .autoHeightRatio(0);
+    
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，会员系统升级中，请咨询会员专线：010-56052557";
+    
+    
+    
+    
+    fabuButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(label2,20)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    //    fanhuiButton.sd_layout.leftEqualToView(label2)
+    //    .rightEqualToView(label2)
+    //    .topSpaceToView(fabuButton,20)
+    //    .heightIs(40*kHeightScale);
+    //    fanhuiButton.layer.borderWidth = 1.5;
+    //    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(CancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    //    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    //    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.PromiseView = mengbanView;
+    //    [self.PromiseView setHidden:YES];
+    
+    
+}
+
+- (void)CancelAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+}
+
+- (void)didClickfabuFabuAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+    
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.sourceArray.count;
@@ -227,12 +371,19 @@
 
         return serviceCell;
     }
-    else
+    else if([TypeID isEqualToString:@"2"])
     {
         CollectVideoViewCell *videoCell = [tableView dequeueReusableCellWithIdentifier:@"CollectVideoViewCell" forIndexPath:indexPath];
         videoCell.model = model;
          videoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return videoCell;
+    }
+    else
+    {
+        CollectNewsCell *newsCell = [tableView dequeueReusableCellWithIdentifier:@"CollectNewsCell" forIndexPath:indexPath];
+        newsCell.model = model;
+        newsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return newsCell;
     }
 }
 
@@ -243,13 +394,22 @@
     model = self.sourceArray[indexPath.row];
     NSString *TypeID  = [NSString stringWithFormat:@"%@",model.TypeID];
     if ([TypeID isEqualToString:@"1"]) {
-        InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+        
+        
+        if ([model.Member isEqualToString:@"1"]) {
+            [self setPromiseView];
+        }
+        
+        else
+        {
+        DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
         infoDetailsVC.ProjectID = model.ProjectID;
         infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.typeName = model.TypeName;
 
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
+        }
     }
     else if([TypeID isEqualToString:@"4"])
     {
@@ -259,7 +419,7 @@
         ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     }
-    else
+    else if([TypeID isEqualToString:@"2"])
     {
         self.zvideo.title = model.VideoTitle;
         if (model.VideoLink ==nil) {
@@ -282,7 +442,14 @@
         //    NSLog(@"222222%@",self.navigationController);
         
         [self.navigationController pushViewController:videoPlayVC animated:YES];
-
+    }
+    else
+    {
+        NewsDetailController *newsDetailVC = [[NewsDetailController alloc]init];
+        newsDetailVC.NewsID = model.NewsID;
+        [self.navigationController pushViewController:newsDetailVC animated:YES];
+        
+    
     }
 
 }
@@ -323,11 +490,12 @@
             model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
             model.ProjectID = [NSString stringWithFormat:@"%@",model.ProjectID];
             model.ServiceID = [NSString stringWithFormat:@"%@",model.ServiceID];
+            model.NewsID = [NSString stringWithFormat:@"%@",model.NewsID];
+            
             
             if ([model.TypeID isEqualToString:@"1"]) {
                 [postdic setObject:model.ProjectID forKey:@"itemID"];
                 NSLog(@"取消的为信息为：------%@",model.ProjectID);
-
             }
             
             else if([model.TypeID isEqualToString:@"2"])
@@ -339,8 +507,13 @@
             {
                 [postdic setObject:model.ServiceID forKey:@"itemID"];
                 NSLog(@"取消的服务为：------%@",model.ServiceID);
-                
             }
+            else if ([model.TypeID isEqualToString:@"3"])
+            {
+                [postdic setObject:model.NewsID forKey:@"itemID"];
+
+            }
+            
             [postdic setObject:model.TypeID forKey:@"type"];
             
             [self.manager POST:URL parameters:postdic progress:^(NSProgress * _Nonnull uploadProgress)
@@ -362,8 +535,6 @@
         [alertVC addAction:action1];
         [alertVC addAction:action2];
         [self presentViewController:alertVC animated:YES completion:nil];
-        
-       
     }
 }
 /*

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="381" height="151"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NhX-Uq-6v4" id="Gsi-5i-UtX">
-                <frame key="frameInset" width="381" height="150"/>
+                <frame key="frameInset" width="381" height="150.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l1H-TJ-Zt1">
@@ -56,23 +56,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEI-jj-AyG">
-                                <attributedString key="attributedText">
-                                    <fragment content="10">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="0.74304296640848144" blue="0.27418447530359347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="13" name="Helvetica-Bold"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="0">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="0.74304296640848144" blue="0.27418447530359347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="13" name="PingFangSC-Semibold"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有评估报告" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rT3-kL-vdj">
@@ -151,11 +134,6 @@
                                     <constraint firstAttribute="width" constant="25" id="X2d-2h-jpS"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="芽币" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q1g-dg-UXF">
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -164,9 +142,6 @@
                             <constraint firstItem="rT3-kL-vdj" firstAttribute="top" secondItem="ZYm-PQ-9AP" secondAttribute="bottom" constant="5" id="4G0-PX-QTx"/>
                             <constraint firstItem="swg-aM-QZH" firstAttribute="centerY" secondItem="ZYm-PQ-9AP" secondAttribute="centerY" id="6E7-Gg-OG1"/>
                             <constraint firstItem="rT3-kL-vdj" firstAttribute="leading" secondItem="X7Z-gd-OXc" secondAttribute="trailing" constant="10" id="6VB-qI-QOJ"/>
-                            <constraint firstItem="Q1g-dg-UXF" firstAttribute="centerY" secondItem="XEI-jj-AyG" secondAttribute="centerY" id="6Xu-8r-Pid"/>
-                            <constraint firstItem="XEI-jj-AyG" firstAttribute="centerY" secondItem="ZYm-PQ-9AP" secondAttribute="centerY" id="6bD-le-LXU"/>
-                            <constraint firstItem="Q1g-dg-UXF" firstAttribute="leading" secondItem="XEI-jj-AyG" secondAttribute="trailing" id="6n2-ag-RH3"/>
                             <constraint firstItem="yEL-cC-2Pa" firstAttribute="leading" secondItem="AZR-OV-mcP" secondAttribute="trailing" constant="5" id="8Jc-6R-ItK"/>
                             <constraint firstItem="zRu-ig-iBc" firstAttribute="leading" secondItem="X7Z-gd-OXc" secondAttribute="trailing" constant="10" id="8kW-EZ-jlR"/>
                             <constraint firstAttribute="trailing" secondItem="tCW-Jq-NiP" secondAttribute="trailing" constant="5" id="ALo-Kz-tKM"/>
@@ -189,7 +164,6 @@
                             <constraint firstItem="h8k-Yf-6dc" firstAttribute="leading" secondItem="rT3-kL-vdj" secondAttribute="trailing" constant="10" id="pGB-yZ-K3d"/>
                             <constraint firstItem="5Kj-11-Jd8" firstAttribute="centerY" secondItem="Cvg-kh-EWI" secondAttribute="centerY" id="pTx-tX-YW9"/>
                             <constraint firstItem="X7Z-gd-OXc" firstAttribute="centerY" secondItem="l1H-TJ-Zt1" secondAttribute="centerY" id="siJ-az-xJx"/>
-                            <constraint firstItem="XEI-jj-AyG" firstAttribute="leading" secondItem="esh-Mh-Z70" secondAttribute="trailing" constant="15" id="tx0-u7-ye9"/>
                             <constraint firstItem="swg-aM-QZH" firstAttribute="leading" secondItem="ZYm-PQ-9AP" secondAttribute="trailing" constant="15" id="u8X-Jh-zev"/>
                             <constraint firstItem="ZYm-PQ-9AP" firstAttribute="leading" secondItem="X7Z-gd-OXc" secondAttribute="trailing" constant="10" id="wte-Gh-CCv"/>
                         </constraints>
@@ -199,7 +173,7 @@
                 <constraints>
                     <constraint firstItem="l1H-TJ-Zt1" firstAttribute="leading" secondItem="Gsi-5i-UtX" secondAttribute="leading" constant="10" id="57B-5i-nxE"/>
                     <constraint firstItem="l1H-TJ-Zt1" firstAttribute="top" secondItem="Gsi-5i-UtX" secondAttribute="top" id="N0f-sY-pO5"/>
-                    <constraint firstAttribute="bottom" secondItem="l1H-TJ-Zt1" secondAttribute="bottom" constant="15" id="m6p-dj-h8a"/>
+                    <constraint firstAttribute="bottom" secondItem="l1H-TJ-Zt1" secondAttribute="bottom" constant="10" id="m6p-dj-h8a"/>
                     <constraint firstAttribute="trailing" secondItem="l1H-TJ-Zt1" secondAttribute="trailing" constant="10" id="vno-Kw-lhK"/>
                 </constraints>
             </tableViewCellContentView>
@@ -218,7 +192,6 @@
                 <outlet property="specialImageWidth" destination="w5I-Sc-9Rw" id="4xj-B2-BzE"/>
                 <outlet property="titleLabel" destination="zRu-ig-iBc" id="W0X-X6-o6B"/>
                 <outlet property="typeLabel" destination="swg-aM-QZH" id="eBJ-01-og5"/>
-                <outlet property="yabiCountLabel" destination="XEI-jj-AyG" id="beF-gJ-wD6"/>
             </connections>
             <point key="canvasLocation" x="96.5" y="122.5"/>
         </tableViewCell>

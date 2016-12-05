@@ -17,6 +17,7 @@
                 <outlet property="button1" destination="bTx-qL-zJJ" id="Q8c-Ch-19R"/>
                 <outlet property="button2" destination="KKF-S7-VjF" id="f5D-rc-z9m"/>
                 <outlet property="button3" destination="NWW-rz-LXR" id="Caa-jr-vda"/>
+                <outlet property="connectPersonTextfield" destination="0Og-Sa-nxg" id="7LE-uG-hpq"/>
                 <outlet property="diquLabel" destination="52x-Fo-638" id="pBV-jo-IOf"/>
                 <outlet property="diquView" destination="E06-gc-YKB" id="nMK-Cb-ZRP"/>
                 <outlet property="diyawuleixingLabel" destination="pwn-Ql-fTR" id="1Wq-rQ-Vbz"/>
@@ -25,6 +26,7 @@
                 <outlet property="laiyuanLabel" destination="Eey-na-wua" id="ght-Ad-UFP"/>
                 <outlet property="laiyuanView" destination="jL6-d0-FNe" id="JrM-jS-lG2"/>
                 <outlet property="lixiTextField" destination="mAk-4r-2qT" id="LIN-3G-2WV"/>
+                <outlet property="phoneTextField" destination="PpH-ff-VgP" id="REn-lr-dTj"/>
                 <outlet property="recordView" destination="nEd-bo-9RW" id="voO-dE-wrW"/>
                 <outlet property="scrollView" destination="oGs-xa-8Y3" id="bUB-b8-W8H"/>
                 <outlet property="sendButton" destination="oxR-iE-4dy" id="Vsi-o5-dOu"/>
@@ -321,7 +323,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="（请点击一下标签）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85h-w9-Nor">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="（请点击以下标签，可多选）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85h-w9-Nor">
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -538,7 +540,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -571,7 +573,7 @@
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

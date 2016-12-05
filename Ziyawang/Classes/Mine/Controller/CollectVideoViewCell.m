@@ -22,6 +22,7 @@
 {
     NSLog(@"$$$$$$$$$$$$$$$$$$$$$%@",self.model.VideoLogo);
     NSString *URL = [getImageURL stringByAppendingString:self.model.VideoLogo];
+    
     [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:URL]];
     self.videoTitle.text = self.model.VideoTitle;
     if (self.model.VideoDes.length > 60) {

@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 @interface HttpManager : NSObject
+
+typedef void(^pop)(NSString *);
+@property (nonatomic, copy) pop ifpop;
+
 +(HttpManager *)httpManager;
 - (void)postDataWithURL:(NSString *)URL ImageArray:(NSMutableArray *)imageArray audioURL:(NSURL *)url param:(NSMutableDictionary *)param;
 

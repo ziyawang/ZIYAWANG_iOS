@@ -57,6 +57,7 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
   }
+
  //正则判断
 - (void)checkMobilePhoneNumber:(NSString *)mobile{
     if (mobile.length < 11)
@@ -833,7 +834,6 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    
 
 }
 

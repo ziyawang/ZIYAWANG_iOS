@@ -19,7 +19,7 @@
 @property (nonatomic,strong) NSString *ServiceLocation;
 @property (nonatomic,strong) NSString *ServiceLevel;
 
-
+@property (nonatomic,strong) NSString *Member;
 @property (nonatomic,strong) NSString *TypeName;
 @property (nonatomic,strong) NSString *ProjectID;
 @property (nonatomic,strong) NSString *ProArea;
@@ -50,5 +50,9 @@
 
 @property (nonatomic,strong) NSString *PublishTime;
 
+@property (nonatomic,strong) NSString *Brief;
+@property (nonatomic,strong) NSString *NewsTitle;
+@property (nonatomic,strong) NSString *NewsLogo;
+@property (nonatomic,strong) NSString *NewsID;
 
 @end
