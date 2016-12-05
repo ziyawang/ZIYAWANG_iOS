@@ -20,7 +20,10 @@
 #import "ZZAttributedMarkupActionLabel.h"
 #import "NewWebViewController.h"
 
+#import "LoginController.h"
 #import <WebKit/WebKit.h>
+#import "PublishModel.h"
+#import "CSTextView.h"
 @interface NewsDetailController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,MBProgressHUDDelegate,UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,WKUIDelegate,WKScriptMessageHandler>
 @property (nonatomic,strong) NewsModel *model;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -30,7 +33,7 @@
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 @property (nonatomic,assign) NSInteger startpage;
 @property (nonatomic,strong) UIView *commentBackView;
-@property (nonatomic,strong) UITextView *textView;
+@property (nonatomic,strong) CSTextView *textView;
 @property (nonatomic,assign) CGFloat height;
 @property (nonatomic,strong) UIView *mengban;
 
@@ -38,9 +41,9 @@
 @property (nonatomic,strong) UILabel *remenLabel;
 
 @property (nonatomic,strong) UIView *HeadView;
-
-
-
+@property (nonatomic,strong) UIButton *collectButton;
+@property (nonatomic,strong) UIButton *fabiaoButton;
+@property (nonatomic,strong) UIView *textBackView;
 
 @end
 
@@ -93,6 +96,7 @@
         [self.HUD hideAnimated:YES];
         [self setHeadView];
         
+      
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -123,6 +127,8 @@
     UIButton *shareButton = [UIButton new];
     UILabel *shareLabel = [UILabel new];
     
+    [shareButton addTarget:self action:@selector(didClickShareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
 //   self.webView = [UIWebView new];
     self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width,100)];
 //s
@@ -137,9 +143,10 @@
     self.HeadView.backgroundColor = [UIColor whiteColor];
 //    [self.view addSubview:view];
     self.tableView = [UITableView new];
-    self.textView.delegate = self;
+//    self.textView.delegate = self;
+    self.textView.placeholder = @"请输入评论内容";
     self.textView.textColor = [UIColor darkGrayColor];
-    self.textView.text = @"请输入评论内容";
+//    self.textView.text = @"请输入评论内容";
     [self.tableView registerClass:[CommentsCell class] forCellReuseIdentifier:@"CommentsCell"];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
     
@@ -156,7 +163,7 @@
 
     
     [self.HeadView addSubview:self.remenLabel];
-    [self.HeadView addSubview:shareButton];
+//    [self.HeadView addSubview:shareButton];
     [self.HeadView addSubview:shareLabel];
     
     
@@ -216,6 +223,9 @@
 //    briefLabel.attributedText =  [htmlString attributedStringWithStyleBook:style1];
 ;
     
+    
+    
+    
     fromLabel.font = [UIFont systemFontOfSize:14];
     timeLabel.font = [UIFont systemFontOfSize:14];
     self.remenLabel.text = @"热门评论";
@@ -237,21 +247,20 @@
     .heightIs(20)
     .autoHeightRatio(0);
     
-    shareButton.sd_layout.rightSpaceToView(self.HeadView,20)
-    .topSpaceToView(self.HeadView,50)
-    .widthIs(25)
-    .heightIs(25);
+//    shareButton.sd_layout.rightSpaceToView(self.HeadView,20)
+//    .topSpaceToView(self.HeadView,50)
+//    .widthIs(25)
+//    .heightIs(25);
+//    
+//    shareLabel.sd_layout.topSpaceToView(shareButton,0)
+//    .centerXEqualToView(shareButton)
+//    .widthIs(30)
+//    .heightIs(15);
     
-    shareLabel.sd_layout.topSpaceToView(shareButton,0)
-    .centerXEqualToView(shareButton)
-    .widthIs(30)
-    .heightIs(15);
-    shareLabel.font = [UIFont systemFontOfSize:11];
-    shareLabel.textColor = [UIColor grayColor];
-    shareLabel.text = @"分享";
-    shareLabel.textAlignment = NSTextAlignmentCenter;
-    
-    
+//    shareLabel.font = [UIFont systemFontOfSize:11];
+//    shareLabel.textColor = [UIColor grayColor];
+//    shareLabel.text = @"分享";
+//    shareLabel.textAlignment = NSTextAlignmentCenter;
     
     [shareButton addTarget:self action:@selector(didClickShareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
@@ -259,6 +268,8 @@
     
     
 
+    
+    
     fromLabel.sd_layout.leftSpaceToView(self.HeadView,20)
     .topSpaceToView(TitleLabel,20)
     .heightIs(14);
@@ -308,56 +319,170 @@
     .heightIs(20);
     
     [self.remenLabel setSingleLineAutoResizeWithMaxWidth:100];
-
-    
-    
-    
-    
     
     [self.HeadView setupAutoHeightWithBottomView:self.remenLabel bottomMargin:5];
     
     
-
     
     
     
     self.mengban = [UIView new];
     [self.view addSubview:self.mengban];
+    UITapGestureRecognizer *mengbanGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(menbanViewAction:)];
+    [self.mengban addGestureRecognizer:mengbanGesture];
     self.mengban.backgroundColor = [UIColor blackColor];
     self.mengban.alpha = 0.5;
     [self.mengban setHidden:YES];
 
-    
-    
     self.mengban.sd_layout.leftSpaceToView(self.view,0)
     .rightSpaceToView(self.view,0)
     .topSpaceToView(self.view,0)
     .heightIs(700);
-    
     
     self.tableView.sd_layout.leftSpaceToView(self.view,0)
     .rightSpaceToView(self.view,0)
     .topSpaceToView(self.view,0)
     .bottomSpaceToView(self.view,0);
     
-    
-    
-    
-    
     self.commentBackView = [UIView new];
     self.commentBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     
-    self.textView = [UITextView new];
+    
+    UIView *touchView = [UIView new];
+    UIButton *commCountButton = [UIButton new];
+    self.collectButton = [UIButton new];
+    UIButton *sharebutton = [UIButton new];
+    UILabel *xiepinglun = [UILabel new];
+    self.fabiaoButton = [UIButton new];
+    
+    xiepinglun.text = @"写评论...";
+    xiepinglun.textColor = [UIColor lightGrayColor];
+    
+    
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchViewTouchAction:)];
+    [touchView addGestureRecognizer:gesture];
+    
+    
+    
+    [commCountButton setBackgroundImage:[UIImage imageNamed:@"commentCount"] forState:(UIControlStateNormal)];
+    
+//    sharebutton.backgroundColor = [UIColor redColor];
+//    self.collectButton.backgroundColor = [UIColor redColor];
+    [self.collectButton addTarget:self action:@selector(collectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [commCountButton addTarget:self action:@selector(commCountButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
+    
+    if ([self.model.CollectFlag isEqualToString:@"0"]) {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+    }
+    else
+    {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
+    }
+    [sharebutton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
+    
+    
+    [self.commentBackView addSubview:touchView];
+    [self.commentBackView addSubview:commCountButton];
+    [self.commentBackView addSubview:sharebutton];
+    [self.commentBackView addSubview:self.collectButton];
+    [touchView addSubview:xiepinglun];
+    
+    
+    
+    self.textBackView = [UIView new];
+    
+    self.textView = [[CSTextView alloc]init];
     self.textView.delegate = self;
+    self.textView.placeholder = @"请输入评论内容";
+    [self.view addSubview:self.textBackView];
+    [self.textBackView addSubview:self.textView];
+    [self.textBackView addSubview:self.fabiaoButton];
+    self.fabiaoButton.layer.cornerRadius = 5;
+    self.fabiaoButton.layer.masksToBounds = YES;
+    
+    [self.fabiaoButton addTarget:self action:@selector(sendButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    
+    self.textBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    self.textView.layer.cornerRadius = 10;
+    self.textView.layer.masksToBounds = YES;
+    
+    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0)
+    .heightIs(150)
+    .topSpaceToView(self.commentBackView,0);
+    
+    self.textView.sd_layout.leftSpaceToView(self.textBackView,15)
+    .rightSpaceToView(self.textBackView,15)
+    .heightIs(80)
+    .topSpaceToView(self.textBackView,15);
+    
+    
+    self.fabiaoButton.sd_layout.rightEqualToView(self.textView)
+    .topSpaceToView(self.textView,15)
+    .heightIs(20)
+    .widthIs(40);
+    
+    [self.fabiaoButton setTitle:@"发表" forState:(UIControlStateNormal)];
+    [self.fabiaoButton setBackgroundColor:[UIColor grayColor]];
+    
+    
+    //self.textView.layer.borderColor = [UIColor grayColor];
+    
+    
+    
+    
+    
+    
     UIButton *sendButton = [UIButton new];
     [sendButton setTitle:@"发送" forState:(UIControlStateNormal)];
     [sendButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
     
     [sendButton addTarget:self action:@selector(sendButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
-    [self.commentBackView addSubview:sendButton];
-    [self.commentBackView addSubview:self.textView];
+//    [self.commentBackView addSubview:sendButton];
+//    [self.commentBackView addSubview:self.textView];
     [self.view addSubview:self.commentBackView];
+    
+    touchView.sd_layout.leftSpaceToView(self.commentBackView,20)
+    .rightSpaceToView(commCountButton,30)
+    .centerYEqualToView(self.commentBackView)
+    .heightIs(30);
+    
+    
+    
+    xiepinglun.sd_layout.leftSpaceToView(touchView,5)
+    .centerYEqualToView(touchView)
+    .heightIs(20);
+    [xiepinglun setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    sharebutton.sd_layout.centerYEqualToView(touchView)
+    .rightSpaceToView(self.commentBackView,20)
+    .heightIs(25)
+    .widthIs(15);
+    
+    self.collectButton.sd_layout.centerYEqualToView(touchView)
+    .rightSpaceToView(sharebutton,30)
+    .heightIs(25)
+    .widthIs(25);
+    
+    commCountButton.sd_layout.centerYEqualToView(touchView)
+    .rightSpaceToView(self.collectButton,30)
+    .widthIs(25)
+    .heightIs(25);
+    
+    
+    touchView.layer.borderWidth = 1;
+    touchView.layer.masksToBounds = YES;
+    touchView.layer.cornerRadius = 15;
+    touchView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    
     
     
     
@@ -366,6 +491,7 @@
     UIView *pinglun = [UIView new];
     UIImageView *image = [UIImageView new];
     UILabel *label = [UILabel new];
+    
     
     label.text = @"评论";
     label.font = [UIFont systemFontOfSize:14];
@@ -387,48 +513,48 @@
     
     
     
-    commentButton.sd_layout.leftSpaceToView(self.view,0)
-    .rightSpaceToView(self.view,0)
-    .bottomSpaceToView(self.view,0)
-    .heightIs(60);
+//    commentButton.sd_layout.leftSpaceToView(self.view,0)
+//    .rightSpaceToView(self.view,0)
+//    .bottomSpaceToView(self.view,0)
+//    .heightIs(60);
     
-    pinglun.sd_layout.centerXEqualToView(commentButton)
-    .centerYEqualToView(commentButton)
-    .heightIs(20)
-    .widthIs(50);
-    
-    
-    image.sd_layout.leftSpaceToView(pinglun,0)
-    .topSpaceToView(pinglun,0)
-    .heightIs(20)
-    .widthIs(17)
-    .centerYEqualToView(pinglun);
-    
-    label.sd_layout.leftSpaceToView(image,5)
-    .topEqualToView(image)
-    .heightIs(20)
-    .widthIs(30)
-    .centerYEqualToView(pinglun);
+//    pinglun.sd_layout.centerXEqualToView(commentButton)
+//    .centerYEqualToView(commentButton)
+//    .heightIs(20)
+//    .widthIs);
+//    
+//
+//    image.sd_layout.leftSpaceToView(pinglun,0)
+//    .topSpaceToView(pinglun,0)
+//    .heightIs(20)
+//    .widthIs(17)
+//    .centerYEqualToView(pinglun);
+//
+//    label.sd_layout.leftSpaceToView(image,5)
+//    .topEqualToView(image)
+//    .heightIs(20)
+//    .widthIs(30)
+//    .centerYEqualToView(pinglun);
     
     self.commentBackView.sd_layout.leftSpaceToView(self.view,0)
     .rightSpaceToView(self.view,0)
     .bottomSpaceToView(self.view,0)
-    .heightIs(60);
+    .heightIs(50);
     
     
-    sendButton.sd_layout.rightSpaceToView(self.commentBackView,10)
-    .centerYEqualToView(self.commentBackView)
-    .widthIs(40)
-    .heightIs(30);
-    
-    self.textView.sd_layout.leftSpaceToView(self.commentBackView,10)
-    .centerYEqualToView(self.commentBackView)
-    .rightSpaceToView(sendButton,10)
-    .heightIs(40);
+//    sendButton.sd_layout.rightSpaceToView(self.commentBackView,10)
+//    .centerYEqualToView(self.commentBackView)
+//    .widthIs(40)
+//    .heightIs(30);
+//    
+//    self.textView.sd_layout.leftSpaceToView(self.commentBackView,10)
+//    .centerYEqualToView(self.commentBackView)
+//    .rightSpaceToView(sendButton,10)
+//    .heightIs(40);
     
   
     self.textView.textColor = [UIColor darkGrayColor];
-    self.textView.text = @"请输入评论内容";
+//    self.textView.text = @"请输入评论内容";
     self.textView.font = [UIFont systemFontOfSize:17];
 
     
@@ -531,6 +657,90 @@
     
 
 }
+
+#pragma mark----评论三个按钮的监听事件
+
+- (void)touchViewTouchAction:(UITapGestureRecognizer *)geture
+{
+    [self.textView becomeFirstResponder];
+
+    
+}
+- (void)collectButtonAction:(UIButton *)button
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults objectForKey:@"token"];
+    if (token == nil) {
+        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }
+    else
+    {
+        NSString *Token = @"?token=";
+        NSString *url = getDataURL;
+        NSString *url2 = @"/collect";
+        NSString *access_token = @"token";
+        
+        NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
+        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
+        [postdic setObject:access_token forKey:@"access_token"];
+        //    [postdic setObject:token forKey:@"token"];
+        
+        [postdic setObject:self.NewsID forKey:@"itemID"];
+        [postdic setObject:@"3" forKey:@"type"];
+        if ([self.model.CollectFlag isEqualToString:@"0"])
+        {
+            NSLog(@"未收藏过,改变button的状态,调用收藏接口");
+            [self.manager POST:URL parameters:postdic progress:^(NSProgress * _Nonnull uploadProgress)
+             {
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 NSLog(@"收藏成功");
+                 //                 [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
+                 //                 收藏按钮状态改变
+                 [button setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
+                 self.model.CollectFlag = @"1";
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+                 //                 [self MBProgressWithString:@"收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 
+                 NSLog(@"收藏失败");
+             }];
+        }
+        else
+        {
+            [self.manager POST:URL parameters:postdic progress:^(NSProgress * _Nonnull uploadProgress)
+             {
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 NSLog(@"取消收藏成功");
+                 [button setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+                 
+                 //                 [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
+                 
+                 //收藏按钮状态改变
+                 //            self.saveButton.imageView.image = [UIImage imageNamed:<#(nonnull NSString *)#>]
+                 self.model.CollectFlag = @"0";
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                 [alert show];
+                 //                 [self MBProgressWithString:@"取消收藏失败" timer:1 mode:MBProgressHUDModeText];
+                 NSLog(@"取消收藏失败");
+             }];
+        }
+    }
+    
+}
+
+
+
+
+- (void)commCountButtonAction:(UIButton *)button
+{
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
 - (void)didClickShareButtonAction:(UIButton *)button
 {
     //1、创建分享参数
@@ -671,6 +881,8 @@
             [self.HUD removeFromSuperViewOnHide];
             [self.HUD hideAnimated:YES];
             [self MBProgressWithString:@"评论发送成功！" timer:1 mode:MBProgressHUDModeText];
+            
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
             NSLog(@"评论成功");
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"评论失败");
@@ -690,13 +902,29 @@
 #pragma mark----TextView代理方法
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    self.textView.text = nil;
+//    self.textView.text = nil;
     self.textView.textColor = [UIColor blackColor];
 }
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
-    self.textView.text = @"请输入评论内容";
-    self.textView.textColor = [UIColor grayColor];
+    if ([textView.text isEqualToString:@""] == NO&&textView.text != nil) {
+        [self.fabiaoButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+        self.fabiaoButton.userInteractionEnabled = YES;
+    }
+  
+}
+-(void)textViewDidChange:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""] == NO&&textView.text != nil) {
+    [self.fabiaoButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+    self.fabiaoButton.userInteractionEnabled = YES;
+}
+    else
+    {
+        [self.fabiaoButton setBackgroundColor:[UIColor grayColor]];
+        self.fabiaoButton.userInteractionEnabled = NO;
+    }
+
 }
 - (void)MBProgressWithString:(NSString *)lableText timer:(NSTimeInterval)timer mode:(MBProgressHUDMode)mode
 
@@ -709,11 +937,15 @@
     [self.HUD hideAnimated:YES afterDelay:timer];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+
+- (void)menbanViewAction:(UITapGestureRecognizer *)gesture
 {
     [self.textView resignFirstResponder];
     [self.mengban setHidden:YES];
-
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+   
     //    [self.view endEditing:YES];
 }
 
@@ -788,14 +1020,18 @@
     CGRect keyboardF = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     if (keyboardF.origin.y == [UIScreen mainScreen].bounds.size.height) {
         [self.mengban setHidden:YES];
+        [UIView animateWithDuration:duration animations:^{
+            self.textBackView.y = keyboardF.origin.y ;
+        }];
     }
     else
     {
     [self.mengban setHidden:NO];
+        [UIView animateWithDuration:duration animations:^{
+            self.textBackView.y = keyboardF.origin.y - 210;
+        }];
     }
-    [UIView animateWithDuration:duration animations:^{
-        self.commentBackView.centerY = keyboardF.origin.y - 90;
-    }];
+   
 }
 
 
@@ -806,8 +1042,8 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     NSLog(@"keyBoard:%f", keyboardSize.height);//216
-    self.height = keyboardSize.height +60;
-    [self.commentBackView setFrame:CGRectMake(0, self.view.bounds.size.height - 60-self.height, self.view.bounds.size.width, 60)];
+    self.height = keyboardSize.height +150;
+    [self.textBackView setFrame:CGRectMake(0, self.view.bounds.size.height - 150-self.height, self.view.bounds.size.width, 150)];
     
     
     //    [self animateTextField:self.textView up:YES height:self.height];
@@ -816,7 +1052,7 @@
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
     [self.mengban setHidden:YES];
-    [self.commentBackView setFrame:CGRectMake(0, self.view.bounds.size.height - 60, self.view.bounds.size.width, 60)];
+    [self.textBackView setFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 150)];
     
     NSDictionary *info = [notif userInfo];
     
@@ -853,13 +1089,10 @@
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *URL = NewsCommentListURL;
-    
-    
+
     if (token != nil) {
 //        URL = [[[[URL stringByAppendingString:@"/"]stringByAppendingString:self.NewsID]stringByAppendingString:@"?token="]stringByAppendingString:token];
-        
         URL = [[URL stringByAppendingString:@"?token="]stringByAppendingString:token];
-        
     }
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:@"token" forKey:@"access_token"];
@@ -898,7 +1131,6 @@
 //    [self.HUD hideAnimated:YES];
     [self.tableView.mj_header endRefreshing];
     NSLog(@"请求评论失败");
-
 }];
     
     

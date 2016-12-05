@@ -120,6 +120,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
     UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 70, 50)];
     UIButton *collectButton = [UIButton new];
     UIButton *shareButton = [UIButton new];
@@ -131,8 +133,6 @@
    
     [collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
     [shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
-    
-    
     shareButton.sd_layout.rightSpaceToView(rightBarView,0)
     .centerYEqualToView(rightBarView)
     .heightIs(25)
@@ -146,8 +146,6 @@
     [shareButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     self.collectButton = collectButton;
     self.shareButton = shareButton;
-    
-    
 }
 - (void)collectButtonAction:(UIButton *)button
 {

@@ -111,21 +111,16 @@
 {
     [super viewWillAppear:animated];
     [RCIM sharedRCIM].receiveMessageDelegate=self;
-
+    
     NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
     NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
-    
-    
     if (unreadcount == 99 || unreadcount>99) {
         unreadStr = @"99+";
     }
-    if (unreadcount == 0) {
+    if (unreadcount == 0 || unreadcount < 0) {
         unreadStr = nil;
-        
     }
     [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
-    
-    
 //    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //    delegate.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
 //    NSString *value = delegate.tabarBageValue;

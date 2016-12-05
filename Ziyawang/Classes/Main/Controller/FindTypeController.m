@@ -175,9 +175,8 @@
 {
     [super viewWillAppear:animated];
     self.userModel = [[UserInfoModel alloc]init];
-   
     [self getUserInfoFromDomin];
-
+    
  }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -227,13 +226,14 @@
     self.manager = [AFHTTPSessionManager manager];
     
     NSArray *titles = @[self.type,@"地区",@"更多"];
-//    [self createNewMoreMenuViewWithArray:titles];
-//    [self setHeadView];
+    [self createNewMoreMenuViewWithArray:titles];
+    [self setHeadView];
 
     self.dataDic = [NSMutableDictionary new];
     [self.dataDic setObject:self.searchValue forKey:@"TypeID"];
-    [self createNewHeadViewWithType];
-//    [self loadNewData];
+//    NSArray *array = @[self.type,@"地区",@"更多"];
+//    [self createNewMoreMenuViewWithArray:array];
+        [self loadNewData];
 }
 - (void)loadNewData
 {
@@ -1688,6 +1688,7 @@
         [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             self.account = dic[@"user"][@"Account"];

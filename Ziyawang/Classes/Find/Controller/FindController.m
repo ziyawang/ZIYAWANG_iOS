@@ -69,7 +69,7 @@
     if (unreadcount == 99 || unreadcount>99) {
         unreadStr = @"99+";
     }
-    if (unreadcount == 0) {
+    if (unreadcount == 0 || unreadcount < 0) {
         unreadStr = nil;
         
     }

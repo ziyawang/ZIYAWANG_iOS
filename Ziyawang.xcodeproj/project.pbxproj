@@ -643,6 +643,13 @@
 		78D960FF1D9D1F5E007ECABA /* fangdajing@.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FC1D9D1F5E007ECABA /* fangdajing@.png */; };
 		78D961001D9D1F5E007ECABA /* fangdajing@2x .png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FD1D9D1F5E007ECABA /* fangdajing@2x .png */; };
 		78D961011D9D1F5E007ECABA /* fangdajing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D960FE1D9D1F5E007ECABA /* fangdajing@3x.png */; };
+		78DB14301DF5082B0051F73A /* ping_gu.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB142D1DF5082B0051F73A /* ping_gu.png */; };
+		78DB14311DF5082B0051F73A /* ping_gu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB142E1DF5082B0051F73A /* ping_gu@2x.png */; };
+		78DB14321DF5082B0051F73A /* ping_gu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB142F1DF5082B0051F73A /* ping_gu@3x.png */; };
+		78DB14361DF5092A0051F73A /* commentCount.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB14331DF5092A0051F73A /* commentCount.png */; };
+		78DB14371DF5092A0051F73A /* commentCount@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB14341DF5092A0051F73A /* commentCount@2x.png */; };
+		78DB14381DF5092A0051F73A /* commentCount@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DB14351DF5092A0051F73A /* commentCount@3x.png */; };
+		78DB143B1DF511390051F73A /* LimitForTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DB143A1DF511390051F73A /* LimitForTextField.m */; };
 		78E2255D1DE8029900CB5D16 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255C1DE8029900CB5D16 /* RecordManager.m */; };
 		78E225601DE8149300CB5D16 /* AddImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255F1DE8149300CB5D16 /* AddImageManager.m */; };
 		78EA8B441DC832DD005658A1 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B411DC832DD005658A1 /* eye.png */; };
@@ -1673,6 +1680,14 @@
 		78D960FC1D9D1F5E007ECABA /* fangdajing@.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@.png"; sourceTree = "<group>"; };
 		78D960FD1D9D1F5E007ECABA /* fangdajing@2x .png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@2x .png"; sourceTree = "<group>"; };
 		78D960FE1D9D1F5E007ECABA /* fangdajing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fangdajing@3x.png"; sourceTree = "<group>"; };
+		78DB142D1DF5082B0051F73A /* ping_gu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ping_gu.png; sourceTree = "<group>"; };
+		78DB142E1DF5082B0051F73A /* ping_gu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ping_gu@2x.png"; sourceTree = "<group>"; };
+		78DB142F1DF5082B0051F73A /* ping_gu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ping_gu@3x.png"; sourceTree = "<group>"; };
+		78DB14331DF5092A0051F73A /* commentCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentCount.png; sourceTree = "<group>"; };
+		78DB14341DF5092A0051F73A /* commentCount@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commentCount@2x.png"; sourceTree = "<group>"; };
+		78DB14351DF5092A0051F73A /* commentCount@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commentCount@3x.png"; sourceTree = "<group>"; };
+		78DB14391DF511390051F73A /* LimitForTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimitForTextField.h; sourceTree = "<group>"; };
+		78DB143A1DF511390051F73A /* LimitForTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimitForTextField.m; sourceTree = "<group>"; };
 		78E2255B1DE8029900CB5D16 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		78E2255C1DE8029900CB5D16 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		78E2255E1DE8149300CB5D16 /* AddImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImageManager.h; sourceTree = "<group>"; };
@@ -2262,6 +2277,8 @@
 				78FD6D071DF027CE001F69BB /* ChuzhiCell.h */,
 				78FD6D081DF027CE001F69BB /* ChuzhiCell.m */,
 				78FD6D091DF027CE001F69BB /* ChuzhiCell.xib */,
+				78DB14391DF511390051F73A /* LimitForTextField.h */,
+				78DB143A1DF511390051F73A /* LimitForTextField.m */,
 			);
 			path = NewPublish;
 			sourceTree = "<group>";
@@ -2643,6 +2660,9 @@
 		7836E8ED1D5DFFC900187E41 /* shouyeButton */ = {
 			isa = PBXGroup;
 			children = (
+				78DB142D1DF5082B0051F73A /* ping_gu.png */,
+				78DB142E1DF5082B0051F73A /* ping_gu@2x.png */,
+				78DB142F1DF5082B0051F73A /* ping_gu@3x.png */,
 				78FD6D1E1DF151FD001F69BB /* bao.png */,
 				78FD6D1F1DF151FD001F69BB /* bao@2x.png */,
 				78FD6D201DF151FD001F69BB /* bao@3x.png */,
@@ -3345,6 +3365,9 @@
 		78EA8B401DC832D1005658A1 /* News */ = {
 			isa = PBXGroup;
 			children = (
+				78DB14331DF5092A0051F73A /* commentCount.png */,
+				78DB14341DF5092A0051F73A /* commentCount@2x.png */,
+				78DB14351DF5092A0051F73A /* commentCount@3x.png */,
 				78EA8B611DC9C362005658A1 /* pen.png */,
 				78EA8B621DC9C362005658A1 /* pen@2x.png */,
 				78EA8B631DC9C362005658A1 /* pen@3x.png */,
@@ -3875,6 +3898,7 @@
 				78746D5E1D68895A00AD60FF /* pic04@2x.png in Resources */,
 				78FD6D0B1DF027CE001F69BB /* ChuzhiCell.xib in Resources */,
 				7825232B1D7D72E500F2C0A2 /* set.png in Resources */,
+				78DB14361DF5092A0051F73A /* commentCount.png in Resources */,
 				782522581D77DE5300F2C0A2 /* beidiaochafang@3x.png in Resources */,
 				7825233F1D7EC87400F2C0A2 /* video_btn.png in Resources */,
 				78FD6D1D1DF04863001F69BB /* shoucangxin@3x.png in Resources */,
@@ -4143,6 +4167,7 @@
 				78D960E11D9B6CEB007ECABA /* yuetan-goldcoin.png in Resources */,
 				782522A21D77DE5300F2C0A2 /* xiala.png in Resources */,
 				780E52A31D73E1120083A3E1 /* chakan-xuanzhong.png in Resources */,
+				78DB14371DF5092A0051F73A /* commentCount@2x.png in Resources */,
 				782522691D77DE5300F2C0A2 /* jiantou.png in Resources */,
 				7889626C1D8680BE008DC681 /* KNPhotoBrower.bundle in Resources */,
 				7836E9171D5DFFC900187E41 /* 6@3x.png in Resources */,
@@ -4290,6 +4315,7 @@
 				78D960F41D9CEDAB007ECABA /* shoufeiziyuan@2x.png in Resources */,
 				780E51FE1D73E1120083A3E1 /* denglu@3x.png in Resources */,
 				782522CF1D77DE5300F2C0A2 /* xitongxiaoxi@3x.png in Resources */,
+				78DB14311DF5082B0051F73A /* ping_gu@2x.png in Resources */,
 				78746D241D66DB2D00AD60FF /* Bottombg.png in Resources */,
 				78FD6D441DF151FD001F69BB /* qiye@3x.png in Resources */,
 				78A3993F1D4995B00053FA7C /* v6_guide_2.png in Resources */,
@@ -4344,6 +4370,7 @@
 				78FD6CF01DEFC0DB001F69BB /* zhuanrangjia@3x.png in Resources */,
 				782522641D77DE5300F2C0A2 /* hezuo@2x.png in Resources */,
 				7883E8FD1D65EF8400192C11 /* MySetController.xib in Resources */,
+				78DB14381DF5092A0051F73A /* commentCount@3x.png in Resources */,
 				78D960661D97DE3C007ECABA /* weixuanzhong.png in Resources */,
 				782522D21D77DE5300F2C0A2 /* yihezuo@3x.png in Resources */,
 				7836E9081D5DFFC900187E41 /* 1@3x.png in Resources */,
@@ -4361,9 +4388,11 @@
 				786C4DF11DE717C000C19373 /* zhai@3x.png in Resources */,
 				782522BA1D77DE5300F2C0A2 /* tu@3x.png in Resources */,
 				780E51FB1D73E1120083A3E1 /* denglu-logo@3x.png in Resources */,
+				78DB14301DF5082B0051F73A /* ping_gu.png in Resources */,
 				780E52B31D73E1120083A3E1 /* wode@2x.png in Resources */,
 				78D960D31D9A79F5007ECABA /* gerenwodeyuetan@2x.png in Resources */,
 				7825226D1D77DE5300F2C0A2 /* jine@2x.png in Resources */,
+				78DB14321DF5082B0051F73A /* ping_gu@3x.png in Resources */,
 				78FD6D361DF151FD001F69BB /* chuzhi.png in Resources */,
 				78D960611D97C28E007ECABA /* CostDetailController.xib in Resources */,
 				78F3DD7F1D45ADB400C1E62E /* SuPhoto_circle@2x.png in Resources */,
@@ -4597,6 +4626,7 @@
 				7836E7F31D5AF51800187E41 /* SegmentTapView.m in Sources */,
 				78F3DDEB1D461D5C00C1E62E /* VideoPlayViewController.m in Sources */,
 				7836E8441D5B47DC00187E41 /* LBNavigationController.m in Sources */,
+				78DB143B1DF511390051F73A /* LimitForTextField.m in Sources */,
 				78F545741D51DB4C0009E2F1 /* SegmentButton.m in Sources */,
 				78F624541D5AC13E002E21B3 /* MASViewAttribute.m in Sources */,
 				78A3991E1D4892DF0053FA7C /* MainSectionHeadView.m in Sources */,

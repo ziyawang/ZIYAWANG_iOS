@@ -62,7 +62,7 @@
     if (unreadcount == 99 || unreadcount>99) {
         unreadStr = @"99+";
     }
-    if (unreadcount == 0) {
+    if (unreadcount == 0 || unreadcount < 0) {
         unreadStr = nil;
         
     }
@@ -86,8 +86,8 @@
     self.navigationItem.title = @"资讯";
     self.imageDataArray = [NSArray array];
     self.imageSourceArray = [NSMutableArray array];
-    [self getLunbotu];
-    [self setScroHeadView];
+//    [self getLunbotu];
+//    [self setScroHeadView];
     [self initSegment];
     [self initFlipTableView];
     

@@ -18,5 +18,5 @@
 @property (nonatomic,strong) NSString *PublishTime;
 @property (nonatomic,strong) NSString *ViewCount;
 @property (nonatomic,strong) NSString *Brief;
-
+@property (nonatomic,strong) NSString *CollectFlag;
 @end

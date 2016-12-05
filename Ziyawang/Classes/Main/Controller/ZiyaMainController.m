@@ -47,6 +47,7 @@
 #import "ChuzhiDetailController.h"
 #import "DetailOfInfoController.h"
 #import "ChuzhiCell.h"
+#import "TestViewController.h"
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface ZiyaMainController ()<scrollHeadViewDelegate,UIScrollViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,MBProgressHUDDelegate,RCIMReceiveMessageDelegate>
@@ -236,7 +237,6 @@
     
     //    item.badgeColor = [UIColor redColor];
     
-    
     NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
     
     //    [self.tabBarItem setBadgeValue:@"2"];
@@ -258,13 +258,16 @@
     [super viewWillAppear:animated];
     
     NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    
+    NSLog(@"%ld",unreadcount);
+    
     NSString *unreadStr = [NSString stringWithFormat:@"%ld",unreadcount];
     
     
     if (unreadcount == 99 || unreadcount>99) {
       unreadStr = @"99+";
     }
-    if (unreadcount == 0) {
+    if (unreadcount == 0 || unreadcount < 0) {
         unreadStr = nil;
         
     }
@@ -591,7 +594,7 @@ self.navigationItem.title = @"首页";
  */
 - (void)setSearchBar
 {
-    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(15, 10, self.view.bounds.size.width-121, 38)];
+    SearchBar *searchBar= [[SearchBar alloc]initWithFrame:CGRectMake(15, 10, self.view.bounds.size.width-212, 38)];
     self.searchBarbutton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     self.searchBarbutton.backgroundColor = [UIColor whiteColor];
     [self.searchBarbutton setTitle:@"找信息" forState:(UIControlStateNormal)];
@@ -642,9 +645,15 @@ self.navigationItem.title = @"首页";
      设置视频播放按钮
      */
     UIButton *VideoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    [VideoButton setFrame:CGRectMake(self.view.bounds.size.width-91, 10, 76, 38)];
+    [VideoButton setFrame:CGRectMake(self.view.bounds.size.width-182, 10, 76, 38)];
     [VideoButton setBackgroundImage:[UIImage imageNamed:@"video_btn"] forState:(UIControlStateNormal)];
     [VideoButton addTarget:self action:@selector(didClickVideoButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UIButton *cepingButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [cepingButton setFrame:CGRectMake(self.view.bounds.size.width-91, 10, 76, 38)];
+    [cepingButton setBackgroundImage:[UIImage imageNamed:@"ping_gu"] forState:(UIControlStateNormal)];
+    [cepingButton addTarget:self action:@selector(didClickCepingButton:) forControlEvents:(UIControlEventTouchUpInside)];
+
     
     
     /**
@@ -658,6 +667,7 @@ self.navigationItem.title = @"首页";
     
     [self.searchBarBackView addSubview:VideoButton];
     
+    [self.searchBarBackView addSubview:cepingButton];
     
     //精选服务视图
     UIImageView *jingxuanView = [[UIImageView alloc]initWithFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
@@ -668,6 +678,7 @@ self.navigationItem.title = @"首页";
     NSLog(@"%f)))))))))))))))))))))3",self.backView.bounds.size.height);
     
 }
+
 /**
  *  设置轮播图
  *
@@ -757,15 +768,18 @@ self.navigationItem.title = @"首页";
         button.tag = i;
         [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, Buttonheight -20, Buttonheight - 20)];
+        imageView.sd_layout.centerXEqualToView(button);
+        
+        
         [imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         
-        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
-        if (i == 1) {
-            lable = [[UILabel alloc]initWithFrame:CGRectMake(-5, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
-        }
+        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, Buttonheight, 20)];
+        lable.centerX = imageView.centerX;
+        
+        
         lable.textAlignment = NSTextAlignmentCenter;
         lable.font = [UIFont FontForBigLabel];
         
@@ -778,7 +792,6 @@ self.navigationItem.title = @"首页";
         [button addSubview:lable];
         [view addSubview:button];
         
-        lable.sd_layout.centerXEqualToView(button);
         
     }
     //设置按钮的图片---图片数组
@@ -829,10 +842,10 @@ self.navigationItem.title = @"首页";
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
-        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
+        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(-5, button.bounds.size.height-8, button.bounds.size.width, 20)];
         
-        
-        lable.sd_layout.centerXEqualToView(button);
+        lable.centerX = imageView.centerX;
+
         lable.textAlignment = NSTextAlignmentCenter;
         lable.font = [UIFont FontForBigLabel];
         // imageView.backgroundColor = [UIColor whiteColor];
@@ -1308,6 +1321,16 @@ self.navigationItem.title = @"首页";
 
 }
 
+/**
+ *  测评入口
+ */
+
+- (void)didClickCepingButton:(UIButton *)button
+{
+    TestViewController *testVC = [[TestViewController alloc]init];
+    [self.navigationController pushViewController:testVC animated:YES];
+    
+}
 - (void)didClickVideoButton:(UIButton*)button
 {
     VideosListController *videoVC = [[VideosListController alloc]init];

@@ -26,7 +26,7 @@
     self.sourceArray = [NSMutableArray new];
 //    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
     self.scroViewHight = [self getImageViewHight] + 40;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, [self getImageViewHight], self.view.bounds.size.width, self.view.bounds.size.height - self.scroViewHight) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ZixunViewCell" bundle:nil] forCellReuseIdentifier:@"ZixunViewCell"];
     [self.view addSubview:self.tableView];
