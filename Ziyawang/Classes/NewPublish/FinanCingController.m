@@ -651,6 +651,8 @@
     NSString *url = [url1 stringByAppendingString:url2];
     NSString *URL = [url stringByAppendingString:token];
     
+    NSLog(@"%@",URL);
+    
     NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
     NSLog(@"%@",urlStr);
     NSString *fileName = @"lll.wav";
@@ -665,7 +667,6 @@
             self.liangdianStr = [self.liangdianStr stringByAppendingFormat:@",%@",str]
             ;
         }
-        
         self.liangdianStr = [self.liangdianStr substringFromIndex:1];
     }
     
@@ -687,11 +688,11 @@
     [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
     
     if ([self.rongzifangshiLabel.text isEqualToString:@"债权融资"]) {
+        
         [dic setObject:self.jineTextField.text forKey:@"Money"];
         [dic setObject:self.danbaofangshiLabel.text forKey:@"Type"];
         [dic setObject:self.qixianTextField.text forKey:@"Month"];
         [dic setObject:@"17" forKey:@"TypeID"];
-        
         
     }
     else
@@ -700,14 +701,11 @@
         [dic setObject:self.guquanbiliTextField.text forKey:@"Rate"];
         [dic setObject:self.xianzhaungLabel.text forKey:@"Status"];
         [dic setObject:self.hangyeLabel.text forKey:@"Belong"];
-        [dic setObject:self.zijinyongtuLabel.text forKey:@"Userfor"];
+        [dic setObject:self.zijinyongtuLabel.text forKey:@"Usefor"];
         [dic setObject:@"6" forKey:@"TypeID"];
         
     }
-    
-    
     NSLog(@"%@",dic);
-    
     NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
     [HttpManager httpManager].ifpop = ^(NSString *statu)
@@ -754,7 +752,7 @@
     NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@"token" forKey:@"access_token"];
-    [param setObject:@"22" forKey:@"TypeID"];
+    [param setObject:@"6" forKey:@"TypeID"];
     [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
     [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
     [param setObject:@"IOS" forKey:@"Channel"];
@@ -1050,6 +1048,9 @@
     UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
     
     [cancelButton addTarget:self action:@selector(didClickCancelButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];

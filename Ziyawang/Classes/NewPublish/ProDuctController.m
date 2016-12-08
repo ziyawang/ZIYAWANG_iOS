@@ -649,9 +649,7 @@
     [dic setObject:promise forKey:@"Promise"];
 
     [dic setObject:self.liangdianStr forKey:@"ProLabel"];
-    
-    
-    
+  
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
     
@@ -662,6 +660,7 @@
     [dic setObject:self.yearTextField.text forKey:@"Year"];
     [dic setObject:self.zhuanrangfangshiLabel.text forKey:@"TransferType"];
     [dic setObject:self.zhuanrangjiageTextField.text forKey:@"TransferMoney"];
+    [dic setObject:@"IOS" forKey:@"Channel"];
     
     if ([self.zhengjianLabel.text isEqualToString:@"请选择"] == NO) {
         [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
@@ -695,16 +694,13 @@
     
     if ([self.biaodiwuLabel.text isEqualToString:@"房产"])
     {
+        [dic setObject:self.leixingLabel.text forKey:@"Type"];
         [dic setObject:self.shichangjiageTextField.text forKey:@"MarketPrice"];
-        
-        [dic setObject:self.caichanLabel.text forKey:@"Property"];
-        [dic setObject:@"16" forKey:@"TypeID"];
+        [dic setObject:@"12" forKey:@"TypeID"];
     }
     else
     {
-        [dic setObject:self.leixingLabel.text forKey:@"Type"];
-        
-        [dic setObject:@"12" forKey:@"TypeID"];
+        [dic setObject:@"16" forKey:@"TypeID"];
     }
     
     
@@ -811,7 +807,7 @@
     NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@"token" forKey:@"access_token"];
-    [param setObject:@"22" forKey:@"TypeID"];
+    [param setObject:@"16" forKey:@"TypeID"];
     [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
     [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
     [param setObject:@"IOS" forKey:@"Channel"];
@@ -887,6 +883,8 @@
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
     
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
     [cancelButton addTarget:self action:@selector(didClickCancelButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
@@ -1220,79 +1218,100 @@
 }
 
 #pragma mark - UITextField delegate
+#pragma mark - UITextField delegate
+//textField.text 输入之前的值 string 输入的字符
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:YES];
+    }
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag == 11 || textField.tag == 12) {
+        [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:NO];
+    }
+}
 //textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    
-    NSInteger value = [textField.text integerValue];
-    if (value > 999999.9) {
-        textField.text = [textField.text substringToIndex:6];
-        //            [self showError:@"您输入的位数过多"];
-    }
-    
-    if ([textField.text rangeOfString:@"."].location == NSNotFound) {
-        self.isHaveDian = NO;
-    }
-    if ([string length] > 0) {
+    if (textField.tag != 11 && textField.tag != 12)
+    {
+        NSInteger value = [textField.text integerValue];
+        if (value > 999999.9) {
+            textField.text = [textField.text substringToIndex:6];
+            //            [self showError:@"您输入的位数过多"];
+        }
         
-        unichar single = [string characterAtIndex:0];//当前输入的字符
-        if ((single >= '0' && single <= '9') || single == '.') {//数据格式正确
+        if ([textField.text rangeOfString:@"."].location == NSNotFound) {
+            self.isHaveDian = NO;
+        }
+        if ([string length] > 0) {
             
-            //首字母不能为0和小数点
-            if([textField.text length] == 0){
-                if(single == '.') {
-                    [self showError:@"亲，第一个数字不能为小数点"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
+            unichar single = [string characterAtIndex:0];//当前输入的字符
+            if ((single >= '0' && single <= '9') || single == '.') {//数据格式正确
+                
+                //首字母不能为0和小数点
+                if([textField.text length] == 0){
+                    if(single == '.') {
+                        [self showError:@"亲，第一个数字不能为小数点"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
+                    if (single == '0') {
+                        [self showError:@"亲，第一个数字不能为0"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                        return NO;
+                    }
                 }
-                if (single == '0') {
-                    [self showError:@"亲，第一个数字不能为0"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
-                }
-            }
-            //输入的字符是否是小数点
-            if (single == '.') {
-                if(self.isHaveDian==NO)//text中还没有小数点
-                {
-                    self.isHaveDian = YES;
-                    return YES;
-                    
-                }else{
-                    [self showError:@"亲，您已经输入过小数点了"];
-                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                    return NO;
-                }
-            }else{
-                if (self.isHaveDian) {//存在小数点
-                    
-                    //判断小数点的位数
-                    NSRange ran = [textField.text rangeOfString:@"."];
-                    if (range.location - ran.location <= 2) {
+                //输入的字符是否是小数点
+                if (single == '.') {
+                    if(self.isHaveDian==NO)//text中还没有小数点
+                    {
+                        self.isHaveDian = YES;
                         return YES;
+                        
                     }else{
-                        //                        [self showError:@"亲，您最多输入两位小数"];
+                        [self showError:@"亲，您已经输入过小数点了"];
+                        [textField.text stringByReplacingCharactersInRange:range withString:@""];
                         return NO;
                     }
                 }else{
-                    return YES;
+                    if (self.isHaveDian) {//存在小数点
+                        
+                        //判断小数点的位数
+                        NSRange ran = [textField.text rangeOfString:@"."];
+                        if (range.location - ran.location <= 2) {
+                            return YES;
+                        }else{
+                            //                        [self showError:@"亲，您最多输入两位小数"];
+                            return NO;
+                        }
+                    }else{
+                        return YES;
+                    }
                 }
+            }else{//输入的数据格式不正确
+                [self showError:@"亲，您输入的格式不正确"];
+                NSLog(@"%lu",(unsigned long)range.length);
+                if (range.length != 0) {
+                    [textField.text stringByReplacingCharactersInRange:range withString:@""];
+                    
+                }
+                return NO;
             }
-        }else{//输入的数据格式不正确
-            [self showError:@"亲，您输入的格式不正确"];
-            NSLog(@"%lu",(unsigned long)range.length);
-            if (range.length != 0) {
-                [textField.text stringByReplacingCharactersInRange:range withString:@""];
-                
-            }
-            return NO;
         }
+        else
+        {
+            return YES;
+        }
+        
     }
-    else
-    {
-        return YES;
-    }
+    return YES;
+    
 }
+
 
 - (void)showError:(NSString *)errorString
 {

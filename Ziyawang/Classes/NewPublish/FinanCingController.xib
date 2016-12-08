@@ -16,8 +16,6 @@
                 <outlet property="button3" destination="zim-7T-L3F" id="kru-Wz-RuQ"/>
                 <outlet property="button4" destination="rzy-bU-N6d" id="bVX-lv-i3d"/>
                 <outlet property="button5" destination="PQa-h2-PNj" id="nBj-xA-5BS"/>
-                <outlet property="button6" destination="Wu5-VV-GtJ" id="IuJ-uq-Guf"/>
-                <outlet property="button7" destination="pFM-b9-4D8" id="BqS-g0-g9G"/>
                 <outlet property="danbaoViewHeight" destination="wsj-Xy-PHZ" id="B4n-tj-7fF"/>
                 <outlet property="danbaofangshiLabel" destination="Ylj-io-58j" id="0YQ-Mi-Pyo"/>
                 <outlet property="danbaofangshiView" destination="bXt-Yd-Ute" id="rLM-98-gHb"/>
@@ -281,7 +279,7 @@
                                         <constraint firstItem="KK3-2F-NwL" firstAttribute="width" secondItem="89R-zA-zVf" secondAttribute="width" multiplier="1:3" constant="-20" id="H2t-uD-PDY"/>
                                         <constraint firstItem="WHQ-VG-Lm9" firstAttribute="top" secondItem="KK3-2F-NwL" secondAttribute="top" id="Icy-8b-lJB"/>
                                         <constraint firstItem="WHQ-VG-Lm9" firstAttribute="leading" secondItem="89R-zA-zVf" secondAttribute="leading" constant="15" id="K4P-hj-KM0"/>
-                                        <constraint firstAttribute="height" constant="110" id="NFB-RS-cut"/>
+                                        <constraint firstAttribute="height" constant="70" id="NFB-RS-cut"/>
                                         <constraint firstItem="WHQ-VG-Lm9" firstAttribute="width" secondItem="KK3-2F-NwL" secondAttribute="width" id="QX4-Gy-0Yg"/>
                                         <constraint firstAttribute="trailing" secondItem="E2P-5r-9t4" secondAttribute="trailing" id="kBB-yM-ZDM"/>
                                         <constraint firstItem="E2P-5r-9t4" firstAttribute="leading" secondItem="89R-zA-zVf" secondAttribute="leading" id="lQc-25-hGS"/>
@@ -586,15 +584,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7I-jE-5Sp">
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzy-bU-N6d">
-                                            <state key="normal" title="大股东兜底"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zim-7T-L3F">
-                                            <state key="normal" title="抵押/质押融资"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQa-h2-PNj">
                                             <state key="normal" title="成熟市场"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wu5-VV-GtJ">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zim-7T-L3F">
+                                            <state key="normal" title="大股东兜底"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQa-h2-PNj">
                                             <state key="normal" title="热门项目"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrC-D8-Kyu">
@@ -603,31 +598,21 @@
                                                 <constraint firstAttribute="height" constant="10" id="9aR-Yz-UjC"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFM-b9-4D8">
-                                            <state key="normal" title="蓝海市场"/>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="zim-7T-L3F" firstAttribute="width" secondItem="rzy-bU-N6d" secondAttribute="width" id="1vr-xw-nR4"/>
                                         <constraint firstItem="rzy-bU-N6d" firstAttribute="width" secondItem="N7I-jE-5Sp" secondAttribute="width" multiplier="1:3" constant="-20" id="A8n-Jb-aIU"/>
-                                        <constraint firstItem="pFM-b9-4D8" firstAttribute="width" secondItem="rzy-bU-N6d" secondAttribute="width" id="Ch3-vi-fW3"/>
                                         <constraint firstItem="yrC-D8-Kyu" firstAttribute="leading" secondItem="N7I-jE-5Sp" secondAttribute="leading" id="FIs-Sv-b5a"/>
                                         <constraint firstItem="rzy-bU-N6d" firstAttribute="top" secondItem="N7I-jE-5Sp" secondAttribute="top" constant="13" id="IXm-Ih-3c8"/>
-                                        <constraint firstItem="Wu5-VV-GtJ" firstAttribute="width" secondItem="zim-7T-L3F" secondAttribute="width" id="JHo-F6-80S"/>
                                         <constraint firstItem="PQa-h2-PNj" firstAttribute="width" secondItem="rzy-bU-N6d" secondAttribute="width" id="Pyq-3M-j6B"/>
-                                        <constraint firstItem="pFM-b9-4D8" firstAttribute="top" secondItem="zim-7T-L3F" secondAttribute="bottom" constant="15" id="W8y-tS-nHf"/>
-                                        <constraint firstItem="Wu5-VV-GtJ" firstAttribute="leading" secondItem="N7I-jE-5Sp" secondAttribute="leading" constant="15" id="YLf-gu-89e"/>
                                         <constraint firstItem="rzy-bU-N6d" firstAttribute="centerX" secondItem="N7I-jE-5Sp" secondAttribute="centerX" id="alQ-2s-Y2l"/>
-                                        <constraint firstItem="pFM-b9-4D8" firstAttribute="height" secondItem="rzy-bU-N6d" secondAttribute="height" id="f13-K5-3ZD"/>
                                         <constraint firstItem="PQa-h2-PNj" firstAttribute="top" secondItem="rzy-bU-N6d" secondAttribute="top" id="gJ3-0e-DCX"/>
                                         <constraint firstItem="zim-7T-L3F" firstAttribute="top" secondItem="rzy-bU-N6d" secondAttribute="top" id="hVy-XJ-v0n"/>
                                         <constraint firstAttribute="bottom" secondItem="yrC-D8-Kyu" secondAttribute="bottom" id="j0j-Ma-vHh"/>
                                         <constraint firstAttribute="trailing" secondItem="PQa-h2-PNj" secondAttribute="trailing" constant="15" id="lEQ-PR-WbX"/>
-                                        <constraint firstItem="Wu5-VV-GtJ" firstAttribute="top" secondItem="zim-7T-L3F" secondAttribute="bottom" constant="15" id="nJk-0j-bXz"/>
                                         <constraint firstAttribute="trailing" secondItem="yrC-D8-Kyu" secondAttribute="trailing" id="obj-Cp-dYG"/>
-                                        <constraint firstItem="pFM-b9-4D8" firstAttribute="centerX" secondItem="N7I-jE-5Sp" secondAttribute="centerX" id="slJ-uJ-j8L"/>
-                                        <constraint firstAttribute="height" constant="110" id="un9-bA-FVq"/>
+                                        <constraint firstAttribute="height" constant="70" id="un9-bA-FVq"/>
                                         <constraint firstItem="zim-7T-L3F" firstAttribute="leading" secondItem="N7I-jE-5Sp" secondAttribute="leading" constant="15" id="x9B-XJ-jZB"/>
                                     </constraints>
                                 </view>

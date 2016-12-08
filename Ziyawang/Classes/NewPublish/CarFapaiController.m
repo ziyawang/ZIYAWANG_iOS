@@ -609,6 +609,9 @@
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
     
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    
     [cancelButton addTarget:self action:@selector(didClickCancelDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
 
@@ -644,6 +647,8 @@
     UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
     
     [cancelButton addTarget:self action:@selector(didClickCancelButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -664,7 +669,7 @@
     [param setObject:@"token" forKey:@"access_token"];
     
     
-    [param setObject:@"fpzc" forKey:@"TypeID"];
+    [param setObject:@"20" forKey:@"TypeID"];
     
     [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
     [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
@@ -1007,7 +1012,7 @@
     [dic setObject:self.textView.text forKey:@"WordDes"];
     [dic setObject:@"IOS" forKey:@"Channel"];
     
-    if ([self.Type isEqualToString:@"汽车"])
+    if ([self.zichanLabel.text isEqualToString:@"汽车"])
     {
         [dic setObject:self.pinpaiTextField.text forKey:@"Brand"];
         

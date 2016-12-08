@@ -226,9 +226,11 @@
   [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.ConfirmationP3]]];
     }
     [self.addImageButton setHidden:YES];
-    [self.deleteButton setHidden:YES];
+//    [self.deleteButton setHidden:YES];
     [self.sentMessageButton setHidden:YES];
     [self.sentButtonBackView setHidden:YES];
+    [self.deleteButton setHidden:YES];
+    
      //添加图片显示VIEW
 }
 - (void)layOutViewForRole2
@@ -323,7 +325,7 @@
     label.font = [UIFont systemFontOfSize:11];
     [self.addImageButton addSubview:label];
     UIButton *deleteButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [deleteButton setFrame:CGRectMake(self.view.bounds.size.width - 140, 30, 30, 30)];
+    [deleteButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 140, 30, 30, 30)];
     NSLog(@"%f",self.view.bounds.size.width);
     
     [deleteButton setBackgroundImage:[UIImage imageNamed:@"chexiao"] forState:(UIControlStateNormal)];

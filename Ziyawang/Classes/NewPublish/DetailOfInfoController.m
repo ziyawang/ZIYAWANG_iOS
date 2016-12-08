@@ -1818,13 +1818,23 @@
   
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+        
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -2244,13 +2254,23 @@
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     NSLog(@"%ld",proArr.count);
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -2658,13 +2678,23 @@
     
     
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+
         button1.text = @"暂无项目亮点";
 //        [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-//        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -3073,13 +3103,23 @@
    
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -3340,14 +3380,30 @@
 
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+        [button1 setHidden:NO];
+        button1.text = @"暂无项目亮点";
+ 
+    }
+    
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
         button1.text = proArr[0];
         [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -3568,13 +3624,23 @@
  
         NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
+
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -3831,12 +3897,12 @@
     }
 
     danbaoLabel.text = [[@"本金："stringByAppendingString:self.model.Money]stringByAppendingString:@"万"] ;
-    danbaoLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+//    danbaoLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
     danbaoLabel.font = [UIFont systemFontOfSize:20];
     
     changhuanLabel.text = [@"是否有尽调报告："stringByAppendingString:self.model.Report];
     diyaLabel.text = [[@"利息："stringByAppendingString:self.model.Rate]stringByAppendingString:@"万"];
-    diyaLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+//    diyaLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
     diyaLabel.font = [UIFont systemFontOfSize:20];
     
     pingzhenLabel.text = [@"出表时间："stringByAppendingString:self.model.Time];
@@ -3904,13 +3970,22 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
+        [button1 setHidden:NO];
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+        if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+            [button1 setHidden:NO];
+            button1.text = @"暂无项目亮点";
+            
+        }
+        else
+        {
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
+        }
     }
     
     else if(proArr.count == 2)
@@ -3940,7 +4015,7 @@
     label.layer.borderWidth = 1;
     label.textColor = [UIColor colorWithHexString:@"fdd000"];
     label.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
-    label.layer.cornerRadius = 10;
+    label.layer.cornerRadius = 4;
     label.layer.masksToBounds = YES;
 }
 

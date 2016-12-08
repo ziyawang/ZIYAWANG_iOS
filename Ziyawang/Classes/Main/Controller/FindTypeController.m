@@ -25,6 +25,11 @@
 #import "UserInfoModel.h"
 #import "MyidentifiController.h"
 #import "RechargeController.h"
+#import "ChuzhiCell.h"
+#import "ChuzhiDetailController.h"
+#import "DetailOfInfoController.h"
+
+
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 
@@ -80,6 +85,7 @@
 @property (nonatomic,strong) InfoDetailsController *infoDetailsVC;
 @property (nonatomic,strong) PublishModel *pubModel;
 
+@property (nonatomic,strong) UIView *PromiseView;
 
 
 @end
@@ -210,6 +216,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource =self;
     [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"ChuzhiCell" bundle:nil] forCellReuseIdentifier:@"ChuzhiCell"];
+
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -1648,7 +1657,7 @@
             
             self.model = [[PublishModel alloc]init];
             [self.model setValuesForKeysWithDictionary:dic];
-            self.model.ProArea = [self.model.ProArea substringToIndex:2];
+            
             [array addObject:self.model];
         }
         
@@ -1710,6 +1719,141 @@
 }
 
 
+- (void)setPromiseView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
+    
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    
+    [bottomView addSubview:label1];
+    [bottomView addSubview:label2];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYIs(self.view.centerY)
+    .widthIs(285 * kWidthScale)
+    .heightIs(300 * kHeightScale);
+    
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    
+    label1.sd_layout.centerXEqualToView(bottomView)
+    .topSpaceToView(bottomView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    label1.text = @"温馨提示";
+    
+    label2.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(label1,15)
+    .autoHeightRatio(0);
+    
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+    label2.font = [UIFont systemFontOfSize:13];
+    
+    fabuButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(label2,30*kHeightScale)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    //    fanhuiButton.sd_layout.leftEqualToView(label2)
+    //    .rightEqualToView(label2)
+    //    .topSpaceToView(fabuButton,20)
+    //    .heightIs(40*kHeightScale);
+    //    fanhuiButton.layer.borderWidth = 1.5;
+    //    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(CancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    //    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    //    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.PromiseView = mengbanView;
+    //    [self.PromiseView setHidden:YES];
+    
+    
+}
+- (void)CancelAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+}
+
+- (void)didClickfabuFabuAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+    
+}
+
 #pragma mark - Table view data source
 
 //这两个代理方法必须同时存在才起作用
@@ -1738,36 +1882,49 @@
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
         
-        return 130;
+        return 125;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
-        return 140;
+        return 115;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
-        return 140;
-        
+        return 115;
     }
     
-    return 140;
+    return 115;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (nib == nil) {
-        nib = [UINib nibWithNibName:@"NewPublishCell" bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:@"NewPublishCell"];
-        NSLog(@"我是从nib过来的");
+    
+    PublishModel *model = [[PublishModel alloc]init];
+    model = self.sourceArray[indexPath.row];
+    model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
+    if ([model.TypeID isEqualToString:@"99"]) {
+        ChuzhiCell *cell2 = [self.tableView dequeueReusableCellWithIdentifier:@"ChuzhiCell" forIndexPath:indexPath];
         
+        cell2.model = self.sourceArray[indexPath.row];
+        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell2;
     }
-    
-    NewPublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
-    
-    cell.model = self.sourceArray[indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
+    else
+    {
+        
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
+        
+        
+        //        if (cell == nil)
+        //        {
+        //            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];
+        //        }
+        cell.model = self.sourceArray[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
+    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1781,13 +1938,40 @@
 //    infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
 //    infoDetailsVC.typeName = model.TypeName;
 //    [self.navigationController pushViewController:infoDetailsVC animated:YES];
+    
+    ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
 
+    PublishModel *model = [[PublishModel alloc]init];
+    model = self.sourceArray[indexPath.row];
+    
+    
+    if ([model.Member isEqualToString:@"1"]) {
+        [self setPromiseView];
+    }
+
+    
+    else
+    {
+    
+    if ([model.TypeID isEqualToString:@"99"]) {
+        chuzhiVC.NewsID = model.NewsID;
+        [self.navigationController pushViewController:chuzhiVC animated:YES];
+    }
+    
+    else
+    {
+    
+    
     
     /**
      *  新支付
      *
      */
-    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
+    
+    
+    
+    
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     PublishModel *model = [[PublishModel alloc]init];
     model = self.sourceArray[indexPath.row];
     self.pubModel = model;
@@ -1797,7 +1981,6 @@
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;
-    self.infoDetailsVC = infoDetailsVC;
     
     model.Member = [NSString stringWithFormat:@"%@",model.Member];
     
@@ -1890,7 +2073,8 @@
     }
     
     
-    
+    }
+    }
 
     
 }
@@ -1952,6 +2136,7 @@
          [alert show];
          
      }];
+    
     
 }
 

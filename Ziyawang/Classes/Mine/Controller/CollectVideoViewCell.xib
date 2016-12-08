@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,8 +18,8 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wd1-WS-Pxt">
                         <constraints>
-                            <constraint firstAttribute="width" constant="148" id="9Gk-WO-wqD"/>
-                            <constraint firstAttribute="height" constant="90" id="DQf-sr-Pdr"/>
+                            <constraint firstAttribute="width" constant="120" id="9Gk-WO-wqD"/>
+                            <constraint firstAttribute="width" secondItem="Wd1-WS-Pxt" secondAttribute="height" multiplier="10:7" id="qQ7-Gh-WAz"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="NhY-lI-VMm">
@@ -67,13 +68,13 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="OUF-qW-oI0"/>
-                        <exclude reference="qPY-al-8GY"/>
-                        <exclude reference="o3O-SJ-Um1"/>
                         <exclude reference="7j4-kL-ljm"/>
                         <exclude reference="FQ2-2i-YFU"/>
                         <exclude reference="Nnc-lR-hvr"/>
                         <exclude reference="NpV-Jg-ezz"/>
+                        <exclude reference="OUF-qW-oI0"/>
+                        <exclude reference="qPY-al-8GY"/>
+                        <exclude reference="o3O-SJ-Um1"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

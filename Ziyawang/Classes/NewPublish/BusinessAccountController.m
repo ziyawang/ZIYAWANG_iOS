@@ -707,7 +707,7 @@
     NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@"token" forKey:@"access_token"];
-    [param setObject:@"22" forKey:@"TypeID"];
+    [param setObject:@"18" forKey:@"TypeID"];
     [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
     [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
     [param setObject:@"IOS" forKey:@"Channel"];
@@ -1062,6 +1062,9 @@
     UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
     
     [cancelButton addTarget:self action:@selector(didClickCancelButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];

@@ -100,6 +100,9 @@
     [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
     
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    
     [cancelButton addTarget:self action:@selector(didClickCancelButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     

@@ -119,13 +119,13 @@
     if ([self.model.Member isEqualToString:@"1"]) {
         self.specialImage.image = [UIImage imageNamed:@"xinvip"];
         
-        self.specialImageWidth.constant = 50;
+        self.specialImageWidth.constant = 45;
         [self.specialImage setHidden:NO];
     }
     else if([self.model.Member isEqualToString:@"2"])
     {
         
-        self.specialImageWidth.constant = 50;
+        self.specialImageWidth.constant = 45;
         [self.specialImage setHidden:NO];
         self.specialImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
     }
