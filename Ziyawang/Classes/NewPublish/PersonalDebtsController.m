@@ -471,7 +471,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)
@@ -768,7 +768,7 @@
 - (IBAction)sendButtonAction:(id)sender {
     [self.view endEditing:YES];
     if ([self.chooseShenfenLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+        [MyMBHud MBProgressWithString:@"请选择您的身份" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
     if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:_zongjineTextField] == NO) {

@@ -198,7 +198,7 @@
     //        return 270;
     //
     //    }
-    return 134;
+    return 110;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZixunViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZixunViewCell" forIndexPath:indexPath];

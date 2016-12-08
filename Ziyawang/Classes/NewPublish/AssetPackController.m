@@ -435,7 +435,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)
@@ -874,6 +874,16 @@
     
     self.shijianLabel.text = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
 }
+- (NSString *)getFormatDateWithDatePicker
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+    NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
+    NSString *time = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
+    return time;
+    
+}
 
 #pragma mark----pickerView Button Action
 - (void)didClickCancelButtonAction:(UIButton*)sender
@@ -941,6 +951,8 @@
 }
 - (void)didClickSureDateButtonAction:(UIButton *)sender
 {
+    self.shijianLabel.text = [self getFormatDateWithDatePicker];
+    
     [self.mengbanView setHidden:YES];
     
     

@@ -404,6 +404,8 @@
     self.textView = [[CSTextView alloc]init];
     self.textView.delegate = self;
     self.textView.placeholder = @"请输入评论内容";
+    self.textBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 1000, self.view.bounds.size.width, 150)];
+
     [self.view addSubview:self.textBackView];
     [self.textBackView addSubview:self.textView];
     [self.textBackView addSubview:self.fabiaoButton];
@@ -418,10 +420,10 @@
     self.textView.layer.cornerRadius = 10;
     self.textView.layer.masksToBounds = YES;
     
-    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
-    .rightSpaceToView(self.view,0)
-    .heightIs(150)
-    .topSpaceToView(self.commentBackView,0);
+//    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
+//    .rightSpaceToView(self.view,0)
+//    .heightIs(150)
+//    .topSpaceToView(self.commentBackView,0);
     
     self.textView.sd_layout.leftSpaceToView(self.textBackView,15)
     .rightSpaceToView(self.textBackView,15)
@@ -951,15 +953,22 @@
     if (keyboardF.origin.y == [UIScreen mainScreen].bounds.size.height) {
         [self.mengban setHidden:YES];
         [UIView animateWithDuration:duration animations:^{
-            self.textBackView.y = keyboardF.origin.y ;
+            //            self.textBackView.y = keyboardF.origin.y ;
+            [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y, self.view.bounds.size.width, 150)];
         }];
     }
     else
     {
         [self.mengban setHidden:NO];
-        [UIView animateWithDuration:duration animations:^{
-            self.textBackView.y = keyboardF.origin.y - 150;
-        }];
+        [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y - 150, self.view.bounds.size.width, 150)];
+        //        [UIView animateWithDuration:duration animations:^{
+        ////            self.textBackView.y = keyboardF.origin.y - 220;
+        ////            [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y - 220, self.view.bounds.size.width, 150)];
+        //
+        //
+        //        }];
+        
+        
     }
     
 }

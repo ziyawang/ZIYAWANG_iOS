@@ -356,7 +356,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //委外催收
     NSArray *Stypearray14 = @[@"个人债权",@"银行贷款",@"企业商账",@"其他"];
     NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上",@"面议"];
-    NSArray *Stypearray16 = @[@"已诉讼",@"未诉讼"];
+    NSArray *Stypearray16 = @[@"已诉",@"未诉"];
     NSMutableArray *weiwai = [NSMutableArray new];
     [weiwai addObject:Stypearray14];
     [weiwai addObject:Stypearray15];
@@ -843,7 +843,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //委外催收
     NSArray *Stypearray14 = @[@"个人债权",@"银行贷款",@"企业商账",@"其他"];
     NSArray *Stypearray15 = @[@"5%-15%",@"15%-%30",@"30%-35%",@"50%以上",@"面议"];
-    NSArray *Stypearray16 = @[@"已诉讼",@"未诉讼"];
+    NSArray *Stypearray16 = @[@"已诉",@"未诉"];
     NSMutableArray *weiwai = [NSMutableArray new];
     [weiwai addObject:Stypearray14];
     [weiwai addObject:Stypearray15];
@@ -1453,22 +1453,36 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
-//    {
-//        
-//        return 130;
-//    }
-//    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
-//    {
-//        return 140;
-//    }
-//    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
-//    {
-//        return 140;
-//        
+    PublishModel *model = [[PublishModel alloc]init];
+    
+    model = self.sourceArray[indexPath.row];
+    model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
+
+//    if ([model.TypeID isEqualToString:@"1"]||[model.TypeID isEqualToString:@"12"]) {
+//        return 135;
 //    }
 //    
-    return 105;
+//    else
+//    {
+//        return 115;
+//    }
+
+    
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        
+        return 125;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+    {
+        return 115;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+    {
+        return 115;
+    }
+    
+    return 115;
 }
 
 
@@ -1915,7 +1929,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(350 * kHeightScale);
+    .heightIs(300 * kHeightScale);
     
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
@@ -1947,11 +1961,12 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
     
-    label2.text = @"本条VIP信息只针对本类型会员免费开放，会员系统升级中，请咨询会员专线：010-56052557";
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+    label2.font = [UIFont systemFontOfSize:13];
     
     fabuButton.sd_layout.leftEqualToView(label2)
     .rightEqualToView(label2)
-    .topSpaceToView(label2,20)
+    .topSpaceToView(label2,30*kHeightScale)
     .heightIs(40*kHeightScale);
     [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
     fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];

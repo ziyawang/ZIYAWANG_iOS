@@ -453,7 +453,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)
@@ -693,7 +693,7 @@
     [dic setObject:self.nameTextField.text forKey:@"ConnectPerson"];
     [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
     
-    if ([self.biaodiwuLabel.text isEqualToString:@"土地"])
+    if ([self.biaodiwuLabel.text isEqualToString:@"房产"])
     {
         [dic setObject:self.shichangjiageTextField.text forKey:@"MarketPrice"];
         
@@ -735,7 +735,7 @@
     [self.view endEditing:YES];
     
     if ([self.shenfenLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+        [MyMBHud MBProgressWithString:@"请选择您的身份" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
     if ([self.diquLabel.text isEqualToString:@"请选择"]) {
@@ -747,7 +747,7 @@
         return;
     }
     
-    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+    if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
         if ([self.leixingLabel.text isEqualToString:@"请选择"]) {
             [MyMBHud MBProgressWithString:@"请选择类型" timer:1 mode:(MBProgressHUDModeText) target:self];
             return;
@@ -771,7 +771,7 @@
         [MyMBHud MBProgressWithString:@"请选择转让方式" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
-    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+    if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
         if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.shichangjiageTextField] == NO) {
             [MyMBHud MBProgressWithString:@"请输入市场价格" timer:1 mode:(MBProgressHUDModeText) target:self];
             return;
@@ -1204,19 +1204,19 @@
 
 - (void)feiFangchanViews
 {
-    [self.leixingView setHidden:NO];
-    self.leixingHeight.constant = 50;
-    [self.shichangjiageView setHidden:NO];
-    self.shichangjiageHeight.constant = 50;
-}
-
-- (void)fangchanViews
-{
     [self.leixingView setHidden:YES];
     self.leixingHeight.constant = 0;
     [self.shichangjiageView setHidden:YES];
     self.shichangjiageHeight.constant = 0;
+    
+}
 
+- (void)fangchanViews
+{
+    [self.leixingView setHidden:NO];
+    self.leixingHeight.constant = 50;
+    [self.shichangjiageView setHidden:NO];
+    self.shichangjiageHeight.constant = 50;
 }
 
 #pragma mark - UITextField delegate

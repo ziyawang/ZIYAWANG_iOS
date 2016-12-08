@@ -397,7 +397,10 @@
     self.textView = [[CSTextView alloc]init];
     self.textView.delegate = self;
     self.textView.placeholder = @"请输入评论内容";
+    self.textBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 1000, self.view.bounds.size.width, 150)];
+    
     [self.view addSubview:self.textBackView];
+    
     [self.textBackView addSubview:self.textView];
     [self.textBackView addSubview:self.fabiaoButton];
     self.fabiaoButton.layer.cornerRadius = 5;
@@ -411,15 +414,18 @@
     self.textView.layer.cornerRadius = 10;
     self.textView.layer.masksToBounds = YES;
     
-    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
-    .rightSpaceToView(self.view,0)
-    .heightIs(150)
-    .topSpaceToView(self.commentBackView,0);
+//    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
+//    .rightSpaceToView(self.view,0)
+//    .topSpaceToView(self.view,1000)
+//    .heightIs(150);
+    
+    
     
     self.textView.sd_layout.leftSpaceToView(self.textBackView,15)
     .rightSpaceToView(self.textBackView,15)
-    .heightIs(80)
-    .topSpaceToView(self.textBackView,15);
+    .topSpaceToView(self.textBackView,15)
+    .heightIs(80);
+    
     
     
     self.fabiaoButton.sd_layout.rightEqualToView(self.textView)
@@ -557,16 +563,14 @@
     self.textView.textColor = [UIColor darkGrayColor];
 //    self.textView.text = @"请输入评论内容";
     self.textView.font = [UIFont systemFontOfSize:17];
-
-    
-  
-    
+ 
     
     
     
     self.webView.sd_layout.topSpaceToView(lineView,20)
     .leftSpaceToView(self.HeadView,15)
     .rightSpaceToView(self.HeadView,15);
+    
     self.webView.delegate = self;
     self.webView.scalesPageToFit = NO;
     self.webView.scrollView.scrollEnabled = NO;
@@ -579,8 +583,9 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getComments)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreContentData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
-    [self.tableView setTableHeaderView:self.HeadView];
     [self getComments];
+        [self.tableView setTableHeaderView:self.HeadView];
+
 }
 
 
@@ -591,13 +596,15 @@
     CGSize fittingSize = [self.webView sizeThatFits:CGSizeZero];
     frame.size = fittingSize;
     self.webView.frame = frame;
+    [self.webView setFrame:frame];
+    
     
     self.remenLabel.sd_layout.topSpaceToView(self.webView,0)
     .leftSpaceToView(self.HeadView,20)
     .heightIs(20);
     [self.remenLabel setSingleLineAutoResizeWithMaxWidth:100];
     [self getComments];
-    [self.tableView setTableHeaderView:self.HeadView];
+//    [self.tableView setTableHeaderView:self.HeadView];
 
     
 //    CGSize
@@ -1023,15 +1030,22 @@
     if (keyboardF.origin.y == [UIScreen mainScreen].bounds.size.height) {
         [self.mengban setHidden:YES];
         [UIView animateWithDuration:duration animations:^{
-            self.textBackView.y = keyboardF.origin.y ;
+//            self.textBackView.y = keyboardF.origin.y ;
+            [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y, self.view.bounds.size.width, 150)];
         }];
     }
     else
     {
     [self.mengban setHidden:NO];
-        [UIView animateWithDuration:duration animations:^{
-            self.textBackView.y = keyboardF.origin.y - 220;
-        }];
+    [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y - 210, self.view.bounds.size.width, 150)];
+//        [UIView animateWithDuration:duration animations:^{
+////            self.textBackView.y = keyboardF.origin.y - 220;
+////            [self.textBackView setFrame:CGRectMake(0, keyboardF.origin.y - 220, self.view.bounds.size.width, 150)];
+//
+//            
+//        }];
+        
+        
     }
    
 }
@@ -1119,11 +1133,9 @@
     NSLog(@"!!!!!!!!!%@",self.sourceArray);
 
     [self.tableView reloadData];
-  
-    
-    
-    
-    [self.tableView.mj_header endRefreshing];
+    [self.tableView setTableHeaderView:self.HeadView];
+
+       [self.tableView.mj_header endRefreshing];
 
 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     NSLog(@"%@",error);

@@ -509,7 +509,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)
@@ -784,7 +784,7 @@
     [self.view endEditing:YES];
 
     if ([self.shenfenLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+        [MyMBHud MBProgressWithString:@"请选择您的身份" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
     if ([self.suozaidLabel.text isEqualToString:@"请选择"]) {
@@ -802,7 +802,7 @@
     }
     if ([self.rongzifangshiLabel.text isEqualToString:@"债权融资"]) {
         if ([self.danbaofangshiLabel.text isEqualToString:@"请选择"]) {
-            [MyMBHud MBProgressWithString:@"请选择身份" timer:1 mode:(MBProgressHUDModeText) target:self];
+            [MyMBHud MBProgressWithString:@"请选择您的身份" timer:1 mode:(MBProgressHUDModeText) target:self];
              return;
         }
         if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:_qixianTextField] == NO) {
@@ -984,6 +984,8 @@
             self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[4]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
+            self.selectStr = self.AllArray[4][0];
+
             self.row = 4;
         }
             break;
@@ -996,6 +998,8 @@
             self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[5]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
+            self.selectStr = self.AllArray[5][0];
+
             self.row = 5;
         }
             
@@ -1010,6 +1014,7 @@
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.selectStr = self.AllArray[6][0];
+
             
             self.row = 6;
         }

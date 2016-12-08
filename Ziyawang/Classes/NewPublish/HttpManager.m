@@ -8,6 +8,11 @@
 
 #import "HttpManager.h"
 
+@interface HttpManager ()<MBProgressHUDDelegate>
+@property (nonatomic,strong) MBProgressHUD *HUD;
+
+@end
+
 @implementation HttpManager
 
 +(HttpManager *)httpManager
@@ -25,6 +30,10 @@
 
 - (void)postDataWithURL:(NSString *)URL ImageArray:(NSMutableArray *)imageArray audioURL:(NSURL *)url param:(NSMutableDictionary *)param
 {
+    self.HUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication]keyWindow] animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -48,6 +57,8 @@
       UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
       [alert show];
       NSString *statu = @"成功";
+      [self.HUD removeFromSuperViewOnHide];
+      [self.HUD hideAnimated:YES];
       self.ifpop(statu);
 
   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -57,6 +68,8 @@
       UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布失败，请稍后重试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
       [alert show];
       NSString *statu = @"失败";
+      [self.HUD removeFromSuperViewOnHide];
+      [self.HUD hideAnimated:YES];
       self.ifpop(statu);
       
   }];

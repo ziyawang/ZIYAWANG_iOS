@@ -11,6 +11,7 @@
 @interface UIFont (UILabel)
 //+(UIFont *)fontWithLabel:(UILabel *)label;
 + (UIFont *)FontForLabel;
++ (UIFont *)FontForLabel2;
 
 + (UIFont *)FontForBigLabel;
 + (UIFont *)FontForSmallLabel;

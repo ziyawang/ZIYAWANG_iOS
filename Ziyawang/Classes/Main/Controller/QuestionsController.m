@@ -8,7 +8,8 @@
 
 #import "QuestionsController.h"
 #import "QuestionModel.h"
-
+#import "PushViewController.h"
+#import "PersonalDebtsController.h"
 @interface QuestionsController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) MBProgressHUD *HUD;
@@ -77,11 +78,30 @@
 
 - (void)popAction:(UIButton *)button
 {
-    [self postAnswers];
-    [self.navigationController popViewControllerAnimated:YES];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的测评还未完成，确定要退出吗?" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self postAnswers2];
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    if (_ifFinishAnswer == YES) {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
+    else
+    {
+    [self presentViewController:alertVC animated:YES completion:nil];
+    }
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"债权风险评估系统";
+
     UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
     [leftButton addTarget:self action:@selector(popAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
@@ -378,6 +398,8 @@ NSString *URL = TestQuestionURL;
         self.phoneNumber = [UITextField new];
         UIButton *surePhoneButton = [UIButton new];
         
+        self.phoneNumber.textAlignment = NSTextAlignmentCenter;
+        
         
         [self.contentView addSubview:inputPhoneView];
         [inputPhoneView addSubview:backView1];
@@ -435,9 +457,9 @@ NSString *URL = TestQuestionURL;
         
         [surePhoneButton addTarget:self action:@selector(didClickSurePhoneButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
         
-        topLabel.text = @"测评结束！";
-        bottomLabel.text = @"请输入电话号码以便为您提供更专业的服务";
-        self.phoneNumber.placeholder = @"    电话号码";
+        topLabel.text = @"评估结束！";
+        bottomLabel.text = @"请输入电话号码以便查询评估结果";
+        self.phoneNumber.placeholder = @"电话号码";
         [surePhoneButton setTitle:@"确认" forState:(UIControlStateNormal)];
         [surePhoneButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
         [surePhoneButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
@@ -541,11 +563,13 @@ NSString *URL = TestQuestionURL;
 - (void)didClickFabuButtonAction:(UIButton *)button
 {
     
+    PersonalDebtsController *pushVC = [[PersonalDebtsController alloc]init];
+    [self.navigationController pushViewController:pushVC animated:YES];
+    
 }
 - (void)didClickRetestButtonAction:(UIButton *)button
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 - (void)postAnswers
@@ -584,19 +608,16 @@ NSString *URL = TestQuestionURL;
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.amount forKey:@"Money"];
     [dic setObject:self.area forKey:@"Area"];
-    [dic setObject:self.Type forKey:@"AssetType"];
-    [dic setObject:self.personType forKey:@"Type"];
+    [dic setObject:self.personType forKey:@"AssetType"];
+    [dic setObject:self.Type forKey:@"Type"];
     if (_ifFinishAnswer == YES) {
         [dic setObject:self.phoneNumber.text forKey:@"PhoneNumber"];
     }
-    
     
 //    [dic setObject:self.allSelected forKey:@"Answer"];
     
     [dic setObject:self.allSelected forKey:@"Answer"];
     [dic setObject:@"IOS" forKey:@"Channel"];
-    
-    
     
 [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
     
@@ -621,6 +642,66 @@ NSString *URL = TestQuestionURL;
   
 }
 
+- (void)postAnswers2
+{
+    //    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    //    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    //     self.manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    
+    //    self.allSelected = [self dictionaryToJson:self.AllSelectedDic];
+    
+    //    self.allSelected = [QuestionsController JsonModel:self.AllSelectedDic];
+
+    NSArray *array = @[@"sdfs"];
+    
+    NSDictionary * Dic= @{@"2":array,@"3":array};
+    
+    NSString *str = [QuestionsController JsonModel:Dic];
+    NSLog(@"%@",Dic);
+    NSLog(@"%@",str);
+    
+    
+    self.allSelected = [QuestionsController JsonModel:self.AllSelectedDic];
+    NSLog(@"%@",self.allSelected);
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *URL = TestResultURL;
+    if (token != nil) {
+        URL = [[TestResultURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    }
+    
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:self.amount forKey:@"Money"];
+    [dic setObject:self.area forKey:@"Area"];
+    [dic setObject:self.personType forKey:@"AssetType"];
+    [dic setObject:self.Type forKey:@"Type"];
+    [dic setObject:self.allSelected forKey:@"Answer"];
+    [dic setObject:@"IOS" forKey:@"Channel"];
+    
+    
+    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [self setResultViews];
+        NSString *result = resultDic[@"result"];
+        
+        NSString *Score = [NSString stringWithFormat:@"%@",resultDic[@"score"]];
+        
+//        self.resultDes.text = result;
+//        self.testResult.text = Score;
+//        [self.HUD removeFromSuperViewOnHide];
+//        [self.HUD hideAnimated:YES];
+//        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+//        [self.HUD removeFromSuperViewOnHide];
+//        [self.HUD hideAnimated:YES];
+//        [self showAlertViewWithString:@"提交失败，请稍后重试"];
+    }];
+    
+}
 - (void)setResultViews
 {
 
@@ -806,6 +887,17 @@ NSString *URL = TestQuestionURL;
 //    model = self.firstQuestionArray[indexPath.row];
     cell.textLabel.text = self.firstQuestionArray2[indexPath.row];
     
+    if ([self.Type isEqualToString:@"个人"] ) {
+        if (self.firstindex == 1 || self.firstindex == 2) {
+            cell.textLabel.text = self.firstQuestionArray2[indexPath.row + 1];
+        }
+    }
+    else
+    {
+        if (self.firstindex == 1) {
+            cell.textLabel.text = self.firstQuestionArray2[indexPath.row + 1];
+        }
+    }
     for (NSIndexPath *indexP in self.indexPathDic[key])
     {
         if (indexPath == indexP) {

@@ -218,7 +218,6 @@
     [[[[[self tabBarController]tabBar]items]objectAtIndex:0] showBadgeWithStyle:WBadgeStyleNumber value:1 animationType:WBadgeAnimTypeShake];
     
     
-    
     NSString *value = [[[[self tabBarController]tabBar]items]objectAtIndex:0].badgeValue;
     NSLog(@"%@",value);
     
@@ -241,7 +240,6 @@
     NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
     
     //    [self.tabBarItem setBadgeValue:@"2"];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -528,6 +526,7 @@ self.navigationItem.title = @"首页";
                               CGRectMake(0, 58,backView.bounds.size.width,
                                          [self getSectionHaderHight]
                                          )];
+    
     scroView.contentSize = CGSizeMake(backView.bounds.size.width * 2,
                                       [self getSectionHaderHight]);
     scroView.pagingEnabled = YES;
@@ -568,17 +567,20 @@ self.navigationItem.title = @"首页";
     self.rightView = rightView;
     self.leftView2 = leftView2;
     self.rightView2 = rightView2;
+    
     [self.scrollView addSubview:leftView];
     [self.scrollView addSubview:rightView];
      self.backView = backView;
     [self.backView addSubview:self.scrollView];
+    self.scrollView.backgroundColor = [UIColor whiteColor];
 }
 /**
  *  设置pageControl
  */
 - (void)setPageControl
-{    CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight] +45);
+{
     self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
+     CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight] +45);
     [self.pageControl setCenter:pagePoint];
     self.pageControl.numberOfPages = 2;
     self.pageControl.currentPage = 0;
@@ -671,11 +673,16 @@ self.navigationItem.title = @"首页";
     [self.searchBarBackView addSubview:cepingButton];
     
     //精选服务视图
-    UIImageView *jingxuanView = [[UIImageView alloc]initWithFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
-    [jingxuanView setBackgroundColor:[UIColor colorWithHexString:@"f4f4f4"]];
-    jingxuanView.image = [UIImage imageNamed:@"jingxuanxinxi"];
+    UIImageView *jingxuanView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 58 + [self getSectionHaderHight], self.view.bounds.size.width - 10, 45)];
+    
+//    UIImageView *jingxuanView = [UIImageView new];
     self.jingxuanView = jingxuanView;
+ 
+    
+    [self.jingxuanView setBackgroundColor:[UIColor colorWithHexString:@"f4f4f4"]];
+    self.jingxuanView.image = [UIImage imageNamed:@"xinxi"];
     [self.backView addSubview:self.jingxuanView];
+
     NSLog(@"%f)))))))))))))))))))))3",self.backView.bounds.size.height);
     
 }
@@ -725,6 +732,47 @@ self.navigationItem.title = @"首页";
     return self.headView;
     
 }
+- (UIView *)setImageView2
+{
+    
+    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, [self getImageViewHight])];
+    //最上方轮播图
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"lunbotu1@2x" ofType:@"png"];
+    
+    NSString *url2 = path;
+    NSString *url3 = path;
+    NSString *url4 = path;
+    NSString *url5 = path;
+    /**
+     *  为0
+     */
+    if (self.imageSourceArray.count == 0) {
+        url2 = path;
+        url3 = path;
+        url4 = path;
+        url5 = path;
+    }
+    else
+    {
+        url2 = [getImageURL stringByAppendingString:self.imageSourceArray[0]];
+        url3 = [getImageURL stringByAppendingString:self.imageSourceArray[1]];
+        url4 = [getImageURL stringByAppendingString:self.imageSourceArray[2]];
+        url5 = [getImageURL stringByAppendingString:self.imageSourceArray[3]];
+        
+    }
+    NSArray *imagearray = @[url5,url2,url3,url4,url5,url2];
+    
+    NSMutableArray *imageMuarray = [NSMutableArray arrayWithArray:imagearray];
+    self.scrollHeadView = [[ScrollHeadView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, [self getImageViewHight]) arraySource:imageMuarray];
+    self.scrollHeadView.Mydelegate = self;
+    imageview.image = [UIImage imageNamed:@"lunbotu.jpg"];
+    
+    //    [self.headView addSubview:imageview];
+    [self.headView addSubview:self.scrollHeadView];
+    return self.headView;
+    
+}
+
 /**
  *  初始化headView
  */
@@ -1041,7 +1089,7 @@ self.navigationItem.title = @"首页";
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(350 * kHeightScale);
+    .heightIs(300 * kHeightScale);
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
     .rightSpaceToView(weituoView,0)
@@ -1072,14 +1120,12 @@ self.navigationItem.title = @"首页";
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
     
-    label2.text = @"本条VIP信息只针对本类型会员免费开放，会员系统升级中，请咨询会员专线：010-56052557";
-    
-    
-    
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+    label2.font = [UIFont systemFontOfSize:13];
     
     fabuButton.sd_layout.leftEqualToView(label2)
     .rightEqualToView(label2)
-    .topSpaceToView(label2,20)
+    .topSpaceToView(label2,30*kHeightScale)
     .heightIs(40*kHeightScale);
     [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
     fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
@@ -1141,15 +1187,34 @@ self.navigationItem.title = @"首页";
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
-        return 85;
+        return 95;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
-        return 105;
+        return 110;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
         return 120;
+        
+    }
+    return 200;
+    
+}
+
+- (CGFloat )getSectionHaderHight2
+{
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        return 170;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+    {
+        return 197.5;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+    {
+        return 230;
         
     }
     return 200;
@@ -1228,6 +1293,8 @@ self.navigationItem.title = @"首页";
         [self.HUD hideAnimated:YES];
         
         [self.tableView reloadData];
+        [self setHeadView];
+
         [self.tableView.mj_footer endRefreshing];
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
@@ -1291,6 +1358,8 @@ self.navigationItem.title = @"首页";
             
         }
         [self.tableView reloadData];
+        [self setHeadView];
+
         [self.tableView.mj_header endRefreshing];
 
         [self.HUD removeFromSuperViewOnHide];
@@ -1499,18 +1568,48 @@ self.navigationItem.title = @"首页";
 {
     
     if ([searchButton.titleLabel.text isEqualToString:@"找信息"]) {
+//        self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight2] +99)];
+//        
+//       self.scrollView = [[UIScrollView alloc]initWithFrame:
+//                                  CGRectMake(0, 58,self.backView.bounds.size.width,
+//                                             [self getSectionHaderHight2]
+//                                             )];
+//        
+        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight2] +99)];
+        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
+                                            [self getSectionHaderHight2]
+                                             )];
+        
+        
+        [self.jingxuanView setFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight2], self.view.bounds.size.width, 45)];
+        
+        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
+        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight2] +45);
+        [self.pageControl setCenter:pagePoint];
+        
+        
         [self loadNewServiceData];
         [searchButton setTitle:@"找服务" forState:(UIControlStateNormal)];
         self.findType = @"找服务";
         self.jingxuanView.image = [UIImage imageNamed:@"youzhifuwu"];
         [self.scrollView addSubview:self.leftView2];
         [self.scrollView addSubview:self.rightView2];
+
     }
     if ([searchButton.titleLabel.text isEqualToString:@"找服务"]) {
+        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight] +99)];
+        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
+                                             [self getSectionHaderHight]
+                                             )];
+        [self.jingxuanView setFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
+        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
+        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight] +45);
+        [self.pageControl setCenter:pagePoint];
+
         [self loadNewInfoData];
         [searchButton setTitle:@"找信息" forState:(UIControlStateNormal)];
         self.findType = @"找信息";
-        self.jingxuanView.image = [UIImage imageNamed:@"jingxuanxinxi"];
+        self.jingxuanView.image = [UIImage imageNamed:@"xinxi"];
         
         [self.scrollView addSubview:self.leftView];
         [self.scrollView addSubview:self.rightView];
@@ -2177,42 +2276,75 @@ self.navigationItem.title = @"首页";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
-//    {
-//        
-//        return 130;
-//    }
-//    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
-//    {
-//        return 140;
-//    }
-//    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
-//    {
-//        return 140;
-//        
-//    }
+//    PublishModel *model = [[PublishModel alloc]init];
+//    model = self.sourceArray[indexPath.row];
+//    model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
     
-    return 105;
+//    if ([model.TypeID isEqualToString:@"1"]||[model.TypeID isEqualToString:@"12"]) {
+//        return 135;
+//    }
+//    
+//    else
+//    {
+//        return 115;
+//    }
+    if ([self.findType isEqualToString:@"找信息"]) {
+        if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+        {
+            
+            return 125;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+        {
+            return 115;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+        {
+            return 115;
+        }
+        
+
+    }
+    else
+    {
+        if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+        {
+            
+            return 125;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+        {
+            return 135;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+        {
+            return 135;
+        }
+
+    }
+    
+        return 115;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    PublishModel *model = [[PublishModel alloc]init];
-    model = self.sourceArray[indexPath.row];
-    model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
-    if ([model.TypeID isEqualToString:@"99"]) {
-        ChuzhiCell *cell2 = [self.tableView dequeueReusableCellWithIdentifier:@"ChuzhiCell" forIndexPath:indexPath];
-        
-        cell2.model = self.sourceArray[indexPath.row];
-        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell2;
-    }
-    
-    else
-    {
-    
+  
     if ([self.findType isEqualToString:@"找信息"]) {
+        
+        PublishModel *model = [[PublishModel alloc]init];
+        model = self.sourceArray[indexPath.row];
+        model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
+        if ([model.TypeID isEqualToString:@"99"]) {
+            ChuzhiCell *cell2 = [self.tableView dequeueReusableCellWithIdentifier:@"ChuzhiCell" forIndexPath:indexPath];
+            
+            cell2.model = self.sourceArray[indexPath.row];
+            cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell2;
+        }
+        else
+        {
+        
         NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
         
         
@@ -2224,6 +2356,7 @@ self.navigationItem.title = @"首页";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
+        }
     }
     else
     {
@@ -2241,7 +2374,7 @@ self.navigationItem.title = @"首页";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
-    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -2254,26 +2387,8 @@ self.navigationItem.title = @"首页";
     ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
     
     //    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
-    PublishModel *model = [[PublishModel alloc]init];
-    model = self.sourceArray[indexPath.row];
-    if ([model.Member isEqualToString:@"1"])
-    {
-        [self setPromiseView];
-    }
-    else
-    {
     
-    
-    
-    if ([model.TypeID isEqualToString:@"99"]) {
-        chuzhiVC.NewsID = model.NewsID;
-
-        [self.navigationController pushViewController:chuzhiVC animated:YES];
-        
-    }
-    
-    else
-    {
+ 
     
     
     if ([self.searchBarbutton.titleLabel.text isEqualToString:@"找信息"]) {
@@ -2291,7 +2406,27 @@ self.navigationItem.title = @"首页";
 //        [self.navigationController pushViewController:infoDetailsVC animated:YES];
         
         
+        PublishModel *model = [[PublishModel alloc]init];
+        model = self.sourceArray[indexPath.row];
+        if ([model.Member isEqualToString:@"1"])
+        {
+            [self setPromiseView];
+        }
         
+        else
+        {
+        
+        
+        if ([model.TypeID isEqualToString:@"99"]) {
+            chuzhiVC.NewsID = model.NewsID;
+            
+            [self.navigationController pushViewController:chuzhiVC animated:YES];
+            
+        }
+            else
+                
+            {
+
         
         /**
          *  新支付
@@ -2400,8 +2535,9 @@ self.navigationItem.title = @"首页";
             
             
         }
+            }
         
-        
+        }
         
         
     }
@@ -2415,8 +2551,8 @@ self.navigationItem.title = @"首页";
         ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
         [self.navigationController pushViewController:ServiceDetailVC animated:YES];
     }
-    }
-    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

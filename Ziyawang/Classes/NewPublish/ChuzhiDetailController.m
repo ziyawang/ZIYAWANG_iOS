@@ -27,7 +27,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+
     self.navigationItem.title = @"处置公告";
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 70, 50)];
@@ -43,22 +49,21 @@
     [shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
     shareButton.sd_layout.rightSpaceToView(rightBarView,0)
     .centerYEqualToView(rightBarView)
-    .heightIs(25)
-    .widthIs(19);
+    .heightIs(20)
+    .widthIs(15);
     collectButton.sd_layout.rightSpaceToView(shareButton,15)
     .centerYEqualToView(rightBarView)
-    .heightIs(30)
+    .heightIs(20)
     .widthIs(25);
     
     [collectButton addTarget:self action:@selector(collectButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [shareButton addTarget:self action:@selector(didClickShareButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     self.collectButton = collectButton;
     self.shareButton = shareButton;
-    
-
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [self getDetailData];
+    
     }
 - (void)setViews
 {

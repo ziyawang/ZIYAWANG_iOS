@@ -42,6 +42,7 @@
 #import "MineViewController.h"
 #import "LBTabBarController.h"
 #import "LoginController.h"
+#import "UpdateAppController.h"
 
 #import "UITabBar+CustomBadge.h"
 
@@ -97,11 +98,12 @@
     /**
      *  设置当前版本
      */
-//    [[NSUserDefaults standardUserDefaults]setObject:@"Version1.0.3" forKey:@"Version"];
+    [[NSUserDefaults standardUserDefaults]setObject:@"2.0" forKey:@"Version"];
+    
     /**
      *  检查是否需要版本更新
      */
-//    [self ifNeedUpdate];
+    [self ifNeedUpdate];
     /**
      *  是否要重新发送订单验证
      */
@@ -416,11 +418,14 @@
         NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSDictionary *dic = Array.lastObject;
         NSLog(@"----%@",dic);
-        NSString *newVersion = dic[@"UpdateTitle"];
-        NSLog(@"-------newVersion:%@",newVersion);
-        if ([version isEqualToString:newVersion] == NO) {
-            [self showAlertController];
+        NSString *newVersion = dic[@"VersionCode"];
+        if (newVersion.integerValue > version.integerValue && [dic[@"choose"] isEqualToString:@"强制"]) {
+            UpdateAppController *updateVC = [[UpdateAppController alloc]init];
+            updateVC.updateDes = dic[@"UpdateDes"];
+            
+            self.window.rootViewController = updateVC;
         }
+    
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];

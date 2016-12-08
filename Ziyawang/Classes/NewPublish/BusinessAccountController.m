@@ -454,7 +454,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)

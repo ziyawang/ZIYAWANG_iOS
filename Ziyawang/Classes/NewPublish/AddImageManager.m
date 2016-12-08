@@ -141,11 +141,11 @@
 - (void)didClickDeleteButton:(UIButton *)deleteButton
 {
     if (self.imageArray.count == 0) {
-        
+
     }
     else if(self.imageArray.count == 1)
     {
-        self.imageOne.image = [UIImage new];
+        self.imageOne.image = [UIImage imageNamed:@"shangchuan"];
         [self.imageTwo setHidden:YES];
         [self.imageArray removeObjectAtIndex:0];
         
@@ -153,7 +153,7 @@
     }
     else if(self.imageArray.count == 2)
     {
-        self.imageTwo.image = [UIImage new];
+        self.imageTwo.image = [UIImage imageNamed:@"shangchuan"];
         [self.imageThree setHidden:YES];
         [self.imageArray removeObjectAtIndex:1];
         
@@ -161,7 +161,7 @@
   
     else if(self.imageArray.count == 3)
     {
-        self.imageThree.image = [UIImage new];
+        self.imageThree.image = [UIImage imageNamed:@"shangchuan"];
         [self.imageArray removeObjectAtIndex:2];
     }
 }

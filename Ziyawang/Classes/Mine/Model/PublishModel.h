@@ -113,7 +113,11 @@
 @property (nonatomic,strong) NSString *phonenumber    ;
 @property (nonatomic,strong) NSString *truename       ;
 @property (nonatomic,strong) NSString *UserPicture    ;
+@property (nonatomic,strong) NSString *status         ;
 @property (nonatomic,strong) NSString *Status         ;
+@property (nonatomic,strong) NSString *companyStatus;
+
+
 @property (nonatomic,strong) NSString *RushCount      ;
 @property (nonatomic,strong) NSString *CollectCount   ;
 @property (nonatomic,strong) NSString *CollectFlag    ;

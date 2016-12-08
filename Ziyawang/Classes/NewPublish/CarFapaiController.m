@@ -133,7 +133,6 @@
 
     self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
     
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"企业所在"];
     
     self.navigationItem.title = @"法拍资产";
@@ -401,7 +400,7 @@
     .heightIs(20)
     .topSpaceToView(bottomView,15)
     .autoHeightRatio(0);
-    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系。";
+    pleaseLabel.text = @"请留下姓名及联系方式以便资芽网客服人员与您联系，帮您发布。";
     
     kefuPhoneLabel.sd_layout.leftEqualToView(pleaseLabel)
     .rightEqualToView(pleaseLabel)
@@ -663,7 +662,10 @@
     NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *param = [NSMutableDictionary new];
     [param setObject:@"token" forKey:@"access_token"];
-    [param setObject:@"22" forKey:@"TypeID"];
+    
+    
+    [param setObject:@"fpzc" forKey:@"TypeID"];
+    
     [param setObject:self.lianxirenTextField.text forKey:@"ConnectPerson"];
     [param setObject:self.lianxifangshiTextfield.text forKey:@"ConnectPhone"];
     [param setObject:@"IOS" forKey:@"Channel"];
@@ -844,7 +846,16 @@
     
     self.paimaishijianLabel.text = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
 }
-
+- (NSString *)getFormatDateWithDatePicker
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+    NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
+    NSString *time = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
+    return time;
+    
+}
 
 
 
@@ -852,6 +863,7 @@
 #pragma mark----pickerView Button Action
 - (void)didClickCancelButtonAction:(UIButton*)sender
 {
+    
     [self.mengbanView setHidden:YES];
  
     [UIView animateWithDuration:0.5 animations:^{
@@ -873,9 +885,7 @@
         case 0:
            
             self.zichanLabel.text = self.selectStr;
-            if (self.selectStr == nil) {
-                self.zichanLabel.text = @"土地";
-            }
+
             if ([self.zichanLabel.text isEqualToString:@"土地"]) {
                 self.Type = @"土地";
                 self.mianjiViewHeight.constant = 50;
@@ -907,18 +917,10 @@
               break;
         case 1:
             self.xingzhiLabel.text = self.selectStr;
-            if (self.selectStr == nil) {
-                self.xingzhiLabel.text = @"工业";
-            }
-            
-            
-            
-            break;
+                 break;
         case 2:
             self.paimaijieduanLabel.text = self.selectStr;
-            if (self.selectStr == nil) {
-                self.paimaijieduanLabel.text = @"一拍";
-            }
+
             break;
             
         default:
@@ -940,9 +942,9 @@
 }
 - (void)didClickSureDateButtonAction:(UIButton *)sender
 {
+    self.paimaishijianLabel.text = [self getFormatDateWithDatePicker];
+
     [self.mengbanView setHidden:YES];
-    
-    
     [UIView animateWithDuration:0.5 animations:^{
         self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height;
     }];    
@@ -976,7 +978,24 @@
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:promise forKey:@"Promise"];
     [dic setObject:@"token" forKey:@"access_token"];
-    [dic setObject:@"22" forKey:@"TypeID"];
+    
+    if ([self.zichanLabel.text isEqualToString:@"汽车"]) {
+        [dic setObject:@"22" forKey:@"TypeID"];
+
+    }
+    else if ([self.zichanLabel.text isEqualToString:@"土地"])
+    {
+        [dic setObject:@"21" forKey:@"TypeID"];
+        
+    }
+    else
+    {
+        [dic setObject:@"20" forKey:@"TypeID"];
+
+    }
+    
+    
+    
     [dic setObject:self.zichanLabel.text forKey:@"AssetType"];
     [dic setObject:self.qipaijiaTextField.text forKey:@"Money"];
     [dic setObject:self.paimaididianLabel.text forKey:@"ProArea"];
@@ -991,7 +1010,6 @@
     if ([self.Type isEqualToString:@"汽车"])
     {
         [dic setObject:self.pinpaiTextField.text forKey:@"Brand"];
-        
         
     }
     else
@@ -1123,10 +1141,12 @@
             [UIView animateWithDuration:0.5 animations:^{
                 self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
             }];
-          
+
             self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[0]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
+            self.selectStr = self.AllArray[0][0];
+            
             self.row = 0;
         }
             break;
@@ -1141,6 +1161,8 @@
             self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[1]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
+            self.selectStr = self.AllArray[1][0];
+
             self.row = 1;
         }
             break;
@@ -1155,6 +1177,8 @@
             self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[2]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
+            self.selectStr = self.AllArray[2][0];
+
             self.row = 2;
         }
             break;

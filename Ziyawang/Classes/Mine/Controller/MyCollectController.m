@@ -250,7 +250,7 @@
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(350 * kHeightScale);
+    .heightIs(300 * kHeightScale);
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
     .rightSpaceToView(weituoView,0)
@@ -281,14 +281,16 @@
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
     
-    label2.text = @"本条VIP信息只针对本类型会员免费开放，会员系统升级中，请咨询会员专线：010-56052557";
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+    label2.font = [UIFont systemFontOfSize:13];
+    
     
     
     
     
     fabuButton.sd_layout.leftEqualToView(label2)
     .rightEqualToView(label2)
-    .topSpaceToView(label2,20)
+    .topSpaceToView(label2,30*kHeightScale)
     .heightIs(40*kHeightScale);
     [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
     fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];

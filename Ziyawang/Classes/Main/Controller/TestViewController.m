@@ -47,22 +47,23 @@
         
     }
     
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    
-    self.navigationItem.title = @"债权风险测评系统";
+    self.navigationItem.title = @"债权风险评估系统";
     [self.startButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
-    
     self.zhaiquanType = @[@"企业",@"个人"];
     self.perSonType = @[@"个人债权",@"企业商债"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"债务人所在"];
-    
     UITapGestureRecognizer *getrure1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureForView1:)];
     UITapGestureRecognizer *getrure2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureForView2:)];
     UITapGestureRecognizer *getrure3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureForView3:)];
-    
     
     [self.areaView addGestureRecognizer:getrure1];
     [self.TypeView addGestureRecognizer:getrure3];
@@ -212,8 +213,8 @@
     QuestionsController *questVC = [[QuestionsController alloc]init];
     questVC.amount = self.accountTextField.text;
     questVC.area = self.areaLabel.text;
-    questVC.personType = self.PersonTypeLabel.text;
-    questVC.Type = self.zhaiquanTypeLabel.text;
+    questVC.personType = self.zhaiquanTypeLabel.text;
+    questVC.Type = self.PersonTypeLabel.text;
     [self.navigationController pushViewController:questVC animated:YES];
     }
     

@@ -18,23 +18,43 @@
 {
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
-        return [UIFont systemFontOfSize:12];
+        return [UIFont systemFontOfSize:10];
         
     }
     else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
     {
-        return [UIFont systemFontOfSize:13];;
+        return [UIFont systemFontOfSize:11];;
     }
     else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
     {
-        return [UIFont systemFontOfSize:13];;
-        
+        return [UIFont systemFontOfSize:13];
     }
 else
 {
-   return [UIFont systemFontOfSize:12];;
+   return [UIFont systemFontOfSize:12];
 }
 }
++ (UIFont *)FontForLabel2
+{
+    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+    {
+        return [UIFont systemFontOfSize:10];
+        
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+    {
+        return [UIFont systemFontOfSize:10];;
+    }
+    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+    {
+        return [UIFont systemFontOfSize:11];
+    }
+    else
+    {
+        return [UIFont systemFontOfSize:11];
+    }
+}
+
 
 + (UIFont *)FontForVideoDesLabel
 {

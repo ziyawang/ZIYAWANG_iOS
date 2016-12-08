@@ -97,8 +97,8 @@ self.navigationItem.title = @"发布";
     
     self.imageArray = [NSMutableArray array];
     NSArray *imageNameArray = [NSArray new];
-    imageNameArray = @[@"zi",@"rong",@"gu",@"zhang",@"fa",@"zhai"];
-    
+    imageNameArray = @[@"bao",@"rong",@"gu",@"qiye",@"fapai",@"gerenzhaiquan"];
+   
         for (int i = 1; i < 7; i++)
         {
             NSString *name = [NSString stringWithFormat:@"%d",i];
