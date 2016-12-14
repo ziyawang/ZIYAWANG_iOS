@@ -72,6 +72,12 @@
     
     // Do any additional setup after loading the view from its nib.
 }
+
+- (void)createButtons
+{
+
+}
+
 - (void)setProductArray
 {
     self.productsArray = [NSMutableArray new];

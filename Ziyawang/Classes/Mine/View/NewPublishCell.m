@@ -116,18 +116,21 @@
     [self.bottomImageView setHidden:YES];
     
     
-    if ([self.model.Member isEqualToString:@"1"]) {
+    self.model.Hide = [NSString stringWithFormat:@"%@",self.model.Hide];
+    
+    if ([self.model.Member isEqualToString:@"1"] && [self.model.Hide isEqualToString:@"0"]) {
+      
         self.specialImage.image = [UIImage imageNamed:@"xinvip"];
-        
         self.specialImageWidth.constant = 45;
         [self.specialImage setHidden:NO];
     }
     else if([self.model.Member isEqualToString:@"2"])
     {
-        
         self.specialImageWidth.constant = 45;
         [self.specialImage setHidden:NO];
         self.specialImage.image = [UIImage imageNamed:@"shoufeiziyuan"];
+        [self.yabiCountLabel setHidden:NO];
+        [self.yabi setHidden:NO];
     }
     else
     {
@@ -140,6 +143,7 @@
         [self.yabiCountLabel setHidden:YES];
         [self.yabi setHidden:YES];
     }
+    
     
     //维度信息布局
     NSInteger typeid = self.model.TypeID.integerValue;

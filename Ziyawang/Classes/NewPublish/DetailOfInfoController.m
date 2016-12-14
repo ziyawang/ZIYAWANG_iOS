@@ -110,7 +110,6 @@
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
     self.navigationController.navigationBar.titleTextAttributes = dict;
     
-
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[PublishModel alloc]init];
@@ -119,20 +118,15 @@
     self.userModel = [[UserInfoModel alloc]init];
     [self getUserInfoFromDomin];
     [self getInfoData];
-
-    
     self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
     
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.dataDic = [NSMutableDictionary new];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = self.typeName;
-
-    
     UIView *rightBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 70, 50)];
     UIButton *collectButton = [UIButton new];
     UIButton *shareButton = [UIButton new];
@@ -402,7 +396,10 @@
     
 
 //    [self.scrollView addSubview:self.ContentView];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.scrollView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    self.scrollBackView.backgroundColor = [UIColor whiteColor];
     
 //    self.ScrollView.sd_layout.leftSpaceToView(self.view,0)
 //    .rightSpaceToView(self.view,0)
@@ -428,6 +425,8 @@
     titleLabel.text = @"dfhiasuhfiuewhiugweuigweiugtiuewgt";
     
     titleLabel.text = self.model.Title;
+    titleLabel.font = [UIFont boldSystemFontOfSize:19];
+    
     
     [self.scrollView addSubview:titleView];
     [titleView addSubview:titleLabel];
@@ -550,12 +549,17 @@
     .topSpaceToView(self.changeView,15)
     .heightIs(65)
     .widthIs(80);
+    
+    
+    
+    
+    self.model.Hide = [NSString stringWithFormat:@"%@",self.model.Hide];
+    
     if ([self.model.Member isEqualToString:@"2"]) {
         specialImageView.image = [UIImage imageNamed:@"shoufeiyuan"];
     }
-    if ([self.model.Member isEqualToString:@"1"]) {
+    if ([self.model.Member isEqualToString:@"1"] && [self.model.Hide isEqualToString:@"0"]) {
         specialImageView.image = [UIImage imageNamed:@"vipyuan"];
-        
     }
     if ([self.model.Member isEqualToString:@"0"]) {
         specialImageView.image = [UIImage imageNamed:@"mianfeiyuan"];
@@ -588,12 +592,13 @@
     .heightIs(50);
     
     
-    wenziLabel.sd_layout.centerYEqualToView(wenziView)
-    .centerXEqualToView(wenziView);
+    wenziLabel.sd_layout.leftSpaceToView(wenziView,15)
+    .centerYEqualToView(wenziView);
     [wenziLabel setSingleLineAutoResizeWithMaxWidth:200];
     wenziLabel.textAlignment = NSTextAlignmentCenter;
     
     wenziLabel.text = @"文字描述";
+    wenziLabel.font = [UIFont boldSystemFontOfSize:17];
     
     wordDesView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -630,6 +635,7 @@
     [yuyinLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     yuyinLabel.text = @"语音描述";
+    yuyinLabel.font = [UIFont boldSystemFontOfSize:17];
     
     recordButton.sd_layout.leftSpaceToView(yuyinLabel,10)
     .centerYEqualToView(yuyinLabel)
@@ -756,10 +762,11 @@
     .topSpaceToView(audioView,10)
     .heightIs(50);
     
-    xiangguanLabel.sd_layout.centerXEqualToView(xiangguanView)
+    xiangguanLabel.sd_layout.leftSpaceToView(xiangguanView,15)
     .centerYEqualToView(xiangguanView);
     [xiangguanLabel setSingleLineAutoResizeWithMaxWidth:200];
     xiangguanLabel.text = @"相关凭证";
+    xiangguanLabel.font = [UIFont boldSystemFontOfSize:17];
     
     self.imageBackView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -803,6 +810,8 @@
         [self.scrollView setupAutoHeightWithBottomView:tishiView bottomMargin:50];
         
         [self.scrollBackView setupAutoContentSizeWithBottomView:self.scrollView bottomMargin:50];
+        [self.scrollBackView layoutSubviews];
+        
     }
     
     
@@ -812,6 +821,8 @@
         [self.scrollView setupAutoHeightWithBottomView:self.imageBackView bottomMargin:50];
         
        [self.scrollBackView setupAutoContentSizeWithBottomView:self.scrollView bottomMargin:50];
+        [self.scrollBackView layoutSubviews];
+
     }
     //判断是自己还是别人
     NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
@@ -1640,6 +1651,8 @@
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
+    qitaLabel.font = [UIFont boldSystemFontOfSize:17];
+    
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -1683,7 +1696,7 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    qitaLabel.sd_layout.leftSpaceToView(qitaView,15)
     .centerYEqualToView(qitaView)
     .heightIs(20);
     [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
@@ -1773,11 +1786,12 @@
     .topSpaceToView(line3,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
     
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
@@ -2081,6 +2095,8 @@
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
+    qitaLabel.font = [UIFont boldSystemFontOfSize:17];
+    
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -2124,9 +2140,10 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    qitaLabel.sd_layout.leftSpaceToView(qitaView,15)
     .centerYEqualToView(qitaView)
     .heightIs(20);
+    
     [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     line2.sd_layout.leftEqualToView(line1)
@@ -2211,11 +2228,12 @@
     .topSpaceToView(line3,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
     
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
@@ -2326,7 +2344,7 @@
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
-    label6.textColor = [UIColor grayColor];
+//    label6.textColor = [UIColor grayColor];
     label7.textColor = [UIColor grayColor];
     label9.textColor = [UIColor grayColor];
     label11.textColor = [UIColor grayColor];
@@ -2487,6 +2505,8 @@
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
+    qitaLabel.font = [UIFont boldSystemFontOfSize:17];
+
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -2531,7 +2551,7 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    qitaLabel.sd_layout.leftSpaceToView(qitaView,15)
     .centerYEqualToView(qitaView)
     .heightIs(20);
     [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
@@ -2631,12 +2651,13 @@
     .topSpaceToView(line3,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
-    
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
+
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)
@@ -2959,6 +2980,8 @@
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
+    qitaLabel.font = [UIFont boldSystemFontOfSize:17];
+
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -3001,9 +3024,11 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    qitaLabel.sd_layout.leftSpaceToView(qitaView,15)
     .centerYEqualToView(qitaView)
     .heightIs(20);
+    
+    
     [qitaLabel setSingleLineAutoResizeWithMaxWidth:500];
     
     line2.sd_layout.leftEqualToView(line1)
@@ -3070,12 +3095,13 @@
     .topSpaceToView(line3,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
-    
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
+
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)
@@ -3347,12 +3373,13 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
-    
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
+
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
@@ -3596,11 +3623,12 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
 
     
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
@@ -3783,6 +3811,8 @@
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
+    qitaLabel.font = [UIFont boldSystemFontOfSize:17];
+
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -3830,7 +3860,7 @@
     .topSpaceToView(line1,0)
     .heightIs(50);
     
-    qitaLabel.sd_layout.centerXEqualToView(qitaView)
+    qitaLabel.sd_layout.leftSpaceToView(qitaView,15)
     .centerYEqualToView(qitaView)
     .heightIs(20);
     [qitaLabel setSingleLineAutoResizeWithMaxWidth:200];
@@ -3898,12 +3928,12 @@
 
     danbaoLabel.text = [[@"本金："stringByAppendingString:self.model.Money]stringByAppendingString:@"万"] ;
 //    danbaoLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    danbaoLabel.font = [UIFont systemFontOfSize:20];
+//    danbaoLabel.font = [UIFont systemFontOfSize:20];
     
     changhuanLabel.text = [@"是否有尽调报告："stringByAppendingString:self.model.Report];
     diyaLabel.text = [[@"利息："stringByAppendingString:self.model.Rate]stringByAppendingString:@"万"];
 //    diyaLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    diyaLabel.font = [UIFont systemFontOfSize:20];
+//    diyaLabel.font = [UIFont systemFontOfSize:20];
     
     pingzhenLabel.text = [@"出表时间："stringByAppendingString:self.model.Time];
     zhaiwurenLabel.text = [@"户数："stringByAppendingString:self.model.Time];
@@ -3932,12 +3962,13 @@
     .topSpaceToView(line3,0)
     .heightIs(50);
     
-    liandianLabel.sd_layout.centerXEqualToView(liangdianTopView)
+    liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
     .centerYEqualToView(liangdianTopView)
     .heightIs(20);
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
-    
+    liandianLabel.font = [UIFont boldSystemFontOfSize:17];
+
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)

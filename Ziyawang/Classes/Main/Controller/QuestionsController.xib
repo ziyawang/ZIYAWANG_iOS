@@ -28,7 +28,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fpB-jf-ZKd">
@@ -39,13 +39,13 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mX-DR-2XY">
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQv-sM-dRD">
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(根据您债权实际情况的不同，本测评共20-41题不等)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBl-GP-C5t">
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(根据债权情况不同，共20-41题)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBl-GP-C5t">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.98548173900000002" green="0.068466175470000001" blue="0.075890419680000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -62,7 +62,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRO-yb-HUG">
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUf-XD-M7A">
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -103,7 +103,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hyw-5B-qIK">
                                             <color key="backgroundColor" red="1" green="0.82219387509999997" blue="0.32084181070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="leg-X9-HBk"/>
+                                                <constraint firstAttribute="height" constant="40" id="leg-X9-HBk"/>
                                             </constraints>
                                             <state key="normal" title="下一题">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -115,7 +115,8 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3V-Ce-nGy">
                                             <color key="backgroundColor" red="1" green="0.82219387509999997" blue="0.32084181070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="s7Z-qR-slh"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="RIm-wk-FUJ"/>
+                                                <constraint firstAttribute="height" constant="40" id="s7Z-qR-slh"/>
                                             </constraints>
                                             <state key="normal" title="上一题">
                                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -124,15 +125,25 @@
                                                 <action selector="lastButtonAction:" destination="-1" eventType="touchUpInside" id="WrP-Q8-dzY"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pM-2h-gyA">
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="F5W-Ob-3um"/>
+                                                <constraint firstAttribute="height" constant="40" id="iuK-nn-NCS"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="Hyw-5B-qIK" firstAttribute="top" secondItem="S3V-Ce-nGy" secondAttribute="bottom" constant="25" id="09G-H9-EC7"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hyw-5B-qIK" secondAttribute="trailing" constant="60" id="Coy-Qp-5Ah"/>
-                                        <constraint firstItem="Hyw-5B-qIK" firstAttribute="leading" secondItem="EFx-2w-mw3" secondAttribute="leading" constant="60" id="IDw-Ki-Psc"/>
-                                        <constraint firstItem="S3V-Ce-nGy" firstAttribute="leading" secondItem="EFx-2w-mw3" secondAttribute="leading" constant="60" id="eLl-mh-9J0"/>
-                                        <constraint firstAttribute="trailing" secondItem="S3V-Ce-nGy" secondAttribute="trailing" constant="60" id="jff-fE-L6K"/>
-                                        <constraint firstItem="S3V-Ce-nGy" firstAttribute="top" secondItem="EFx-2w-mw3" secondAttribute="top" constant="40" id="kYQ-fA-ffF"/>
+                                        <constraint firstItem="Hyw-5B-qIK" firstAttribute="centerY" secondItem="S3V-Ce-nGy" secondAttribute="centerY" id="645-3n-DIM"/>
+                                        <constraint firstItem="S3V-Ce-nGy" firstAttribute="leading" secondItem="EFx-2w-mw3" secondAttribute="leading" constant="25" id="Nve-ZD-qpG"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hyw-5B-qIK" secondAttribute="trailing" constant="25" id="Us5-q4-6o3"/>
+                                        <constraint firstItem="4pM-2h-gyA" firstAttribute="top" secondItem="EFx-2w-mw3" secondAttribute="top" constant="20" id="WZ5-Kl-j6I"/>
+                                        <constraint firstItem="4pM-2h-gyA" firstAttribute="centerX" secondItem="EFx-2w-mw3" secondAttribute="centerX" id="fv7-D4-vTV"/>
+                                        <constraint firstItem="4pM-2h-gyA" firstAttribute="leading" secondItem="S3V-Ce-nGy" secondAttribute="trailing" id="jqO-5W-ykA"/>
+                                        <constraint firstItem="S3V-Ce-nGy" firstAttribute="top" secondItem="EFx-2w-mw3" secondAttribute="top" constant="20" id="kYQ-fA-ffF"/>
+                                        <constraint firstItem="Hyw-5B-qIK" firstAttribute="leading" secondItem="4pM-2h-gyA" secondAttribute="trailing" id="xlW-xp-UfY"/>
                                     </constraints>
                                 </view>
                             </subviews>

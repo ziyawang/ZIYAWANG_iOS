@@ -57,5 +57,8 @@ typedef void(^handleSelectedIndex)(NSString *message);
  *  @return MoreMenuView
  */
 - (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)titles;
+- (void)creatTableView;
+- (void)showMoreView;
+
 
 @end

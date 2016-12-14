@@ -398,7 +398,9 @@
     if ([TypeID isEqualToString:@"1"]) {
         
         
-        if ([model.Member isEqualToString:@"1"]) {
+        model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
+
+        if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
             [self setPromiseView];
         }
         

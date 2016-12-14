@@ -249,6 +249,7 @@ static NSString *indefier = @"UITableViewCell";
      CGRect  mainTableViewFrame = CGRectZero;
      CGRect  bottomButtonFrame = self.bottomButton.frame;
     
+    
     if (self.datasourceOne.count < 10) {
         leftTableViewFrame.size.height = self.datasourceOne.count * 44;
     }
@@ -323,6 +324,12 @@ static NSString *indefier = @"UITableViewCell";
     [self.mainTableView reloadData];
 }
 
+- (void)creatTableView
+{
+    
+    
+}
+
 #pragma mark - tbaleViewsStateAnimation
 //对 tableView 的状态管理---显示
 - (void)showTableViewAnimation:(NSArray <UITableView *>*)tableViews sender:(SegmentButton *)sender{
@@ -395,11 +402,7 @@ static NSString *indefier = @"UITableViewCell";
             {
             rightTableViewFrame.size.height = tableViewHeight;
             }
-          
-            
-            
-
-//            
+    //
             
 //            rightTableViewFrame.size.height = self.datasourceTwo.count *44;
             self.leftTableView.frame = leftTableViewFrame;
@@ -411,6 +414,105 @@ static NSString *indefier = @"UITableViewCell";
 
     }];
 }
+
+- (void)showMoreView
+{
+    
+    self.datasourceOne = self.indexsOneFist;
+    self.datasourceTwo = self.indexsOneSecond;
+    
+    //菜单级别唯一标识
+    self.isMoreMenu = YES;
+    
+    [self showTableViewAnimation:@[self.rightTableView,self.leftTableView,self.mainTableView] sender:nil];
+    
+    __block CGFloat tableViewHeight = kTableViewHeight;
+    __block CGFloat bottomHeight = kSelfBottomButtonHeight;
+    __block CGRect  leftTableViewFrame = CGRectZero;
+    __block CGRect  rightTableViewFrame = CGRectZero;
+    __block CGRect  mainTableViewFrame = CGRectZero;
+    __block CGRect  bottomButtonFrame = self.bottomButton.frame;
+    
+    
+    for (UITableView *tableView in @[self.rightTableView,self.leftTableView,self.mainTableView]) {
+        if (tableView == self.mainTableView) {
+            
+            mainTableViewFrame = self.mainTableView.frame;
+            mainTableViewFrame.size.height = 0;
+            self.mainTableView.frame = mainTableViewFrame;
+            self.leftTableView.hidden = YES;
+            self.rightTableView.hidden = YES;
+            self.mainTableView.hidden = NO;
+        }
+        if (tableView == self.leftTableView) {
+            
+            leftTableViewFrame = self.leftTableView.frame;
+            leftTableViewFrame.size.height = 0;
+            self.leftTableView.frame = leftTableViewFrame;
+            self.leftTableView.hidden = NO;
+            self.rightTableView.hidden = NO;
+            self.mainTableView.hidden = YES;
+        }
+        if (tableView == self.rightTableView) {
+            
+            rightTableViewFrame = self.rightTableView.frame;
+            rightTableViewFrame.size.height = 0;
+            self.rightTableView.frame = rightTableViewFrame;
+            self.leftTableView.hidden = NO;
+            
+        }
+    }
+    
+    //设置动画
+    [UIView animateWithDuration:kAnimationDurtimer animations:^{
+        
+        bottomButtonFrame.size.height = bottomHeight;
+        self.bottomButton.frame = bottomButtonFrame;
+        
+        if (!self.isMoreMenu || self.notDatasource) {
+            mainTableViewFrame.size.height = tableViewHeight;
+            
+            if (self.datasourceMain.count < 10) {
+                mainTableViewFrame.size.height = self.datasourceMain.count * 44;
+            }
+            self.mainTableView.frame = mainTableViewFrame;
+            
+//            [self rotationSegmentButtonAnimation:sender show:YES];
+            self.notDatasource = NO;
+        }else{
+            if (self.datasourceOne.count < 10) {
+                leftTableViewFrame.size.height = self.datasourceOne.count * 44;
+            }
+            else
+            {
+                leftTableViewFrame.size.height = tableViewHeight;
+            }
+            if ([self.datasourceTwo[self.index] count] < 10) {
+                rightTableViewFrame.size.height = [self.datasourceTwo[self.index] count] * 44;
+            }
+            else
+            {
+                rightTableViewFrame.size.height = tableViewHeight;
+            }
+            
+            
+            
+            
+            //
+            
+            //            rightTableViewFrame.size.height = self.datasourceTwo.count *44;
+            self.leftTableView.frame = leftTableViewFrame;
+            self.rightTableView.frame = rightTableViewFrame;
+//            [self rotationSegmentButtonAnimation:sender show:YES];
+        }
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+
+
+}
+
 
 //对 tableView 的状态管理---消失
 - (void)dismissTableViewAnimation{

@@ -57,6 +57,7 @@
     menuView.cornerMarkLocationType = CornerMarkLocationTypeRight;
     NSString *path =  [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
     [self.view addSubview:menuView];
+    
     NSArray *arr = [NSArray arrayWithContentsOfFile:path];
     self.shengArray = [NSMutableArray array];
     
@@ -82,6 +83,8 @@
     menuView.indexsOneFist = self.shengArray;
     menuView.indexsOneSecond = self.allshiArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
+    
+//    [menuView showMoreView];
     
     __weak typeof(self) weakSelf = self;
     menuView.selectedIndex = ^(NSString *string)

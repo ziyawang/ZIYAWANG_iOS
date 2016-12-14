@@ -10,6 +10,7 @@
 #import "QuestionModel.h"
 #import "PushViewController.h"
 #import "PersonalDebtsController.h"
+
 @interface QuestionsController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) MBProgressHUD *HUD;
@@ -69,7 +70,6 @@
 @property (nonatomic,assign) BOOL ifFinishAnswer;
 
 
-
 //@property (nonatomic,strong) 
 
 @end
@@ -82,15 +82,15 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
         [self postAnswers2];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
 
     }];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     [alertVC addAction:action1];
     [alertVC addAction:action2];
-    if (_ifFinishAnswer == YES) {
-        [self.navigationController popViewControllerAnimated:YES];
-
+    if (_ifFinishAnswer == YES)
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {
@@ -122,7 +122,6 @@
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     self.buttonBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
 
-    
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -156,7 +155,11 @@
     [self.buttonBackView addGestureRecognizer:scroTapgesture];
     
     self.firstindex = 0;
+    
+    
+   
     [self getQuestionData];
+    
     
 }
 
@@ -191,6 +194,7 @@ NSString *URL = TestQuestionURL;
         self.quesTitle.text = [[@"第" stringByAppendingString:self.allQuestionArray[self.firstindex][@"Sort"]] stringByAppendingString:@"道题"];
 //        self.quesDes.text = self.allQuestionArray[self.firstindex][@"Question"];
         self.quesDetail.text = self.allQuestionArray[self.firstindex][@"Question"];
+        
         self.questionType = self.allQuestionArray[self.firstindex][@"Type"];
         self.firstQuestionArray = [NSMutableArray arrayWithArray:quesArray];
         self.firstQuestionArray2 = [NSMutableArray arrayWithArray:quesArray2];
@@ -201,6 +205,7 @@ NSString *URL = TestQuestionURL;
         self.tableTopTo.constant = 0;
         
         [self.lastButton setTitle:@"返回" forState:(UIControlStateNormal)];
+        [self setButtonWithButton:self.lastButton value:@"0"];
         
         [self.tableView reloadData];
         [self.HUD removeFromSuperViewOnHide];
@@ -240,12 +245,32 @@ NSString *URL = TestQuestionURL;
     if (self.firstindex == 0) {
 //        UIAlertView *alertVC = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为第1道题" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //        [alertVC show];
-        [self.navigationController popViewControllerAnimated:YES];
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的测评还未完成，确定要退出吗?" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self postAnswers2];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        }];
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+        [alertVC addAction:action1];
+        [alertVC addAction:action2];
+        if (_ifFinishAnswer == YES)
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        else
+        {
+            [self presentViewController:alertVC animated:YES completion:nil];
+        }
         return;
         
     }
     if (self.firstindex == 1) {
         [self.lastButton setTitle:@"返回" forState:(UIControlStateNormal)];
+        
+        [self setButtonWithButton:self.lastButton value:@"0"];
+        
     }
     
     NSInteger count = self.allQuestionArray.count;
@@ -257,6 +282,8 @@ NSString *URL = TestQuestionURL;
     else
     {
     [self.lastButton setTitle:@"上一题" forState:(UIControlStateNormal)];
+        [self setButtonWithButton:self.lastButton value:@"1"];
+        
     }
     self.firstindex = self.firstindex - 1;
     
@@ -320,6 +347,21 @@ NSString *URL = TestQuestionURL;
     [self.tableView reloadData];
     [self.ScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
+- (void)setButtonWithButton:(UIButton *)button value:(NSString *)value
+{
+    if ([value isEqualToString:@"0"]) {
+        button.layer.borderWidth = 1.5;
+        button.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+        button.backgroundColor = [UIColor whiteColor];
+        
+    }
+    else
+    {
+        button.layer.borderWidth = 0;
+        button.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+        
+    }
+}
 - (IBAction)nextButtonAction:(id)sender {
     self.selectArray = [NSMutableArray new];
     
@@ -345,6 +387,8 @@ NSString *URL = TestQuestionURL;
     self.selectStatu = @"0";
 
     [self.lastButton setTitle:@"上一题" forState:(UIControlStateNormal)];
+    [self setButtonWithButton:self.lastButton value:@"1"];
+    
     self.firstindex = self.firstindex + 1;
     NSInteger count = self.allQuestionArray.count;
     
@@ -569,7 +613,7 @@ NSString *URL = TestQuestionURL;
 }
 - (void)didClickRetestButtonAction:(UIButton *)button
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)postAnswers
@@ -629,7 +673,7 @@ NSString *URL = TestQuestionURL;
     NSString *Score = [NSString stringWithFormat:@"%@",resultDic[@"score"]];
     
     self.resultDes.text = result;
-    self.testResult.text = Score;
+    self.testResult.text = [Score stringByAppendingString:@"分"];
     [self.HUD removeFromSuperViewOnHide];
     [self.HUD hideAnimated:YES];
     
@@ -799,7 +843,7 @@ NSString *URL = TestQuestionURL;
     [reTestButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     
     [reTestButton addTarget:self action:@selector(didClickRetestButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    [reTestButton setTitle:@"重新测评" forState:(UIControlStateNormal)];
+    [reTestButton setTitle:@"退出测评" forState:(UIControlStateNormal)];
     
 
 }
@@ -902,18 +946,25 @@ NSString *URL = TestQuestionURL;
     {
         if (indexPath == indexP) {
             
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.imageView.image = [UIImage imageNamed:@"leixingxuanzhong"];
+            
         }
         else
         {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.imageView.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
+
         }
         
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        cell.imageView.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
+
 
     }
     if (!self.indexPathDic[key]) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.imageView.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
 
     }
     
@@ -923,15 +974,22 @@ NSString *URL = TestQuestionURL;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *firstKey = [NSString stringWithFormat:@"%ld",self.firstindex + 1];
-    
+    NSMutableArray *indexArray = [NSMutableArray new];
+
     
     [self.inputTextfield resignFirstResponder];
     if ([self.questionType isEqualToString:@"2"] == NO) {
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:self.indexPathDic[firstKey][0]];
-        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+//        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        selectedCell.imageView.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
+        
         
         UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
-        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        willSelectCell.imageView.image = [UIImage imageNamed:@"leixingxuanzhong"];
+        [indexArray addObject:indexPath];
+        [self.indexPathDic setObject:indexArray forKey:firstKey];
         
         if (self.firstindex == 1 || self.firstindex == 2) {
             if (self.firstindex == 1) {
@@ -962,9 +1020,7 @@ NSString *URL = TestQuestionURL;
         }
         
         
-        NSMutableArray *indexArray = [NSMutableArray new];
-        [indexArray addObject:indexPath];
-        [self.indexPathDic setObject:indexArray forKey:firstKey];
+        
         
         
 //        NSMutableArray *array = [NSMutableArray new];
@@ -988,8 +1044,9 @@ NSString *URL = TestQuestionURL;
     else
     {
         UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
-        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        NSMutableArray *indexArray = [NSMutableArray new];
+//        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        willSelectCell.imageView.image = [UIImage imageNamed:@"leixingxuanzhong"];
+
         [indexArray addObject:indexPath];
         [self.indexPathDic setObject:indexArray forKey:firstKey];
         
@@ -998,10 +1055,7 @@ NSString *URL = TestQuestionURL;
         NSString *indStr = self.firstQuestionArray[indexPath.row];
         [self.selectArray addObject:indStr];
         [self.AllSelectedDic setObject:self.selectArray forKey:firstKey];
-        
         NSLog(@"%@",self.AllSelectedDic);
-
-        
     }
 
 }

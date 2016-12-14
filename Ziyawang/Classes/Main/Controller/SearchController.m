@@ -22,6 +22,8 @@
 #import "UserInfoModel.h"
 #import "MyidentifiController.h"
 #import "RechargeController.h"
+#import "ChuzhiDetailController.h"
+#import "DetailOfInfoController.h"
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface SearchController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
@@ -58,6 +60,8 @@
 
 @property (nonatomic,strong) InfoDetailsController *infoDetailsVC;
 @property (nonatomic,strong) PublishModel *pubModel;
+@property (nonatomic,strong) UIView *PromiseView;
+
 @end
 
 @implementation SearchController
@@ -973,19 +977,42 @@
 #pragma mark----tableView delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
-    {
-        return 130;
+    if ([self.findType isEqualToString:@"找信息"]) {
+        if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+        {
+            
+            return 125;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+        {
+            return 115;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+        {
+            return 115;
+        }
+        
+        
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+    else
     {
-        return 140;
+        if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+        {
+            
+            return 125;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+        {
+            return 135;
+        }
+        else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+        {
+            return 135;
+        }
+        
     }
-    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
-    {
-        return 140;
-    }
-    return 150;
+    
+    return 115;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -1040,7 +1067,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
     if ([self.searchType isEqualToString:@"找信息"])
     {
 //        InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
@@ -1055,15 +1081,31 @@
 //
 //        [self.navigationController pushViewController:infoDetailsVC animated:YES];
         
+        ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
+        PublishModel *model = [[PublishModel alloc]init];
+        model = self.sourceArray[indexPath.row];
         
+        model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
+
+        if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
+            [self setPromiseView];
+        }
+      
+        else
+        {
         
+        if ([model.TypeID isEqualToString:@"99"]) {
+            chuzhiVC.NewsID = model.NewsID;
+            [self.navigationController pushViewController:chuzhiVC animated:YES];
+        }
+        
+        else
+        {
         
         /**
          *  新支付
          */
-        InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
-        PublishModel *model = [[PublishModel alloc]init];
-        model = self.sourceArray[indexPath.row];
+       DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
         self.pubModel = model;
         
         infoDetailsVC.ProjectID = model.ProjectID;
@@ -1071,7 +1113,6 @@
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.typeName = model.TypeName;
-        self.infoDetailsVC = infoDetailsVC;
         
         model.Member = [NSString stringWithFormat:@"%@",model.Member];
         
@@ -1165,9 +1206,9 @@
             
         }
         
+        }
         
-        
-        
+        }
         
     }
     else
@@ -1223,6 +1264,142 @@
 //    return self.searchBar;
 //    
 //}
+
+- (void)setPromiseView
+{
+    UIView *mengbanView= [UIView new];
+    UIView *weituoView = [UIView new];
+    UIImageView *tuziImage = [UIImageView new];
+    UIView *imageBackView = [UIView new];
+    
+    UIView *bottomView = [UIView new];
+    
+    UILabel *label1 = [UILabel new];
+    UILabel *label2 = [UILabel new];
+    
+    
+    UIButton *fabuButton = [UIButton new];
+    UIButton *fanhuiButton = [UIButton new];
+    UIButton *cancelButton = [UIButton new];
+    
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    [window addSubview:mengbanView];
+    
+    [mengbanView addSubview:weituoView];
+    [weituoView addSubview:imageBackView];
+    [imageBackView addSubview:tuziImage];
+    [imageBackView addSubview:cancelButton];
+    [weituoView addSubview:bottomView];
+    
+    [bottomView addSubview:label1];
+    [bottomView addSubview:label2];
+    
+    [bottomView addSubview:fabuButton];
+    [bottomView addSubview:fanhuiButton];
+    
+    mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
+    weituoView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    mengbanView.sd_layout.leftSpaceToView(window,0)
+    .rightSpaceToView(window,0)
+    .topSpaceToView(window,0)
+    .bottomSpaceToView(window,0);
+    
+    weituoView.sd_layout.centerXEqualToView(mengbanView)
+    .centerYIs(self.view.centerY)
+    .widthIs(285 * kWidthScale)
+    .heightIs(300 * kHeightScale);
+    
+    
+    imageBackView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .heightIs(140 * kHeightScale)
+    .topSpaceToView(weituoView,0);
+    
+    tuziImage.sd_layout.centerXEqualToView(imageBackView)
+    .centerYEqualToView(imageBackView)
+    .heightIs(95*kHeightScale)
+    .widthIs(90*kWidthScale);
+    tuziImage.image = [UIImage imageNamed:@"TUZI"];
+    
+    bottomView.sd_layout.leftSpaceToView(weituoView,0)
+    .rightSpaceToView(weituoView,0)
+    .topSpaceToView(imageBackView,0)
+    .bottomSpaceToView(weituoView,0);
+    
+    
+    
+    label1.sd_layout.centerXEqualToView(bottomView)
+    .topSpaceToView(bottomView,15)
+    .heightIs(20);
+    [label1 setSingleLineAutoResizeWithMaxWidth:200];
+    label1.text = @"温馨提示";
+    
+    label2.sd_layout.leftSpaceToView(bottomView,15)
+    .rightSpaceToView(bottomView,15)
+    .topSpaceToView(label1,15)
+    .autoHeightRatio(0);
+    
+    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+    label2.font = [UIFont systemFontOfSize:13];
+    
+    fabuButton.sd_layout.leftEqualToView(label2)
+    .rightEqualToView(label2)
+    .topSpaceToView(label2,30*kHeightScale)
+    .heightIs(40*kHeightScale);
+    [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    //    fanhuiButton.sd_layout.leftEqualToView(label2)
+    //    .rightEqualToView(label2)
+    //    .topSpaceToView(fabuButton,20)
+    //    .heightIs(40*kHeightScale);
+    //    fanhuiButton.layer.borderWidth = 1.5;
+    //    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    
+    
+    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    .topSpaceToView(imageBackView,10)
+    .heightIs(25)
+    .widthIs(25);
+    
+    
+    
+    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    [cancelButton addTarget:self action:@selector(CancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    //    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    
+    [fabuButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    //    self.weituoView = weituoView;
+    weituoView.layer.cornerRadius = 10;
+    weituoView.layer.masksToBounds = YES;
+    self.PromiseView = mengbanView;
+    //    [self.PromiseView setHidden:YES];
+    
+    
+}
+- (void)CancelAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+}
+
+- (void)didClickfabuFabuAction2:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

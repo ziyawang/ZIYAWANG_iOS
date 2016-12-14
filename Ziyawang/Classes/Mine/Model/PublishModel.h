@@ -159,4 +159,6 @@
 @property (nonatomic,strong) NSString *ListType       ;
 @property (nonatomic,strong) NSString *Account       ;
 
+@property (nonatomic,strong) NSString *Hide;
+
 @end

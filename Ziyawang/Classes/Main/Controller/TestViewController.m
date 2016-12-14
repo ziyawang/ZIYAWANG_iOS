@@ -9,6 +9,8 @@
 #import "TestViewController.h"
 #import "QuestionsController.h"
 #import "ChooseAreaController.h"
+#import "SkyerCityPicker.h"
+
 @interface TestViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *accountTextField;
 @property (weak, nonatomic) IBOutlet UIView *areaView;
@@ -33,6 +35,7 @@
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 
 @property (nonatomic,strong) UIView *mengbanView;
+@property (nonatomic,strong) SkyerCityPicker *cityPicker;
 
 
 @end
@@ -41,11 +44,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.areaLabel.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"债务人所在"];
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"债务人所在"] == nil) {
-        self.areaLabel.text = @"";
-        
-    }
+//    self.areaLabel.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"债务人所在"];
+//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"债务人所在"] == nil) {
+//        self.areaLabel.text = @"";
+//        
+//    }
     
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
@@ -70,8 +73,8 @@
     [self.personTypeView addGestureRecognizer:getrure2];
     
     self.mengbanView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    self.mengbanView.backgroundColor = [UIColor blackColor];
-    self.mengbanView.alpha = 0.5;
+    self.mengbanView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+//    self.mengbanView.alpha = 0.5;
     
     [self.view addSubview:self.mengbanView];
     [self.mengbanView setHidden:YES];
@@ -80,24 +83,17 @@
     self.pickerBackView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 300)];
     self.pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 50,self.pickerBackView.bounds.size.width,150)];
     
-    
-
     self.pickerView.delegate = self;
     self.pickerView.dataSource= self;
     
     self.pickerBackView.backgroundColor = [UIColor whiteColor];
-    
-    
-    
     self.accountTextField.delegate = self;
     
-    
-    
     UIButton *cancelButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [cancelButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [cancelButton setFrame:CGRectMake(10, 10, 40, 30)];
     [cancelButton setTitle:@"取消" forState:(UIControlStateNormal)];
     UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
+    [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 50, 10, 40, 30)];
     [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
     
     cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
@@ -114,6 +110,19 @@
     [self.pickerBackView addSubview:cancelButton];
     [self.pickerBackView addSubview:sureButton];
     [self.view addSubview:self.pickerBackView];
+    
+    
+    self.cityPicker = [[SkyerCityPicker alloc]init];
+    [self.cityPicker cityPikerGetSelectCity:^(NSMutableDictionary *dicSelectCity)
+     {
+     [self.mengbanView setHidden:YES];
+        NSLog(@"%@",dicSelectCity);
+         self.areaLabel.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+         
+     
+    }];
+    
+    
     
 }
 #pragma mark----pickerView Button Action
@@ -158,10 +167,15 @@
 - (void)gestureForView1:(UITapGestureRecognizer *)gesture
 {
     [self.accountTextField resignFirstResponder];
-    ChooseAreaController *choosAreaVC =  [[ChooseAreaController alloc]init];
-    choosAreaVC.type = @"测试";
-    
-    [self.navigationController pushViewController:choosAreaVC animated:YES];
+//    [self.mengbanView setHidden:NO];
+
+    [self.view addSubview:self.cityPicker]
+    ;
+//    [self.mengbanView addSubview:self.cityPicker];
+
+//    ChooseAreaController *choosAreaVC =  [[ChooseAreaController alloc]init];
+//    choosAreaVC.type = @"测试";
+//    [self.navigationController pushViewController:choosAreaVC animated:YES];
     
     
 }
@@ -274,6 +288,21 @@
     return 40;
     
 }
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    
+    UILabel *myView;
+    
+    
+        myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, [UIScreen mainScreen].bounds.size.width/3.0, 30)];
+        myView.textAlignment = 1;
+        myView.text = self.sourceArray[row];
+        myView.font = [UIFont systemFontOfSize:17];
+        myView.backgroundColor = [UIColor clearColor];
+       
+    return myView;
+}
+
 
 
 - (void)didReceiveMemoryWarning {

@@ -18,6 +18,8 @@
 #define kTotalColumns 3
 #define kMarginWidth 30
 #define kMarginHeight 10
+
+
 @interface CSChooseServiceArearController ()
 @property (nonatomic, strong) NSArray *cityArray;
 
@@ -201,6 +203,8 @@
         
         CGFloat viewX = 10 * kWidthScale + col * (W + kMarginWidth);
         CGFloat viewY = kMarginHeight + row * (H + kMarginHeight);
+        
+        
         
         button.frame = CGRectMake(viewX, viewY, W, H);
         
