@@ -23,5 +23,5 @@
 @property (nonatomic,strong) NSString *ServiceArea;
 @property (nonatomic,strong) NSString *role;
 @property (nonatomic,strong) NSString *username;
-
+@property (nonatomic,strong) NSString *showrightios;
 @end

@@ -26,6 +26,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *connectPhone;
 @property (weak, nonatomic) IBOutlet UILabel *xiugaimima;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *image1;
+@property (weak, nonatomic) IBOutlet UIImageView *image2;
+@property (weak, nonatomic) IBOutlet UIImageView *image3;
+@property (weak, nonatomic) IBOutlet UIImageView *image4;
+@property (weak, nonatomic) IBOutlet UIImageView *image5;
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UserInfoModel *model;
@@ -131,8 +136,38 @@
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%@",dic);
             [self.model setValuesForKeysWithDictionary:dic[@"user"]];
+            NSLog(@"%@",dic[@"user"]);
+            
             [self.model setValuesForKeysWithDictionary:dic[@"service"]];
             self.nickNameLabel.text = self.model.username;
+            
+            NSArray *rightArr = dic[@"user"][@"showrightios"];
+            for (NSString *type in rightArr) {
+                if ([type isEqualToString:@"zcb"]) {
+                    self.image1.image = [UIImage imageNamed:@"huiyuanbao"];
+                }
+                else if([type isEqualToString:@"gdzc"])
+                {
+                    self.image2.image = [UIImage imageNamed:@"huiyuangu"];
+                    
+                }
+                else if([type isEqualToString:@"grzq"])
+                {
+                    self.image3.image = [UIImage imageNamed:@"huiyuange"];
+                    
+                }
+                else if([type isEqualToString:@"qysz"])
+                {
+                    self.image2.image = [UIImage imageNamed:@"huiyuanqi"];
+                    
+                }
+                else if([type isEqualToString:@"rzxx"])
+                {
+                    self.image2.image = [UIImage imageNamed:@"huiyuanrong"];
+                    
+                }
+            }
+            
             
 
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

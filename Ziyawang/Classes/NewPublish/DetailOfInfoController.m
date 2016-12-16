@@ -471,19 +471,23 @@
     
     nameLabel.text = self.model.username;
     if (self.model.username == nil || [self.model.username isEqualToString:@""]) {
-        nameLabel.text = [self.model.phonenumber stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+        nameLabel.text = [self.model.ConnectPhone stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
     }
     numberLabel.text = self.model.ProjectNumber;
     
     numberLabel.font = [UIFont systemFontOfSize:14];
-    
+    if (self.model.ViewCount != nil) {
     viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
+    }
+    
     NSArray *textarr = [self.model.PublishTime componentsSeparatedByString:@" "];
     timeLabel.text = textarr[0];
     
     
+    if(self.model.UserPicture != nil)
+    {
     [imageview sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
-    
+    }
     [imageview setContentScaleFactor:[[UIScreen mainScreen] scale]];
     imageview.contentMode = UIViewContentModeScaleAspectFill;
     imageview.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -565,10 +569,6 @@
         specialImageView.image = [UIImage imageNamed:@"mianfeiyuan"];
 
     }
-   
-    
-    
-    
     UIView *wordDesView = [UIView new];
     UIView *wenziView = [UIView new];
     
@@ -1026,7 +1026,7 @@
     else if([role isEqualToString:@"1"])
     {
             UIWebView *webView = [[UIWebView alloc]init];
-            NSString *telString = [@"tel:"stringByAppendingString:self.model.phonenumber];
+            NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
             NSURL *url = [NSURL URLWithString:telString];
             [webView loadRequest:[NSURLRequest requestWithURL:url]];
             [self.view addSubview:webView];
@@ -1745,7 +1745,7 @@
         self.model.Pay = @"未填写";
     }
     if ([self.model.Property isEqualToString:@""]) {
-        self.model.Brand = @"未填写";
+        self.model.Property = @"未填写";
     }
     if ([self.model.Credentials isEqualToString:@""]) {
         self.model.Credentials = @"未填写";

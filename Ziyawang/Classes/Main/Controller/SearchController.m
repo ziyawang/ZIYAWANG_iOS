@@ -24,6 +24,8 @@
 #import "RechargeController.h"
 #import "ChuzhiDetailController.h"
 #import "DetailOfInfoController.h"
+#import "VipViewController.h"
+
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface SearchController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
@@ -61,6 +63,7 @@
 @property (nonatomic,strong) InfoDetailsController *infoDetailsVC;
 @property (nonatomic,strong) PublishModel *pubModel;
 @property (nonatomic,strong) UIView *PromiseView;
+@property (nonatomic,strong) NSString *selectTypeName;
 
 @end
 
@@ -753,9 +756,9 @@
 }
 
 
-- (void)ShowAlertViewController
+- (void)ShowAlertViewControllerWithMessage:(NSString *)message
 {
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"您需要先通过服务方认证才可查看收费类信息" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"去认证" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
@@ -1082,13 +1085,36 @@
 //        [self.navigationController pushViewController:infoDetailsVC animated:YES];
         
         ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
+         DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
         PublishModel *model = [[PublishModel alloc]init];
         model = self.sourceArray[indexPath.row];
-        
+        infoDetailsVC.ProjectID = model.ProjectID;
+        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
+        NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
+        infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+        infoDetailsVC.typeName = model.TypeName;
+        self.selectTypeName = model.TypeName;
+
+
         model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
 
+        NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];
+        for (NSString *typeID in TypeIDArray) {
+            if ([model.TypeID isEqualToString:typeID]) {
+                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                return;
+            }
+        }
+        
         if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
-            [self setPromiseView];
+            if ([self.role isEqualToString:@"1"])
+            {
+                [self setPromiseView];
+            }
+            else
+            {
+                [self ShowAlertViewControllerWithMessage:@"您需要先通过服务方认证才可查看VIP类信息"];
+            }
         }
       
         else
@@ -1105,15 +1131,10 @@
         /**
          *  新支付
          */
-       DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
+      
         self.pubModel = model;
         
-        infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
-        NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
-        infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
-        infoDetailsVC.typeName = model.TypeName;
-        
+            
         model.Member = [NSString stringWithFormat:@"%@",model.Member];
         
         if ([self.USERID isEqualToString:model.UserID])
@@ -1199,7 +1220,7 @@
                 }
                 else
                 {
-                    [self ShowAlertViewController];
+                    [self ShowAlertViewControllerWithMessage:@"您需要先通过服务方认证才可查看收费类信息"];
                 }
             }
             
@@ -1312,7 +1333,7 @@
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(300 * kHeightScale);
+    .heightIs(360 * kHeightScale);
     
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
@@ -1344,15 +1365,29 @@
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
     
-    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+//    label2.text = @"本条VIP信息只针对本类型会员免费开放，开通相应类型会员后即可查看";
+    label2.text = [[@"本条VIP信息只针对"stringByAppendingString:self.selectTypeName]stringByAppendingString:@"类型会员免费开放，详情请咨询会员专线：010-56052557"];
+
     label2.font = [UIFont systemFontOfSize:13];
     
     fabuButton.sd_layout.leftEqualToView(label2)
     .rightEqualToView(label2)
     .topSpaceToView(label2,30*kHeightScale)
     .heightIs(40*kHeightScale);
-    [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    [fabuButton setTitle:@"取消" forState:(UIControlStateNormal)];
     fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    UIButton *kaitongButton = [UIButton new];
+    [bottomView addSubview:kaitongButton];
+    [kaitongButton setTitle:@"去开通" forState:(UIControlStateNormal)];
+    kaitongButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    kaitongButton.sd_layout.leftEqualToView(fabuButton)
+    .rightEqualToView(fabuButton)
+    .topSpaceToView(fabuButton,20*kHeightScale)
+    .heightIs(40*kHeightScale);
+    [kaitongButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [kaitongButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [kaitongButton addTarget:self action:@selector(kaitongButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
     //    fanhuiButton.sd_layout.leftEqualToView(label2)
     //    .rightEqualToView(label2)
@@ -1378,7 +1413,7 @@
     [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
-    [fabuButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    [fabuButton addTarget:self action:@selector(kaitongButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
     
     //    self.weituoView = weituoView;
@@ -1386,6 +1421,16 @@
     weituoView.layer.masksToBounds = YES;
     self.PromiseView = mengbanView;
     //    [self.PromiseView setHidden:YES];
+    
+    
+}
+- (void)kaitongButtonAction:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+
+    VipViewController *vipRVC = [[VipViewController alloc]init];
+    
+    [self.navigationController pushViewController:vipRVC animated:YES];
     
     
 }

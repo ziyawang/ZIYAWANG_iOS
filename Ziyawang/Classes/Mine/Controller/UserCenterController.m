@@ -23,6 +23,7 @@
 #import "MySetController.h"
 #import "MyYabiController.h"
 #import "MessageListViewController.h"
+#import "VipViewController.h"
 
 #import "UITabBar+CustomBadge.h"
 
@@ -64,26 +65,26 @@
     NSLog(@"%@",value);
     UITabBarItem * item=[self.navigationController.tabBarController.tabBar.items objectAtIndex:3];
     [item setValue:value forKeyPath:@"badgeValue"];
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
-//    view.backgroundColor = [UIColor redColor];
-//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
-//    label.text = @"12";
-//    label.textColor = [UIColor whiteColor];
-//    label.font = [UIFont systemFontOfSize:10];
-//    
-//    [self.tabBarController.tabBar addSubview:view];
-//    [self.tabBarController.tabBar addSubview:label];
-
+    //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+    //    view.backgroundColor = [UIColor redColor];
+    //    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+    //    label.text = @"12";
+    //    label.textColor = [UIColor whiteColor];
+    //    label.font = [UIFont systemFontOfSize:10];
+    //
+    //    [self.tabBarController.tabBar addSubview:view];
+    //    [self.tabBarController.tabBar addSubview:label];
     
-//    item.badgeValue = value;
-//    item.badgeValue = @"2";
-
-//    item.badgeColor = [UIColor redColor];
+    
+    //    item.badgeValue = value;
+    //    item.badgeValue = @"2";
+    
+    //    item.badgeColor = [UIColor redColor];
     
     
     NSLog(@"%@",sender.userInfo[@"BadgeValue"]);
     
-//    [self.tabBarItem setBadgeValue:@"2"];
+    //    [self.tabBarItem setBadgeValue:@"2"];
     
 }
 
@@ -92,16 +93,16 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-
-[super viewWillDisappear:animated];
-//[[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+    [super viewWillDisappear:animated];
+    //[[NSNotificationCenter defaultCenter]removeObserver:self];
     
 }
 
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 {
-// NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
-//    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
+    // NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
+    //    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
     
 }
 
@@ -121,28 +122,28 @@
         unreadStr = nil;
     }
     [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
-//    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    delegate.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
-//    NSString *value = delegate.tabarBageValue;
+    //    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //    delegate.tabarBageValue = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    //    NSString *value = delegate.tabarBageValue;
     
-//    
-//    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
-//    
-//    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
-//    if (value == 0) {
-//     valueStr = @"";
-//        
-//        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
-//        
-//    }
-//    [self.tabBarItem setBadgeValue:valueStr];
+    //
+    //    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    //
+    //    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
+    //    if (value == 0) {
+    //     valueStr = @"";
+    //
+    //        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
+    //
+    //    }
+    //    [self.tabBarItem setBadgeValue:valueStr];
     
     
-//    [self.tabBarItem setBadgeValue:@"2"];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
-
-
-
+    //    [self.tabBarItem setBadgeValue:@"2"];
+    //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+    
+    
+    
     self.navigationItem.title = @"我的";
     UIColor *color = [UIColor clearColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
@@ -162,20 +163,20 @@
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     if (token == nil) {
-    [self.redRechageLabel setHidden:NO];
+        [self.redRechageLabel setHidden:NO];
     }
     [self.redRechageLabel setTitleColor:[UIColor colorWithHexString:@"ee5a50"] forState:(UIControlStateNormal)];
     self.redRechageLabel.layer.borderColor = [UIColor colorWithHexString:@"ee5a50"].CGColor;
     
     
-//    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
+    //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
     
     self.defaults = [NSUserDefaults standardUserDefaults];
     self.manager = [AFHTTPSessionManager manager];
- 
+    
     
     self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-
+    
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.sourceArray  = [NSMutableArray new];
     self.model = [[UserInfoModel alloc]init];
@@ -184,42 +185,42 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     [self setViewGesture];
     [self setTableViewHight];
-//    [self setViews];
+    //    [self setViews];
     [self getUserInfoFromDomin];
-
-//    [self setViews];
+    
+    //    [self setViews];
 }
 //- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left
 //{
 ////    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d",left]];
 //    [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:[NSString stringWithFormat:@"%d",left]];
-//    
+//
 ////    [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d",left];
-// 
-//    
+//
+//
 //}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [RCIM sharedRCIM].receiveMessageDelegate=self;
-
+    
     NSInteger unreadcount = [[RCIMClient sharedRCIMClient]getTotalUnreadCount];
     [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",unreadcount]];
     
     
-//    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
-//    
-//    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
-//    if (value == 0) {
-//        valueStr = @"";
-//        
-//        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
-//    }
-//    [self.tabBarItem setBadgeValue:valueStr];
-//     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
-//    [self.tabBarItem setBadgeValue:@"3"];
-
-//    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
+    //    NSInteger value = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    //
+    //    NSString *valueStr = [NSString stringWithFormat:@"%ld",value];
+    //    if (value == 0) {
+    //        valueStr = @"";
+    //
+    //        [self.tabBarItem setBadgeColor:[UIColor clearColor]];
+    //    }
+    //    [self.tabBarItem setBadgeValue:valueStr];
+    //     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tabBarBadgeValueNotiFication:) name:@"tabBarBadgeValueNotifi" object:nil];
+    //    [self.tabBarItem setBadgeValue:@"3"];
+    
+    //    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"modify"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarbuttonAction:)];
     self.userIconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *userIconGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userIconGestureAction:)];
     [self.userIconImage addGestureRecognizer:userIconGesture];
@@ -242,10 +243,10 @@
     }
     else
     {
-  [self setViews];
-
+        [self setViews];
+        
     }
-//
+    //
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -341,7 +342,7 @@
             }
             else
             {
-               self.nameLabel.text = self.model.username;
+                self.nameLabel.text = self.model.username;
             }
             self.areaLabel.text = self.model.ServiceLocation;
             self.companyNameLabel.text = self.model.ServiceName;
@@ -375,7 +376,7 @@
             dataDic[@"MyProCount"] = [NSString stringWithFormat:@"%@",dic[@"MyProCount"]];
             dataDic[@"MyColCount"] = [NSString stringWithFormat:@"%@",dic[@"MyColCount"]];
             dataDic[@"MyCooCount"] = [NSString stringWithFormat:@"%@",dic[@"MyCooCount"]];
-//            self.MyproCountLabel.text = dataDic[@"MyProCount"];
+            //            self.MyproCountLabel.text = dataDic[@"MyProCount"];
             self.MyColCountLabel.text = dataDic[@"MyColCount"];
             self.MycooCountLabel.text = dataDic[@"MyProCount"];
             self.MyproCountLabel.text = dataDic[@"user"][@"Account"];
@@ -391,7 +392,7 @@
             NSLog(@"%@",dic[@"role"]);
             self.role =dic[@"role"];
             //        NSString *role = self.role;
-                    [[NSUserDefaults standardUserDefaults]setObject:self.role forKey:@"role"];
+            [[NSUserDefaults standardUserDefaults]setObject:self.role forKey:@"role"];
             if ([self.role isEqualToString:@"0"])
             {
                 NSLog(@"第一种视图");
@@ -419,7 +420,7 @@
             //        NSString *userPicture = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
             //        NSString *
         }];
-
+        
         
     }
     else
@@ -427,12 +428,12 @@
         [self setViews];
         
     }
-   }
+}
 
 - (void)setTableViewHight
 {
     if ([self.role isEqualToString:@"1"]) {
-        self.tableViewHeight.constant = 220;
+        self.tableViewHeight.constant = 264;
         [self.tableView reloadData];
         
     }
@@ -448,7 +449,7 @@
 - (void)setViewGesture
 {
     
-
+    
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction1:)];
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction2:)];
     
@@ -524,13 +525,13 @@
     
     
     if ([role isEqualToString:@"1"]) {
-        return 5;
+        return 6;
     }
     
     
     else
     {
-        return 4;
+        return 5;
     }
     
 }
@@ -572,24 +573,30 @@
                 
                 break;
             case 1:
+                cell.imageView.image = [UIImage imageNamed:@"vipCenter"];
+                cell.textLabel.text = @"会员中心";
                 
+                break;
+                
+            case 2:
                 cell.imageView.image = [UIImage imageNamed:@"gerenwodeyuetan"];
                 cell.textLabel.text = @"我的约谈";
                 
+                
                 break;
-            case 2:
+            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
                 cell.textLabel.text = @"消息中心";
                 
                 
                 break;
-            case 3:
+            case 4:
                 
                 cell.imageView.image = [UIImage imageNamed:@"help"];
                 cell.textLabel.text = @"帮助与反馈";
                 
                 break;
-            case 4:
+            case 5:
                 
                 cell.imageView.image = [UIImage imageNamed:@"set"];
                 cell.textLabel.text = @"设置";
@@ -609,6 +616,11 @@
                 cell.textLabel.text = @"服务方认证";
                 
                 break;
+//            case 1:
+//                cell.imageView.image = [UIImage imageNamed:@"vipCenter"];
+//                cell.textLabel.text = @"会员中心";
+//                
+//                break;
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
                 cell.textLabel.text = @"消息中心";
@@ -666,7 +678,6 @@
                     LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
                     //        [self.navigationController pushViewController:loginVC animated:YES];
                     [self presentViewController:loginVC animated:YES completion:nil];
-                    
                 }
                 else
                 {
@@ -698,6 +709,27 @@
             case 1:
             {
                 
+                
+                if ([self ifNeedLogin] == YES) {
+                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                    //        [self.navigationController pushViewController:loginVC animated:YES];
+                    [self presentViewController:loginVC animated:YES completion:nil];
+                }
+                else
+                {
+                    VipViewController *VipVC = [[VipViewController alloc]init];
+                    
+                    [self.navigationController pushViewController:VipVC animated:YES];
+                    
+                    
+                }
+            }
+                break;
+            case 2:
+            {
+          
+                
+                
                 if ([self ifNeedLogin] == YES) {
                     LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
                     //        [self.navigationController pushViewController:loginVC animated:YES];
@@ -711,9 +743,12 @@
                     
                     
                 }
+
             }
                 break;
-            case 2:
+                
+           
+            case 3:
             {
                 
                 
@@ -724,10 +759,10 @@
                 [self.navigationController pushViewController:messageVC animated:YES];
             }
                 break;
-            case 3:
+            case 4:
             {
                 
-
+                
                 
                 CSBackMessageController *helpVC = [[CSBackMessageController alloc]init];
                 
@@ -735,7 +770,7 @@
                 [self.navigationController pushViewController:helpVC animated:YES];
             }
                 break;
-            case 4:
+            case 5:
             {
                 MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
                 [self.navigationController pushViewController:setVc animated:YES];
@@ -779,7 +814,21 @@
                 }
             }
                 break;
-                
+//            case 1:
+//            {
+//                if ([self ifNeedLogin] == YES) {
+//                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+//                    //        [self.navigationController pushViewController:loginVC animated:YES];
+//                    [self presentViewController:loginVC animated:YES completion:nil];
+//                }
+//                else
+//                {
+//                    VipViewController *VipVC = [[VipViewController alloc]init];
+//                    [self.navigationController pushViewController:VipVC animated:YES];
+//                }
+//            }
+//                break;
+//                
             case 1:
             {
                 if ([self ifNeedLogin] == YES) {
@@ -789,8 +838,8 @@
                 }
                 else
                 {
-                MessageListViewController *helpVC = [[MessageListViewController alloc]init];
-                [self.navigationController pushViewController:helpVC animated:YES];
+                    MessageListViewController *helpVC = [[MessageListViewController alloc]init];
+                    [self.navigationController pushViewController:helpVC animated:YES];
                 }
             }
                 break;
@@ -824,13 +873,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -802,7 +802,6 @@
 }
 - (void)weituoFabu
 {
-    
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *URL = [[WeituoFabuURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *param = [NSMutableDictionary new];
@@ -846,7 +845,7 @@
     NSArray *array4 = @[@"住宅",@"商业",@"厂房",@"其他"];
     NSArray *array5 = @[@"工业",@"商业",@"住宅",@"其他"];
     NSArray *array6 = @[@"产权转让",@"股权转让"];
-    NSArray *array7 = @[@"有",@"无"];
+    NSArray *array7 = @[@"是",@"否"];
     
     [self.AllArray addObject:array1];
     [self.AllArray addObject:array2];

@@ -27,6 +27,6 @@
 @property (nonatomic,strong) NSString *ViewCount;
 @property (nonatomic,strong) NSString *CollectFlag;
 @property (nonatomic,strong) NSString *created_at;
-
+@property (nonatomic,strong) NSString *insider;
 
 @end

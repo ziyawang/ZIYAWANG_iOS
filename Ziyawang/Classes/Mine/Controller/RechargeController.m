@@ -491,6 +491,7 @@
 }
 - (void)buttonsAction:(UIButton *)button
 {
+    
     NSLog(@"%ld",button.tag);
     self.buttonLabel.text =[@"¥"stringByAppendingString:self.realMoneyArray[button.tag]];
     self.product = self.productsArray[button.tag];

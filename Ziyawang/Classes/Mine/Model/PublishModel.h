@@ -160,5 +160,6 @@
 @property (nonatomic,strong) NSString *Account       ;
 
 @property (nonatomic,strong) NSString *Hide;
+@property (nonatomic,strong) NSString *right;
 
 @end

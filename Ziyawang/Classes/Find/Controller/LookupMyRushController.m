@@ -53,6 +53,8 @@
     //    [self setupTitle];
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+
     UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
     statuView.backgroundColor = [UIColor blackColor];
     [self.navigationController.navigationBar addSubview:statuView];
@@ -62,7 +64,6 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
     
     
-    self.navigationController.navigationBar.titleTextAttributes = dict;
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
  self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];

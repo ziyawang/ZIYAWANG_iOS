@@ -870,9 +870,8 @@
         view.tag = i;
         i ++;
     }
-    NSArray *array1 = @[@"债权人",@"FA(中介)"];
+    NSArray *array1 = @[@"项目持有者",@"FA(中介)"];
     NSArray *array2 = @[@"货款",@"工程款",@"违约金",@"其他"];
-    
     NSArray *array3 = @[@"债权融资",@"股权融资"];
     NSArray *array4 = @[@"抵押",@"质押",@"担保人",@"其他"];
     

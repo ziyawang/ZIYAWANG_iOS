@@ -313,7 +313,9 @@
         
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
       
-            [self.model setValuesForKeysWithDictionary:dic];
+        NSLog(@"%@",dic);
+        
+        [self.model setValuesForKeysWithDictionary:dic];
         [self layoutView];
         
         
@@ -613,7 +615,7 @@
     
     UILabel *connectLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 100, 20)];
     connectLabel.font = [UIFont systemFontOfSize:14];
-    connectLabel.text = @"联系方式";
+    connectLabel.text = @"约谈";
     UIView *connectView = [[UIView alloc]initWithFrame:CGRectMake(0, 17, 130, 20)];
     connectView.centerX = connectButton.centerX;
     [connectView addSubview:connectLabel];
@@ -714,29 +716,35 @@
     {
         NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
         NSString *URL = [[ServiceConnectCountURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-        
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:@"token" forKey:@"access_token"];
         [dic setObject:@"IOS" forKey:@"Channel"];
         [dic setObject:self.model.ServiceID forKey:@"ServiceID"];
         [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"%@",dic);
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
         }];
         
-        NSLog(@"调用打电话");
-        UIWebView *webView = [[UIWebView alloc]init];
-        NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
-        NSURL *url = [NSURL URLWithString:telString];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.view addSubview:webView];
-    }
+        self.model.insider = [NSString stringWithFormat:@"%@",self.model.insider];
+        
+        if ([self.model.insider isEqualToString:@"1"]) {
+            NSLog(@"调用打电话");
+            UIWebView *webView = [[UIWebView alloc]init];
+            NSString *telString = [@"tel:"stringByAppendingString:self.phoneNumber];
+            NSURL *url = [NSURL URLWithString:telString];
+            [webView loadRequest:[NSURLRequest requestWithURL:url]];
+            [self.view addSubview:webView];
+
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"该服务方未办理会员，无法查看其联系方式" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+            }
     
 }
 

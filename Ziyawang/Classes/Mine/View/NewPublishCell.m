@@ -168,10 +168,14 @@
                 [self.rightMoneyLabel setHidden:NO];
             }
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+//            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+           self.leftMoneyLabel.text = [self getMoneyWithString:self.model.TotalMoney];
             
-            self.rightMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
-            self.bottomLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+//            self.rightMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+           self.rightMoneyLabel.text = [self getMoneyWithString:self.model.TransferMoney];
+            
+//            self.bottomLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+           self.bottomLabel.text =  [self getMoneyWithString:self.model.TransferMoney];
             
             
             self.leftImageView.image = [UIImage imageNamed:@"zongjine"];
@@ -186,7 +190,9 @@
             [self.leftMoneyLabel setHidden:NO];
             
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+//            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.TotalMoney];
+            
             self.leftImageView.image = [UIImage imageNamed:@"rongzie"];
             break;
             //固定资产房产
@@ -209,10 +215,13 @@
             [self.rightMoneyLabel setHidden:NO];
             }
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.MarketPrice substringToIndex:self.model.MarketPrice.length - 3]stringByAppendingString:@"万"];
-
-            self.rightMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
-            self.bottomLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+//            self.leftMoneyLabel.text = [[self.model.MarketPrice substringToIndex:self.model.MarketPrice.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text= [self getMoneyWithString:self.model.MarketPrice];
+            
+//            self.rightMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+            self.rightMoneyLabel.text =  [self getMoneyWithString:self.model.TransferMoney];
+//            self.bottomLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+            self.bottomLabel.text = [self getMoneyWithString:self.model.TransferMoney];
             
             
             self.leftImageView.image = [UIImage imageNamed:@"shichangjia"];
@@ -226,7 +235,9 @@
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+//            self.leftMoneyLabel.text = [[self.model.TransferMoney substringToIndex:self.model.TransferMoney.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.TransferMoney];
+            
             self.leftImageView.image = [UIImage imageNamed:@"zhuanrangjia"];
             break;
             //融资信息债权
@@ -243,8 +254,9 @@
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
-
+//            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.Money];
+            
             self.leftImageView.image = [UIImage imageNamed:@"zhaiquane"];
             
             break;
@@ -254,7 +266,11 @@
         {
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
-            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+            
+//            self.leftMoneyLabel.text = [[self.model.TotalMoney substringToIndex:self.model.TotalMoney.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.TotalMoney];
+            
+            
             self.leftImageView.image = [UIImage imageNamed:@"zongjine"];
             if (self.model.Law == nil) {
                 self.otherTypeLabel.text = self.model.UnLaw;
@@ -271,8 +287,9 @@
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
-
+//            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.Money];
+            
             self.leftImageView.image = [UIImage imageNamed:@"qipaijia"];
             
             break;
@@ -280,16 +297,18 @@
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
-;
+//            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
+            ;self.leftMoneyLabel.text = [self getMoneyWithString:self.model.Money];
+            
             self.leftImageView.image = [UIImage imageNamed:@"qipaijia"];
             break;
         case 22:
             [self.rightImageView setHidden:YES];
             [self.rightMoneyLabel setHidden:YES];
             self.otherTypeLabel.text = self.model.AssetType;
-            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
-
+//            self.leftMoneyLabel.text = [[self.model.Money substringToIndex:self.model.Money.length - 3]stringByAppendingString:@"万"];
+            self.leftMoneyLabel.text = [self getMoneyWithString:self.model.Money];
+            
             self.leftImageView.image = [UIImage imageNamed:@"qipaijia"];
             break;
               default:
@@ -452,6 +471,13 @@
     }
     
     
+    
+}
+
+- (NSString *)getMoneyWithString:(NSString *)string
+{
+   NSArray *arr = [string componentsSeparatedByString:@"."];
+    return [arr[0] stringByAppendingString:@"万"];
     
 }
 - (void)setLabelWithLabel:(UILabel *)label

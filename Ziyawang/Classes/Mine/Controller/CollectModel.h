@@ -56,4 +56,5 @@
 @property (nonatomic,strong) NSString *NewsID;
 
 @property (nonatomic,strong) NSString *Hide;
+@property (nonatomic,strong) NSString *right;
 @end

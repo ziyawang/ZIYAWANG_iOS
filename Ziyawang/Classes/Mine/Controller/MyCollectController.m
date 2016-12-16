@@ -21,6 +21,8 @@
 #import "CollectNewsCell.h"
 #import "NewsDetailController.h"
 #import "DetailOfInfoController.h"
+#import "VipViewController.h"
+
 //#import "CollectInfomationCell.h"
 @interface MyCollectController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -33,6 +35,8 @@
 @property (nonatomic,strong) ZXVideo *zvideo;
 @property (nonatomic,assign) NSInteger startpage;
 @property (nonatomic,strong) UIView *PromiseView;
+@property (nonatomic,strong) NSString *selectTypeName;
+
 @end
 
 @implementation MyCollectController
@@ -250,7 +254,7 @@
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(300 * kHeightScale);
+    .heightIs(360 * kHeightScale);
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
     .rightSpaceToView(weituoView,0)
@@ -281,7 +285,9 @@
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
     
-    label2.text = @"本条VIP信息只针对本类型会员免费开放，详情请咨询会员专线：010-56052557";
+//    label2.text = @"本条VIP信息只针对本类型会员免费开放，开通相应类型会员后即可查看";
+    label2.text = [[@"本条VIP信息只针对"stringByAppendingString:self.selectTypeName]stringByAppendingString:@"类型会员免费开放，详情请咨询会员专线：010-56052557"];
+
     label2.font = [UIFont systemFontOfSize:13];
     
     
@@ -292,8 +298,21 @@
     .rightEqualToView(label2)
     .topSpaceToView(label2,30*kHeightScale)
     .heightIs(40*kHeightScale);
-    [fabuButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    [fabuButton setTitle:@"去开通" forState:(UIControlStateNormal)];
     fabuButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    
+    UIButton *kaitongButton = [UIButton new];
+    [bottomView addSubview:kaitongButton];
+    [kaitongButton setTitle:@"取消" forState:(UIControlStateNormal)];
+    kaitongButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    kaitongButton.sd_layout.leftEqualToView(fabuButton)
+    .rightEqualToView(fabuButton)
+    .topSpaceToView(fabuButton,20*kHeightScale)
+    .heightIs(40*kHeightScale);
+    [kaitongButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [kaitongButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [kaitongButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+
     
     //    fanhuiButton.sd_layout.leftEqualToView(label2)
     //    .rightEqualToView(label2)
@@ -319,7 +338,7 @@
     [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
-    [fabuButton addTarget:self action:@selector(didClickfabuFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    [fabuButton addTarget:self action:@selector(kaitongButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
     
     //    self.weituoView = weituoView;
@@ -327,6 +346,16 @@
     weituoView.layer.masksToBounds = YES;
     self.PromiseView = mengbanView;
     //    [self.PromiseView setHidden:YES];
+    
+    
+}
+- (void)kaitongButtonAction:(UIButton *)button
+{
+    [self.PromiseView removeFromSuperview];
+
+    VipViewController *vipRVC = [[VipViewController alloc]init];
+    
+    [self.navigationController pushViewController:vipRVC animated:YES];
     
     
 }
@@ -394,23 +423,34 @@
 {
     CollectModel *model = [[CollectModel alloc]init];
     model = self.sourceArray[indexPath.row];
+    
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
+    infoDetailsVC.ProjectID = model.ProjectID;
+    infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
+    infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
+    infoDetailsVC.typeName = model.TypeName;
+    self.selectTypeName = model.TypeName;
+
+    NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];
+    for (NSString *typeID in TypeIDArray) {
+        if ([model.TypeID isEqualToString:typeID]) {
+            [self.navigationController pushViewController:infoDetailsVC animated:YES];
+            return;
+        }
+    }
+    
     NSString *TypeID  = [NSString stringWithFormat:@"%@",model.TypeID];
     if ([TypeID isEqualToString:@"1"]) {
         
         
         model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
 
-        if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
+        if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"])
+        {
             [self setPromiseView];
         }
-        
         else
         {
-        DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
-        infoDetailsVC.ProjectID = model.ProjectID;
-        infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
-        infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
-        infoDetailsVC.typeName = model.TypeName;
 
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
         }
