@@ -146,26 +146,28 @@
                 if ([type isEqualToString:@"zcb"]) {
                     self.image1.image = [UIImage imageNamed:@"huiyuanbao"];
                 }
-                else if([type isEqualToString:@"gdzc"])
-                {
-                    self.image2.image = [UIImage imageNamed:@"huiyuangu"];
-                    
-                }
-                else if([type isEqualToString:@"grzq"])
-                {
-                    self.image3.image = [UIImage imageNamed:@"huiyuange"];
-                    
-                }
                 else if([type isEqualToString:@"qysz"])
                 {
                     self.image2.image = [UIImage imageNamed:@"huiyuanqi"];
                     
                 }
-                else if([type isEqualToString:@"rzxx"])
+                else if([type isEqualToString:@"gdzc"])
                 {
-                    self.image2.image = [UIImage imageNamed:@"huiyuanrong"];
+                    self.image3.image = [UIImage imageNamed:@"huiyuangu"];
                     
                 }
+                else if([type isEqualToString:@"rzxx"])
+                {
+                    self.image4.image = [UIImage imageNamed:@"huiyuanrong"];
+                    
+                }
+                else if([type isEqualToString:@"grzq"])
+                {
+                    self.image5.image = [UIImage imageNamed:@"huiyuange"];
+                    
+                }
+                
+                
             }
             
             

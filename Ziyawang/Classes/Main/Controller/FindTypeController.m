@@ -1546,6 +1546,15 @@
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
 {
+    if ([dataDic[@"TypeID"] isEqualToString:@"czgg"]) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        
+    }
     self.startpage = 1;
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HUD.delegate = self;
@@ -1815,7 +1824,9 @@
     UIButton *kaitongButton = [UIButton new];
     [bottomView addSubview:kaitongButton];
     [kaitongButton setTitle:@"取消" forState:(UIControlStateNormal)];
-    kaitongButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
+    kaitongButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    kaitongButton.backgroundColor = [UIColor whiteColor];
+    kaitongButton.layer.borderWidth = 1;
     kaitongButton.sd_layout.leftEqualToView(fabuButton)
     .rightEqualToView(fabuButton)
     .topSpaceToView(fabuButton,20*kHeightScale)

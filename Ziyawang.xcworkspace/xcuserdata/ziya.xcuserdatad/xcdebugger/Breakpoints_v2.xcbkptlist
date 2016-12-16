@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ziyawang/Classes/Mine/Controller/VipRechargeController.m"
-            timestampString = "503549451.373758"
+            timestampString = "503583125.68725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "435"
-            endingLineNumber = "435"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "-sendReceiptToDomainWithReceipt:"
             landmarkType = "7">
          </BreakpointContent>

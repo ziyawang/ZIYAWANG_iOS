@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *memberNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *payMoneyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel2;
 
 @end
 
@@ -38,10 +39,14 @@
 - (void)setCell
 {
     self.memberNameLabel.text = [[@"充值"stringByAppendingString:self.model.MemberName]stringByAppendingString:@"VIP"];
-    self.timeLabel.text = self.model.StartTime;
+    self.timeLabel.text = [@"开通时间："stringByAppendingString:self.model.EndTime];
+
+    self.timeLabel2.text = [@"到期时间："stringByAppendingString:self.model.EndTime];
+    
     NSLog(@"%@",self.model.PayMoney);
     
     self.payMoneyLabel.text = [NSString stringWithFormat:@"%ld",self.model.PayMoney.integerValue/100];
+    self.payMoneyLabel.text = [[@"+"stringByAppendingString:self.payMoneyLabel.text]stringByAppendingString:@"¥"];
     
     
 }

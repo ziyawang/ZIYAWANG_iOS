@@ -1379,9 +1379,10 @@
     
     UIButton *kaitongButton = [UIButton new];
     [bottomView addSubview:kaitongButton];
-    [kaitongButton setTitle:@"去开通" forState:(UIControlStateNormal)];
-    kaitongButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
-    kaitongButton.sd_layout.leftEqualToView(fabuButton)
+    [kaitongButton setTitle:@"取消" forState:(UIControlStateNormal)];
+    kaitongButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    kaitongButton.backgroundColor = [UIColor whiteColor];
+    kaitongButton.layer.borderWidth = 1;    kaitongButton.sd_layout.leftEqualToView(fabuButton)
     .rightEqualToView(fabuButton)
     .topSpaceToView(fabuButton,20*kHeightScale)
     .heightIs(40*kHeightScale);

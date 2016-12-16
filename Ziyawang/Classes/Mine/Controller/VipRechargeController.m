@@ -51,8 +51,6 @@
     
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [self.sureButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
     
     self.imageNameArray = @[@"superbao",@"superqi",@"supergu",@"superrong",@"superge",@"superSvip"];
@@ -70,9 +68,10 @@
             self.topLabel.text = @"月度会员";
             self.monthMoneyLabel.text = @"¥6498";
             self.payname = @"资产包";
-            
             self.payid = @"7";
             self.product = self.productsArray[0];
+            self.monthImageview.image = [UIImage imageNamed:@"leixingxuanzhong"];
+
             break;
             //企业商账
         case 2:
@@ -95,6 +94,7 @@
             self.payid = @"5";
             self.product = self.productsArray[3];
             self.payname = @"固定资产";
+            self.monthImageview.image = [UIImage imageNamed:@"leixingxuanzhong"];
 
             break;
             //融资信息
@@ -105,7 +105,6 @@
             self.payid = @"4";
             self.product = self.productsArray[5];
             self.payname = @"融资信息";
-
             break;
             //个人债权
         case 5:

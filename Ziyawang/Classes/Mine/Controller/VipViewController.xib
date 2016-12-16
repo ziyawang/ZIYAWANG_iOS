@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,39 +31,52 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注：根据您的需求可同时办理多个类型会员" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikL-GN-POI">
+                    <rect key="frame" x="10" y="10" width="271.5" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.98548173900000002" green="0.068466175470000001" blue="0.075890419680000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OSm-1L-4DJ">
+                    <rect key="frame" x="0.0" y="37" width="375" height="50"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3bN-90-qW0">
+                            <rect key="frame" x="10" y="7.5" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="WId-gh-q3v"/>
                                 <constraint firstAttribute="width" constant="35" id="sUC-EH-VNx"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您当前会员类型为：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trG-sH-VRJ">
+                            <rect key="frame" x="55" y="16.5" width="129" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oF8-Sl-qV7"/>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OaD-nL-HLg"/>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1L5-fl-R0C"/>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YKK-G6-XgK"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oF8-Sl-qV7">
+                            <rect key="frame" x="207" y="17.5" width="20" height="15"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OaD-nL-HLg">
+                            <rect key="frame" x="230" y="17.5" width="20" height="15"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1L5-fl-R0C">
+                            <rect key="frame" x="253" y="17.5" width="20" height="15"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YKK-G6-XgK">
+                            <rect key="frame" x="276" y="17.5" width="20" height="15"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Qd-cO-T3Z">
-                            <frame key="frameInset" minX="184" width="15" height="15"/>
+                            <rect key="frame" x="184" y="0.0" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="QLe-9k-WDn"/>
                                 <constraint firstAttribute="height" constant="15" id="c76-dE-129"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkZ-ef-J0v">
+                            <rect key="frame" x="184" y="16.5" width="14.5" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -96,21 +112,26 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDI-Hd-2oj">
+                    <rect key="frame" x="0.0" y="97" width="375" height="284.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2m-Af-a7Y">
+                            <rect key="frame" x="187" y="0.0" width="1" height="284.5"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="yYn-lT-Bhi"/>
                             </constraints>
                         </view>
                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SWg-RZ-aXC">
+                            <rect key="frame" x="0.0" y="1" width="187" height="93.5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dabao.png" translatesAutoresizingMaskIntoConstraints="NO" id="X8g-9V-Hfg">
+                                    <rect key="frame" x="67.5" y="15" width="52" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="X8g-9V-Hfg" secondAttribute="height" multiplier="88:75" id="RNT-81-IOr"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资产包" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2h-b0-qef">
+                                    <rect key="frame" x="70.5" y="66" width="46" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -128,13 +149,16 @@
                             </constraints>
                         </view>
                         <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sds-4O-MgM">
+                            <rect key="frame" x="0.0" y="95.5" width="187" height="93.5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dagu.png" translatesAutoresizingMaskIntoConstraints="NO" id="LAk-yr-zom">
+                                    <rect key="frame" x="67.5" y="10" width="52" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="LAk-yr-zom" secondAttribute="height" multiplier="88:75" id="MiJ-cg-mYi"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="固定资产" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umH-DD-oVJ">
+                                    <rect key="frame" x="63" y="61" width="61.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -150,9 +174,13 @@
                             </constraints>
                         </view>
                         <view tag="4" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWi-b7-Sjk">
+                            <rect key="frame" x="188" y="95.5" width="187" height="93.5"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darong.png" translatesAutoresizingMaskIntoConstraints="NO" id="kyB-sJ-hUj"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darong.png" translatesAutoresizingMaskIntoConstraints="NO" id="kyB-sJ-hUj">
+                                    <rect key="frame" x="67.5" y="10" width="52" height="44"/>
+                                </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="融资信息" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-d0-0vR">
+                                    <rect key="frame" x="63" y="61" width="61.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -170,16 +198,20 @@
                             </constraints>
                         </view>
                         <view tag="6" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBz-5O-prg">
+                            <rect key="frame" x="188" y="190" width="187" height="93.5"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <view tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWx-8E-hwl">
+                            <rect key="frame" x="0.0" y="190" width="187" height="93.5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dage.png" translatesAutoresizingMaskIntoConstraints="NO" id="VbK-dl-ruh">
+                                    <rect key="frame" x="67.5" y="10" width="52" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="VbK-dl-ruh" secondAttribute="height" multiplier="88:75" id="a3K-ir-EYf"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个人债权" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cry-Su-etq">
+                                    <rect key="frame" x="63" y="61" width="61.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -195,13 +227,16 @@
                             </constraints>
                         </view>
                         <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHa-Ow-Iit">
+                            <rect key="frame" x="188" y="1" width="187" height="93.5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="daqi.png" translatesAutoresizingMaskIntoConstraints="NO" id="pb7-KT-He7">
+                                    <rect key="frame" x="67.5" y="15" width="52" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="pb7-KT-He7" secondAttribute="height" multiplier="88:75" id="6Mc-Kp-EJY"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="企业商账" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpZ-t8-GN9">
+                                    <rect key="frame" x="63" y="66" width="61.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -233,7 +268,7 @@
                         <constraint firstItem="SWg-RZ-aXC" firstAttribute="top" secondItem="lDI-Hd-2oj" secondAttribute="top" constant="1" id="TQm-QJ-8f6"/>
                         <constraint firstItem="wHa-Ow-Iit" firstAttribute="leading" secondItem="b2m-Af-a7Y" secondAttribute="trailing" id="auT-Gy-sAV"/>
                         <constraint firstItem="Sds-4O-MgM" firstAttribute="top" secondItem="SWg-RZ-aXC" secondAttribute="bottom" constant="1" id="b1A-TV-xlN"/>
-                        <constraint firstItem="qBz-5O-prg" firstAttribute="width" secondItem="qBz-5O-prg" secondAttribute="height" multiplier="2:1" constant="-2" id="baA-UD-uZx"/>
+                        <constraint firstItem="qBz-5O-prg" firstAttribute="width" secondItem="qBz-5O-prg" secondAttribute="height" multiplier="2:1" id="baA-UD-uZx"/>
                         <constraint firstItem="qBz-5O-prg" firstAttribute="top" secondItem="xWi-b7-Sjk" secondAttribute="bottom" constant="1" id="bdb-MI-waz"/>
                         <constraint firstItem="b2m-Af-a7Y" firstAttribute="centerX" secondItem="lDI-Hd-2oj" secondAttribute="centerX" id="d36-FX-JRh"/>
                         <constraint firstItem="wHa-Ow-Iit" firstAttribute="top" secondItem="lDI-Hd-2oj" secondAttribute="top" constant="1" id="eyc-IC-25J"/>
@@ -248,6 +283,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择您需要的会员类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3JG-Hq-eSw">
+                    <rect key="frame" x="10" y="391.5" width="157.5" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.98548173900000002" green="0.068466175470000001" blue="0.075890419680000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

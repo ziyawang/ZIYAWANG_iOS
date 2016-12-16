@@ -12,5 +12,5 @@
 @property (nonatomic,strong) NSString *PayMoney;
 @property (nonatomic,strong) NSString *MemberName;
 @property (nonatomic,strong) NSString *StartTime;
-
+@property (nonatomic,strong) NSString *EndTime;
 @end

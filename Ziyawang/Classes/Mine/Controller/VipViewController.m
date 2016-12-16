@@ -45,14 +45,13 @@
     
     self.userIcon.layer.masksToBounds = YES;
     self.userIcon.layer.cornerRadius = 17.5;
-    
-    
+
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[UserInfoModel alloc]init];
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-    self.view6.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+//    self.view6.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction:)];
     
     UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction:)];
@@ -97,45 +96,44 @@
             if (self.model.UserPicture != nil) {
                 [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
             }
-            
             NSArray *rightArr = dic[@"user"][@"showrightios"];
             switch (rightArr.count) {
                 case 0:
                     [self.noLabel setHidden:NO];
                     break;
                 case 1:
+                    [self.noLabel setHidden:YES];
                     self.imageview1.image = [UIImage imageNamed:rightArr[0]];
                     break;
                 case 2:
+                    [self.noLabel setHidden:YES];
                     self.imageview1.image = [UIImage imageNamed:rightArr[0]];
                     self.imageview2.image = [UIImage imageNamed:rightArr[1]];
-                    
                     break;
                 case 3:
+                    [self.noLabel setHidden:YES];
                     self.imageview1.image = [UIImage imageNamed:rightArr[0]];
                     self.imageview2.image = [UIImage imageNamed:rightArr[1]];
                     self.imageview3.image = [UIImage imageNamed:rightArr[2]];
-
                     break;
                 case 4:
+                    [self.noLabel setHidden:YES];
                     self.imageview1.image = [UIImage imageNamed:rightArr[0]];
                     self.imageview2.image = [UIImage imageNamed:rightArr[1]];
                     self.imageview3.image = [UIImage imageNamed:rightArr[2]];
                     self.imageview4.image = [UIImage imageNamed:rightArr[3]];
-
                     break;
                 case 5:
+                    [self.noLabel setHidden:YES];
                     self.imageview1.image = [UIImage imageNamed:rightArr[0]];
                     self.imageview2.image = [UIImage imageNamed:rightArr[1]];
                     self.imageview3.image = [UIImage imageNamed:rightArr[2]];
                     self.imageview4.image = [UIImage imageNamed:rightArr[3]];
                     self.imageview5.image = [UIImage imageNamed:rightArr[4]];
-
                     break;
                 default:
                     break;
             }
-            
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
