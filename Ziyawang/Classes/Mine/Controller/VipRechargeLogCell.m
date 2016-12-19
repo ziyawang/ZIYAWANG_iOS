@@ -38,8 +38,9 @@
 }
 - (void)setCell
 {
-    self.memberNameLabel.text = [[@"充值"stringByAppendingString:self.model.MemberName]stringByAppendingString:@"VIP"];
-    self.timeLabel.text = [@"开通时间："stringByAppendingString:self.model.EndTime];
+    self.memberNameLabel.text = self.model.Operates;
+    
+    self.timeLabel.text = [@"开通时间："stringByAppendingString:self.model.StartTime];
 
     self.timeLabel2.text = [@"到期时间："stringByAppendingString:self.model.EndTime];
     

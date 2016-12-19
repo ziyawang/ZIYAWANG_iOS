@@ -117,7 +117,7 @@
         }
         NSString *count = [NSString stringWithFormat:@"%@",dic[@"counts"]];
         if ([count isEqualToString:@"0"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"暂时没有抢单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"暂时没有约谈" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             return;
         }

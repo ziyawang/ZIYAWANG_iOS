@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backViewHeight;
+@property (weak, nonatomic) IBOutlet UILabel *typeDesLabel;
 
 
 @property (nonatomic,strong) NSArray *imageNameArray;
@@ -71,7 +72,7 @@
             self.payid = @"7";
             self.product = self.productsArray[0];
             self.monthImageview.image = [UIImage imageNamed:@"leixingxuanzhong"];
-
+            self.typeDesLabel.text = @"开通资产包VIP享受精彩特权";
             break;
             //企业商账
         case 2:
@@ -82,6 +83,7 @@
             self.payid = @"10";
             self.product = self.productsArray[2];
             self.payname = @"企业商账";
+            self.typeDesLabel.text = @"开通企业商账VIP享受精彩特权";
 
             break;
             //固定资产
@@ -95,6 +97,7 @@
             self.product = self.productsArray[3];
             self.payname = @"固定资产";
             self.monthImageview.image = [UIImage imageNamed:@"leixingxuanzhong"];
+            self.typeDesLabel.text = @"开通固定资产VIP享受精彩特权";
 
             break;
             //融资信息
@@ -105,6 +108,8 @@
             self.payid = @"4";
             self.product = self.productsArray[5];
             self.payname = @"融资信息";
+            self.typeDesLabel.text = @"开通融资信息VIP享受精彩特权";
+
             break;
             //个人债权
         case 5:
@@ -114,6 +119,7 @@
             self.payid = @"2";
             self.product = self.productsArray[7];
             self.payname = @"个人债权";
+            self.typeDesLabel.text = @"开通个人债权VIP享受精彩特权";
 
             break;
            

@@ -92,7 +92,6 @@
             NSLog(@"%@",dic[@"user"]);
             
             [self.model setValuesForKeysWithDictionary:dic[@"service"]];
-            
             if (self.model.UserPicture != nil) {
                 [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
             }

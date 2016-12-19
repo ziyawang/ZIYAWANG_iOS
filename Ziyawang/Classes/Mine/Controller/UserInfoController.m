@@ -34,7 +34,10 @@
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UserInfoModel *model;
+@property (nonatomic,strong) NSMutableArray *lightArray;
+@property (nonatomic,strong) NSMutableArray *timeArray;
 
+@property (nonatomic,strong) NSMutableDictionary *timeDic;
 @end
 
 @implementation UserInfoController
@@ -51,6 +54,7 @@
     title.textColor = [UIColor blackColor];
     
     self.navigationItem.titleView = title;
+    
     
     //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
@@ -75,7 +79,10 @@
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
     self.HUD.mode = mode;
-    self.HUD.labelText = lableText;
+    self.HUD.label.text = lableText;
+//    self.HUD.label.font = [UIFont systemFontOfSize:14];
+    self.HUD.label.numberOfLines = 0;
+    
     self.HUD.removeFromSuperViewOnHide = YES;
     [self.HUD hideAnimated:YES afterDelay:timer];
     
@@ -86,6 +93,9 @@
 //    self.touxiang.font = [UIFont FontForLabel];
 //    self.connectPhone.font = [UIFont FontForLabel];
 //    self.xiugaimima.font = [UIFont FontForLabel];
+    
+    
+    
     self.navigationItem.title = @"个人信息";
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
@@ -102,8 +112,35 @@
     
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
-
     
+    NSArray *lightar = @[@"0",@"0",@"0",@"0",@"0"];
+    self.lightArray = [NSMutableArray arrayWithArray:lightar];
+    self.image1.tag = 0;
+    self.image2.tag = 1;
+    self.image3.tag = 2;
+    self.image4.tag = 3;
+    self.image5.tag = 4;
+    
+    self.image1.userInteractionEnabled = YES;
+    self.image2.userInteractionEnabled = YES;
+    self.image3.userInteractionEnabled = YES;
+    self.image4.userInteractionEnabled = YES;
+    self.image5.userInteractionEnabled = YES;
+    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageGestureAction:)];
+    [self.image1 addGestureRecognizer:gesture1];
+    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageGestureAction:)];
+    [self.image2 addGestureRecognizer:gesture2];
+
+    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageGestureAction:)];
+    [self.image3 addGestureRecognizer:gesture3];
+    UITapGestureRecognizer *gesture4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageGestureAction:)];
+    [self.image4 addGestureRecognizer:gesture4];
+
+    UITapGestureRecognizer *gesture5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageGestureAction:)];
+    [self.image5 addGestureRecognizer:gesture5];
+    
+
+
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -138,32 +175,47 @@
             [self.model setValuesForKeysWithDictionary:dic[@"user"]];
             NSLog(@"%@",dic[@"user"]);
             
+            
             [self.model setValuesForKeysWithDictionary:dic[@"service"]];
             self.nickNameLabel.text = self.model.username;
             
+            
+            
             NSArray *rightArr = dic[@"user"][@"showrightios"];
+            NSArray *timearr = dic[@"user"][@"showrightarr"][1];
+            NSDictionary *timedic = dic[@"user"][@"showright"];
+            self.timeDic = [NSMutableDictionary dictionaryWithDictionary:timedic];
+            
+            self.timeArray = [NSMutableArray arrayWithArray:timearr];
+            
             for (NSString *type in rightArr) {
                 if ([type isEqualToString:@"zcb"]) {
                     self.image1.image = [UIImage imageNamed:@"huiyuanbao"];
+                    self.lightArray[0] = @"1";
+                    
                 }
                 else if([type isEqualToString:@"qysz"])
                 {
                     self.image2.image = [UIImage imageNamed:@"huiyuanqi"];
-                    
-                }
+                    self.lightArray[1] = @"1";
+                                    }
                 else if([type isEqualToString:@"gdzc"])
                 {
                     self.image3.image = [UIImage imageNamed:@"huiyuangu"];
+                    self.lightArray[2] = @"1";
                     
                 }
                 else if([type isEqualToString:@"rzxx"])
                 {
                     self.image4.image = [UIImage imageNamed:@"huiyuanrong"];
+                    self.lightArray[3] = @"1";
+                   
                     
                 }
                 else if([type isEqualToString:@"grzq"])
                 {
                     self.image5.image = [UIImage imageNamed:@"huiyuange"];
+                    self.lightArray[4] = @"1";
                     
                 }
                 
@@ -186,6 +238,48 @@
 
 }
 
+- (void)imageGestureAction:(UITapGestureRecognizer *)gesture
+{
+   
+    if ([self.lightArray[gesture.view.tag] isEqualToString:@"0"]) {
+        [self MBProgressWithString:@"您还未开通此类型会员" timer:2 mode:(MBProgressHUDModeText)];
+    }
+    else
+    {
+        NSString *str1 = @"aa";
+        NSString *str = @"bb";
+        switch (gesture.view.tag) {
+            case 0:
+                str1 = @"资产包会员到期时间为：";
+                str = [str1 stringByAppendingString:self.timeDic[@"资产包"]];
+                
+                break;
+            case 1:
+                str1 = @"企业商账会员到期时间为：";
+                str = [str1 stringByAppendingString:self.timeDic[@"企业商账"]];
+
+                break;
+            case 2:
+                str1 = @"固定资产会员到期时间为：";
+                str = [str1 stringByAppendingString:self.timeDic[@"固定资产"]];
+
+                break;
+            case 3:
+                str1 = @"融资信息会员到期时间为：";
+                str = [str1 stringByAppendingString:self.timeDic[@"融资信息"]];
+
+                break;
+            case 4:
+                str1 = @"个人债权会员到期时间为：";
+                str = [str1 stringByAppendingString:self.timeDic[@"个人债权"]];
+
+                break;
+            default:
+                break;
+        }
+        [self MBProgressWithString:str timer:2 mode:(MBProgressHUDModeText)];
+    }
+}
 
 
 - (void)setSubViews

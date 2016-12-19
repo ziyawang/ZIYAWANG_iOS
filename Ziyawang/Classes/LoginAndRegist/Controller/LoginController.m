@@ -430,12 +430,18 @@
             NSString *role = [NSString stringWithFormat:@"%@",dic[@"role"]];
             self.UserPictuerURl = dic[@"UserPicture"];
             [self.userDefault setObject:token forKey:@"token"];
+               
+            //可访问权限
+            [self.userDefault setObject:dic[@"right"] forKey:@"right"];
+               
             [self.userDefault setObject:@"已登录" forKey:@"登录状态"];
             [self.userDefault setObject:userid forKey:@"UserID"];
             NSLog(@"#############USERID%@",UserID);
             [self.userDefault setObject:role forKey:@"role"];
             [self.userDefault setObject:self.UserPictuerURl forKey:@"UserPicture"];
             [self.userDefault setObject:dic[@"UserName"] forKey:@"UserName"];
+               [self.userDefault synchronize];
+               
             [MobClick profileSignInWithPUID:self.userNnameTextField.text];
             
             NSLog(@"-----------------------------%@",dic[@"UserName"]);

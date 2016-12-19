@@ -85,6 +85,8 @@
 @property (nonatomic,strong) UIView *PromiseView;
 
 @property (nonatomic,strong) NSString *selectTypeName;
+@property (nonatomic,strong) NSString *vipStr;
+@property (nonatomic,strong) NSString *right;
 @end
 
 @implementation FindInfoController
@@ -118,24 +120,28 @@
                  [self.dataDic setObject:@"" forKey:@"Vip"];
                  [self findInfomationsWithDic:self.dataDic];
                   self.isInView = NO;
+                 self.vipStr = @"";
              }
              else if(index == 1)
              {
                  [self.dataDic setObject:@"0" forKey:@"Vip"];
                   [self findInfomationsWithDic:self.dataDic];
                  self.isInView = NO;
+                 self.vipStr = @"0";
              }
              else if(index == 2)
              {
                  [self.dataDic setObject:@"1" forKey:@"Vip"];
                  [self findInfomationsWithDic:self.dataDic];
                  self.isInView = NO;
+                 self.vipStr = @"1";
              }
              else if (index == 3)
              {
                  [self.dataDic setObject:@"2" forKey:@"Vip"];
                  [self findInfomationsWithDic:self.dataDic];
                  self.isInView = NO;
+                 self.vipStr = @"2";
              }
         }];
         self.dropMenu.direction = CLDirectionTypeBottom;
@@ -155,6 +161,9 @@
     [super viewWillAppear:animated];
     self.userModel = [[UserInfoModel alloc]init];
     [self getUserInfoFromDomin];
+    
+    self.right = [[NSUserDefaults standardUserDefaults]objectForKey:@"right"];
+    
     
     
 }
@@ -176,7 +185,8 @@
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
             
-            
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
+
             [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
             [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
             
@@ -195,6 +205,7 @@
    
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
+    self.vipStr = @"";
     self.navigationItem.title = @"找信息";
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 //    [self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"icon_left_jt"] forState:(UIControlStateNormal) barMetrics:UIBarMetricsDefault];
@@ -203,17 +214,13 @@
     UIButton* backButton= [[UIButton alloc] initWithFrame:backframe];
     [backButton setTitle:@"筛选" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    
     [backButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
 //    backButton.titleLabel.font=[UIFont systemFontOfSize:13];
     [backButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
      UIBarButtonItem* rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
-    
-   
-    
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
+     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
 //    self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
@@ -288,7 +295,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //固定资产
     NSArray *typearray3 = @[@"标的物类型"];
     //企业商账
-    NSArray *typearray4 = @[@"企业商账"];
+    NSArray *typearray4 = @[@"处置方式"];
     //法拍资产
     NSArray *typearray5 = @[@"资产类型"];
     //个人债权
@@ -395,11 +402,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [allTypeArray addObject:touzi];
     
     
-     self.menuView.indexsOneFist = infonmationType;
+    self.menuView.indexsOneFist = infonmationType;
     self.menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
     self.menuView.indexsThirFist = level;
-//    self.dataDic = [NSMutableDictionary dictionary];
+    //    self.dataDic = [NSMutableDictionary dictionary];
     __weak typeof(self) weakSelf = self;
     self.menuView.selectedIndex = ^(NSString *string){
         for (NSString *str in weakSelf.shengArray) {
@@ -457,11 +464,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 {
                     [self.dataDic setObject:@"6" forKey:@"TypeID"];
                     [self findInfomationsWithDic:self.dataDic];
-
+                    
                 }
-               
+                
             }
-         
+            
             
         }
         
@@ -475,7 +482,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 NSString *findValue = [string substringFromIndex:2];
                 if ([findValue isEqualToString:@"土地"]) {
                     [self.dataDic setObject:@"16" forKey:@"TypeID"];
-
+                    
                 }
                 else
                 {
@@ -494,22 +501,25 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
             NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"处置"])
+            if ([substr isEqualToString:@"处置方式"])
             {
                 NSString *findValue = [string substringToIndex:2];
                 if ([findValue isEqualToString:@"诉讼"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
                 else
                 {
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
-                [self findInfomationsWithDic:self.dataDic];
             }
             
-
+            
         }
         //---------------
         else if([self.lastChoose isEqualToString:informationTypeID[4]])
@@ -519,7 +529,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             NSString *substr = [string substringToIndex:2];
             if ([substr isEqualToString:@"资产"]) {
                 NSString *findValue = [string substringToIndex:2];
-  
+                
                 if ([findValue isEqualToString:@"土地"]) {
                     [self.dataDic setObject:@"21" forKey:@"TypeID"];
                 }
@@ -533,7 +543,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 }
                 [self findInfomationsWithDic:self.dataDic];
             }
-           
+            
             
         }
         //---------------
@@ -541,22 +551,25 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             //类型 求购方
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"处置"])
+            NSString *substr = [string substringToIndex:4];
+            if ([substr isEqualToString:@"处置方式"])
             {
                 NSString *findValue = [string substringToIndex:2];
                 if ([findValue isEqualToString:@"诉讼"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                     
                 }
                 else
                 {
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                     
                 }
-                [self findInfomationsWithDic:self.dataDic];
             }
             
         }
@@ -731,10 +744,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 //                [weakSelf findInfomationsWithDic:self.dataDic];
             }
         }
-
+        
         
     };
-
     
     
 }
@@ -1269,53 +1281,56 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
 {
-  
-    if ([dataDic[@"TypeID"] isEqualToString:@"czgg"]) {
+    if (self.dataDic[@"Vip"] == nil)
+    {
+        [self.dataDic setObject:self.vipStr forKey:@"Vip"];
+    }
+    if ([dataDic[@"TypeID"] isEqualToString:@"czgg"])
+    {
+        self.dataDic[@"Vip"] = @"";
+        
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
     else
     {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
-
     }
     self.startpage = 1;
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HUD.delegate = self;
     HUD.mode = MBProgressHUDModeIndeterminate;
     
-//    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    self.HUD.delegate = self;
-//    self.HUD.mode = MBProgressHUDModeIndeterminate;
-    if (self.sourceArray != nil)
-    {
-        [self.sourceArray removeAllObjects];
-    }
-    
-//    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
-//    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
-//    getdic = self.dataDic;
-//    
-//    NSString *access_token = @"token";
-//    
-//    [getdic setObject:access_token forKey:@"access_token"];
-//    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
+    //    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //    self.HUD.delegate = self;
+    //    self.HUD.mode = MBProgressHUDModeIndeterminate;
+//    if (self.sourceArray != nil)
+//    {
+//        [self.sourceArray removeAllObjects];
+//    }
+    self.sourceArray = [NSMutableArray new];
+    //    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+    //    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
+    //    getdic = self.dataDic;
+    //
+    //    NSString *access_token = @"token";
+    //
+    //    [getdic setObject:access_token forKey:@"access_token"];
+    //    NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
     NSString *getURL = FindInformationURL;
-      NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     if (token != nil) {
         getURL = [[getURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     }
-    
-    NSLog(@"%@",getURL);
-    
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     getdic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
     NSString *access_token = @"token";
     NSString *startPage = [NSString stringWithFormat:@"%ld",self.startpage];
     [getdic setObject:startPage forKey:@"startpage"];
+    
     [getdic setObject:access_token forKey:@"access_token"];
     NSLog(@"------getdic%@",getdic[@"AssetType"]);
     NSLog(@"!!!!!!!!!%@",getdic);
-//    [getdic setObject:@"5" forKey:@"pagecount"];
+    //    [getdic setObject:@"5" forKey:@"pagecount"];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self.manager GET:getURL parameters:getdic progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -1323,14 +1338,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"--------%@",dic);
+                NSLog(@"--------%@",dic);
         
-        NSMutableArray *sourceArray = dic[@"data"];
-        for (NSDictionary *dic in sourceArray) {
-            PublishModel *model = [[PublishModel alloc]init];
-            [model setValuesForKeysWithDictionary:dic];
-            [self.sourceArray addObject:model];
-            }
+        NSArray *array = dic[@"data"];
+        for (NSDictionary *dic in array) {
+            self.model = [[PublishModel alloc]init];
+            [self.model setValuesForKeysWithDictionary:dic];
+            [self.sourceArray addObject:self.model];
+        }
         if (self.sourceArray.count == 0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
@@ -1338,16 +1353,15 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         }
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
-         [self.tableView reloadData];
+        [self.tableView reloadData];
         [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
-
-//        [self.HUD removeFromSuperViewOnHide];
-//        [self.HUD hideAnimated:YES];
-             [HUD removeFromSuperViewOnHide];
+        //        [self.HUD removeFromSuperViewOnHide];
+        //        [self.HUD hideAnimated:YES];
+        [HUD removeFromSuperViewOnHide];
         [HUD hideAnimated:YES];
-
-//        [self.HUD removeFromSuperViewOnHide];
-//        [self.HUD hideAnimated:YES];
+        
+        //        [self.HUD removeFromSuperViewOnHide];
+        //        [self.HUD hideAnimated:YES];
         [self.tableView.mj_header endRefreshing];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -1356,9 +1370,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         [alert show];
         [HUD removeFromSuperViewOnHide];
         [HUD hideAnimated:YES];
-//        [self.HUD removeFromSuperViewOnHide];
-//        [self.HUD hideAnimated:YES];
-
+        //        [self.HUD removeFromSuperViewOnHide];
+        //        [self.HUD hideAnimated:YES];
+        
     }];
 }
 
@@ -1545,7 +1559,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 
     
     
-   NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];
+   NSArray *TypeIDArray = [self.right componentsSeparatedByString:@","];
     for (NSString *typeID in TypeIDArray) {
         if ([model.TypeID isEqualToString:typeID]) {
             [self.navigationController pushViewController:infoDetailsVC animated:YES];

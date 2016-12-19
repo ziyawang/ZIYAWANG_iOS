@@ -89,6 +89,9 @@
 @property (nonatomic,strong) UIView *PromiseView;
 
 @property (nonatomic,strong) NSString *selectTypeName;
+@property (nonatomic,strong) NSString *vipStr;
+
+@property (nonatomic,strong) NSString *right;
 
 @end
 
@@ -125,28 +128,29 @@
                 [self.dataDic setObject:@"" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
                 self.isInView = NO;
-
+                self.vipStr = @"";
+     
             }
             else if(index == 1)
             {
                 [self.dataDic setObject:@"0" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
                 self.isInView = NO;
-
+                self.vipStr = @"0";
             }
             else if(index == 2)
             {
                 [self.dataDic setObject:@"1" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
                 self.isInView = NO;
-
+                self.vipStr = @"1";
             }
             else if (index == 3)
             {
                 [self.dataDic setObject:@"2" forKey:@"Vip"];
                 [self findInfomationsWithDic:self.dataDic];
                 self.isInView = NO;
-                
+                self.vipStr = @"2";
             }
         }];
         self.dropMenu.direction = CLDirectionTypeBottom;
@@ -184,6 +188,7 @@
     [super viewWillAppear:animated];
     self.userModel = [[UserInfoModel alloc]init];
     [self getUserInfoFromDomin];
+    self.right = [[NSUserDefaults standardUserDefaults]objectForKey:@"right"];
     
  }
 - (void)viewDidLoad {
@@ -191,6 +196,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
+    self.vipStr = @"";
+    
     self.navigationItem.title = @"找信息";
     [self setupTitle];
        //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
@@ -293,7 +300,7 @@
     //固定资产
     NSArray *typearray3 = @[@"标的物类型"];
     //企业商账
-    NSArray *typearray4 = @[@"企业商账"];
+    NSArray *typearray4 = @[@"处置方式"];
     //法拍资产
     NSArray *typearray5 = @[@"资产类型"];
     //个人债权
@@ -498,20 +505,23 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"处置"])
+            NSString *substr = [string substringToIndex:4];
+            if ([substr isEqualToString:@"处置方式"])
             {
                 NSString *findValue = [string substringToIndex:2];
                 if ([findValue isEqualToString:@"诉讼"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
                 else
                 {
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
-                [self findInfomationsWithDic:self.dataDic];
             }
             
             
@@ -546,22 +556,23 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             //类型 求购方
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"处置"])
+            NSString *substr = [string substringToIndex:4];
+            if ([substr isEqualToString:@"处置方式"])
             {
                 NSString *findValue = [string substringToIndex:2];
                 if ([findValue isEqualToString:@"诉讼"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
-                    
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
                 else
                 {
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
-                    
+                    [self findInfomationsWithDic:self.dataDic];
+
                 }
-                [self findInfomationsWithDic:self.dataDic];
             }
             
         }
@@ -1537,23 +1548,24 @@
      //                [weakSelf findInfomationsWithDic:self.dataDic];
      }
      }
-     
-     
      };
      */
-    
-    
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
 {
-    if ([dataDic[@"TypeID"] isEqualToString:@"czgg"]) {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    if (self.dataDic[@"Vip"] == nil)
+    {
+        [self.dataDic setObject:self.vipStr forKey:@"Vip"];
+    }
+    if ([dataDic[@"TypeID"] isEqualToString:@"czgg"])
+    {
+        self.dataDic[@"Vip"] = @"";
         
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
     else
     {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        
     }
     self.startpage = 1;
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -1607,7 +1619,11 @@
             [self.model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:self.model];
         }
-        
+        if (self.sourceArray.count == 0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+        }
         //判断count=0告诉用户没有相关信息
         self.startpage ++;
         [self.tableView reloadData];
@@ -1714,13 +1730,9 @@
             self.account = dic[@"user"][@"Account"];
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
-            
-            
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
             [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
             [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
-            
-            
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             
@@ -1991,7 +2003,7 @@
     
     
     model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
-    NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];
+    NSArray *TypeIDArray = [self.right componentsSeparatedByString:@","];
     for (NSString *typeID in TypeIDArray) {
         if ([model.TypeID isEqualToString:typeID]) {
             [self.navigationController pushViewController:infoDetailsVC animated:YES];

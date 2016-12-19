@@ -203,6 +203,7 @@
 
 @property (nonatomic,strong) UIView *PromiseView;
 @property (nonatomic,strong) NSString *selectTypeName;
+@property (nonatomic,strong) NSString *right;
 
 @end
 
@@ -331,6 +332,7 @@ self.navigationItem.title = @"首页";
     [self getVideoStatu];
     [self getUserInfoFromDomin];
     
+    self.right = [[NSUserDefaults standardUserDefaults]objectForKey:@"right"];
     
 }
 - (void)getVideoStatu
@@ -1989,6 +1991,7 @@ self.navigationItem.title = @"首页";
             self.account = dic[@"user"][@"Account"];
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
             
             
             [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
@@ -2412,11 +2415,7 @@ self.navigationItem.title = @"首页";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-   
-    
-    
-     DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
+    DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
     
     //    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
@@ -2450,6 +2449,15 @@ self.navigationItem.title = @"首页";
 
         self.selectTypeName = model.TypeName;
 
+        
+        NSArray *TypeIDArray = [self.right componentsSeparatedByString:@","];
+        for (NSString *typeID in TypeIDArray) {
+            if ([model.TypeID isEqualToString:typeID]) {
+                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                return;
+            }
+        }
+        
         model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
 
         if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"])

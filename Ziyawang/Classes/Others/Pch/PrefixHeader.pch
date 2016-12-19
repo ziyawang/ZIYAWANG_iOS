@@ -21,24 +21,24 @@
  *
  *  @return
  */
-//#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
-//#define getImageURL @"http://images.ziyawang.com"//获取图片
-//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-//#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
-//
-//#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
-//#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
-//#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
-//#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
-//#define RechargeSussceeURL @"http://api.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
-//
-//#define TipURL @"http://api.ziyawang.com/v1/report"//举报
-//#define IfHadPayMessageURL @"http://api.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
-//#define ServiceConnectCountURL @"http://api.ziyawang.com/v1/count/service"//联系服务方次数
-//
-//#define WeituoFabuURL @"http://api.ziyawang.com/v1/v2/entrust"//委托发布
-//#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
-//#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"];//充值会员记录
+#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
+#define getImageURL @"http://images.ziyawang.com"//获取图片
+#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+#define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
+
+#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
+#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
+#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
+#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
+#define RechargeSussceeURL @"http://api.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
+
+#define TipURL @"http://api.ziyawang.com/v1/report"//举报
+#define IfHadPayMessageURL @"http://api.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
+#define ServiceConnectCountURL @"http://api.ziyawang.com/v1/count/service"//联系服务方次数
+
+#define WeituoFabuURL @"http://api.ziyawang.com/v1/v2/entrust"//委托发布
+#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
+#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
 
 
 /**
@@ -49,24 +49,24 @@
 
 
 
-#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
-//#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
-#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
-#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
-
-#define paidURL @"http://apitest.ziyawang.com/v1/app/consume"//消费接口
-#define rechargeURL @"http://apitest.ziyawang.com/v1/pay/list"//充值芽币金额类型
-#define CostURL @"http://apitest.ziyawang.com/v1/mybill"//充值明细
-#define changeNickNameURL @"http://apitest.ziyawang.com/v1/auth/chusername"//修改昵称
-#define RechargeSussceeURL @"http://apitest.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
-
-#define TipURL @"http://apitest.ziyawang.com/v1/report"//举报
-#define IfHadPayMessageURL @"http://apitest.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
-#define ServiceConnectCountURL @"http://apitest.ziyawang.com/v1/count/service"//联系服务方次数
-
-#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/v2/entrust"//委托发布
-#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
-#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
+//#define getDataURL @"http://apitest.ziyawang.com/v1"//获取本服务器
+////#define getImageURL @"http://imagestest.ziyawang.com"//获取图片
+//#define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
+//#define AudioURL @"http://filestest.ziyawang.com"//获取文件（语音以及资芽公约）
+//
+//#define paidURL @"http://apitest.ziyawang.com/v1/app/consume"//消费接口
+//#define rechargeURL @"http://apitest.ziyawang.com/v1/pay/list"//充值芽币金额类型
+//#define CostURL @"http://apitest.ziyawang.com/v1/mybill"//充值明细
+//#define changeNickNameURL @"http://apitest.ziyawang.com/v1/auth/chusername"//修改昵称
+//#define RechargeSussceeURL @"http://apitest.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
+//
+//#define TipURL @"http://apitest.ziyawang.com/v1/report"//举报
+//#define IfHadPayMessageURL @"http://apitest.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
+//#define ServiceConnectCountURL @"http://apitest.ziyawang.com/v1/count/service"//联系服务方次数
+//
+//#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/v2/entrust"//委托发布
+//#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
+//#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
 
 
 
