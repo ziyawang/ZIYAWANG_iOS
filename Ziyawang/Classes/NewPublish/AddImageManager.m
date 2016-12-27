@@ -11,8 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface AddImageManager()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
-
+@property (nonatomic,assign) NSInteger tag;
 @end
 
 @implementation AddImageManager
@@ -27,6 +26,8 @@
 }
 - (void)setAddimageViewWithView:(UIView *)imageBackView target:(id)target
 {
+    self.tag = imageBackView.tag;
+    
     self.VC = target;
     
     self.imageArray = [NSMutableArray new];
@@ -141,15 +142,12 @@
 - (void)didClickDeleteButton:(UIButton *)deleteButton
 {
     if (self.imageArray.count == 0) {
-
     }
     else if(self.imageArray.count == 1)
     {
         self.imageOne.image = [UIImage imageNamed:@"shangchuan"];
         [self.imageTwo setHidden:YES];
         [self.imageArray removeObjectAtIndex:0];
-        
-        
     }
     else if(self.imageArray.count == 2)
     {
@@ -172,13 +170,18 @@
     //定义一个newPhoto，用来存放我们选择的图片。
     UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     _addImageView.image = newPhoto;
+    
     [self.imageArray addObject:_addImageView.image];
-    if (self.imageArray.count == 1) {
-        [self.imageTwo setHidden:NO];
+    
+    if (self.tag != 1001) {
+        if (self.imageArray.count == 1) {
+            [self.imageTwo setHidden:NO];
+        }
+        if (self.imageArray.count == 2) {
+            [self.imageThree setHidden:NO];
+        }
     }
-    if (self.imageArray.count == 2) {
-        [self.imageThree setHidden:NO];
-    }
+    
     [self.VC dismissViewControllerAnimated:YES completion:nil];
 }
 

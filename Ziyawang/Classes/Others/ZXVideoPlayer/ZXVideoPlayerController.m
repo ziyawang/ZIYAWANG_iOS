@@ -200,6 +200,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     // 播放状态改变，可配合playbakcState属性获取具体状态
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMPMoviePlayerPlaybackStateDidChangeNotification) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
     
+    
     // 媒体网络加载状态改变
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMPMoviePlayerLoadStateDidChangeNotification) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
     
@@ -519,6 +520,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     self.frame = [UIScreen mainScreen].bounds;
 
     self.isFullscreenMode = YES;
+    
     self.videoControl.fullScreenButton.hidden = YES;
     self.videoControl.shrinkScreenButton.hidden = NO;
 }

@@ -28,5 +28,9 @@
 @property (nonatomic,strong) NSString *CollectFlag;
 @property (nonatomic,strong) NSString *created_at;
 @property (nonatomic,strong) NSString *insider;
-
+@property (nonatomic,strong) NSString *Size;
+@property (nonatomic,strong) NSString *Founds;
+@property (nonatomic,strong) NSString *Regtime;
+@property (nonatomic,strong) NSString *starvideo;
+@property (nonatomic,strong) NSString *starcns;
 @end

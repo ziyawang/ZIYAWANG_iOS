@@ -27,5 +27,6 @@
 #import "TextFieldViewAnimate.h"
 #import "MyMBHud.h"
 #import "CheckTextFieldAndLabelText.h"
+#import "AlertView.h"
 #endif /* Header_h */
 

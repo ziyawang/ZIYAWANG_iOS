@@ -39,7 +39,7 @@
 #define WeituoFabuURL @"http://api.ziyawang.com/v1/v2/entrust"//委托发布
 #define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
 #define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
-
+#define UploadStarImagesURL [getDataURL stringByAppendingString:@"/v2/lds/star"]//星级认证上传图片
 
 /**
  *  测试服API
@@ -67,7 +67,7 @@
 //#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/v2/entrust"//委托发布
 //#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
 //#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
-
+//#define uploadStarImagesURL [getDataURL stringByAppendingString:@"/star"]//星级认证上传图片
 
 
 
@@ -82,8 +82,9 @@
 
 #define FindInformationURL [getDataURL stringByAppendingString:@"/v2/project/list"]//找信息
 #define InformationDetailURL [getDataURL stringByAppendingString:@"/v2/project/list/"]//信息详情
-#define FindServiceURL [getDataURL stringByAppendingString:@"/service/list"]//找服务
-#define ServiceDetailURL [getDataURL stringByAppendingString:@"/service/list/"]//服务详情
+#define FindServiceURL [getDataURL stringByAppendingString:@"/v2/service/list"]//找服务
+#define ServiceDetailURL [getDataURL stringByAppendingString:@"/v2/service/list/"]//服务详情
+
 
 #define getUserInfoURL [getDataURL stringByAppendingString:@"/v2/auth/me"]//获取用户信
 #define getUserInfoWithUseridURL [getDataURL stringByAppendingString:@"/app/uinfo"]//根据UserID获取用户信息

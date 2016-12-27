@@ -24,6 +24,7 @@
 #import "MyYabiController.h"
 #import "MessageListViewController.h"
 #import "VipViewController.h"
+#import "StaridentiController.h"
 
 #import "UITabBar+CustomBadge.h"
 
@@ -52,6 +53,7 @@
 @property (nonatomic,strong) NSString *role;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
 @property (nonatomic,strong) NSUserDefaults *defaults;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
 
 
 @end
@@ -433,13 +435,17 @@
 - (void)setTableViewHight
 {
     if ([self.role isEqualToString:@"1"]) {
-        self.tableViewHeight.constant = 264;
+        self.tableViewHeight.constant = 308;
+        self.contentViewHeight.constant = 533;
+        
         [self.tableView reloadData];
         
     }
     else
     {
         self.tableViewHeight.constant = 176;
+        self.contentViewHeight.constant = 401;
+
         [self.tableView reloadData];
         
     }
@@ -525,13 +531,13 @@
     
     
     if ([role isEqualToString:@"1"]) {
-        return 6;
+        return 7;
     }
     
     
     else
     {
-        return 5;
+        return 4;
     }
     
 }
@@ -542,7 +548,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
+//    {
+//        
+//        return 30;
+//    }
+//    
+//    else if([SDiOSVersion deviceVersion] == iPhone6 || [SDiOSVersion deviceVersion] == iPhone6S || [SDiOSVersion deviceVersion] == iPhone7 )
+//    {
+//        return 44;
+//    }
+//    else if([SDiOSVersion deviceVersion] == iPhone6Plus || [SDiOSVersion deviceVersion] == iPhone6SPlus || [SDiOSVersion deviceVersion] == iPhone7Plus)
+//    {
+//        return 44;
+//    }
     return 44;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -577,26 +598,30 @@
                 cell.textLabel.text = @"会员中心";
                 
                 break;
-                
             case 2:
+                cell.imageView.image = [UIImage imageNamed:@"xingjirenzheng"];
+                cell.textLabel.text = @"星级认证";
+                break;
+
+                
+            case 3:
                 cell.imageView.image = [UIImage imageNamed:@"gerenwodeyuetan"];
                 cell.textLabel.text = @"我的约谈";
                 
-                
                 break;
-            case 3:
+            case 4:
                 cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
                 cell.textLabel.text = @"消息中心";
                 
                 
                 break;
-            case 4:
+            case 5:
                 
                 cell.imageView.image = [UIImage imageNamed:@"help"];
                 cell.textLabel.text = @"帮助与反馈";
                 
                 break;
-            case 5:
+            case 6:
                 
                 cell.imageView.image = [UIImage imageNamed:@"set"];
                 cell.textLabel.text = @"设置";
@@ -725,7 +750,27 @@
                 }
             }
                 break;
+                
             case 2:
+            {
+                
+                
+                
+                if ([self ifNeedLogin] == YES) {
+                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                    //        [self.navigationController pushViewController:loginVC animated:YES];
+                    [self presentViewController:loginVC animated:YES completion:nil];
+                }
+                else
+                {
+                    StaridentiController *roblistVC = [[StaridentiController alloc]init];
+                    
+                    [self.navigationController pushViewController:roblistVC animated:YES];
+                }
+                
+            }
+                break;
+            case 3:
             {
           
                 
@@ -748,7 +793,7 @@
                 break;
                 
            
-            case 3:
+            case 4:
             {
                 
                 
@@ -759,7 +804,7 @@
                 [self.navigationController pushViewController:messageVC animated:YES];
             }
                 break;
-            case 4:
+            case 5:
             {
                 
                 
@@ -770,7 +815,7 @@
                 [self.navigationController pushViewController:helpVC animated:YES];
             }
                 break;
-            case 5:
+            case 6:
             {
                 MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
                 [self.navigationController pushViewController:setVc animated:YES];

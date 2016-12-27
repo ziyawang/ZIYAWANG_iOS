@@ -22,6 +22,7 @@
 #import "KNPhotoBrower.h"
 #import "KNToast.h"
 #import "TipTableViewController.h"
+#import "StarIdentiDetailController.h"
 @interface ServiceDetailController ()<MBProgressHUDDelegate>
 {
     BOOL     _ApplicationStatusIsHidden;
@@ -64,12 +65,41 @@
 @property (nonatomic, strong) NSMutableArray *actionSheetArray; // 右上角弹出框的 选项 -->代理回调
 @property (nonatomic, strong) KNPhotoBrower *photoBrower;
 
+@property (weak, nonatomic) IBOutlet UIImageView *vipima1;
+@property (weak, nonatomic) IBOutlet UIImageView *vipima2;
+@property (weak, nonatomic) IBOutlet UIImageView *vipima3;
+@property (weak, nonatomic) IBOutlet UIImageView *vipima4;
+@property (weak, nonatomic) IBOutlet UIImageView *vipima5;
+@property (weak, nonatomic) IBOutlet UIImageView *starima1;
+@property (weak, nonatomic) IBOutlet UIImageView *starima2;
+@property (weak, nonatomic) IBOutlet UIImageView *starima3;
+@property (weak, nonatomic) IBOutlet UIImageView *starima4;
+@property (weak, nonatomic) IBOutlet UIImageView *starima5;
+
+@property (weak, nonatomic) IBOutlet UILabel *guimoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *zhucezijinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lianxirenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noLabel;
+
+@property (nonatomic,strong) NSArray *starszArr;
+@property (nonatomic,strong) NSArray *starsdArr;
+@property (nonatomic,strong) NSDictionary *showlevelDic;
 
 
 @end
 
 @implementation ServiceDetailController
 
+- (IBAction)lookDetailButtonAction:(id)sender {
+    StarIdentiDetailController *starDetailVC = [[StarIdentiDetailController alloc]init];
+    starDetailVC.VideoURL = self.model.starvideo;
+    starDetailVC.promiseBookURL = self.model.starcns;
+    starDetailVC.threeBookArr = self.starszArr;
+    starDetailVC.areaArr = self.starsdArr;
+    starDetailVC.sholevelDic = self.showlevelDic;
+    [self.navigationController pushViewController:starDetailVC animated:YES];
+    
+}
 
 - (IBAction)didClickSaveButton:(id)sender {
     
@@ -244,10 +274,15 @@
 - (void)popAction:(UIBarButtonItem *)barbutton
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.translucent = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
     self.navigationController.navigationBar.titleTextAttributes = dict;
@@ -316,8 +351,77 @@
         NSLog(@"%@",dic);
         
         [self.model setValuesForKeysWithDictionary:dic];
-        [self layoutView];
+        self.starsdArr = dic[@"starsd"];
+        self.starszArr = dic[@"starsz"];
+
+        NSArray *rightArr = dic[@"showrightios"];
+        switch (rightArr.count) {
+            case 0:
+                [self.noLabel setHidden:NO];
+                break;
+            case 1:
+                [self.noLabel setHidden:YES];
+                self.vipima1.image = [UIImage imageNamed:rightArr[0]];
+                break;
+            case 2:
+                [self.noLabel setHidden:YES];
+                self.vipima1.image = [UIImage imageNamed:rightArr[0]];
+                self.vipima2.image = [UIImage imageNamed:rightArr[1]];
+                break;
+            case 3:
+                [self.noLabel setHidden:YES];
+                self.vipima1.image = [UIImage imageNamed:rightArr[0]];
+                self.vipima2.image = [UIImage imageNamed:rightArr[1]];
+                self.vipima3.image = [UIImage imageNamed:rightArr[2]];
+                break;
+            case 4:
+                [self.noLabel setHidden:YES];
+                self.vipima1.image = [UIImage imageNamed:rightArr[0]];
+                self.vipima2.image = [UIImage imageNamed:rightArr[1]];
+                self.vipima3.image = [UIImage imageNamed:rightArr[2]];
+                self.vipima4.image = [UIImage imageNamed:rightArr[3]];
+                break;
+            case 5:
+                [self.noLabel setHidden:YES];
+                self.vipima1.image = [UIImage imageNamed:rightArr[0]];
+                self.vipima2.image = [UIImage imageNamed:rightArr[1]];
+                self.vipima3.image = [UIImage imageNamed:rightArr[2]];
+                self.vipima4.image = [UIImage imageNamed:rightArr[3]];
+                self.vipima5.image = [UIImage imageNamed:rightArr[4]];
+                break;
+            default:
+                break;
+        }
         
+        NSDictionary *starDic = dic[@"showlevelarr"];
+        self.showlevelDic = starDic;
+        
+        NSMutableDictionary *starArray = [NSMutableDictionary dictionaryWithDictionary:starDic];
+        
+        starArray[@"1"] = [NSString stringWithFormat:@"%@",starArray[@"1"]];
+        starArray[@"2"] = [NSString stringWithFormat:@"%@",starArray[@"2"]];
+        starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
+        starArray[@"4"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
+        starArray[@"5"] = [NSString stringWithFormat:@"%@",starArray[@"5"]];
+        
+        
+        if ([starArray[@"1"] isEqualToString:@"2"]) {
+            self.starima1.image = [UIImage imageNamed:@"baozhengjin"];
+        }
+        if ([starArray[@"2"] isEqualToString:@"2"]) {
+            self.starima2.image = [UIImage imageNamed:@"shi"];
+        }
+        
+        if ([starArray[@"3"] isEqualToString:@"2"]) {
+            self.starima3.image = [UIImage imageNamed:@"shipin"];
+        }
+        if ([starArray[@"4"] isEqualToString:@"2"]) {
+            self.starima4.image = [UIImage imageNamed:@"nuo"];
+        }
+        if ([starArray[@"5"] isEqualToString:@"2"]) {
+            self.starima5.image = [UIImage imageNamed:@"zheng"];
+        }
+        [self layoutView];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -485,6 +589,26 @@
     self.servicearea.text = self.model.ServiceArea;
     self.serviceType.text = self.model.ServiceType;
     self.serviceLocation.text = self.model.ServiceLocation;
+    
+    self.model.Size = [NSString stringWithFormat:@"%@",self.model.Size];
+    self.model.Founds = [NSString stringWithFormat:@"%@",self.model.Founds];
+    
+    self.guimoLabel.text = [self.model.Size stringByAppendingString:@"人"];
+    self.zhucezijinLabel.text = [self.model.Founds stringByAppendingString:@"万"];
+    self.lianxirenLabel.text = self.model.ConnectPerson;
+    
+    if ([self.model.Founds isEqualToString:@"0"]) {
+        self.zhucezijinLabel.text = @"未填写";
+    }
+    if ([self.model.Size isEqualToString:@"0"]) {
+        self.guimoLabel.text =@"未填写";
+    }
+    
+    
+    
+    
+    
+    
     NSString *imageURL1 = @"1";
     NSString *imageURL2 = @"2";
     NSString *imageURL3 = @"3";

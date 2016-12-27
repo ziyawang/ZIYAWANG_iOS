@@ -9,6 +9,8 @@
 #import "VideoPlayViewController.h"
 #import "ZXVideoPlayerController.h"
 #import "ZXVideo.h"
+
+
 #import "CommentCell.h"
 #import "CommentModel.h"
 #import "CommentsCell.h"
@@ -113,7 +115,6 @@
 //    [self.tableView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellReuseIdentifier:@"CommentCell"];
         [self.tableView registerClass:[CommentsCell class] forCellReuseIdentifier:@"CommentsCell"];
     [self.view addSubview:self.tableView];
-    
     
     
     [self registerForKeyboardNotifications];
@@ -458,7 +459,7 @@
     [self.view addSubview:self.commentBackView];
     
     touchView.sd_layout.leftSpaceToView(self.commentBackView,20)
-    .rightSpaceToView(self.collectButton,30)
+    .widthIs(200)
     .centerYEqualToView(self.commentBackView)
     .heightIs(30);
     
@@ -1146,7 +1147,6 @@
 - (void)playVideo
 {
    
-    
     if (!self.videoController) {
         self.videoController = [[ZXVideoPlayerController alloc] initWithFrame:
                                 CGRectMake(0, 0, kZXVideoPlayerOriginalWidth,
@@ -1179,6 +1179,7 @@
             [weakSelf.contentView setHidden:NO];
             [weakSelf.commentCountView setHidden:NO];
             [weakSelf.tableView setHidden:NO];
+            [weakSelf.commentBackView setHidden:NO];
             
         };
         self.videoController.videoPlayerWillChangeToFullScreenModeBlock = ^(){
@@ -1186,6 +1187,8 @@
             [weakSelf.contentView setHidden:YES];
             [weakSelf.commentCountView setHidden:YES];
             [weakSelf.tableView setHidden:YES];
+            [weakSelf.commentBackView setHidden:YES];
+
         };
         [self.videoController showInView:self.view];
     }

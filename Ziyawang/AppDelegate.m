@@ -489,6 +489,7 @@
 {
     //rcToken判断
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"rcToken"] == nil) {
+        NSLog(@"没有融云token");
         
     }
     else

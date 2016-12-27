@@ -65,8 +65,9 @@
     [self.view3 addGestureRecognizer:gesture3];
     [self.view4 addGestureRecognizer:gesture4];
     [self.view5 addGestureRecognizer:gesture5];
-    [self.view6 addGestureRecognizer:gesture6];
+//    [self.view6 addGestureRecognizer:gesture6];
     
+ 
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"充值记录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
     

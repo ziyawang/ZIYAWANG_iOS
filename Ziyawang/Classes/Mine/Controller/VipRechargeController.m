@@ -147,14 +147,14 @@
 - (void)setproductArray
 {
     self.productsArray = [NSMutableArray new];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.zichanbaoyuedu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyejidu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyenianduhuiyuan"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanjidu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongzijidu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongziniandu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenjidu"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenniandu"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.zichanbaoyuedu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyejidu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyenianduhuiyuan2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanjidu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongzijidu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongziniandu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenjidu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenniandu2"];
 }
 
 - (void)setamountArray
@@ -475,7 +475,6 @@
 - (void)dealloc
 {
     [[SKPaymentQueue defaultQueue]removeTransactionObserver:self];
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

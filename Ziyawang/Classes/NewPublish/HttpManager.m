@@ -41,7 +41,7 @@
     if (imageArray.count>0) {
         for (int i = 0; i<imageArray.count; i++) {
             NSData *imageData = UIImageJPEGRepresentation(imageArray[i], 1.0f);
-            [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"PictureDes%d",i+1] fileName:[NSString stringWithFormat:@"image%d",i+1] mimeType:@"image/jpg/png/jpeg"];
+            [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"PictureDes%d",i+1] fileName:[NSString stringWithFormat:@"image%d.png",i+1] mimeType:@"image/jpg/png/jpeg"];
         }
     }
      if (url != nil) {
@@ -54,13 +54,22 @@
       
       NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
       NSLog(@"%@",dic);
-      UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-      [alert show];
+      
+
+      if (!param[@"StarID"]) {
+          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"发布成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+          [alert show];
+      }
+      else
+      {
+          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"上传成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+          [alert show];
+      }
+     
       NSString *statu = @"成功";
       [self.HUD removeFromSuperViewOnHide];
       [self.HUD hideAnimated:YES];
       self.ifpop(statu);
-
   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
       
       NSLog(@"%@",error);
@@ -71,7 +80,6 @@
       [self.HUD removeFromSuperViewOnHide];
       [self.HUD hideAnimated:YES];
       self.ifpop(statu);
-      
   }];
     
 }

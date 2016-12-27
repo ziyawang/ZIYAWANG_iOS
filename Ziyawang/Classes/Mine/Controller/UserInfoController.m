@@ -102,6 +102,7 @@
     //    [self setupTitle];
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    
     UIView *statuView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
     statuView.backgroundColor = [UIColor blackColor];
     [self.navigationController.navigationBar addSubview:statuView];

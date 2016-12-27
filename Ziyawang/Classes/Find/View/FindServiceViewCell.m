@@ -20,6 +20,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fuwudengji;
 @property (weak, nonatomic) IBOutlet UILabel *fuwuleixing;
+@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *ima1;
+@property (weak, nonatomic) IBOutlet UIImageView *ima2;
+@property (weak, nonatomic) IBOutlet UIImageView *ima3;
+@property (weak, nonatomic) IBOutlet UIImageView *ima4;
+@property (weak, nonatomic) IBOutlet UIImageView *ima5;
+@property (weak, nonatomic) IBOutlet UIImageView *imag1;
+@property (weak, nonatomic) IBOutlet UIImageView *imag2;
+@property (weak, nonatomic) IBOutlet UIImageView *imag3;
+@property (weak, nonatomic) IBOutlet UIImageView *imag4;
+@property (weak, nonatomic) IBOutlet UIImageView *imag5;
 
 @end
 
@@ -43,14 +54,14 @@
 //    self.model.ServiceType = [NSString stringWithFormat:@"%@",self.model.ServiceType];
     
     
-    self.typeNameLable.font = [UIFont FontForLabel];
-    self.companyName.font = [UIFont FontForBigLabel];
-    self.servplaceLable.font = [UIFont FontForLabel];
-    self.placeLabel.font = [UIFont FontForLabel];
-    self.fuwudengji.font = [UIFont FontForLabel];
-    self.numberLabel.font = [UIFont FontForLabel];
-    self.fuwuleixing.font = [UIFont FontForLabel];
-    
+//    self.typeNameLable.font = [UIFont FontForLabel];
+//    self.companyName.font = [UIFont FontForBigLabel];
+//    self.servplaceLable.font = [UIFont FontForLabel];
+//    self.placeLabel.font = [UIFont FontForLabel];
+//    self.fuwudengji.font = [UIFont FontForLabel];
+//    self.numberLabel.font = [UIFont FontForLabel];
+//    self.fuwuleixing.font = [UIFont FontForLabel];
+//    
     self.typeNameLable.text = self.model.ServiceType;
     self.projectNameLable.text = self.model.ServiceNumber;
     
@@ -61,6 +72,9 @@
     self.imageurl1 = self.model.ConfirmationP1;
     self.imageurl2 = self.model.ConfirmationP2;
     self.imageurl3 = self.model.ConfirmationP3;
+    
+    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.imageurl1]]];
+    
     
 }
 
