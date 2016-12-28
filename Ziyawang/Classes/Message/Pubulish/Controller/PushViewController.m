@@ -214,6 +214,7 @@ self.navigationItem.title = @"发布";
     [defaults removeObjectForKey:@"3"];
     [defaults removeObjectForKey:@"4"];
     [defaults removeObjectForKey:@"企业所在"];
+    
     [defaults setObject:@"请选择" forKey:@"金额"];
     [defaults setObject:@"请选择" forKey:@"折扣"];
     NSString *isLogin = [defaults objectForKey:@"登录状态"];

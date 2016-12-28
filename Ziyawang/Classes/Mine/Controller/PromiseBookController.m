@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *postButton;
 @property (weak, nonatomic) IBOutlet UIView *imageBackView;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
-
 @end
 
 @implementation PromiseBookController
@@ -34,6 +33,7 @@
     self.postButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     
 }
 - (IBAction)downLoadPromiseBookButtonAction:(id)sender {

@@ -1097,6 +1097,10 @@
         identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
         identifiVC.ViewType = @"服务";
         identifiVC.role = self.role;
+        identifiVC.RegTime = self.userModel.RegTime;
+        identifiVC.Founds = self.userModel.Founds;
+        identifiVC.Size = self.userModel.Size;
+        
         [self.navigationController pushViewController:identifiVC animated:YES];
     }];
     [alertVC addAction:action1];

@@ -7,8 +7,12 @@
 //
 
 #import "GoldCertiViewController.h"
-
+#import "PayManager.h"
 @interface GoldCertiViewController ()
+@property (nonatomic,strong) NSString *product;
+@property (nonatomic,strong) NSString *payid;
+@property (nonatomic,strong) NSString *payname;
+
 
 @end
 
@@ -20,9 +24,27 @@
     UIColor *color = [UIColor blackColor];
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
     self.navigationController.navigationBar.titleTextAttributes = dict;
+    
+    self.payid = @"1";
+    self.payname = @"保证金认证";
+    self.product = @"i.e.com.ziyawang.Ziya.baozhengjin";
+    
 
 }
 - (IBAction)rechargeButtonAction:(id)sender {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    
+    NSString *URL = [[VipRechargeURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSLog(@"--------%@",URL);
+    NSMutableDictionary *dic = [NSMutableDictionary new];
+    [dic setObject:@"token" forKey:@"access_token"];
+    [dic setObject:self.payname forKey:@"payname"];
+    [dic setObject:self.payid forKey:@"payid"];
+    [dic setObject:@"star" forKey:@"paytype"];
+
+    
+    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic];
+    
 }
 
 - (void)didReceiveMemoryWarning {

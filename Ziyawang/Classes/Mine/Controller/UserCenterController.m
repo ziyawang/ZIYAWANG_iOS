@@ -725,6 +725,9 @@
                     identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
                     identifiVC.ViewType = @"服务";
                     identifiVC.role = self.role;
+                    identifiVC.RegTime = self.model.RegTime;
+                    identifiVC.Founds = self.model.Founds;
+                    identifiVC.Size = self.model.Size;
                     
                     
                     [self.navigationController pushViewController:identifiVC animated:YES];
@@ -753,10 +756,7 @@
                 
             case 2:
             {
-                
-                
-                
-                if ([self ifNeedLogin] == YES) {
+                    if ([self ifNeedLogin] == YES) {
                     LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
                     //        [self.navigationController pushViewController:loginVC animated:YES];
                     [self presentViewController:loginVC animated:YES completion:nil];

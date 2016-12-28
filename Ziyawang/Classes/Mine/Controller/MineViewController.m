@@ -828,6 +828,9 @@ self.navigationItem.title = @"个人中心";
                 identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
 
                 identifiVC.ViewType = @"服务";
+                identifiVC.RegTime = self.model.RegTime;
+                identifiVC.Founds = self.model.Founds;
+                identifiVC.Size = self.model.Size;
                 identifiVC.role = self.role;
 
 
@@ -898,6 +901,9 @@ self.navigationItem.title = @"个人中心";
                     identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
                     identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
                     identifiVC.ViewType = @"服务";
+                    identifiVC.RegTime = self.model.RegTime;
+                    identifiVC.Founds = self.model.Founds;
+                    identifiVC.Size = self.model.Size;
                     identifiVC.role = self.role;
                     
                     [self.navigationController pushViewController:identifiVC animated:YES];

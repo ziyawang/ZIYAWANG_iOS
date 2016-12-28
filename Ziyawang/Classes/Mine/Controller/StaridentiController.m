@@ -44,6 +44,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIColor *color = [UIColor blackColor];
+    NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    self.navigationItem.title = @"星级认证";
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [self setViews];

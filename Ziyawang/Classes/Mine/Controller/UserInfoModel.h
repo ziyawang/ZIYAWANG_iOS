@@ -25,4 +25,10 @@
 @property (nonatomic,strong) NSString *username;
 @property (nonatomic,strong) NSString *showrightios;
 @property (nonatomic,strong) NSString *EndTime;
+
+@property (nonatomic,strong) NSString *Size;
+@property (nonatomic,strong) NSString *Founds;
+@property (nonatomic,strong) NSString *RegTime;
+
+
 @end

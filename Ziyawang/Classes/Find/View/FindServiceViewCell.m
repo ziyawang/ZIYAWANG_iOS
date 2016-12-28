@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imag3;
 @property (weak, nonatomic) IBOutlet UIImageView *imag4;
 @property (weak, nonatomic) IBOutlet UIImageView *imag5;
+@property (weak, nonatomic) IBOutlet UILabel *noLabel;
 
 @end
 
@@ -61,7 +62,8 @@
 //    self.fuwudengji.font = [UIFont FontForLabel];
 //    self.numberLabel.font = [UIFont FontForLabel];
 //    self.fuwuleixing.font = [UIFont FontForLabel];
-//    
+//
+    [self.noLabel setHidden:YES];
     self.typeNameLable.text = self.model.ServiceType;
     self.projectNameLable.text = self.model.ServiceNumber;
     
@@ -76,6 +78,78 @@
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.imageurl1]]];
     
     
+    if ([self.model.right isEqualToString:@""]||self.model.right == nil) {
+        [self.noLabel setHidden:NO];
+    }
+    else
+    {
+    NSLog(@"%@",self.model.showrightiosStr);
+    NSArray *vipArr = [self.model.showrightiosStr componentsSeparatedByString:@","];
+        switch (vipArr.count) {
+  
+            case 1:
+                [self.noLabel setHidden:YES];
+                self.imag1.image = [UIImage imageNamed:vipArr[0]];
+                break;
+            case 2:
+                [self.noLabel setHidden:YES];
+                self.imag1.image = [UIImage imageNamed:vipArr[0]];
+                self.imag2.image = [UIImage imageNamed:vipArr[1]];
+                break;
+            case 3:
+                [self.noLabel setHidden:YES];
+                self.imag1.image = [UIImage imageNamed:vipArr[0]];
+                self.imag2.image = [UIImage imageNamed:vipArr[1]];
+                self.imag3.image = [UIImage imageNamed:vipArr[2]];
+                break;
+            case 4:
+                [self.noLabel setHidden:YES];
+                self.imag1.image = [UIImage imageNamed:vipArr[0]];
+                self.imag2.image = [UIImage imageNamed:vipArr[1]];
+                self.imag3.image = [UIImage imageNamed:vipArr[2]];
+                self.imag4.image = [UIImage imageNamed:vipArr[3]];
+                break;
+            case 5:
+                [self.noLabel setHidden:YES];
+                self.imag1.image = [UIImage imageNamed:vipArr[0]];
+                self.imag2.image = [UIImage imageNamed:vipArr[1]];
+                self.imag3.image = [UIImage imageNamed:vipArr[2]];
+                self.imag4.image = [UIImage imageNamed:vipArr[3]];
+                self.imag5.image = [UIImage imageNamed:vipArr[4]];
+                break;
+            default:
+                break;
+        }
+     }
+    
+    
+    if ([self.model.Level isEqualToString:@""]||self.model.Level == nil) {
+        [self.noLabel setHidden:NO];
+    }
+    else
+    {
+        NSArray *starArr = [self.model.Level componentsSeparatedByString:@","];
+        for (NSString *starStr in starArr)
+        {
+            if ([starStr isEqualToString:@"1"]) {
+                self.ima1.image = [UIImage imageNamed:@"baozhengjin"];
+            }
+            if ([starStr isEqualToString:@"2"]) {
+                self.ima2.image = [UIImage imageNamed:@"shi"];
+            }
+            if ([starStr isEqualToString:@"3"]) {
+                self.ima3.image = [UIImage imageNamed:@"shipin"];
+            }
+            if ([starStr isEqualToString:@"4"]) {
+                self.ima4.image = [UIImage imageNamed:@"nuo"];
+
+            }
+            if ([starStr isEqualToString:@"5"]) {
+                self.ima5.image = [UIImage imageNamed:@"zheng"];
+
+            }
+        }
+    }
 }
 
 - (void)awakeFromNib {

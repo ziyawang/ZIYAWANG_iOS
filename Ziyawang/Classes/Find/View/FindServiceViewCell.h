@@ -10,5 +10,5 @@
 #import "FindServiceModel.h"
 @interface FindServiceViewCell : UITableViewCell
 @property (nonatomic,strong) FindServiceModel *model;
-
+@property (nonatomic,strong) NSMutableArray *vipRightArray;
 @end

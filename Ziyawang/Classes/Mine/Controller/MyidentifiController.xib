@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyidentifiController">
             <connections>
+                <outlet property="RegtimeView" destination="0SM-Uy-kCe" id="jEm-Sb-15j"/>
                 <outlet property="ScrollView" destination="kzj-nU-8Wf" id="Rae-Be-1GU"/>
                 <outlet property="addImageButton" destination="Hm3-DA-DOi" id="dGx-9h-hrG"/>
                 <outlet property="addImageButtonLeftConstraint" destination="thR-Sz-oO6" id="7hk-ex-meo"/>
@@ -23,6 +24,7 @@
                 <outlet property="companyLocationView" destination="suN-UG-pMK" id="uIM-nT-M4z"/>
                 <outlet property="companyServiceView" destination="grw-Ew-G0D" id="Si0-Yj-Fke"/>
                 <outlet property="companyTextField" destination="brG-xL-bFW" id="fuj-pb-IAB"/>
+                <outlet property="foundsTextField" destination="ueo-BT-eYQ" id="qTk-73-zM5"/>
                 <outlet property="fuwudiqu" destination="aSv-S3-FZ9" id="iCq-oS-gzH"/>
                 <outlet property="fuwuleixing" destination="vpE-XD-bTA" id="Lkt-JP-Ngi"/>
                 <outlet property="imageBackView" destination="ilg-OL-yMY" id="ZKn-9v-r9a"/>
@@ -32,7 +34,9 @@
                 <outlet property="sentButtonBackView" destination="Th1-y7-sf2" id="V8J-8B-zgS"/>
                 <outlet property="sentMessageButton" destination="pAQ-uM-Bkq" id="hPN-I0-woW"/>
                 <outlet property="serviceView" destination="hjL-MQ-wdy" id="rxW-eV-7M0"/>
+                <outlet property="sizeTextField" destination="VSD-bv-jB6" id="p8e-s7-pz9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="zhuceTimeLabel" destination="LfS-HM-0qc" id="zTy-3p-JUK"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -397,9 +401,9 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="jGM-2C-1Xf"/>
                                             <exclude reference="I9Y-l1-I8x"/>
                                             <exclude reference="gDr-wz-5Hm"/>
+                                            <exclude reference="jGM-2C-1Xf"/>
                                             <exclude reference="vu2-fX-szg"/>
                                         </mask>
                                     </variation>
@@ -444,9 +448,9 @@
                                     <variation key="default">
                                         <mask key="constraints">
                                             <exclude reference="Pl6-Tn-Y0n"/>
-                                            <exclude reference="pG2-qI-Uy9"/>
                                             <exclude reference="lkn-Lx-95n"/>
                                             <exclude reference="nFz-au-amP"/>
+                                            <exclude reference="pG2-qI-Uy9"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -461,17 +465,17 @@
                                             </constraints>
                                             <state key="normal" backgroundImage="jiantou.png"/>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfS-HM-0qc">
-                                            <rect key="frame" x="269" y="12" width="200" height="0.0"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfS-HM-0qc">
+                                            <rect key="frame" x="269" y="12" width="200" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="mrW-8A-3yc"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.65482908490000002" green="0.65494394300000003" blue="0.65482187270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="服务地区" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsh-tf-Zv7">
-                                            <rect key="frame" x="10" y="12" width="57.5" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成立时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsh-tf-Zv7">
+                                            <rect key="frame" x="10" y="12" width="58" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>

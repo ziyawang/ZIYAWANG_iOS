@@ -38,6 +38,8 @@
 
 @property (nonatomic,assign) NSInteger startPage;
 
+@property (nonatomic,strong) NSMutableArray *vipRightArray;
+
 
 @end
 
@@ -53,6 +55,7 @@
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
 
     self.sourceArray = [NSMutableArray array];
+    self.vipRightArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
     [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
 
@@ -115,6 +118,8 @@
             FindServiceModel *model = [[FindServiceModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:model];
+            [self.vipRightArray addObject:dic[@"showrightios"]];
+            
         }
        
         [self.HUD removeFromSuperViewOnHide];
@@ -154,11 +159,13 @@
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSMutableArray *sourceArray = dic[@"data"];
         NSMutableArray *addArray = [NSMutableArray new];
+        NSMutableArray *addvipArray = [NSMutableArray new];
         for (NSDictionary *dic in sourceArray) {
             
             FindServiceModel *model = [[FindServiceModel alloc]init];
             [model setValuesForKeysWithDictionary:dic];
             [addArray addObject:model];
+            [addvipArray addObject:dic[@"showrightios"]];
         }
         if (addArray.count == 0) {
             //            [self.tableView.mj_footer resetNoMoreData];
@@ -170,6 +177,8 @@
         else
         {
         [self.sourceArray addObjectsFromArray:addArray];
+        [self.vipRightArray addObjectsFromArray:addvipArray];
+            
         [self.tableView.mj_footer endRefreshing];
     
         [self.tableView reloadData];
@@ -220,14 +229,14 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
 //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
-        NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"律师事务所",@"保理公司",@"典当公司",@"担保公司",@"催收机构",@"尽职调查",@"资产收购",@"债权收购"];
-        NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"05",@"02",@"10",@"12",@"14"];
+    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"法律服务",@"委外催收",@"收购固产"];
+    NSArray *informationTypeID = @[@"01",@"06",@"03",@"02",@"12"];
     
 
     
     
     
-    NSArray *level = @[@"VIP1"];
+    NSArray *level = @[@"不限",@"会员"];
     menuView.indexsOneFist = infonmationType;
     menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
@@ -256,6 +265,15 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
                 //                    [weakSelf findServiceswithDic:self.dataDic];
                 //
                 //                });
+            }
+        }
+        
+        for (NSString *tyStr in level) {
+            if ([tyStr isEqualToString:string]) {
+                if ([tyStr isEqualToString:@"不限"] == NO) {
+                    [self.dataDic setObject:@"1" forKey:@"ServiceLevel"];
+                }
+                [weakSelf findServiceswithDic:self.dataDic];
             }
         }
         for (NSString *sstr in infonmationType) {
@@ -363,7 +381,7 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
     FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+   
     return cell;
 }
 

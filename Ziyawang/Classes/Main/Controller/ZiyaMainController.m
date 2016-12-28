@@ -200,7 +200,8 @@
 
 @property (nonatomic,strong) NSArray *imageArray1;
 @property (nonatomic,strong) NSArray *imageArray2;
-
+@property (nonatomic,strong) NSArray *imageArray3;
+@property (nonatomic,strong) NSArray *imageArray4;
 @property (nonatomic,strong) UIView *PromiseView;
 @property (nonatomic,strong) NSString *selectTypeName;
 @property (nonatomic,strong) NSString *right;
@@ -497,9 +498,10 @@ self.navigationItem.title = @"首页";
     self.array1 = @[@"资产包",@"融资信息",@"固定资产",@"个人债权"];
     self.array2 = @[@"投资需求",@"融资需求",@"悬赏信息",@"委外催收"];
     self.array3 = @[@"企业商账",@"法拍资产",@"处置公告",@"担保信息"];
-    self.array4 = @[@"资产包收购",@"债权收购",@"律师事务所",@"保理公司"];
+    
+    self.array4 = @[@"资产包收购",@"投融资服务",@"收购固产",@"委外催收"];
     self.array5 = @[@"典当公司",@"投融资服务",@"尽职调查",@"资产收购"];
-    self.array6 = @[@"担保公司",@"催收机构"];
+    self.array6 = @[@"法律服务",@"催收机构"];
     self.array7 = @[@"投资需求"];
     
     self.findType = @"找信息";
@@ -509,6 +511,11 @@ self.navigationItem.title = @"首页";
     
     self.imageArray1 = @[@"bao",@"rong",@"gu",@"gerenzhaiquan"];
     self.imageArray2 = @[@"qiye",@"fapai",@"chuzhi"];
+    self.imageArray3 = @[@"1",@"14",@"3",@"8"];
+    self.imageArray4 = @[@"10"];
+    
+    
+
 }
 #pragma mark ---- 设置HeaderView
 /**
@@ -899,6 +906,8 @@ self.navigationItem.title = @"首页";
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
+        
+        
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(-5, button.bounds.size.height-8, button.bounds.size.width, 20)];
         
         lable.centerX = imageView.centerX;
@@ -951,62 +960,64 @@ self.navigationItem.title = @"首页";
         button.tag = i + 12;
         [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, Buttonheight -20, Buttonheight - 20)];
+        [imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        
+        
+        
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
-        if (i == 1 || i == 3) {
-            lable = [[UILabel alloc]initWithFrame:CGRectMake(-5, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
-        }
+            lable = [[UILabel alloc]initWithFrame:CGRectMake(-8, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
+    
         
         imageView.backgroundColor = [UIColor whiteColor];
         
         lable.font = [UIFont FontForBigLabel];
         lable.textAlignment = NSTextAlignmentCenter;
-        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
-        if (i==3) {
-            imageView.image = [UIImage imageNamed:@"10"];
-            
-        }
+        imageView.image = [UIImage imageNamed:self.imageArray3[i-1]];
+ 
         lable.text = self.array4[i-1];
         [button addSubview:imageView];
         [button addSubview:lable];
         [view addSubview:button];
     }
-    //设置按钮的图片---图片数组
-    for (int i = 1; i < 5; i ++) {
-        UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [button setFrame:
-         CGRectMake(20 *i + Buttonheight * (i-1), 10 + Buttonheight + 20,
-                    Buttonheight, Buttonheight)];
-        //        button.backgroundColor = [UIColor blackColor];
-        button.tag = i + 16;
-        [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
-        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
-        lable.textAlignment = NSTextAlignmentCenter;
-        lable.font = [UIFont FontForBigLabel];
-        if (i==2) {
-            lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
-        }
-        //        imageView.backgroundColor = [UIColor whiteColor];
-        lable.font = [UIFont FontForBigLabel];
-        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+4]];
-        if (i ==2) {
-            imageView.image = [UIImage imageNamed:@"14"];
-        }
-        if(i==3)
-        {
-            imageView.image = [UIImage imageNamed:@"8"];
-            
-        }
-        if (i==4) {
-            imageView.image = [UIImage imageNamed:@"3"];
-        }
-        
-        lable.text = self.array5[i-1];
-        [button addSubview:imageView];
-        [button addSubview:lable];
-        [view addSubview:button];
-    }
+//    //设置按钮的图片---图片数组
+//    for (int i = 1; i < 5; i ++) {
+//        UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//        [button setFrame:
+//         CGRectMake(20 *i + Buttonheight * (i-1), 10 + Buttonheight + 20,
+//                    Buttonheight, Buttonheight)];
+//        //        button.backgroundColor = [UIColor blackColor];
+//        button.tag = i + 16;
+//        [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
+//        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
+//        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
+//        lable.textAlignment = NSTextAlignmentCenter;
+//        lable.font = [UIFont FontForBigLabel];
+//        if (i==2) {
+//            lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width+10, 20)];
+//        }
+//        //        imageView.backgroundColor = [UIColor whiteColor];
+//        lable.font = [UIFont FontForBigLabel];
+//        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+4]];
+//        if (i ==2) {
+//            imageView.image = [UIImage imageNamed:@"14"];
+//        }
+//        if(i==3)
+//        {
+//            imageView.image = [UIImage imageNamed:@"8"];
+//            
+//        }
+//        if (i==4) {
+//            imageView.image = [UIImage imageNamed:@"3"];
+//        }
+//        
+//        lable.text = self.array5[i-1];
+//        [button addSubview:imageView];
+//        [button addSubview:lable];
+//        [view addSubview:button];
+//    }
 }
 /**
  *  找服务右侧
@@ -1016,7 +1027,7 @@ self.navigationItem.title = @"首页";
 - (void)setButtonWithrightView2:(UIView *)view
 {
     CGFloat Buttonheight = (self.tableView.bounds.size.width - 100) / 4;
-    for(int i = 1;i< 3;i ++)
+    for(int i = 1;i< 2;i ++)
     {
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [button setFrame:
@@ -1026,20 +1037,20 @@ self.navigationItem.title = @"首页";
         //        [rightView addSubview:button];
         button.tag = i + 16;
         [button addTarget:self action:@selector(addtatgetWithButtonTag:) forControlEvents:(UIControlEventTouchUpInside)];
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, button.bounds.size.width -10, button.bounds.size.height - [self heightFotypeimageViews])];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, Buttonheight -20, Buttonheight - 20)];
+        [imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        
+
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, button.bounds.size.height-8, button.bounds.size.width, 20)];
-        lable.textAlignment = NSTextAlignmentCenter;
+        lable.textAlignment = NSTextAlignmentLeft;
         lable.font = [UIFont FontForBigLabel];
         //        imageView.backgroundColor = [UIColor whiteColor];
         
-        if (i == 1) {
-            imageView.image = [UIImage imageNamed:@"12"];
-            
-        }
-        if (i == 2) {
-            imageView.image = [UIImage imageNamed:@"9"];
-            
-        }
+        imageView.image = [UIImage imageNamed:self.imageArray4[i-1]];
+        
+        
         lable.text = self.array6[i-1];
         [button addSubview:imageView];
         [button addSubview:lable];
@@ -1611,17 +1622,17 @@ self.navigationItem.title = @"首页";
 //                                             [self getSectionHaderHight2]
 //                                             )];
 //        
-        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight2] +99)];
-        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
-                                            [self getSectionHaderHight2]
-                                             )];
-        
-        
-        [self.jingxuanView setFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight2], self.view.bounds.size.width, 45)];
-        
-        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
-        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight2] +45);
-        [self.pageControl setCenter:pagePoint];
+//        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight2] +99)];
+//        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
+//                                            [self getSectionHaderHight2]
+//                                             )];
+//        
+//        
+//        [self.jingxuanView setFrame:CGRectMake(0, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
+//
+//        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
+//        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight2] +45);
+//        [self.pageControl setCenter:pagePoint];
         
         
         [self loadNewServiceData];
@@ -1633,14 +1644,14 @@ self.navigationItem.title = @"首页";
 
     }
     if ([searchButton.titleLabel.text isEqualToString:@"找服务"]) {
-        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight] +99)];
-        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
-                                             [self getSectionHaderHight]
-                                             )];
-        [self.jingxuanView setFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
-        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
-        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight] +45);
-        [self.pageControl setCenter:pagePoint];
+//        [self.backView setFrame:CGRectMake(0, [self getImageViewHight], self.tableView.bounds.size.width, [self getSectionHaderHight] +99)];
+//        [self.scrollView setFrame:CGRectMake(0, 58,self.backView.bounds.size.width,
+//                                             [self getSectionHaderHight]
+//                                             )];
+//        [self.jingxuanView setFrame:CGRectMake(3.5, 58 + [self getSectionHaderHight], self.view.bounds.size.width, 45)];
+//        [self.pageControl setFrame:CGRectMake(0, self.scrollView.bounds.size.height , 80, 5)];
+//        CGPoint pagePoint = CGPointMake(self.view.center.x, [self getSectionHaderHight] +45);
+//        [self.pageControl setCenter:pagePoint];
 
         [self loadNewInfoData];
         [searchButton setTitle:@"找信息" forState:(UIControlStateNormal)];
@@ -1881,40 +1892,39 @@ self.navigationItem.title = @"首页";
             findserviceVC.type = @"资产包收购";
             findserviceVC.navigationItem.title = @"资产包收购";
             [self.navigationController pushViewController:findserviceVC animated:YES];
-            
             break;
             
         case 14:
             NSLog(@"14");
-            findserviceVC.searchValue = @"14";
-            findserviceVC.type = @"债权收购";
-            findserviceVC.navigationItem.title = @"债权收购";
+            findserviceVC.searchValue = @"06";
+            findserviceVC.type = @"投融资服务";
+            findserviceVC.navigationItem.title = @"投融资服务";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 15:
             NSLog(@"15");
-            findserviceVC.searchValue = @"03";
-            findserviceVC.type = @"律师事务所";
-            findserviceVC.navigationItem.title = @"律师事务所";
+            findserviceVC.searchValue = @"12";
+            findserviceVC.type = @"收购固产";
+            findserviceVC.navigationItem.title = @"收购固产";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 16:
             NSLog(@"16");
-            findserviceVC.searchValue = @"04";
-            findserviceVC.type = @"保理服务";
+            findserviceVC.searchValue = @"02";
+            findserviceVC.type = @"委外催收";
 
-            findserviceVC.navigationItem.title = @"保理服务";
+            findserviceVC.navigationItem.title = @"委外催收";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
         case 17:
             NSLog(@"17");
-            findserviceVC.searchValue = @"05";
-            findserviceVC.type = @"典当公司";
+            findserviceVC.searchValue = @"03";
+            findserviceVC.type = @"法律服务";
 
-            findserviceVC.navigationItem.title = @"典当公司";
+            findserviceVC.navigationItem.title = @"法律服务";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             
             break;
@@ -1945,10 +1955,10 @@ self.navigationItem.title = @"首页";
             break;
         case 21:
             NSLog(@"19");
-            findserviceVC.searchValue = @"05";
-            findserviceVC.type = @"担保服务";
+            findserviceVC.searchValue = @"03";
+            findserviceVC.type = @"法律服务";
 
-            findserviceVC.navigationItem.title = @"担保服务";
+            findserviceVC.navigationItem.title = @"法律服务";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
         case 22:
@@ -2084,6 +2094,9 @@ self.navigationItem.title = @"首页";
         identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
         identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
         identifiVC.ViewType = @"服务";
+        identifiVC.RegTime = self.userModel.RegTime;
+        identifiVC.Founds = self.userModel.Founds;
+        identifiVC.Size = self.userModel.Size;
         identifiVC.role = self.role;
         [self.navigationController pushViewController:identifiVC animated:YES];
     }];

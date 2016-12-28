@@ -83,36 +83,36 @@
                         <color key="textColor" red="0.36454525589942932" green="0.36859476566314697" blue="0.37270644307136536" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SzU-sJ-DkX">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bao-hui.png" translatesAutoresizingMaskIntoConstraints="NO" id="SzU-sJ-DkX">
                         <rect key="frame" x="145" y="30.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="Wwv-yP-xZT"/>
                             <constraint firstAttribute="height" constant="15" id="lm5-0U-2J2"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3P5-nv-M4J">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shi-hui.png" translatesAutoresizingMaskIntoConstraints="NO" id="3P5-nv-M4J">
                         <rect key="frame" x="162" y="30.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="vmo-w2-3gs"/>
                             <constraint firstAttribute="width" constant="15" id="zPY-8B-OOx"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pKv-9Q-liu">
-                        <rect key="frame" x="179" y="30.5" width="15" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shi-hui-1.png" translatesAutoresizingMaskIntoConstraints="NO" id="pKv-9Q-liu">
+                        <rect key="frame" x="179" y="31" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Byf-8Q-LPs"/>
                             <constraint firstAttribute="width" constant="15" id="S5d-H4-7Bu"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F9u-eF-B0H">
-                        <rect key="frame" x="196" y="30.5" width="15" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nuo-hui.png" translatesAutoresizingMaskIntoConstraints="NO" id="F9u-eF-B0H">
+                        <rect key="frame" x="196" y="30" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="6z0-Wg-tlW"/>
                             <constraint firstAttribute="height" constant="15" id="oFX-og-mVe"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VPv-hV-PUo">
-                        <rect key="frame" x="213" y="30.5" width="15" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zheng-hui.png" translatesAutoresizingMaskIntoConstraints="NO" id="VPv-hV-PUo">
+                        <rect key="frame" x="213" y="30" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="NUn-sG-WCu"/>
                             <constraint firstAttribute="width" constant="15" id="j7i-jh-hOB"/>
@@ -132,39 +132,46 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tjd-bU-59t">
-                        <rect key="frame" x="239.5" y="81" width="20" height="15"/>
+                        <rect key="frame" x="239.5" y="80.5" width="20" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="GIN-eh-i45"/>
                             <constraint firstAttribute="height" constant="15" id="Gt1-9R-Anq"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uds-n8-wQJ">
-                        <rect key="frame" x="262.5" y="81" width="20" height="15"/>
+                        <rect key="frame" x="262.5" y="80.5" width="20" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="QAq-m0-y2G"/>
                             <constraint firstAttribute="height" constant="15" id="gl8-V2-l2p"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xsx-mn-iBR">
-                        <rect key="frame" x="285.5" y="81" width="20" height="15"/>
+                        <rect key="frame" x="285.5" y="80.5" width="20" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="GIg-Jk-v9f"/>
                             <constraint firstAttribute="width" constant="20" id="m9O-oG-Gyq"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c0m-dd-d7a">
-                        <rect key="frame" x="308.5" y="80" width="20" height="15"/>
+                        <rect key="frame" x="308.5" y="80.5" width="20" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="Hi6-v1-4rY"/>
                             <constraint firstAttribute="height" constant="15" id="rve-CN-vXY"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHU-O2-29b">
+                        <rect key="frame" x="216.5" y="79.5" width="14.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="PE5-h2-6Rs" firstAttribute="leading" secondItem="qrS-xi-8AV" secondAttribute="trailing" id="2gm-XU-MRH"/>
                     <constraint firstItem="Uds-n8-wQJ" firstAttribute="centerY" secondItem="yxg-bQ-Kjv" secondAttribute="centerY" id="2p4-q5-8eG"/>
                     <constraint firstItem="F9u-eF-B0H" firstAttribute="leading" secondItem="pKv-9Q-liu" secondAttribute="trailing" constant="2" id="9Mc-FB-aEq"/>
                     <constraint firstItem="3P5-nv-M4J" firstAttribute="leading" secondItem="SzU-sJ-DkX" secondAttribute="trailing" constant="2" id="9eN-Sd-HLh"/>
+                    <constraint firstItem="bHU-O2-29b" firstAttribute="centerY" secondItem="m5H-R0-67p" secondAttribute="centerY" id="BeW-J7-ygE"/>
                     <constraint firstItem="pKv-9Q-liu" firstAttribute="leading" secondItem="3P5-nv-M4J" secondAttribute="trailing" constant="2" id="BuB-fK-iVz"/>
                     <constraint firstAttribute="bottom" secondItem="fQf-rK-aeA" secondAttribute="bottom" id="EYi-bm-VDx"/>
                     <constraint firstItem="T0V-Er-a7l" firstAttribute="top" secondItem="F9u-eF-B0H" secondAttribute="bottom" id="FTW-Jg-N5g"/>
@@ -201,6 +208,7 @@
                     <constraint firstItem="0xu-xg-e4R" firstAttribute="leading" secondItem="6nW-A5-cqt" secondAttribute="trailing" constant="5" id="lXI-Rw-Lch"/>
                     <constraint firstItem="6nW-A5-cqt" firstAttribute="top" secondItem="Ot4-jo-tMR" secondAttribute="top" constant="10" id="u2i-kg-Q1X"/>
                     <constraint firstItem="BEZ-03-Iuk" firstAttribute="leading" secondItem="fQf-rK-aeA" secondAttribute="trailing" id="uLR-so-RCl"/>
+                    <constraint firstItem="bHU-O2-29b" firstAttribute="leading" secondItem="m5H-R0-67p" secondAttribute="trailing" id="vCC-fg-qAy"/>
                     <constraint firstItem="F9u-eF-B0H" firstAttribute="centerY" secondItem="SzU-sJ-DkX" secondAttribute="centerY" id="wTE-b4-4Ui"/>
                     <constraint firstItem="Tjd-bU-59t" firstAttribute="leading" secondItem="yxg-bQ-Kjv" secondAttribute="trailing" constant="3" id="waq-2Z-l3g"/>
                     <constraint firstItem="SzU-sJ-DkX" firstAttribute="top" secondItem="0xu-xg-e4R" secondAttribute="bottom" id="xGC-ke-pUf"/>
@@ -228,6 +236,7 @@
                 <outlet property="imag4" destination="xsx-mn-iBR" id="HwJ-6x-mG5"/>
                 <outlet property="imag5" destination="c0m-dd-d7a" id="kNN-GV-VmF"/>
                 <outlet property="leftImageView" destination="6nW-A5-cqt" id="fAN-rD-3E5"/>
+                <outlet property="noLabel" destination="bHU-O2-29b" id="cXb-wV-qr9"/>
                 <outlet property="placeLabel" destination="T0V-Er-a7l" id="rUG-rS-Hj2"/>
                 <outlet property="servplaceLable" destination="xMf-ZO-hcr" id="xMl-zF-b1q"/>
                 <outlet property="typeNameLable" destination="PE5-h2-6Rs" id="8Kc-Bt-8Td"/>
@@ -235,4 +244,11 @@
             <point key="canvasLocation" x="-129.5" y="-354"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bao-hui.png" width="23" height="22"/>
+        <image name="nuo-hui.png" width="23" height="22"/>
+        <image name="shi-hui-1.png" width="23" height="22"/>
+        <image name="shi-hui.png" width="23" height="22"/>
+        <image name="zheng-hui.png" width="23" height="22"/>
+    </resources>
 </document>

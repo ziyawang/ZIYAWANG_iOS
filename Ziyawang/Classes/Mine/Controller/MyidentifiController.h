@@ -23,5 +23,11 @@
 @property (nonatomic,strong) NSString *ServiceArea;
 @property (nonatomic,strong) NSString *ViewType;
 @property (nonatomic,strong) NSString *role;
+@property (nonatomic,strong) NSString *RegTime;
+@property (nonatomic,strong) NSString *Founds;
+@property (nonatomic,strong) NSString *Size;
+
+
+
 
 @end

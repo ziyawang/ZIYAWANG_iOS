@@ -106,6 +106,7 @@
     {
         [self.sourceArray removeAllObjects];
     }
+    
     NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
     //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
     NSMutableDictionary *getdic = self.dataDic;
@@ -236,14 +237,14 @@
     //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
     //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
-    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"律师事务所",@"保理公司",@"典当公司",@"担保公司",@"催收机构",@"尽职调查",@"资产收购",@"债权收购"];
-    NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"05",@"02",@"10",@"12",@"14"];
+    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"法律服务",@"委外催收",@"收购固产"];
+    NSArray *informationTypeID = @[@"01",@"06",@"03",@"02",@"12"];
     
     
     
     
     
-    NSArray *level = @[@"VIP1"];
+    NSArray *level = @[@"不限",@"会员"];
     menuView.indexsOneFist = infonmationType;
     menuView.indexsTwoFist = self.shengArray;
     //    menuView.indexsTwoSecond = self.allshiArray;
@@ -276,6 +277,15 @@
                 //                });
             }
         }
+        for (NSString *tyStr in level) {
+            if ([tyStr isEqualToString:string]) {
+                if ([tyStr isEqualToString:@"不限"] == NO) {
+                    [self.dataDic setObject:@"1" forKey:@"ServiceLevel"];
+                }
+                [weakSelf findServiceswithDic:self.dataDic];
+            }
+        }
+
         for (NSString *sstr in infonmationType) {
             if ([sstr isEqualToString:string]) {
                 if ([sstr isEqualToString:infonmationType[0]]) {

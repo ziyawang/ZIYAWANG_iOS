@@ -32,13 +32,15 @@
     return defaultManager;
 }
 
-+(void)PayForPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param
+-(void)PayForPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param
 {
     [self PayForPruduct:pruduct WithURL:url param:param];
 }
 
 - (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param
 {
+    
+
     self.product = pruduct;
     self.URL = url;
     self.param = param;
@@ -184,12 +186,14 @@
 
 - (void)sendReceiptToDomainWithReceipt:(NSString *)receipt
 {
+    
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     
     NSString *URL = [[VipRechargeURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSLog(@"--------%@",URL);
     
-    
+    [self.param setObject:receipt forKey:@"backnumber"];
+
     [self.manager POST:self.URL parameters:self.param progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

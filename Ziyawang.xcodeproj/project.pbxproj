@@ -726,6 +726,9 @@
 		78B41CD81DC71A470089B46A /* ZixunViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B41CD61DC71A470089B46A /* ZixunViewCell.m */; };
 		78B41CD91DC71A470089B46A /* ZixunViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B41CD71DC71A470089B46A /* ZixunViewCell.xib */; };
 		78B41CDC1DC745380089B46A /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B41CDB1DC745380089B46A /* NewsModel.m */; };
+		78B46B1B1E13BA6E00FFF274 /* youzhi.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B46B181E13BA6E00FFF274 /* youzhi.png */; };
+		78B46B1C1E13BA6E00FFF274 /* youzhi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B46B191E13BA6E00FFF274 /* youzhi@2x.png */; };
+		78B46B1D1E13BA6E00FFF274 /* youzhi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B46B1A1E13BA6E00FFF274 /* youzhi@3x.png */; };
 		78B4A5EE1DFE66D7005F337B /* SkyerCityPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B4A5ED1DFE66D7005F337B /* SkyerCityPicker.m */; };
 		78B4A5F01DFE6A7E005F337B /* address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B4A5EF1DFE6A7E005F337B /* address.plist */; };
 		78CDF18F1DD0ABEC00812E1C /* NewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDF18E1DD0ABEC00812E1C /* NewWebViewController.m */; };
@@ -1949,6 +1952,9 @@
 		78B41CD71DC71A470089B46A /* ZixunViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZixunViewCell.xib; sourceTree = "<group>"; };
 		78B41CDA1DC745380089B46A /* NewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
 		78B41CDB1DC745380089B46A /* NewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
+		78B46B181E13BA6E00FFF274 /* youzhi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youzhi.png; sourceTree = "<group>"; };
+		78B46B191E13BA6E00FFF274 /* youzhi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youzhi@2x.png"; sourceTree = "<group>"; };
+		78B46B1A1E13BA6E00FFF274 /* youzhi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youzhi@3x.png"; sourceTree = "<group>"; };
 		78B4A5EC1DFE66D7005F337B /* SkyerCityPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkyerCityPicker.h; sourceTree = "<group>"; };
 		78B4A5ED1DFE66D7005F337B /* SkyerCityPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyerCityPicker.m; sourceTree = "<group>"; };
 		78B4A5EF1DFE6A7E005F337B /* address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = address.plist; sourceTree = "<group>"; };
@@ -3233,6 +3239,9 @@
 		7836E8ED1D5DFFC900187E41 /* shouyeButton */ = {
 			isa = PBXGroup;
 			children = (
+				78B46B181E13BA6E00FFF274 /* youzhi.png */,
+				78B46B191E13BA6E00FFF274 /* youzhi@2x.png */,
+				78B46B1A1E13BA6E00FFF274 /* youzhi@3x.png */,
 				78DB142D1DF5082B0051F73A /* ping_gu.png */,
 				78DB142E1DF5082B0051F73A /* ping_gu@2x.png */,
 				78DB142F1DF5082B0051F73A /* ping_gu@3x.png */,
@@ -4868,11 +4877,13 @@
 				782522A61D77DE5300F2C0A2 /* xiaosousuo@2x.png in Resources */,
 				78D960E11D9B6CEB007ECABA /* yuetan-goldcoin.png in Resources */,
 				782522A21D77DE5300F2C0A2 /* xiala.png in Resources */,
+				78B46B1C1E13BA6E00FFF274 /* youzhi@2x.png in Resources */,
 				780E52A31D73E1120083A3E1 /* chakan-xuanzhong.png in Resources */,
 				78163DA91E03A36500E46B87 /* grzq@2x.png in Resources */,
 				78DB14371DF5092A0051F73A /* commentCount@2x.png in Resources */,
 				781047671E0BC83D00A9B5A4 /* nuo@2x.png in Resources */,
 				782522691D77DE5300F2C0A2 /* jiantou.png in Resources */,
+				78B46B1B1E13BA6E00FFF274 /* youzhi.png in Resources */,
 				78163D691E01470500E46B87 /* superge@2x.png in Resources */,
 				7889626C1D8680BE008DC681 /* KNPhotoBrower.bundle in Resources */,
 				7836E9171D5DFFC900187E41 /* 6@3x.png in Resources */,
@@ -5191,6 +5202,7 @@
 				7825227F1D77DE5300F2C0A2 /* shenqingqiangdanren@2x.png in Resources */,
 				782523291D7D72E500F2C0A2 /* Serviceidentification@2x.png in Resources */,
 				786C4DEE1DE717C000C19373 /* rong@3x.png in Resources */,
+				78B46B1D1E13BA6E00FFF274 /* youzhi@3x.png in Resources */,
 				78D9603F1D967FA8007ECABA /* xiaobai@2x.png in Resources */,
 				78276AAB1E012595000F83B5 /* darong.png in Resources */,
 				781E656E1DE2D5B900C13C2B /* PersonalDebtsController.xib in Resources */,

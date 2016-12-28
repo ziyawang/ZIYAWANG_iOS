@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface PayManager : NSObject
-+ (void)PayForPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param;
++(PayManager *)payManager;
+
+- (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param;
 
 
 @end

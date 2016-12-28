@@ -25,6 +25,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
 @property (weak, nonatomic) IBOutlet UITextView *comPanyDesTextView;
+@property (weak, nonatomic) IBOutlet UITextField *sizeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *foundsTextField;
+@property (weak, nonatomic) IBOutlet UILabel *zhuceTimeLabel;
+@property (weak, nonatomic) IBOutlet UIView *RegtimeView;
+
+
 @property (weak, nonatomic) IBOutlet UIButton *chooseButton1;
 @property (weak, nonatomic) IBOutlet UIButton *chooseButton2;
 @property (weak, nonatomic) IBOutlet UIButton *chooseButton3;
@@ -55,10 +61,12 @@
 @property (nonatomic,strong) UserInfoModel *model;
 @property (nonatomic,strong) NSString *servicetypeID;
 @property (nonatomic,assign) BOOL isPhoneNumber;
+@property (nonatomic,strong) UIView *mengbanView;
 
-
-
-
+@property (nonatomic,strong) UIPickerView *pickerView;
+@property (nonatomic,strong) UIView *pickerBackView;
+@property (nonatomic,strong) UIView *DatepickerBackView;
+@property (nonatomic,strong) UIDatePicker *datePicker;
 
 
 @end
@@ -128,6 +136,8 @@
         }
     }
     
+    
+    
 }
 
 
@@ -173,7 +183,6 @@
 {
       NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     NSString *role = self.role;
-    
     NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@"token" forKey:@"access_token"];
@@ -183,12 +192,19 @@
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
+        NSLog(@"%@",dic);
 //        [self.model setValuesForKeysWithDictionary:dic[@"user"]];
 //        [self.model setValuesForKeysWithDictionary:dic[@"service"]];
-        self.nameTextField.text = @"";
-        self.phoneNumTextField.text = @"";
-        self.companyTextField.text = @"";
-        self.comPanyDesTextView.text = @"";
+//        self.nameTextField.text = @"";
+//        self.phoneNumTextField.text = @"";
+//        self.companyTextField.text = @"";
+//        self.comPanyDesTextView.text = @"";
+        
+        [self.model setValuesForKeysWithDictionary:dic[@"user"]];
+        [self.model setValuesForKeysWithDictionary:dic[@"service"]];
+
+        [self setSubViews];
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -207,6 +223,9 @@
     self.fuwudiqu.text = self.ServiceArea;
     self.fuwuleixing.text = self.ServiceType;
     self.comPanyDesTextView.text = self.ServiceIntroduction;
+    self.sizeTextField.text = [self.Size stringByAppendingString:@"人"];
+    self.foundsTextField.text = [self.Founds stringByAppendingString:@"万"];
+    self.zhuceTimeLabel.text = self.RegTime;
     
     UIImageView *imageView1 = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 90, 90)];
     UIImageView *imageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(90+20, 0, 90, 90)];
@@ -240,6 +259,12 @@
     self.companyTextField.text = self.ServiceName;
     self.qiyesuozai.text = self.ServiceLocation;
     self.fuwudiqu.text = self.ServiceArea;
+    
+    self.sizeTextField.text = [self.Size stringByAppendingString:@"人"];
+    self.foundsTextField.text = [self.Founds stringByAppendingString:@"万"];
+    self.zhuceTimeLabel.text = self.RegTime;
+    
+    
     [self.comPanyDesTextView setText:self.ServiceIntroduction];
     NSLog(@"--------%@",self.comPanyDesTextView.text);
     self.fuwuleixing.text = self.ServiceType;
@@ -296,6 +321,12 @@
     [defaults removeObjectForKey:@"服务类型"];
     [defaults removeObjectForKey:@"服务的类型"];
     
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timeViewGestureAction:)];
+    [self.RegtimeView addGestureRecognizer:gesture];
+    
+    
+    
     if (token == nil) {
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
@@ -303,12 +334,111 @@
     
     else
     {
+//        [self getUserInfoFromDomin];
         [self setSubViews];
         
     }
+//    [self getUserInfoFromDomin];
+    
 //    self.ViewType =@"非服务";
+    [self setDatePicker];
+  }
+- (void)setDatePicker
+{
+    self.mengbanView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    self.mengbanView.backgroundColor = [UIColor blackColor];
+    self.mengbanView.alpha = 0.5;
+    
+    [self.view addSubview:self.mengbanView];
+    [self.mengbanView setHidden:YES];
+    self.DatepickerBackView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 300)];
+    self.DatepickerBackView.backgroundColor = [UIColor whiteColor];
+    
+    self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 50,self.DatepickerBackView.bounds.size.width,150)];
+    
+    self.datePicker.datePickerMode = UIDatePickerModeDate;
+    NSDate *minDate = [[NSDate alloc]initWithTimeIntervalSinceNow:(NSTimeIntervalSince1970)];
+    NSDate *maxDate = [[NSDate alloc]initWithTimeIntervalSinceNow:(978307200.0 * 10)];
+    
+    
+    //    NSDate* minDate = [[NSDate alloc]initWithString:@"1900-01-01 00:00:00 -0500"];
+    //    NSDate* maxDate = [[NSDate alloc]initWithString:@"2099-01-01 00:00:00 -0500"];
+    
+    //    datePicker.minimumDate = minDate;
+    //    datePicker.maximumDate = maxDate;
+    [self.datePicker addTarget:self action:@selector(datePickerAction:) forControlEvents:(UIControlEventValueChanged)];
+    
+    
+    UIButton *cancelButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [cancelButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [cancelButton setTitle:@"取消" forState:(UIControlStateNormal)];
+    UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
+    [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    
+    
+    [cancelButton addTarget:self action:@selector(didClickCancelDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [sureButton addTarget:self action:@selector(didClickSureDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [self.DatepickerBackView addSubview:self.datePicker];
+    [self.DatepickerBackView addSubview:cancelButton];
+    [self.DatepickerBackView addSubview:sureButton];
+    [self.view addSubview:self.DatepickerBackView];
+
+}
+
+- (void)timeViewGestureAction:(UITapGestureRecognizer *)gesture
+{
+    [self.mengbanView setHidden:NO];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
+    }];
+    
+
+}
+- (void)datePickerAction:(UIDatePicker *)sender
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:sender.date];
+    NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
+    
+    self.zhuceTimeLabel.text = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
+}
+#pragma mark----时间确定和取消按钮
+- (void)didClickCancelDateButtonAction:(UIButton*)sender
+{
+    [self.mengbanView setHidden:YES];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height;
+    }];
+    
     
 }
+- (NSString *)getFormatDateWithDatePicker
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+    NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
+    NSString *time = [[[[[dateArr[0]stringByAppendingString:@"年"]stringByAppendingString:dateArr[1]]stringByAppendingString:@"月"]stringByAppendingString:dateArr[2]]stringByAppendingString:@"日"];
+    return time;
+}
+- (void)didClickSureDateButtonAction:(UIButton *)sender
+{
+    self.zhuceTimeLabel.text = [self getFormatDateWithDatePicker];
+    
+    [self.mengbanView setHidden:YES];
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height;
+    }];
+}
+
 
 
 - (void)setSubViews
@@ -436,7 +566,7 @@
     NSString *accesstoken = @"token";
 //    [paraDic setObject:token forKey:@"token"];
     
-    if (userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
+    if (self.sizeTextField.text == nil || self.foundsTextField.text == nil ||[self.sizeTextField.text isEqualToString:@""] ||[self.foundsTextField.text isEqualToString:@""]||[self.zhuceTimeLabel.text isEqualToString:@"请选择"]|| userName == nil || phoneNumber ==nil ||companyName==nil||companyDes == nil || companyLocation ==nil ||ServiceArea ==nil || ServiceType ==nil||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0) {
         NSLog(@"信息不完整");
         if ([userName isEqualToString:@""]) {
             [self showAlertViewWithString:@"请添加联系人的姓名"];
@@ -452,6 +582,18 @@
         }
         if ([companyDes isEqualToString:@""] || [companyDes isEqualToString:@"企业简介"]) {
             [self showAlertViewWithString:@"请输入您的企业简介"];
+            return;
+        }
+        if ([self.sizeTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入您的企业规模"];
+            return;
+        }
+        if ([self.foundsTextField.text isEqualToString:@""]) {
+            [self showAlertViewWithString:@"请输入您的企业注册资金"];
+            return;
+        }
+        if ([self.zhuceTimeLabel.text isEqualToString:@""]||self.zhuceTimeLabel.text == nil) {
+            [self showAlertViewWithString:@"请输入您的企业注册时间"];
             return;
         }
         if (companyLocation == nil) {
@@ -490,6 +632,9 @@
     [paraDic setObject:companyLocation forKey:@"ServiceLocation"];
     [paraDic setObject:ServiceArea forKey:@"ServiceArea"];
     [paraDic setObject:ServiceType forKey:@"ServiceType"];
+        [paraDic setObject:self.zhuceTimeLabel.text forKey:@"RegTime"];
+        [paraDic setObject:self.sizeTextField.text forKey:@"Size"];
+        [paraDic setObject:self.foundsTextField.text forKey:@"Founds"];
     [self.manager POST:URL parameters:paraDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //上传四张图片
         if (self.imagearray.count == 1) {
@@ -651,10 +796,9 @@
         NSMutableDictionary *paraDic = [NSMutableDictionary new];
         NSLog(@"token:::::%@",token);
         NSString *accesstoken = @"token";
-            if ([userName isEqualToString:@""]|| [phoneNumber isEqualToString:@""]||[companyName isEqualToString:@""]||[companyDes isEqualToString:@""] || [companyLocation isEqualToString:@""]||[ServiceArea isEqualToString:@""]|| [ServiceType isEqualToString:@""]||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0|| companyLocation == nil||ServiceArea == nil || ServiceType == nil)
+            if (self.sizeTextField.text == nil||[self.sizeTextField.text isEqualToString:@""]||[self.zhuceTimeLabel.text isEqualToString:@"请选择"]||[self.foundsTextField.text isEqualToString:@""]||[userName isEqualToString:@""]|| [phoneNumber isEqualToString:@""]||[companyName isEqualToString:@""]||[companyDes isEqualToString:@""] || [companyLocation isEqualToString:@""]||[ServiceArea isEqualToString:@""]|| [ServiceType isEqualToString:@""]||[companyDes isEqualToString:@"企业简介"]||self.imagearray.count == 0|| companyLocation == nil||ServiceArea == nil || ServiceType == nil)
             
             {
-                
                 if ([userName isEqualToString:@""]) {
                     [self showAlertViewWithString:@"请添加联系人的姓名"];
                     return;
@@ -665,6 +809,18 @@
                 }
                 if ([companyName isEqualToString:@""]) {
                     [self showAlertViewWithString:@"请输入您的企业名称"];
+                    return;
+                }
+                if ([self.sizeTextField.text isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请输入您的企业规模"];
+                    return;
+                }
+                if ([self.foundsTextField.text isEqualToString:@""]) {
+                    [self showAlertViewWithString:@"请输入您的企业注册资金"];
+                    return;
+                }
+                if ([self.zhuceTimeLabel.text isEqualToString:@"请选择"]||self.zhuceTimeLabel.text == nil) {
+                    [self showAlertViewWithString:@"请输入您的企业注册时间"];
                     return;
                 }
                 if ([companyDes isEqualToString:@""] || [companyDes isEqualToString:@"企业简介"]) {
@@ -713,6 +869,11 @@
             [paraDic setObject:ServiceArea forKey:@"ServiceArea"];
             [paraDic setObject:ServiceType forKey:@"ServiceType"];
             
+            
+            [paraDic setObject:self.zhuceTimeLabel.text forKey:@"RegTime"];
+            [paraDic setObject:self.sizeTextField.text forKey:@"Size"];
+            [paraDic setObject:self.foundsTextField.text forKey:@"Founds"];
+
             NSLog(@"ServiceType::::::::::::::::::::%@",paraDic[@"ServiceType"]);
             
             
