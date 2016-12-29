@@ -354,7 +354,8 @@
 - (void)kaitongButtonAction:(UIButton *)button
 {
     [self.PromiseView removeFromSuperview];
-
+ 
+    
     VipViewController *vipRVC = [[VipViewController alloc]init];
     
     [self.navigationController pushViewController:vipRVC animated:YES];

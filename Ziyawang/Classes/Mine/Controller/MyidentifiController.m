@@ -224,9 +224,17 @@
     self.fuwuleixing.text = self.ServiceType;
     self.comPanyDesTextView.text = self.ServiceIntroduction;
     self.sizeTextField.text = [self.Size stringByAppendingString:@"人"];
+    if ([self.Size isEqualToString:@"0"]) {
+        self.sizeTextField.text = @"未填写";
+    }
     self.foundsTextField.text = [self.Founds stringByAppendingString:@"万"];
+    if ([self.Founds isEqualToString:@"0"]) {
+        self.foundsTextField.text = @"未填写";
+    }
     self.zhuceTimeLabel.text = self.RegTime;
-    
+    if ([self.RegTime isEqualToString:@"0000-00-00 00:00:00"]) {
+        self.zhuceTimeLabel.text = @"未填写";
+    }
     UIImageView *imageView1 = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 90, 90)];
     UIImageView *imageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(90+20, 0, 90, 90)];
     UIImageView *imageView3 = [[UIImageView alloc]initWithFrame:CGRectMake(210, 0, 90, 90)];

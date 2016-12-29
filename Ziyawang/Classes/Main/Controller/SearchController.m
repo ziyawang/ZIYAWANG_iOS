@@ -1110,7 +1110,13 @@
         }
         
         if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
-            if ([self.role isEqualToString:@"1"])
+            NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+            if (token == nil) {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+                
+            }
+           else if ([self.role isEqualToString:@"1"])
             {
                 [self setPromiseView];
             }

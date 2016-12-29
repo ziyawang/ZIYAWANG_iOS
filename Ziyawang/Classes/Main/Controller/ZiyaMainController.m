@@ -334,6 +334,8 @@ self.navigationItem.title = @"首页";
     [self getUserInfoFromDomin];
     
     self.right = [[NSUserDefaults standardUserDefaults]objectForKey:@"right"];
+    self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
     
 }
 - (void)getVideoStatu
@@ -499,7 +501,7 @@ self.navigationItem.title = @"首页";
     self.array2 = @[@"投资需求",@"融资需求",@"悬赏信息",@"委外催收"];
     self.array3 = @[@"企业商账",@"法拍资产",@"处置公告",@"担保信息"];
     
-    self.array4 = @[@"资产包收购",@"投融资服务",@"收购固产",@"委外催收"];
+    self.array4 = @[@"收购资产包",@"投融资服务",@"收购固产",@"委外催收"];
     self.array5 = @[@"典当公司",@"投融资服务",@"尽职调查",@"资产收购"];
     self.array6 = @[@"法律服务",@"催收机构"];
     self.array7 = @[@"投资需求"];
@@ -1204,6 +1206,7 @@ self.navigationItem.title = @"首页";
 }
 - (void)kaitongButtonAction:(UIButton *)button
 {
+    
     [self.PromiseView removeFromSuperview];
 
     VipViewController *vipRVC = [[VipViewController alloc]init];
@@ -1667,10 +1670,71 @@ self.navigationItem.title = @"首页";
 /**
  *  轻拍轮播图事件
  */
-- (void)didTapScrollHeadView
+- (void)didTapScrollHeadViewWithTag:(NSInteger)tag
 {
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
     VideosListController *videoVC = [[VideosListController alloc]init];
-    [self.navigationController pushViewController:videoVC animated:YES];
+    switch (tag) {
+        case 100:
+        {
+            if (token == nil)
+            {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+            }
+            else
+            {
+                if ([role isEqualToString:@"1"]) {
+                    VipViewController *vipVC = [[VipViewController alloc]init];
+                    [self.navigationController pushViewController:vipVC animated:YES];
+               
+                }
+                else
+                {
+                    MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+                    identifiVC.ConnectPhone = self.userModel.ConnectPhone;
+                    identifiVC.ServiceName = self.userModel.ServiceName;
+                    identifiVC.ServiceLocation = self.userModel.ServiceLocation;
+                    identifiVC.ServiceType = self.userModel.ServiceType;
+                    identifiVC.ServiceIntroduction = self.userModel.ServiceIntroduction;
+                    identifiVC.ConnectPerson = self.userModel.ConnectPerson;
+                    identifiVC.ServiceArea = self.userModel.ServiceArea;
+                    identifiVC.ConfirmationP1 = self.userModel.ConfirmationP1;
+                    identifiVC.ConfirmationP2 = self.userModel.ConfirmationP2;
+                    identifiVC.ConfirmationP3 = self.userModel.ConfirmationP3;
+                    identifiVC.ViewType = @"服务";
+                    identifiVC.RegTime = self.userModel.RegTime;
+                    identifiVC.Founds = self.userModel.Founds;
+                    identifiVC.Size = self.userModel.Size;
+                    identifiVC.role = self.role;
+                    [self.navigationController pushViewController:identifiVC animated:YES];
+
+                }
+                
+                }
+            
+            
+        }
+            break;
+        case 200:
+            [self.navigationController pushViewController:videoVC animated:YES];
+
+            break;
+        case 300:
+            [self.navigationController pushViewController:videoVC animated:YES];
+
+            break;
+        case 400:
+            [self.navigationController pushViewController:videoVC animated:YES];
+
+            break;
+        default:
+            break;
+    }
+    
+   
 }
 #pragma mark----scrollview textfield代理方法
 /**
@@ -1765,7 +1829,6 @@ self.navigationItem.title = @"首页";
     NSLog(@"当前选中页数：%ld,%s,%d",pageControl.currentPage, __FUNCTION__,__LINE__);
     //改变self.scrollView的contenOffset
     //    [self.scrollView setContentInset:CGPointMake(self.view.bounds.size.width*pageControl.currentPage,0) animated:YES)];
-    
     [self.scrollView setContentOffset:CGPointMake(self.view.bounds.size.width * pageControl.currentPage, 0) animated:YES];
  }
 /**
@@ -1889,8 +1952,8 @@ self.navigationItem.title = @"首页";
             NSLog(@"13");
             
             findserviceVC.searchValue = @"01";
-            findserviceVC.type = @"资产包收购";
-            findserviceVC.navigationItem.title = @"资产包收购";
+            findserviceVC.type = @"收购资产包";
+            findserviceVC.navigationItem.title = @"收购资产包";
             [self.navigationController pushViewController:findserviceVC animated:YES];
             break;
             
@@ -2431,6 +2494,8 @@ self.navigationItem.title = @"首页";
     DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];
     
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+   
     //    InfoDetailsController *infoDetailsVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil]instantiateViewControllerWithIdentifier:@"InfoDetailsController"];
     
  
@@ -2475,7 +2540,13 @@ self.navigationItem.title = @"首页";
 
         if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"])
         {
-            if ([self.role isEqualToString:@"1"])
+            if (token == nil) {
+                LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                [self presentViewController:loginVC animated:YES completion:nil];
+                
+            }
+            
+           else if ([self.role isEqualToString:@"1"])
             {
                 [self setPromiseView];
             }

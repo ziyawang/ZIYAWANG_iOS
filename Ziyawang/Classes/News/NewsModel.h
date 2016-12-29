@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSString *NewsID;
 @property (nonatomic,strong) NSString *NewsLogo;
 @property (nonatomic,strong) NSString *NewsAuthor;
+@property (nonatomic,strong) NSString *NewsThumb;
 
 @property (nonatomic,strong) NSString *PublishTime;
 @property (nonatomic,strong) NSString *ViewCount;

@@ -22,18 +22,15 @@
 @property(nonatomic,assign)NSInteger lastPage;
 
 @end
-
 @implementation ScrollHeadView
 
 
 -(instancetype)initWithFrame:(CGRect)frame arraySource:(NSMutableArray *)arraySource{
     
     if (self=[super initWithFrame:frame]) {
-        
         _arraySource=arraySource;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self createScrollView];
-            
         });
     }
     return self;
@@ -51,11 +48,7 @@
     if (_arraySource.count == 0 || _arraySource == nil) {
         return;
     }
-    
     _scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.bounds)*(_arraySource.count), CGRectGetHeight(self.bounds));
-    
-    
- 
     for (int i = 0 ; i<_arraySource.count; i++) {
         UIImageView * imageV = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.bounds)*i, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
         imageV.tag = 100*i;
@@ -63,7 +56,6 @@
         tap.numberOfTouchesRequired = 1;
         tap.numberOfTapsRequired = 1;
         [imageV addGestureRecognizer:tap];
-        
         imageV.userInteractionEnabled = YES;
         
         /**
@@ -96,8 +88,9 @@
 - (void)tap:(UITapGestureRecognizer*)tap{
     
     NSLog(@"%ld",tap.view.tag);
-    if (self.Mydelegate != nil && [self.Mydelegate respondsToSelector:@selector(didTapScrollHeadView)]) {
-        [self.Mydelegate didTapScrollHeadView];
+    
+    if (self.Mydelegate != nil && [self.Mydelegate respondsToSelector:@selector(didTapScrollHeadViewWithTag:)]) {
+        [self.Mydelegate didTapScrollHeadViewWithTag:tap.view.tag];
     }
     
 }

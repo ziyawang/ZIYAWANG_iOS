@@ -10,7 +10,7 @@
 
 @protocol scrollHeadViewDelegate <NSObject>
 
-- (void)didTapScrollHeadView;
+- (void)didTapScrollHeadViewWithTag:(NSInteger)tag;
 
 @end
 

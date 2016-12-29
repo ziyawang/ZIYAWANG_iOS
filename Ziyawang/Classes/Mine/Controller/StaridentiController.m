@@ -32,6 +32,7 @@
 
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UIView *PromiseView;
+@property (nonatomic,strong) NSMutableDictionary *starStatuDic;
 @end
 
 @implementation StaridentiController
@@ -40,7 +41,6 @@
 {
     [super viewWillAppear:animated];
     [self getUserInfoFromDomin];
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +51,6 @@
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [self setViews];
-    
   }
 
 - (void)getUserInfoFromDomin
@@ -65,40 +64,123 @@
         [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-          
             NSLog(@"%@",dic);
-            
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
-            
             
             NSDictionary *starDic = dic[@"service"][@"showlevelarr"];
             NSMutableDictionary *starArray = [NSMutableDictionary dictionaryWithDictionary:starDic];
             
             starArray[@"1"] = [NSString stringWithFormat:@"%@",starArray[@"1"]];
             starArray[@"2"] = [NSString stringWithFormat:@"%@",starArray[@"2"]];
-            starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
+            starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"3"]];
             starArray[@"4"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
             starArray[@"5"] = [NSString stringWithFormat:@"%@",starArray[@"5"]];
 
+            self.starStatuDic = starArray;
             
             if ([starArray[@"1"] isEqualToString:@"2"]) {
+                [self.openButton1 setTitle:@"已开通" forState:(UIControlStateNormal)];
+                
                 self.starima1.image = [UIImage imageNamed:@"baozhengjin"];
             }
+            else if([starArray[@"1"] isEqualToString:@"0"])
+            {
+                self.openButton1.titleLabel.text = @"开通";
+
+            }
+            else if([starArray[@"1"] isEqualToString:@"1"])
+            {
+                [self.openButton1 setTitle:@"审核中" forState:(UIControlStateNormal)];
+            }
+            else
+            {
+                [self.openButton1 setTitle:@"未通过" forState:(UIControlStateNormal)];
+   
+            }
+            
             if ([starArray[@"2"] isEqualToString:@"2"]) {
+                [self.openButton2 setTitle:@"已开通" forState:(UIControlStateNormal)];
+
                 self.starima2.image = [UIImage imageNamed:@"shi"];
+            }
+            else if([starArray[@"2"] isEqualToString:@"0"])
+            {
+                self.openButton2.titleLabel.text = @"开通";
+
+            }
+            else if([starArray[@"2"] isEqualToString:@"1"])
+            {
+                [self.openButton2 setTitle:@"审核中" forState:(UIControlStateNormal)];
+
+            }
+            else
+            {
+                [self.openButton2 setTitle:@"未通过" forState:(UIControlStateNormal)];
+
             }
             
             if ([starArray[@"3"] isEqualToString:@"2"]) {
+                [self.openButton3 setTitle:@"已开通" forState:(UIControlStateNormal)];
+
                 self.starima3.image = [UIImage imageNamed:@"shipin"];
             }
+            else if([starArray[@"3"] isEqualToString:@"0"])
+            {
+                self.openButton3.titleLabel.text = @"开通";
+
+            }
+            else if([starArray[@"3"] isEqualToString:@"1"])
+            {
+                [self.openButton3 setTitle:@"审核中" forState:(UIControlStateNormal)];
+
+            }
+            else
+            {
+                [self.openButton3 setTitle:@"未通过" forState:(UIControlStateNormal)];
+
+            }
             if ([starArray[@"4"] isEqualToString:@"2"]) {
+                [self.openButton4 setTitle:@"已开通" forState:(UIControlStateNormal)];
+
                 self.starima4.image = [UIImage imageNamed:@"nuo"];
+            }
+            else if([starArray[@"4"] isEqualToString:@"0"])
+            {
+                self.openButton4.titleLabel.text = @"开通";
+
+            }
+            else if([starArray[@"4"] isEqualToString:@"1"])
+            {
+                [self.openButton4 setTitle:@"审核中" forState:(UIControlStateNormal)];
+
+            }
+            else
+            {
+                [self.openButton4 setTitle:@"未通过" forState:(UIControlStateNormal)];
+
             }
             if ([starArray[@"5"] isEqualToString:@"2"]) {
                 self.starima5.image = [UIImage imageNamed:@"zheng"];
+                [self.openButton5 setTitle:@"已开通" forState:(UIControlStateNormal)];
+
             }
+        
+            else if([starArray[@"5"] isEqualToString:@"0"])
+            {
+                self.openButton5.titleLabel.text = @"开通";
+
+            }
+            else if([starArray[@"5"] isEqualToString:@"1"])
+            {
+                [self.openButton5 setTitle:@"审核中" forState:(UIControlStateNormal)];
+            }
+            else
+            {
+                [self.openButton5 setTitle:@"未通过" forState:(UIControlStateNormal)];
+
+            }
+            
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         }];
@@ -208,7 +290,7 @@
     .rightSpaceToView(bottomView,15)
     .topSpaceToView(label1,15)
     .autoHeightRatio(0);
-    label3.textAlignment = NSTextAlignmentCenter;
+    label3.textAlignment = NSTextAlignmentLeft;
     
     switch (tag) {
         case 1:
@@ -337,34 +419,46 @@
             break;
         case 6:
         {
-            GoldCertiViewController *goldVC = [[GoldCertiViewController alloc]init];
-            [self.navigationController pushViewController:goldVC animated:YES];
+            if ([self.starStatuDic[@"1"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"1"] isEqualToString:@"1"] == NO) {
+                
+                GoldCertiViewController *goldVC = [[GoldCertiViewController alloc]init];
+                [self.navigationController pushViewController:goldVC animated:YES];
+            }
+          
             
         }
             break;
         case 7:
         {
-            AreaCertiController *areaVC = [[AreaCertiController alloc]init];
-            [self.navigationController pushViewController:areaVC animated:YES];
+            if ([self.starStatuDic[@"2"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"2"] isEqualToString:@"1"] == NO) {
+                AreaCertiController *areaVC = [[AreaCertiController alloc]init];
+                [self.navigationController pushViewController:areaVC animated:YES];
+            }
         }
             break;
         case 8:
         {
-            VideoCertiController *videoVC = [[VideoCertiController alloc]init];
-            [self.navigationController pushViewController:videoVC animated:YES];
+            if ([self.starStatuDic[@"3"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"3"] isEqualToString:@"1"] == NO) {
+                VideoCertiController *videoVC = [[VideoCertiController alloc]init];
+                [self.navigationController pushViewController:videoVC animated:YES];
+            }
+           
         }
             break;
         case 9:
         {
-            PromiseBookController *proVC = [[PromiseBookController alloc]init];
-            [self.navigationController pushViewController:proVC animated:YES];
-            
+            if ([self.starStatuDic[@"4"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"4"] isEqualToString:@"1"] == NO) {
+                PromiseBookController *proVC = [[PromiseBookController alloc]init];
+                [self.navigationController pushViewController:proVC animated:YES];
+            }
         }
             break;
         case 10:
         {
-            ThreeBookController *threeVC = [[ThreeBookController alloc]init];
-            [self.navigationController pushViewController:threeVC animated:YES];
+            if ([self.starStatuDic[@"5"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"5"] isEqualToString:@"1"] == NO) {
+                ThreeBookController *threeVC = [[ThreeBookController alloc]init];
+                [self.navigationController pushViewController:threeVC animated:YES];
+            }
         }
             break;
             

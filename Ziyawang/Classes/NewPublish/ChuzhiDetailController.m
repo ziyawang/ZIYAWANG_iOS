@@ -78,6 +78,7 @@
     [_scrollView addSubview:_webView];
     [_scrollView addSubview:titleLabel];
     [_scrollView addSubview:laiyuanView];
+    
     [laiyuanView addSubview:laiyuanyuLabel];
     [laiyuanView addSubview:timeLabel];
     
@@ -102,24 +103,28 @@
     titleLabel.text = self.model.NewsTitle;
     titleLabel.font = [UIFont systemFontOfSize:21];
     
-    laiyuanView.sd_layout.centerXEqualToView(_scrollView)
+    laiyuanView.sd_layout.leftSpaceToView(_scrollView,10)
     .topSpaceToView(titleLabel,15)
-    .heightIs(15);
+    .heightIs(15)
+    .rightSpaceToView(_scrollView,10);
     
     
-    [laiyuanView setupAutoWidthWithRightView:timeLabel rightMargin:0];
-    laiyuanyuLabel.sd_layout.leftSpaceToView(laiyuanView,0)
+    
+//    [laiyuanView setupAutoWidthWithRightView:timeLabel rightMargin:0];
+    laiyuanyuLabel.sd_layout.leftSpaceToView(laiyuanView,10)
     .topSpaceToView(laiyuanView,0)
     .heightIs(15);
     [laiyuanyuLabel setSingleLineAutoResizeWithMaxWidth:300];
-    laiyuanyuLabel.text = [@"来源于："stringByAppendingString:self.model.NewsAuthor];
+    laiyuanyuLabel.text = [@"来源于:"stringByAppendingString:self.model.NewsAuthor];
     
     
     laiyuanyuLabel.font = [UIFont systemFontOfSize:14];
     
-    timeLabel.sd_layout.leftSpaceToView(laiyuanyuLabel,25)
+    timeLabel.sd_layout.leftSpaceToView(laiyuanyuLabel,20)
     .topEqualToView(laiyuanyuLabel)
-    .heightIs(15);
+    .heightIs(15)
+    .rightSpaceToView(laiyuanView,10);
+    
     NSArray *textarr = [self.model.PublishTime componentsSeparatedByString:@" "];
     timeLabel.text = textarr[0];
     

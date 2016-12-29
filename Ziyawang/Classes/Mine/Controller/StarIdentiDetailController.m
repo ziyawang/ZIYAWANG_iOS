@@ -10,7 +10,15 @@
 #import "ZXVideoPlayerController.h"
 #import "ZXVideo.h"
 #import "AppDelegate.h"
-@interface StarIdentiDetailController ()
+
+#import "KNPhotoBrowerImageView.h"
+#import "KNPhotoBrower.h"
+@interface StarIdentiDetailController ()<KNPhotoBrowerDelegate>
+{
+    
+    BOOL     _ApplicationStatusIsHidden;
+    
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
@@ -35,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineheight3;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineheight4;
 
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *promiseBookImage;
@@ -77,6 +86,12 @@
 @property (nonatomic, strong) ZXVideoPlayerController *videoController;
 @property (nonatomic, strong, readwrite) ZXVideo *video;
 @property (nonatomic,strong) NSString *isFull;
+
+@property (nonatomic,strong) NSMutableArray *itemsArray;
+@property (nonatomic, strong) KNPhotoBrower *photoBrower;
+
+@property (nonatomic,strong) NSMutableArray *imageViewArray;
+@property (nonatomic,strong) NSMutableArray *imageUrlArray;
 
 @end
 
@@ -181,27 +196,246 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
     
     
+    self.itemsArray = [NSMutableArray new];
+    self.photoBrower = [[KNPhotoBrower alloc]init];
+    self.imageViewArray = [NSMutableArray new];
+    self.imageUrlArray = [NSMutableArray new];
+    
     self.video = [[ZXVideo alloc]init];
     
     self.video.playUrl = self.VideoURL;
     NSLog(@"%@",self.VideoURL);
     
     self.video.title = @"认证视频";
+    [self setImageViewsWithImageView:self.promiseBookImage];
+    [self setImageViewsWithImageView:self.locationImage1];
+    [self setImageViewsWithImageView:self.locationImage2];
+    [self setImageViewsWithImageView:self.locationImage3];
+
+    [self setImageViewsWithImageView:self.threeBookImage1];
+    [self setImageViewsWithImageView:self.threeBookImage2];
+    [self setImageViewsWithImageView:self.threeBookImage3];
+    
+    
+    
+    
+    [self lookImageViews];
     [self setViews];
     
     
  }
-- (void)setViews
+
+- (void)lookImageViews
 {
     
+    self.promiseBookImage.userInteractionEnabled = YES;
+    self.locationImage1.userInteractionEnabled = YES;
+    self.locationImage2.userInteractionEnabled = YES;
+    self.locationImage3.userInteractionEnabled = YES;
+
+    self.threeBookImage1.userInteractionEnabled = YES;
+    self.threeBookImage2.userInteractionEnabled = YES;
+    self.threeBookImage3.userInteractionEnabled = YES;
+
+    
+    UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+    UITapGestureRecognizer *gesture7 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+
+    [self.promiseBookImage addGestureRecognizer:gesture1];
+    [self.locationImage1 addGestureRecognizer:gesture2];
+    [self.locationImage2 addGestureRecognizer:gesture3];
+    [self.locationImage3 addGestureRecognizer:gesture4];
+    [self.threeBookImage1 addGestureRecognizer:gesture5];
+    [self.threeBookImage2 addGestureRecognizer:gesture6];
+    [self.threeBookImage3 addGestureRecognizer:gesture7];
+
+    self.promiseBookImage.tag = 0;
+    self.locationImage1.tag = 1;
+    self.locationImage2.tag = 2;
+    self.locationImage3.tag = 3;
+
+    self.threeBookImage1.tag = 4;
+    self.threeBookImage2.tag = 5;
+    self.threeBookImage3.tag = 6;
+
+    
+    KNPhotoItems *items1 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items2 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items3 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items4 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items5 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items6 = [[KNPhotoItems alloc] init];
+    KNPhotoItems *items7 = [[KNPhotoItems alloc] init];
     
     
+    NSString *imageURL1 = @"1";
+    NSString *imageURL2 = @"2";
+    NSString *imageURL3 = @"3";
+    NSString *imageURL4 = @"4";
+    NSString *imageURL5 = @"5";
+    NSString *imageURL6 = @"6";
+    NSString *imageURL7 = @"7";
+    
+    if (self.promiseBookURL != nil && [self.promiseBookURL isEqualToString:@""] == NO) {
+        imageURL1 = self.promiseBookURL;
+        [self.imageViewArray addObject:self.promiseBookImage];
+        [self.imageUrlArray addObject:self.promiseBookURL];
+        
+//        items1.url = imageURL1;
+//        items1.sourceView =self.promiseBookImage;
+//        [self.itemsArray addObject:items1];
+        
+    }
+    
+    
+    switch (self.areaArr.count) {
+        case 0:
+            
+            break;
+        case 1:
+    
+//            imageURL2 = self.areaArr[0];
+//            items2.url = imageURL2;
+//            items2.sourceView =self.locationImage1;
+//            [self.itemsArray addObject:items2];
+            [self.imageUrlArray addObject:self.areaArr[0]];
+            [self.imageViewArray addObject:self.locationImage1];
+            break;
+        case 2:
+//            imageURL2 = self.areaArr[0];
+//            items2.url = imageURL2;
+//            items2.sourceView =self.locationImage2;
+//            [self.itemsArray addObject:items2];
+//            
+//            imageURL3 = self.areaArr[1];
+//            items3.url = imageURL3;
+//            items3.sourceView =self.locationImage3;
+//            [self.itemsArray addObject:items3];
+            [self.imageUrlArray addObject:self.areaArr[0]];
+            [self.imageViewArray addObject:self.locationImage1];
+            [self.imageUrlArray addObject:self.areaArr[1]];
+            [self.imageViewArray addObject:self.locationImage2];
+            
+            break;
+        case 3:
+//            imageURL2 = self.areaArr[0];
+//            items2.url = imageURL2;
+//            items2.sourceView =self.locationImage1;
+//            [self.itemsArray addObject:items2];
+//            
+//            imageURL3 = self.areaArr[1];
+//            items3.url = imageURL3;
+//            items3.sourceView =self.locationImage2;
+//            [self.itemsArray addObject:items3];
+//            
+//            imageURL4 = self.areaArr[2];
+//            items4.url = imageURL4;
+//            items4.sourceView =self.locationImage3;
+//            [self.itemsArray addObject:items4];
+//            imageURL3 = self.areaArr[2];
+            [self.imageUrlArray addObject:self.areaArr[0]];
+            [self.imageViewArray addObject:self.locationImage1];
+            [self.imageUrlArray addObject:self.areaArr[1]];
+            [self.imageViewArray addObject:self.locationImage2];
+            [self.imageUrlArray addObject:self.areaArr[2]];
+            [self.imageViewArray addObject:self.locationImage3];
+            break;
+        default:
+            break;
+    }
+    switch (self.threeBookArr.count) {
+        case 0:
+            
+            break;
+        case 1:
+//            imageURL5 = self.threeBookArr[0];
+//            items5.url = imageURL5;
+//            items5.sourceView =self.threeBookImage1;
+//            [self.itemsArray addObject:items5];
+            [self.imageUrlArray addObject:self.threeBookArr[0]];
+            [self.imageViewArray addObject:self.threeBookImage1];
+            break;
+        case 2:
+//            imageURL5 = self.threeBookArr[0];
+//            items5.url = imageURL5;
+//            items5.sourceView =self.threeBookImage1;
+//            [self.itemsArray addObject:items5];
+//            
+//            imageURL6 = self.threeBookArr[1];
+//            items6.url = imageURL6;
+//            items6.sourceView =self.threeBookImage2;
+//            [self.itemsArray addObject:items6];
+//
+            [self.imageUrlArray addObject:self.threeBookArr[0]];
+            [self.imageViewArray addObject:self.threeBookImage1];[self.imageUrlArray addObject:self.threeBookArr[1]];
+            [self.imageViewArray addObject:self.threeBookImage2];
+            break;
+        case 3:
+//            imageURL5 = self.threeBookArr[0];
+//            items5.url = imageURL5;
+//            items5.sourceView =self.threeBookImage1;
+//            [self.itemsArray addObject:items5];
+//            
+
+//            
+//            imageURL7 = self.threeBookArr[2];
+//            items7.url = imageURL7;
+//            items7.sourceView =self.threeBookImage3;
+//            [self.itemsArray addObject:items7];
+            [self.imageUrlArray addObject:self.threeBookArr[0]];
+            [self.imageViewArray addObject:self.threeBookImage1];
+            [self.imageUrlArray addObject:self.threeBookArr[1]];
+            [self.imageViewArray addObject:self.threeBookImage2];
+            [self.imageUrlArray addObject:self.threeBookArr[2]];
+            [self.imageViewArray addObject:self.threeBookImage3];
+            
+            break;
+        default:
+            break;
+    }
+    
+    for (int i = 0; i < self.imageViewArray.count; i ++) {
+        
+        KNPhotoItems *item = [[KNPhotoItems alloc] init];
+        UIImageView *imageview = self.imageViewArray[i];
+        
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
+        [imageview addGestureRecognizer:gesture];
+        imageview.tag = i;
+        
+        item.url = self.imageUrlArray[i];
+        
+        item.sourceView = imageview;
+        [self.itemsArray addObject:item];
+        
+        //            imageURL6 = self.threeBookArr[1];
+        //            items6.url = imageURL6;
+        //            items6.sourceView =self.threeBookImage2;
+        //            [self.itemsArray addObject:items6];
+    }
+
+}
+
+- (void)setImageViewsWithImageView:(UIImageView *)imageView
+{
+    [imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    imageView.clipsToBounds = YES;
+}
+- (void)setViews
+{
     NSDictionary *starDic = self.sholevelDic;
     NSMutableDictionary *starArray = [NSMutableDictionary dictionaryWithDictionary:starDic];
     
     starArray[@"1"] = [NSString stringWithFormat:@"%@",starArray[@"1"]];
     starArray[@"2"] = [NSString stringWithFormat:@"%@",starArray[@"2"]];
-    starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
+    starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"3"]];
     starArray[@"4"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
     starArray[@"5"] = [NSString stringWithFormat:@"%@",starArray[@"5"]];
     
@@ -247,13 +481,13 @@
         self.starima3.image = [UIImage imageNamed:@"shipin"];
         self.label3.textColor = [UIColor redColor];
         self.label3.text = @"已认证";
-        [self playVideo];
          self.shipinViewHight.constant = kZXVideoPlayerOriginalHeight;
     }
     else
     {
         self.shipinViewHight.constant = 0;
         
+        [self.playButton setHidden:YES];
     }
     if ([starArray[@"4"] isEqualToString:@"2"]) {
         NSLog(@"%@",starArray[@"4"]);
@@ -299,6 +533,10 @@
     }
 
 }
+- (IBAction)videoPlayButtonAction:(id)sender {
+    [self playVideo];
+}
+
 - (void)playVideo
 {
     UIView *playBackView = [UIView new];
@@ -344,8 +582,9 @@
          
             self.isFull = @"two";
 
-            
-            playBackView.sd_layout.topSpaceToView(self.contentView,0)
+            self.lineheight1.constant = 10;
+            self.lineheight2.constant = 10;
+            playBackView.sd_layout.topSpaceToView(self.shipinTopView,0)
                         .leftEqualToView(self.shipinTopView)
                         .rightEqualToView(self.shipinTopView)
                         .heightIs(kZXVideoPlayerOriginalHeight);
@@ -355,22 +594,23 @@
         self.videoController.videoPlayerWillChangeToFullScreenModeBlock = ^(){
             NSLog(@"切换为全屏模式");
           
-            if (self.isFull == nil) {
-            [self.scrollView setContentOffset:CGPointMake(0,44+10+self.chengnuoViewHeight.constant+10+44)];
-                self.isFull = @"one";
-            }
-            else
-            {
-                [self.scrollView setContentOffset:CGPointMake(0, 0 )];
+//            if (self.isFull == nil) {
+//            
+////            [ self.scrollView setContentOffset:CGPointMake(0,44+10+self.shidiViewHeight.constant+10+44)];
+////                self.isFull = @"one";
+//            }
+//            else
+//            {
+//            }
 
-            }
-
-            
-            
-            playBackView.sd_layout.topSpaceToView(self.shipinTopView,0)
+            self.lineheight1.constant = 0;
+            self.lineheight2.constant = 0;
+            playBackView.sd_layout.topSpaceToView(self.contentView,-20)
             .leftSpaceToView(self.contentView,0)
             .rightSpaceToView(self.contentView,0)
             .heightIs([UIScreen mainScreen].bounds.size.height);
+            
+            [self.scrollView setContentOffset:CGPointMake(0, 0)];
 
 //            self.shipinView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
 //            [self fullScreen];
@@ -437,6 +677,53 @@
     
 }
 
+#pragma mark----查看图片手势方法以及代理
+- (void)imageTapGestureAction:(UITapGestureRecognizer *)imageTapGesture
+{
+    KNPhotoBrower *photoBrower = [[KNPhotoBrower alloc] init];
+    photoBrower.itemsArr = self.itemsArray;
+    photoBrower.currentIndex = imageTapGesture.view.tag;
+    // 如果设置了 photoBrower中的 actionSheetArr 属性. 那么 isNeedRightTopBtn 就应该是默认 YES, 如果设置成NO, 这个actionSheetArr 属性就没有意义了
+    //    photoBrower.actionSheetArr = [self.actionSheetArray mutableCopy];
+    
+    [photoBrower present];
+    
+    _photoBrower = photoBrower;
+    
+    // 设置代理方法 --->可不写
+    [photoBrower setDelegate:self];
+    
+    // 这里是 设置 状态栏的 隐藏 ---> 可不写
+    _ApplicationStatusIsHidden = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+// 下面方法 是让 '状态栏' 在 PhotoBrower 显示的时候 消失, 消失的时候 显示 ---> 根据项目需求而定
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+- (BOOL)prefersStatusBarHidden{
+    if(_ApplicationStatusIsHidden){
+        return YES;
+    }
+    return NO;
+}
+
+/* PhotoBrower 即将消失 */
+- (void)photoBrowerWillDismiss{
+    NSLog(@"Will Dismiss");
+    _ApplicationStatusIsHidden = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+/* PhotoBrower 右上角按钮的点击 */
+- (void)photoBrowerRightOperationActionWithIndex:(NSInteger)index{
+    NSLog(@"operation:%zd",index);
+}
+
+/* PhotoBrower 保存图片是否成功 */
+- (void)photoBrowerWriteToSavedPhotosAlbumStatus:(BOOL)success{
+    NSLog(@"saveImage:%zd",success);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -394,13 +394,16 @@
         }
         
         NSDictionary *starDic = dic[@"showlevelarr"];
+        NSLog(@"%@",starDic);
+        
+        
         self.showlevelDic = starDic;
         
         NSMutableDictionary *starArray = [NSMutableDictionary dictionaryWithDictionary:starDic];
         
         starArray[@"1"] = [NSString stringWithFormat:@"%@",starArray[@"1"]];
         starArray[@"2"] = [NSString stringWithFormat:@"%@",starArray[@"2"]];
-        starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
+        starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"3"]];
         starArray[@"4"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
         starArray[@"5"] = [NSString stringWithFormat:@"%@",starArray[@"5"]];
         

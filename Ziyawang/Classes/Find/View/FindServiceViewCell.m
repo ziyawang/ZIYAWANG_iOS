@@ -78,32 +78,57 @@
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.imageurl1]]];
     
     
-    if ([self.model.right isEqualToString:@""]||self.model.right == nil) {
+    if ([self.model.showrightiosStr isEqualToString:@""]||self.model.showrightiosStr == nil) {
         [self.noLabel setHidden:NO];
+        self.noLabel.text = @"无";
+        self.imag1.image = [UIImage new];
+        self.imag2.image = [UIImage new];
+        self.imag3.image = [UIImage new];
+        self.imag4.image = [UIImage new];
+        self.imag5.image = [UIImage new];
+
+        
     }
     else
     {
     NSLog(@"%@",self.model.showrightiosStr);
     NSArray *vipArr = [self.model.showrightiosStr componentsSeparatedByString:@","];
+     
         switch (vipArr.count) {
-  
+            case 0:
+                [self.noLabel setHidden:NO];
+                self.noLabel.text = @"无";
+                self.imag1.image = [UIImage new];
+                self.imag2.image = [UIImage new];
+                self.imag3.image = [UIImage new];
+                self.imag4.image = [UIImage new];
+                self.imag5.image = [UIImage new];
+                break;
+                
             case 1:
                 [self.noLabel setHidden:YES];
+                self.noLabel.text = @"";
                 self.imag1.image = [UIImage imageNamed:vipArr[0]];
                 break;
             case 2:
                 [self.noLabel setHidden:YES];
+                self.noLabel.text = @"";
+
                 self.imag1.image = [UIImage imageNamed:vipArr[0]];
                 self.imag2.image = [UIImage imageNamed:vipArr[1]];
                 break;
             case 3:
                 [self.noLabel setHidden:YES];
+                self.noLabel.text = @"";
+
                 self.imag1.image = [UIImage imageNamed:vipArr[0]];
                 self.imag2.image = [UIImage imageNamed:vipArr[1]];
                 self.imag3.image = [UIImage imageNamed:vipArr[2]];
                 break;
             case 4:
                 [self.noLabel setHidden:YES];
+                self.noLabel.text = @"";
+
                 self.imag1.image = [UIImage imageNamed:vipArr[0]];
                 self.imag2.image = [UIImage imageNamed:vipArr[1]];
                 self.imag3.image = [UIImage imageNamed:vipArr[2]];
@@ -111,6 +136,8 @@
                 break;
             case 5:
                 [self.noLabel setHidden:YES];
+                self.noLabel.text = @"";
+
                 self.imag1.image = [UIImage imageNamed:vipArr[0]];
                 self.imag2.image = [UIImage imageNamed:vipArr[1]];
                 self.imag3.image = [UIImage imageNamed:vipArr[2]];

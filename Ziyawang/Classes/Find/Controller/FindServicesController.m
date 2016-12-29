@@ -229,13 +229,9 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
 //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
-    NSArray *infonmationType = @[@"资产包收购",@"投融资服务",@"法律服务",@"委外催收",@"收购固产"];
-    NSArray *informationTypeID = @[@"01",@"06",@"03",@"02",@"12"];
-    
-
-    
-    
-    
+    NSArray *infonmationType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+    NSArray *informationTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
+  
     NSArray *level = @[@"不限",@"会员"];
     menuView.indexsOneFist = infonmationType;
     menuView.indexsTwoFist = self.shengArray;
@@ -272,6 +268,11 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
             if ([tyStr isEqualToString:string]) {
                 if ([tyStr isEqualToString:@"不限"] == NO) {
                     [self.dataDic setObject:@"1" forKey:@"ServiceLevel"];
+                }
+                else
+                {
+                    [self.dataDic removeObjectForKey:@"ServiceLevel"];
+                    
                 }
                 [weakSelf findServiceswithDic:self.dataDic];
             }

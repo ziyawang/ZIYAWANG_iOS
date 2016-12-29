@@ -29,13 +29,13 @@
 }
 - (void)setViews
 {
-    NSString *imgeurl = [getImageURL stringByAppendingString:self.model.NewsLogo];
+    NSString *imgeurl = [getImageURL stringByAppendingString:self.model.NewsThumb];
+    NSLog(@"%@",imgeurl);
     [self.imageview sd_setImageWithURL:[NSURL URLWithString:imgeurl]];
     [self.imageview setContentScaleFactor:[[UIScreen mainScreen] scale]];
     self.imageview.contentMode = UIViewContentModeScaleAspectFill;
     self.imageview.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.imageview.clipsToBounds = YES;
-
     self.titleLabel.text = self.model.NewsTitle;
         NSString *htmlString = self.model.Brief;
         NSAttributedString * attrStr =  [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];

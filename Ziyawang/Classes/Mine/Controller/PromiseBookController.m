@@ -9,11 +9,14 @@
 #import "PromiseBookController.h"
 #import "AddImageManager.h"
 #import "HttpManager.h"
-@interface PromiseBookController ()
+@interface PromiseBookController ()<UIDocumentInteractionControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *promiseImage;
 @property (weak, nonatomic) IBOutlet UIButton *postButton;
 @property (weak, nonatomic) IBOutlet UIView *imageBackView;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
+@property (nonatomic,strong) NSString *path;
+@property (nonatomic,strong) UIDocumentInteractionController *documentController;
+
 @end
 
 @implementation PromiseBookController
@@ -37,27 +40,31 @@
     
 }
 - (IBAction)downLoadPromiseBookButtonAction:(id)sender {
-    NSURL *url = [NSURL URLWithString:@""];
+    NSURL *url = [NSURL URLWithString:@"http://images.ziyawang.com/star/ziya.doc"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDownloadTask *downloadTask = [self.manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *path = [filePath stringByAppendingPathComponent:response.suggestedFilename];
         NSLog(@"targetPath:%@",targetPath);
-        NSLog(@"filePath:%@",filePath);
-        return [NSURL fileURLWithPath:filePath];
+        NSLog(@"filePath:%@",path);
+        self.path = path;
         
+        
+        return [NSURL fileURLWithPath:path];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         NSLog(@"filePath:%@",filePath);
-        NSLog(@"下载完毕");
-        
+        [AlertView showAlertWithMessage:@"下载完毕，请在下列应用中选择一个打开文件" target:self];
+        self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:self.path]];
+        self.documentController.delegate = self;
+        self.documentController.UTI = @"com.microsoft.word.doc";
+        [self.documentController presentOpenInMenuFromRect:CGRectMake(760, 20, 100, 100) inView:self.view animated:YES];
     }];
     [downloadTask resume];
     
 }
 - (IBAction)postPromiseBookButtonAction:(id)sender {
-
-
     if ([[AddImageManager AddManager] getImageArray].count == 0) {
         [AlertView showAlertWithMessage:@"请先添加承诺书照片" target:self];
         return;
@@ -72,8 +79,11 @@
     [param setObject:@"承诺书认证" forKey:@"PayName"];
     
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:[[AddImageManager AddManager] getImageArray] audioURL:nil param:param];
-    
-    
+    [HttpManager httpManager].ifpop = ^(NSString *statu)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+
 //    [self.manager POST:URL parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 //        NSData *imageData1 = UIImageJPEGRepresentation(self.promiseImage.image, 1.0f);
 //        [formData appendPartWithFileData:imageData1 name:@"PictureDes1"fileName:@"image1.png" mimeType:@"image/jpg/png/jpeg"];

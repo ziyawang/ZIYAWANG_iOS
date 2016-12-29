@@ -11,6 +11,8 @@
 
 #import "KNPhotoBrowerImageView.h"
 #import "KNPhotoBrower.h"
+
+
 #import "LoginController.h"
 #import "MyidentifiController.h"
 #import "UserInfoModel.h"
@@ -476,6 +478,9 @@
     numberLabel.text = self.model.ProjectNumber;
     
     numberLabel.font = [UIFont systemFontOfSize:14];
+    viewCountLabel.font = [UIFont systemFontOfSize:14];
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    
     if (self.model.ViewCount != nil) {
     viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
     }
@@ -683,18 +688,22 @@
     KNPhotoItems *items1 = [[KNPhotoItems alloc] init];
     KNPhotoItems *items2 = [[KNPhotoItems alloc] init];
     KNPhotoItems *items3 = [[KNPhotoItems alloc] init];
+    
+    
     NSString *imageURL1 = @"1";
     NSString *imageURL2 = @"2";
     NSString *imageURL3 = @"3";
+    
+    
     if ([self.model.PictureDes1 isEqualToString:@""] == NO && self.model.PictureDes1 != nil) {
         [self.imageView1 setHidden:NO];
         imageURL1 = [getImageURL stringByAppendingString:self.model.PictureDes1];
         [imageView1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
         items1.url = imageURL1;
         items1.sourceView =imageView1;
-
         [self.itemsArray addObject:items1];
     }
+    
     if ([self.model.PictureDes2 isEqualToString:@""] == NO && self.model.PictureDes2 != nil) {
          imageURL2 = [getImageURL stringByAppendingString:self.model.PictureDes2];
         [imageView2 setHidden:NO];

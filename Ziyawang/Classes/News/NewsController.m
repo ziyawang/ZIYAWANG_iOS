@@ -69,17 +69,12 @@
     [[[[[self tabBarController]tabBar]items]objectAtIndex:3]setBadgeValue:unreadStr];
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.shadowImage=[UIImage new];
-    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan2"] forBarMetrics:0];
     UIColor *color = [UIColor blackColor];
     
     NSDictionary * dict=[NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
-    
     self.navigationController.navigationBar.titleTextAttributes = dict;
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationAction:) name:@"NewsControllerpush" object:nil];
-    
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,10 +93,7 @@
     NewsDetailController *detailVC = [[NewsDetailController alloc]init];
     detailVC.NewsID = sender.userInfo[@"NewsID"];
     detailVC.NewsTime = sender.userInfo[@"NewsTime"];
-    
     [self.navigationController pushViewController:detailVC animated:YES];
-    
-    
 }
 
 /**
@@ -109,7 +101,6 @@
  */
 - (void)getLunbotu
 {
-    
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSString *accesstoken = @"token";

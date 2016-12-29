@@ -137,6 +137,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="Ott-GB-MNr"/>
                                                         <constraint firstAttribute="height" constant="30" id="ndZ-uG-dDL"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="开通">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -148,6 +149,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="RnS-cG-KH6"/>
                                                         <constraint firstAttribute="height" constant="30" id="gwt-nA-7Bd"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="详情说明">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -189,6 +191,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="G9Z-k9-hqD"/>
                                                         <constraint firstAttribute="height" constant="30" id="ZMO-hE-7vs"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="开通">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -200,6 +203,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="YRy-6s-pmE"/>
                                                         <constraint firstAttribute="height" constant="30" id="gOb-dF-yiK"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="详情说明">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -241,6 +245,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="3cs-dj-pAr"/>
                                                         <constraint firstAttribute="width" constant="75" id="woC-K2-jQE"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="开通">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -252,6 +257,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="hON-Jy-Lrc"/>
                                                         <constraint firstAttribute="height" constant="30" id="ptu-eM-Dlq"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="详情说明">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -293,6 +299,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="DYq-yA-TGb"/>
                                                         <constraint firstAttribute="height" constant="30" id="XO4-Xx-nW8"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="开通">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -304,6 +311,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="Tbr-wF-Cys"/>
                                                         <constraint firstAttribute="width" constant="75" id="vTd-RN-O1H"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="详情说明">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -345,6 +353,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="9qA-Mi-hGw"/>
                                                         <constraint firstAttribute="height" constant="30" id="tJq-Hx-LqP"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="开通">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -356,6 +365,7 @@
                                                         <constraint firstAttribute="width" constant="75" id="9VO-06-Qvr"/>
                                                         <constraint firstAttribute="height" constant="30" id="BMZ-iS-ols"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="详情说明">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
