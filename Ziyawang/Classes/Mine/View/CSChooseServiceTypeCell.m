@@ -16,8 +16,10 @@
 
 @interface CSChooseServiceTypeCell ()
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, assign) BOOL ifselected;
+@property (nonatomic, strong) UIImageView *imageview;
 
-@property (nonatomic, strong) UIButton *chooseBtn;
+
 @end
 
 @implementation CSChooseServiceTypeCell
@@ -37,12 +39,21 @@
 
 - (void)setupSubViews {
     
-    _chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanweixuanzhong"] forState:UIControlStateNormal];
-    [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanzhong"] forState:UIControlStateSelected];
+//    _chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//  
+//    [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanweixuanzhong"] forState:UIControlStateNormal];
+////    [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanzhong"] forState:UIControlStateSelected];
+//    
+//    [_chooseBtn addTarget:self action:@selector(didClickChooseButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+//    
+//    _chooseBtn.frame = CGRectMake(20 * kWidthScale, 5 * kHeightScale, 40 * kWidthScale, 40 * kWidthScale);
+//    [self.contentView addSubview:_chooseBtn];
     
-    _chooseBtn.frame = CGRectMake(20 * kWidthScale, 5 * kHeightScale, 40 * kWidthScale, 40 * kWidthScale);
-    [self.contentView addSubview:_chooseBtn];
+    
+    _imageview = [[UIImageView alloc]initWithFrame:CGRectMake(20 * kWidthScale, 15 * kHeightScale, 20 * kWidthScale, 20 * kWidthScale)];
+    _imageview.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
+    [self.contentView addSubview:_imageview];
+    
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.textColor = [UIColor blackColor];
@@ -58,6 +69,32 @@
     
 }
 
+- (void)didClickChooseButtonAction:(UIButton*)button
+{
+//    if (button.selected == NO) {
+//        [button setImage:[UIImage imageNamed:@"leixingxuanweixuanzhong"] forState:UIControlStateNormal];
+//    }
+//    else
+//    {
+//        [button setImage:[UIImage imageNamed:@"leixingxuanzhong"] forState:UIControlStateNormal];
+//    }
+}
+
+- (void)laoutImageView
+{
+    
+    if (self.ifselected == YES) {
+//        [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanzhong"] forState:UIControlStateSelected];
+        _imageview.image = [UIImage imageNamed:@"leixingxuanzhong"];
+
+    }
+    else
+    {
+//    [_chooseBtn setImage:[UIImage imageNamed:@"leixingxuanweixuanzhong"] forState:UIControlStateNormal];
+        _imageview.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
+    }
+    
+}
 #pragma mark - 子控件布局
 
 - (void)layoutSubviews
@@ -69,6 +106,9 @@
 - (void)setModel:(CSChooseServiceTypeModel *)model {
     _titleLabel.text = model.title;
     _chooseBtn.selected = model.chooseStatue;
+    self.ifselected = model.chooseStatue;
+    
+    [self laoutImageView];
 }
 #pragma mark - 其他方法
 

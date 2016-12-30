@@ -984,7 +984,6 @@ NSString *URL = TestQuestionURL;
         
         selectedCell.imageView.image = [UIImage imageNamed:@"leixingxuanweixuanzhong"];
         
-        
         UITableViewCell *willSelectCell = [tableView cellForRowAtIndexPath:indexPath];
 //        willSelectCell.accessoryType = UITableViewCellAccessoryCheckmark;
         willSelectCell.imageView.image = [UIImage imageNamed:@"leixingxuanzhong"];

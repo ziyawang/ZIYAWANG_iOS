@@ -183,10 +183,11 @@
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
     //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClickAction)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClickAction)];
 }
 
-- (void)setupButtonView {
+- (void)setupButtonView
+{
     
     CGFloat viewWidth = kScreenWidth - 20 * kWidthScale;
     
@@ -207,7 +208,6 @@
         
         
         button.frame = CGRectMake(viewX, viewY, W, H);
-        
         button.layer.cornerRadius = 1;
         button.layer.borderWidth = 1;
         button.layer.borderColor = [UIColor colorWithRed:200.0 / 255.0 green:200.0 / 255.0 blue:200.0 / 255.0 alpha:1.0].CGColor;
@@ -217,11 +217,61 @@
         
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 90 * kWidthScale, 0, 0);
         button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 30 * kWidthScale);
-        
         [button addTarget:self action:@selector(cityButtonClickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:button];
+    }
+    UIButton *sureButton = [UIButton new];
+    [self.view addSubview:sureButton];
+    sureButton.sd_layout.leftSpaceToView(self.view,20)
+    .rightSpaceToView(self.view,20)
+    .bottomSpaceToView(self.view,20)
+    .heightIs(50 * kHeightScale);
+    [sureButton setTitle:@"确认" forState:(UIControlStateNormal)];
+    [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [sureButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    [sureButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
+    
+}
+- (void)didClickSureButtonAction:(UIButton *)button
+{
+    NSString *string = [NSString string];
+    //    if (self.selectArray.count > 5) {
+    //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"地区选择不能超过5个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    //        [alert show];
+    //    }
+    
+    //    else
+    //    {
+    
+    if (self.selectArray.count != 0) {
+        for (NSString *title in self.selectArray) {
+            //        if ([title isEqualToString:@"全国"]) {
+            //            string = @" 全国";
+            //        }
+            //      else
+            //      {
+            string = [string stringByAppendingFormat:@" %@", title];
+            //      }
+        }
         
     }
     
+    if ([string isEqualToString:@""] == NO) {
+        string = [string substringFromIndex:1];
+    }
+    
+    NSLog(@"!!!!!!!!!!!!!%@",string);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (self.selectArray.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择服务地区" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    else
+    {
+        [defaults setObject:string forKey:@"服务地区"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    //    }
+
 }
 @end

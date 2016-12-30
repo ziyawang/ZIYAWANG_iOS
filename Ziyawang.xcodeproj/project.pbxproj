@@ -731,6 +731,7 @@
 		78B46B1D1E13BA6E00FFF274 /* youzhi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78B46B1A1E13BA6E00FFF274 /* youzhi@3x.png */; };
 		78B4A5EE1DFE66D7005F337B /* SkyerCityPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B4A5ED1DFE66D7005F337B /* SkyerCityPicker.m */; };
 		78B4A5F01DFE6A7E005F337B /* address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B4A5EF1DFE6A7E005F337B /* address.plist */; };
+		78C593241E160E2E002D77BC /* ChooseServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C593231E160E2E002D77BC /* ChooseServiceViewController.m */; };
 		78CDF18F1DD0ABEC00812E1C /* NewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDF18E1DD0ABEC00812E1C /* NewWebViewController.m */; };
 		78CDF1911DD1941200812E1C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CDF1901DD1941200812E1C /* WebKit.framework */; };
 		78CFFA261D3DAD0C002A22C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CFFA251D3DAD0C002A22C8 /* main.m */; };
@@ -1958,6 +1959,8 @@
 		78B4A5EC1DFE66D7005F337B /* SkyerCityPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkyerCityPicker.h; sourceTree = "<group>"; };
 		78B4A5ED1DFE66D7005F337B /* SkyerCityPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkyerCityPicker.m; sourceTree = "<group>"; };
 		78B4A5EF1DFE6A7E005F337B /* address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = address.plist; sourceTree = "<group>"; };
+		78C593221E160E2E002D77BC /* ChooseServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseServiceViewController.h; sourceTree = "<group>"; };
+		78C593231E160E2E002D77BC /* ChooseServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseServiceViewController.m; sourceTree = "<group>"; };
 		78CDF18D1DD0ABEC00812E1C /* NewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWebViewController.h; sourceTree = "<group>"; };
 		78CDF18E1DD0ABEC00812E1C /* NewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWebViewController.m; sourceTree = "<group>"; };
 		78CDF1901DD1941200812E1C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -3931,6 +3934,8 @@
 				7836E8111D5B0A0C00187E41 /* CSChooseServiceArearController.m */,
 				7836E8121D5B0A0C00187E41 /* CSChooseServiceTypeViewController.h */,
 				7836E8131D5B0A0C00187E41 /* CSChooseServiceTypeViewController.m */,
+				78C593221E160E2E002D77BC /* ChooseServiceViewController.h */,
+				78C593231E160E2E002D77BC /* ChooseServiceViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5562,6 +5567,7 @@
 				78F9FBC51DE96EF0008AECB7 /* NewPublishCell.m in Sources */,
 				781E656D1DE2D5B900C13C2B /* PersonalDebtsController.m in Sources */,
 				78746D371D6850CB00AD60FF /* CustomerViewController.m in Sources */,
+				78C593241E160E2E002D77BC /* ChooseServiceViewController.m in Sources */,
 				78D960581D97A20F007ECABA /* CostViewCell.m in Sources */,
 				78B4A5EE1DFE66D7005F337B /* SkyerCityPicker.m in Sources */,
 				78469B061D544B2800F3DE4C /* FindInfoController.m in Sources */,

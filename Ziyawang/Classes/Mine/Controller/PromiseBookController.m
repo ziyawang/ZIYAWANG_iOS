@@ -68,6 +68,7 @@
     if ([[AddImageManager AddManager] getImageArray].count == 0) {
         [AlertView showAlertWithMessage:@"请先添加承诺书照片" target:self];
         return;
+        
     }
     
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];

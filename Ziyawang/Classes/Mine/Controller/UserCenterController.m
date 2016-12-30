@@ -807,8 +807,6 @@
             case 5:
             {
                 
-                
-                
                 CSBackMessageController *helpVC = [[CSBackMessageController alloc]init];
                 
                 
@@ -890,17 +888,14 @@
                 break;
             case 2:
             {
-                
                 CSBackMessageController *messageVC = [[CSBackMessageController alloc]init];
-                
                 [self.navigationController pushViewController:messageVC animated:YES];
-                
             }
+                break;
             case 3:
             {
                 MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
                 [self.navigationController pushViewController:setVc animated:YES];
-                
             }
                 break;
                 

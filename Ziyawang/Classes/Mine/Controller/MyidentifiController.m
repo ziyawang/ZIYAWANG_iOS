@@ -17,6 +17,7 @@
 #import "LoginController.h"
 #import "UserInfoModel.h"
 #import "MyUItextField.h"
+#import "ChooseServiceViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface MyidentifiController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
@@ -378,15 +379,14 @@
     
     
     UIButton *cancelButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [cancelButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [cancelButton setFrame:CGRectMake(10, 0, 40, 30)];
     [cancelButton setTitle:@"取消" forState:(UIControlStateNormal)];
     UIButton *sureButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 40, 0, 40, 30)];
-    [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+    [sureButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 50, 0, 40, 30)];
     
+    [sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
     cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
     sureButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    
     
     [cancelButton addTarget:self action:@selector(didClickCancelDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton addTarget:self action:@selector(didClickSureDateButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -395,17 +395,16 @@
     [self.DatepickerBackView addSubview:cancelButton];
     [self.DatepickerBackView addSubview:sureButton];
     [self.view addSubview:self.DatepickerBackView];
-
 }
 
 - (void)timeViewGestureAction:(UITapGestureRecognizer *)gesture
 {
+    [self.view endEditing:YES];
+
     [self.mengbanView setHidden:NO];
     [UIView animateWithDuration:0.5 animations:^{
         self.DatepickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
     }];
-    
-
 }
 - (void)datePickerAction:(UIDatePicker *)sender
 {
@@ -541,7 +540,7 @@
 {
     [self.view endEditing:YES];
 
-    CSChooseServiceTypeViewController *serviceType = [[CSChooseServiceTypeViewController alloc]init];
+    ChooseServiceViewController *serviceType = [[ChooseServiceViewController alloc]init];
     [self.navigationController pushViewController:serviceType animated:YES];
     
 }

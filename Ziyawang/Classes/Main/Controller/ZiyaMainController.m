@@ -1587,6 +1587,18 @@ self.navigationItem.title = @"首页";
 
 - (void)didClickCepingButton:(UIButton *)button
 {
+    NSString *URL = @"https://apis.ziyawang.com";
+    
+//    [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+//        
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSString *str= [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"请求成功：%@",str);
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"请求失败：%@",error);
+//        
+//    }];
+    
     TestViewController *testVC = [[TestViewController alloc]init];
     [self.navigationController pushViewController:testVC animated:YES];
     

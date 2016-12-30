@@ -62,10 +62,9 @@
       }
       else
       {
-          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"上传成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+          UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"已提交审核，客服人员稍后会与您联系！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
           [alert show];
       }
-     
       NSString *statu = @"成功";
       [self.HUD removeFromSuperViewOnHide];
       [self.HUD hideAnimated:YES];

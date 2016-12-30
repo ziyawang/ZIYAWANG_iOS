@@ -10,4 +10,6 @@
 #import "CSChooseServiceTypeModel.h"
 @interface CSChooseServiceTypeCell : UITableViewCell
 @property (nonatomic, strong) CSChooseServiceTypeModel *model;
+@property (nonatomic, strong) UIButton *chooseBtn;
+
 @end

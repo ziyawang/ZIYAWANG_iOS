@@ -25,7 +25,7 @@
     self.navigationController.navigationBar.titleTextAttributes = dict;
     self.payid = @"3";
     self.payname = @"视频认证";
-    self.product = @"i.e.com.ziyawang.Ziya.shipin";
+    self.product = @"i.e.com.ziyawang.Ziya.shipin2";
     
 
 

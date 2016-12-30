@@ -1,29 +1,26 @@
 //
-//  CSChooseServiceTypeViewController.m
+//  ChooseServiceViewController.m
 //  Ziyawang
 //
-//  Created by 崔丰帅 on 16/8/9.
+//  Created by Mr.Xu on 2016/12/30.
 //  Copyright © 2016年 Mr.Xu. All rights reserved.
 //
 
-#import "CSChooseServiceTypeViewController.h"
+#import "ChooseServiceViewController.h"
 #import "CSChooseServiceTypeCell.h"
 #import "CSChooseServiceTypeModel.h"
-#define kWidthScale ([UIScreen mainScreen].bounds.size.width/414)
-#define kHeightScale ([UIScreen mainScreen].bounds.size.height/736)
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-@interface CSChooseServiceTypeViewController ()
-
+@interface ChooseServiceViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
 @property (nonatomic, strong) NSMutableArray *selectArray;
 
 @end
 
-@implementation CSChooseServiceTypeViewController
-
+@implementation ChooseServiceViewController
 #pragma mark - 懒加载
 
 - (NSMutableArray *)dataArray {
@@ -50,10 +47,14 @@
     }
     return _selectArray;
 }
-
-#pragma mark - 系统方法
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50 * kHeightScale * 10) style:(UITableViewStylePlain)];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    [self.view addSubview:self.tableView];
     
     // 自定义控件初始化
     [self setupSubViews];
@@ -61,7 +62,6 @@
     // 初始化数据模型
     [self initData];
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -80,7 +80,7 @@
  */
 - (void)setupSubViews {
     
-//    [self setupTitle];
+    //    [self setupTitle];
     self.navigationItem.title = @"服务类型";
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
@@ -97,21 +97,21 @@
     
     
     self.navigationController.navigationBar.titleTextAttributes = dict;
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClickAction)];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClickAction)];
     
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIButton *sureButton = [UIButton new];
-    [self.tableView addSubview:sureButton];
-    sureButton.sd_layout.leftSpaceToView(self.tableView,20)
-    .rightSpaceToView(self.tableView,20)
-    .bottomSpaceToView(self.tableView,20)
+    [self.view addSubview:sureButton];
+    sureButton.sd_layout.leftSpaceToView(self.view,20)
+    .rightSpaceToView(self.view,20)
+    .bottomSpaceToView(self.view,20)
     .heightIs(50 * kHeightScale);
     [sureButton setTitle:@"确认" forState:(UIControlStateNormal)];
     [sureButton addTarget:self action:@selector(didClickSureButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [sureButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [sureButton setBackgroundColor:[UIColor colorWithHexString:@"fdd000"]];
-
+    
 }
 /**
  *  初始化数据模型
@@ -123,107 +123,6 @@
 #pragma mark - 事件监听方法
 - (void)rightBarButtonClickAction {
     
-    NSString *string = [NSString string];
-    NSMutableArray *TypeIDArray = [NSMutableArray new];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *TypeString = [NSString string];
-    
-    
-//    if (self.selectArray.count > 3) {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"类型选择不能超过3个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }
-//    else
-//    {
-//    if (self.selectArray.count == 0)
-//    {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-    
-        
-        
-    for (CSChooseServiceTypeModel *model in self.selectArray) {
-        if ([model.title isEqualToString:@"资产包收购"])
-        {
-            [TypeIDArray addObject:@"01"];
-            
-        }
-        else if([model.title isEqualToString:@"催收机构"])
-        {
-            [TypeIDArray addObject:@"02"];
-        }
-        if ([model.title isEqualToString:@"律师事务所"]) {
-            [TypeIDArray addObject:@"03"];
-            
-        }
-        else if([model.title isEqualToString:@"保理公司"])
-        {
-            [TypeIDArray addObject:@"04"];
-        }
-        else if([model.title isEqualToString:@"担保公司"])
-        {
-            [TypeIDArray addObject:@"05"];
-        }
-        else if([model.title isEqualToString:@"典当公司"])
-        {
-            [TypeIDArray addObject:@"05"];
-        }
-        else if([model.title isEqualToString:@"投融资服务"])
-        {
-            [TypeIDArray addObject:@"06"];
-        }
-     
-        else if([model.title isEqualToString:@"尽职调查"])
-        {
-            [TypeIDArray addObject:@"10"];
-        }
-        else if([model.title isEqualToString:@"债权收购"])
-        {
-            [TypeIDArray addObject:@"14"];
-        }
-        else if([model.title isEqualToString:@"资产收购"])
-        {
-            [TypeIDArray addObject:@"12"];
-        }
-    }
-    
-    
-    for (NSString *str in TypeIDArray) {
-        
-        string = [string stringByAppendingFormat:@",%@",str];
-        NSLog(@"输出的类型的ID为%@",string);
-    }
-    
-    if (self.selectArray.count != 0) {
-        for (CSChooseServiceTypeModel *model in self.selectArray) {
-            TypeString = [TypeString stringByAppendingFormat:@" %@",model.title];
-        }
-        [defaults setObject:TypeString forKey:@"服务的类型"];
-    }
-    
-    
-        
-//    string = [string stringByAppendingFormat:@",%@", model.title];
-    if ([string isEqualToString:@""]==NO) {
-        string = [string substringFromIndex:1];
-        [defaults setObject:string forKey:@"服务类型"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-        
-     
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择类型" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-   
-    NSLog(@"输出的类型的ID为%@",string);
-//    }
-}
-
-- (void)didClickSureButtonAction:(UIButton *)button
-{
     NSString *string = [NSString string];
     NSMutableArray *TypeIDArray = [NSMutableArray new];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -320,7 +219,107 @@
     }
     
     NSLog(@"输出的类型的ID为%@",string);
+    //    }
+}
 
+- (void)didClickSureButtonAction:(UIButton *)button
+{
+    NSString *string = [NSString string];
+    NSMutableArray *TypeIDArray = [NSMutableArray new];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *TypeString = [NSString string];
+    
+    
+    //    if (self.selectArray.count > 3) {
+    //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"类型选择不能超过3个，请重新选择" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    //        [alert show];
+    //    }
+    //    else
+    //    {
+    //    if (self.selectArray.count == 0)
+    //    {
+    //        [self.navigationController popViewControllerAnimated:YES];
+    //    }
+    
+    
+    
+    for (CSChooseServiceTypeModel *model in self.selectArray) {
+        if ([model.title isEqualToString:@"收购资产包"])
+        {
+            [TypeIDArray addObject:@"01"];
+            
+        }
+        else if([model.title isEqualToString:@"委外催收"])
+        {
+            [TypeIDArray addObject:@"02"];
+        }
+        if ([model.title isEqualToString:@"法律服务"]) {
+            [TypeIDArray addObject:@"03"];
+            
+        }
+        else if([model.title isEqualToString:@"保理公司"])
+        {
+            [TypeIDArray addObject:@"04"];
+        }
+        else if([model.title isEqualToString:@"担保公司"])
+        {
+            [TypeIDArray addObject:@"05"];
+        }
+        else if([model.title isEqualToString:@"典当公司"])
+        {
+            [TypeIDArray addObject:@"05"];
+        }
+        else if([model.title isEqualToString:@"投融资服务"])
+        {
+            [TypeIDArray addObject:@"06"];
+        }
+        
+        else if([model.title isEqualToString:@"尽职调查"])
+        {
+            [TypeIDArray addObject:@"10"];
+        }
+        else if([model.title isEqualToString:@"债权收购"])
+        {
+            [TypeIDArray addObject:@"14"];
+        }
+        else if([model.title isEqualToString:@"收购固产"])
+        {
+            [TypeIDArray addObject:@"12"];
+        }
+    }
+    
+    
+    for (NSString *str in TypeIDArray) {
+        
+        string = [string stringByAppendingFormat:@",%@",str];
+        NSLog(@"输出的类型的ID为%@",string);
+    }
+    
+    if (self.selectArray.count != 0) {
+        for (CSChooseServiceTypeModel *model in self.selectArray) {
+            TypeString = [TypeString stringByAppendingFormat:@" %@",model.title];
+        }
+        [defaults setObject:TypeString forKey:@"服务的类型"];
+    }
+    
+    
+    NSLog(@"%@",string);
+    
+    //    string = [string stringByAppendingFormat:@",%@", model.title];
+    if ([string isEqualToString:@""]==NO) {
+        string = [string substringFromIndex:1];
+        [defaults setObject:string forKey:@"服务类型"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择类型" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    
+    NSLog(@"输出的类型的ID为%@",string);
+    
 }
 #pragma mark - 实现代理方法
 
@@ -340,10 +339,10 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+    
     CSChooseServiceTypeModel *model = self.dataArray[indexPath.row];
     cell.model = model;
-
+    
     
     return cell;
 }
@@ -356,7 +355,7 @@
     } else {
         [self.selectArray addObject:model];
     }
-        model.chooseStatue = !model.chooseStatue;
+    model.chooseStatue = !model.chooseStatue;
     [self.dataArray replaceObjectAtIndex:indexPath.row withObject:model];
     [self.tableView reloadData];
 }
@@ -375,7 +374,7 @@
     title.text = @"服务类型";
     self.navigationItem.titleView = title;
     
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
+    //    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:57.0 / 255.0 green:58.0 / 255.0 blue:59.0 / 255.0 alpha:1.0]];
     // 设置状态栏为白色 你看着自己整体设置 我不给你加了；
     //    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
@@ -384,4 +383,20 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
 @end
