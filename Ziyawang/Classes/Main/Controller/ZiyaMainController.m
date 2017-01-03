@@ -2536,6 +2536,8 @@ self.navigationItem.title = @"首页";
         NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
         infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
         infoDetailsVC.typeName = model.TypeName;
+        infoDetailsVC.TypeID = model.TypeID;
+        
 
         self.selectTypeName = model.TypeName;
 

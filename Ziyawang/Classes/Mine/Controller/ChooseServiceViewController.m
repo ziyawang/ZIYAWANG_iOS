@@ -144,16 +144,16 @@
     
     
     for (CSChooseServiceTypeModel *model in self.selectArray) {
-        if ([model.title isEqualToString:@"资产包收购"])
+        if ([model.title isEqualToString:@"收购资产包"])
         {
             [TypeIDArray addObject:@"01"];
             
         }
-        else if([model.title isEqualToString:@"催收机构"])
+        else if([model.title isEqualToString:@"委外催收"])
         {
             [TypeIDArray addObject:@"02"];
         }
-        if ([model.title isEqualToString:@"律师事务所"]) {
+        if ([model.title isEqualToString:@"法律服务"]) {
             [TypeIDArray addObject:@"03"];
             
         }
@@ -182,7 +182,7 @@
         {
             [TypeIDArray addObject:@"14"];
         }
-        else if([model.title isEqualToString:@"资产收购"])
+        else if([model.title isEqualToString:@"收购固产"])
         {
             [TypeIDArray addObject:@"12"];
         }

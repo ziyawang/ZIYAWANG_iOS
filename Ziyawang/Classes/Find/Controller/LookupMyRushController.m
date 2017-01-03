@@ -238,6 +238,7 @@
     NSLog(@"!!!!!!!!!!!!!!!!!!!!USErid:%@",model.UserID);
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;
+    infoDetailsVC.TypeID = model.TypeID;
 
     [self.navigationController pushViewController:infoDetailsVC animated:YES];
 }

@@ -432,6 +432,7 @@
     infoDetailsVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;
+    infoDetailsVC.TypeID = model.TypeID;
     self.selectTypeName = model.TypeName;
 
     NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];

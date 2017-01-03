@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailOfInfoController : UIViewController
-@property (nonatomic,strong) NSString *Type;
 
+typedef void(^httprequest)();
+@property (nonatomic, copy) httprequest httpRequestBlock;
+
+
+@property (nonatomic,strong) NSString *Type;
 @property (nonatomic,strong) NSString *typeName;
 @property (nonatomic,strong) NSString *ProjectID;
 @property (nonatomic,strong) NSString *userid;
 @property (nonatomic,strong) NSString *targetID;
+@property (nonatomic,strong) NSString *TypeID;
+
+
+
 @end

@@ -1552,6 +1552,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     infoDetailsVC.targetID = [NSString stringWithFormat:@"%@",model.UserID];
     infoDetailsVC.typeName = model.TypeName;
     
+    infoDetailsVC.TypeID = model.TypeID;
+    
     self.selectTypeName = model.TypeName;
     
     

@@ -26,9 +26,9 @@
 #import "TipTableViewController.h"
 @interface DetailOfInfoController ()<KNPhotoBrowerDelegate>
 {
-  
-        BOOL     _ApplicationStatusIsHidden;
-        
+    
+    BOOL     _ApplicationStatusIsHidden;
+    
 }
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UIView *scrollView;
@@ -63,7 +63,7 @@
 - (void)videoButtonAction:(UIButton *)button
 {
     NSString *url = AudioURL;
-//    NSLog(@"333######################%@",self.VideoDes);
+    //    NSLog(@"333######################%@",self.VideoDes);
     if ([self.model.VoiceDes isEqualToString:@""])
     {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"该条信息没有语音描述" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -103,7 +103,7 @@
         //        [player play];
         
     }
-
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -137,7 +137,7 @@
     [rightBarView addSubview:shareButton];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBarView];
-   
+    
     [collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
     [shareButton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
     shareButton.sd_layout.rightSpaceToView(rightBarView,0)
@@ -184,7 +184,7 @@
              {
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  NSLog(@"收藏成功");
-//                 [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
+                 //                 [self MBProgressWithString:@"收藏成功" timer:1 mode:MBProgressHUDModeText];
                  //                 收藏按钮状态改变
                  [button setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
                  self.model.CollectFlag = @"1";
@@ -205,7 +205,7 @@
                  NSLog(@"取消收藏成功");
                  [button setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
                  
-//                 [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
+                 //                 [self MBProgressWithString:@"已取消收藏" timer:1 mode:MBProgressHUDModeText];
                  
                  //收藏按钮状态改变
                  //            self.saveButton.imageView.image = [UIImage imageNamed:<#(nonnull NSString *)#>]
@@ -218,7 +218,7 @@
              }];
         }
     }
-
+    
 }
 - (void)shareButtonAction:(UIButton *)button
 {
@@ -297,7 +297,7 @@
                            break;
                    }
                }];
-
+    
 }
 - (void)getUserInfoFromDomin
 {
@@ -327,7 +327,7 @@
 
 - (void)getInfoData
 {
-//成功
+    //成功
     NSString *url = InformationDetailURL;
     //    NSString *accesstoken = @"?&access_token=token";
     NSLog(@"!!!!!!!!!!!!!!!!%@",self.ProjectID);
@@ -352,7 +352,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
+        
         
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
@@ -367,14 +367,14 @@
         }
         else
         {
-        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+            [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
         }
         
         NSLog(@"%@",dic);
         [self setViews];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-       
+        
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
         
@@ -390,35 +390,35 @@
     
     self.ContentView = [UIView new];
     self.scrollBackView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
-
+    
     [self.view addSubview:self.scrollBackView];
     [self.scrollBackView addSubview:self.scrollView];
     self.scrollBackView.showsVerticalScrollIndicator = FALSE;
     self.scrollBackView.showsHorizontalScrollIndicator = FALSE;
     
-
-//    [self.scrollView addSubview:self.ContentView];
+    
+    //    [self.scrollView addSubview:self.ContentView];
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.scrollView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     self.scrollBackView.backgroundColor = [UIColor whiteColor];
     
-//    self.ScrollView.sd_layout.leftSpaceToView(self.view,0)
-//    .rightSpaceToView(self.view,0)
-//    .topSpaceToView(self.view,0)
-//    .bottomSpaceToView(self.view,0);
-//    self.scrollBackView.backgroundColor = [UIColor whiteColor];
+    //    self.ScrollView.sd_layout.leftSpaceToView(self.view,0)
+    //    .rightSpaceToView(self.view,0)
+    //    .topSpaceToView(self.view,0)
+    //    .bottomSpaceToView(self.view,0);
+    //    self.scrollBackView.backgroundColor = [UIColor whiteColor];
     
-//    self.scrollBackView.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
-
-
+    //    self.scrollBackView.sd_layout.spaceToSuperView(UIEdgeInsetsZero);
+    
+    
     self.scrollView.sd_layout.topSpaceToView(self.scrollBackView,0)
     .leftSpaceToView(self.scrollBackView,0)
     .rightSpaceToView(self.scrollBackView,0);
     
     
     //    [self.scrollView setupAutoContentSizeWithRightView:self.imageBackView rightMargin:10];
-
+    
     
     UIView *titleView = [UIView new];
     titleView.backgroundColor = [UIColor whiteColor];
@@ -449,7 +449,7 @@
     
     UIView *infoView = [UIView new];
     infoView.backgroundColor = [UIColor whiteColor];
-
+    
     UIImageView *imageview = [UIImageView new];
     UILabel *nameLabel = [UILabel new];
     UILabel *numberLabel = [UILabel new];
@@ -482,7 +482,7 @@
     timeLabel.font = [UIFont systemFontOfSize:14];
     
     if (self.model.ViewCount != nil) {
-    viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
+        viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
     }
     
     NSArray *textarr = [self.model.PublishTime componentsSeparatedByString:@" "];
@@ -491,7 +491,7 @@
     
     if(self.model.UserPicture != nil)
     {
-    [imageview sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
+        [imageview sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
     }
     [imageview setContentScaleFactor:[[UIScreen mainScreen] scale]];
     imageview.contentMode = UIViewContentModeScaleAspectFill;
@@ -501,7 +501,7 @@
     imageview.layer.cornerRadius = 25;
     imageview.layer.masksToBounds = YES;
     
- 
+    
     
     infoView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -545,7 +545,7 @@
     
     self.changeView = [UIView new];
     self.changeView.backgroundColor = [UIColor whiteColor];
-
+    
     UIImageView *specialImageView = [UIImageView new];
     [self.changeView addSubview:specialImageView];
     [self.scrollView addSubview:self.changeView];
@@ -572,7 +572,7 @@
     }
     if ([self.model.Member isEqualToString:@"0"]) {
         specialImageView.image = [UIImage imageNamed:@"mianfeiyuan"];
-
+        
     }
     UIView *wordDesView = [UIView new];
     UIView *wenziView = [UIView new];
@@ -580,7 +580,7 @@
     
     wordDesView.backgroundColor = [UIColor whiteColor];
     wenziView.backgroundColor = [UIColor whiteColor];
-
+    
     UILabel *wenziLabel = [UILabel new];
     UILabel *desLabel = [UILabel new];
     [self.scrollView addSubview:wordDesView];
@@ -589,7 +589,7 @@
     [wenziView addSubview:wenziLabel];
     [wordDesView addSubview:desLabel];
     
-
+    
     
     wenziView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -622,7 +622,7 @@
     
     UIView *audioView = [UIView new];
     audioView.backgroundColor = [UIColor whiteColor];
-
+    
     UILabel *yuyinLabel = [UILabel new];
     UIButton *recordButton = [UIButton new];
     
@@ -651,8 +651,8 @@
     
     if ([self.model.VoiceDes isEqualToString:@""]||self.model.VoiceDes == nil)
     {
-//        [recordButton setBackgroundImage:[UIImage new] forState:(UIControlStateNormal)];
-//        recordButton.backgroundColor = [UIColor redColor];
+        //        [recordButton setBackgroundImage:[UIImage new] forState:(UIControlStateNormal)];
+        //        recordButton.backgroundColor = [UIColor redColor];
         [recordButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
         
         [recordButton setTitle:@"无语音" forState:(UIControlStateNormal)];
@@ -660,19 +660,19 @@
     else
     {
         [recordButton setBackgroundImage:[UIImage imageNamed:@"yuyin"] forState:(UIControlStateNormal)];
-
+        
     }
     UIView *xiangguanView = [UIView new];
     xiangguanView.backgroundColor = [UIColor whiteColor];
-
+    
     UILabel *xiangguanLabel = [UILabel new];
     [xiangguanView addSubview:xiangguanLabel];
     [self.scrollView addSubview:xiangguanView];
-
+    
     
     self.imageBackView = [UIView new];
     self.imageBackView.backgroundColor = [UIColor whiteColor];
-
+    
     UIImageView *imageView1 = [UIImageView new];
     UIImageView *imageView2 = [UIImageView new];
     UIImageView *imageView3 = [UIImageView new];
@@ -705,7 +705,7 @@
     }
     
     if ([self.model.PictureDes2 isEqualToString:@""] == NO && self.model.PictureDes2 != nil) {
-         imageURL2 = [getImageURL stringByAppendingString:self.model.PictureDes2];
+        imageURL2 = [getImageURL stringByAppendingString:self.model.PictureDes2];
         [imageView2 setHidden:NO];
         [imageView2 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes2]]];
         items2.url = imageURL2;
@@ -714,7 +714,7 @@
     }
     if ([self.model.PictureDes3 isEqualToString:@""] == NO && self.model.PictureDes3 != nil) {
         imageURL3 = [getImageURL stringByAppendingString:self.model.PictureDes3];
-
+        
         [imageView3 setHidden:NO];
         [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes3]]];
         items3.url = imageURL3;
@@ -722,9 +722,9 @@
         [self.itemsArray addObject:items3];
     }
     
-//    imageView1.backgroundColor = [UIColor redColor];
-//    imageView2.backgroundColor = [UIColor redColor];
-//    imageView3.backgroundColor = [UIColor redColor];
+    //    imageView1.backgroundColor = [UIColor redColor];
+    //    imageView2.backgroundColor = [UIColor redColor];
+    //    imageView3.backgroundColor = [UIColor redColor];
     
     imageView1.userInteractionEnabled = YES;
     imageView2.userInteractionEnabled = YES;
@@ -733,7 +733,7 @@
     UITapGestureRecognizer *ImageTapGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     UITapGestureRecognizer *ImageTapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
     UITapGestureRecognizer *ImageTapGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageTapGestureAction:)];
-   
+    
     imageView1.tag = 0;
     imageView2.tag = 1;
     imageView3.tag = 2;
@@ -742,8 +742,8 @@
     [imageView1 addGestureRecognizer:ImageTapGesture1];
     [imageView2 addGestureRecognizer:ImageTapGesture2];
     [imageView3 addGestureRecognizer:ImageTapGesture3];
-
-
+    
+    
     
     [self.scrollView addSubview:self.imageBackView];
     [self.imageBackView addSubview:imageView1];
@@ -829,9 +829,9 @@
     {
         [self.scrollView setupAutoHeightWithBottomView:self.imageBackView bottomMargin:50];
         
-       [self.scrollBackView setupAutoContentSizeWithBottomView:self.scrollView bottomMargin:50];
+        [self.scrollBackView setupAutoContentSizeWithBottomView:self.scrollView bottomMargin:50];
         [self.scrollBackView layoutSubviews];
-
+        
     }
     //判断是自己还是别人
     NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
@@ -842,12 +842,12 @@
     }
     else
     {
-    [self otherView];
+        [self otherView];
     }
     
     
     switch (self.model.TypeID.integerValue) {
-            case 1:
+        case 1:
             [self asetBackView];
             break;
             //融资信息股权
@@ -890,7 +890,7 @@
             break;
     }
     
-   }
+}
 
 - (void)otherView
 {
@@ -973,7 +973,7 @@
     
     [connectBackView addGestureRecognizer:connectGesture];
     [talkBackView addGestureRecognizer:talkGesture];
-
+    
 }
 
 - (void)MySelfView
@@ -1034,12 +1034,12 @@
     }
     else if([role isEqualToString:@"1"])
     {
-            UIWebView *webView = [[UIWebView alloc]init];
-            NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
-            NSURL *url = [NSURL URLWithString:telString];
-            [webView loadRequest:[NSURLRequest requestWithURL:url]];
-            [self.view addSubview:webView];
-            NSLog(@"认证过的服务方，调用打电话");
+        UIWebView *webView = [[UIWebView alloc]init];
+        NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
+        NSURL *url = [NSURL URLWithString:telString];
+        [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self.view addSubview:webView];
+        NSLog(@"认证过的服务方，调用打电话");
     }
     else
     {
@@ -1067,14 +1067,14 @@
         talkVC.conversationType = ConversationType_PRIVATE;
         [self.navigationController pushViewController:talkVC animated:YES];
         NSLog(@"认证过的服务方，调用私聊界面");
- 
+        
     }
     else
     {
         [self ShowAlertViewController];
         
     }
-
+    
 }
 
 - (void)lookBackViewAction:(UITapGestureRecognizer *)gesture
@@ -1121,10 +1121,10 @@
 - (void)carFapaiView
 {
     
-
-//    addView = self.changeView;
     
-//    [self.scrollView addSubview:addView];
+    //    addView = self.changeView;
+    
+    //    [self.scrollView addSubview:addView];
     
     UILabel *zichanLabel = [UILabel new];
     UILabel *zichanTypeLabel = [UILabel new];
@@ -1161,7 +1161,7 @@
     
     [self.changeView addSubview:zichanLabel];
     [self.changeView addSubview:zichanTypeLabel];
-       [self.changeView addSubview:pinpaiLabel];
+    [self.changeView addSubview:pinpaiLabel];
     [self.changeView addSubview:pinpaiNumber];
     [self.changeView addSubview:qipaiLabel];
     [self.changeView addSubview:qipaiMoney];
@@ -1174,7 +1174,7 @@
     [self.changeView addSubview:chuzhidanwei];
     [self.changeView addSubview:chuzhiLabel];
     
- 
+    
     zichanTypeLabel.text = self.model.AssetType;
     pinpaiNumber.text = self.model.Brand;
     qipaiMoney.text = [self.model.Money stringByAppendingString:@"万"];
@@ -1184,7 +1184,7 @@
     timeLabel.text = self.model.Year;
     jieduanLabel.text = self.model.State;
     chuzhiLabel.text = self.model.Court;
-
+    
     
     zichanLabel.text = @"资产类型：";
     pinpaiLabel.text = @"品牌型号：";
@@ -1196,7 +1196,7 @@
     
     chuzhidanwei.textColor = [UIColor grayColor];
     
-   
+    
     chuzhiLabel.textColor = [UIColor blackColor];
     
     zichanLabel.sd_layout.leftSpaceToView(self.changeView,15)
@@ -1209,71 +1209,71 @@
     .topSpaceToView(self.changeView,15)
     .heightIs(20);
     [zichanTypeLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     pinpaiLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(zichanLabel,15)
     .heightIs(20);
     [pinpaiLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     pinpaiNumber.sd_layout.leftSpaceToView(pinpaiLabel,5)
     .topEqualToView(pinpaiLabel)
     .heightIs(20);
     [pinpaiNumber setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     qipaiLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(pinpaiLabel,15)
     .heightIs(20);
     [qipaiLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     qipaiMoney.sd_layout.leftSpaceToView(qipaiLabel,5)
     .topEqualToView(qipaiLabel)
     .heightIs(20);
     [qipaiMoney setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     didianLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(qipaiLabel,15)
     .heightIs(20);
     [didianLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     areaLabel.sd_layout.leftSpaceToView(didianLabel,5)
     .topSpaceToView(qipaiMoney,15)
     .heightIs(20);
     [areaLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     
     shijianLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(didianLabel,15)
     .heightIs(20);
     [shijianLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     timeLabel.sd_layout.leftSpaceToView(shijianLabel,5)
     .topEqualToView(shijianLabel)
     .heightIs(20);
     [timeLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     paimaijieduan.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(shijianLabel,15)
     .heightIs(20);
     [paimaijieduan setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     jieduanLabel.sd_layout.leftSpaceToView(paimaijieduan,5)
     .topEqualToView(paimaijieduan)
     .heightIs(20);
     [jieduanLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     chuzhidanwei.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(paimaijieduan,15)
     .heightIs(20);
     [chuzhidanwei setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     chuzhiLabel.sd_layout.leftSpaceToView(chuzhidanwei,5)
     .topEqualToView(chuzhidanwei)
     .rightSpaceToView(self.changeView,15)
     .heightIs(20);
-
+    
     [self.changeView setupAutoHeightWithBottomView:chuzhiLabel bottomMargin:35];
     
-//    self.changeView = addView;
+    //    self.changeView = addView;
     
     
 }
@@ -1291,7 +1291,7 @@
     UILabel *xingzhiLabel2 = [UILabel new];
     xingzhiLabel.textColor = [UIColor grayColor];
     
-
+    
     UILabel *qipaiLabel = [UILabel new];
     UILabel *qipaiMoney = [UILabel new];
     qipaiLabel.textColor = [UIColor grayColor];
@@ -1317,7 +1317,7 @@
     [self.changeView addSubview:zichanTypeLabel];
     [self.changeView addSubview:mianjiLabel];
     [self.changeView addSubview:mianjishuLabel];
-
+    
     [self.changeView addSubview:xingzhiLabel];
     [self.changeView addSubview:xingzhiLabel2];
     
@@ -1379,12 +1379,12 @@
     .topSpaceToView(mianjiLabel,15)
     .heightIs(20);
     [xingzhiLabel setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     xingzhiLabel2.sd_layout.leftSpaceToView(xingzhiLabel,0)
     .topEqualToView(xingzhiLabel)
     .heightIs(20);
     [xingzhiLabel2 setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     
     qipaiLabel.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(xingzhiLabel,15)
@@ -1436,10 +1436,10 @@
     .topEqualToView(chuzhidanwei)
     .rightSpaceToView(self.changeView,15)
     .heightIs(20);
-//    [chuzhiLabel setSingleLineAutoResizeWithMaxWidth:200];
+    //    [chuzhiLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     [self.changeView setupAutoHeightWithBottomView:chuzhiLabel bottomMargin:35];
-
+    
     
 }
 - (void)personZhaiquanView
@@ -1447,7 +1447,7 @@
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
-
+    
     UILabel *label4 = [UILabel new];
     UILabel *label5 = [UILabel new];
     UILabel *label6 = [UILabel new];
@@ -1470,7 +1470,7 @@
     label10.textColor = [UIColor grayColor];
     label12.textColor = [UIColor grayColor];
     label14.textColor = [UIColor grayColor];
-
+    
     
     
     [self.changeView addSubview:label1];
@@ -1488,7 +1488,7 @@
     [self.changeView addSubview:label13];
     [self.changeView addSubview:label14];
     [self.changeView addSubview:label15];
-
+    
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -1538,7 +1538,7 @@
         label11.sd_layout.leftSpaceToView(label10,0)
         .topEqualToView(label10)
         .heightIs(20);
-
+        
     }
     if (self.model.Law != nil && self.model.UnLaw == nil) {
         label8.sd_layout.leftEqualToView(label1)
@@ -1576,7 +1576,7 @@
         label11.sd_layout.leftSpaceToView(label10,0)
         .topEqualToView(label10)
         .heightIs(20);
- 
+        
     }
     
     
@@ -1614,8 +1614,8 @@
     [label13 setSingleLineAutoResizeWithMaxWidth:200];
     [label14 setSingleLineAutoResizeWithMaxWidth:200];
     [label15 setSingleLineAutoResizeWithMaxWidth:200];
-
-
+    
+    
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     
@@ -1633,14 +1633,14 @@
     label8.text = @"诉讼佣金比例：";
     if (self.model.Law != nil) {
         label9.text = self.model.Law;
-
+        
     }
     
     label10.text = @"非诉催收佣金比例：";
     if (self.model.UnLaw != nil) {
         label11.text = self.model.UnLaw;
         
-
+        
     }
     
     label12.text = @"债权人所在地：";
@@ -1656,10 +1656,10 @@
     line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-
-//    line1.backgroundColor = [UIColor redColor];
-//    line2.backgroundColor = [UIColor blueColor];
-//    line3.backgroundColor = [UIColor blackColor];
+    
+    //    line1.backgroundColor = [UIColor redColor];
+    //    line2.backgroundColor = [UIColor blueColor];
+    //    line3.backgroundColor = [UIColor blackColor];
     
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
@@ -1743,7 +1743,7 @@
     .topSpaceToView(diyaLabel,15)
     .heightIs(20);
     [pingzhenLabel setSingleLineAutoResizeWithMaxWidth:500];
-
+    
     zhaiwurenLabel.sd_layout.leftEqualToView(diyaLabel)
     .topSpaceToView(pingzhenLabel,15)
     .heightIs(20);
@@ -1766,8 +1766,8 @@
     if ([self.model.Connect isEqualToString:@""]) {
         self.model.Connect = @"未填写";
     }
-
-//    NSString *text =[@"a" stringByAppendingString:self.model.Connect];
+    
+    //    NSString *text =[@"a" stringByAppendingString:self.model.Connect];
     danbaoLabel.text = [@"有无担保：" stringByAppendingString:self.model.Guaranty];
     changhuanLabel.text = [@"债务人有偿还能力："stringByAppendingString:self.model.Pay];
     diyaLabel.text = [@"有无抵押："stringByAppendingString:self.model.Property];
@@ -1781,7 +1781,7 @@
     UILabel *button2 = [UILabel new];
     UILabel *button3 = [UILabel new];
     UILabel *button4 = [UILabel new];
-
+    
     UIView *line4 = [UIView new];
     
     
@@ -1793,7 +1793,7 @@
     [liangdianBottomView addSubview:button2];
     [liangdianBottomView addSubview:button3];
     [liangdianBottomView addSubview:button4];
-
+    
     liangdianTopView.sd_layout.leftEqualToView(line3)
     .rightEqualToView(line3)
     .topSpaceToView(line3,0)
@@ -1842,7 +1842,7 @@
     .heightIs(20);
     
     [button4 setSingleLineAutoResizeWithMaxWidth:200];
-  
+    
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
         [button1 setHidden:NO];
@@ -1875,7 +1875,7 @@
         button1.text = proArr[0];
         button2.text = proArr[1];
         button3.text = proArr[2];
-
+        
     }
     else if(proArr.count == 4)
     {
@@ -1883,9 +1883,9 @@
         button2.text = proArr[1];
         button3.text = proArr[2];
         button4.text = proArr[3];
-
+        
     }
-
+    
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     [self setliangdianLabel:button3];
@@ -1925,9 +1925,9 @@
     label15.textColor = [UIColor grayColor];
     label17.textColor = [UIColor grayColor];
     label19.textColor = [UIColor grayColor];
-
     
-
+    
+    
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
     [self.changeView addSubview:label3];
@@ -1948,9 +1948,9 @@
     [self.changeView addSubview:label18];
     [self.changeView addSubview:label19];
     [self.changeView addSubview:label20];
-
     
-
+    
+    
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
     .heightIs(20);
@@ -2059,7 +2059,7 @@
     [label18 setSingleLineAutoResizeWithMaxWidth:200];
     [label19 setSingleLineAutoResizeWithMaxWidth:200];
     [label20 setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
@@ -2093,14 +2093,14 @@
     label20.text = [self.model.TransferMoney stringByAppendingString:@"万"];
     label20.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label20.font = [UIFont systemFontOfSize:20];
-
+    
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
     UIView *line3 = [UIView new];
     line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-
+    
     
     //    line1.backgroundColor = [UIColor redColor];
     //    line2.backgroundColor = [UIColor blueColor];
@@ -2210,7 +2210,7 @@
         self.model.Debt = @"未填写";
     }
     
-//    NSString *teon = [@"aa" stringByAppendingString:self.model.Dispute];
+    //    NSString *teon = [@"aa" stringByAppendingString:self.model.Dispute];
     danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
     changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
     diyaLabel.text = [@"有无法律纠纷："stringByAppendingString:self.model.Dispute];
@@ -2275,18 +2275,18 @@
     .centerYEqualToView(liangdianBottomView)
     .heightIs(20);
     [button3 setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     button4.sd_layout.topSpaceToView(button1,15)
     .centerYEqualToView(liangdianBottomView)
     .leftEqualToView(button1)
     .heightIs(20);
     [button4 setSingleLineAutoResizeWithMaxWidth:200];
-
+    
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     NSLog(@"%ld",proArr.count);
     if (proArr.count == 0) {
         [button1 setHidden:NO];
-
+        
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
@@ -2308,7 +2308,7 @@
     {
         button1.text = proArr[0];
         button2.text = proArr[1];
-    
+        
         
     }
     else if(proArr.count == 3)
@@ -2317,7 +2317,7 @@
         button2.text = proArr[1];
         button3.text = proArr[2];
     }
-
+    
     else if(proArr.count == 4)
     {
         button1.text = proArr[0];
@@ -2326,14 +2326,14 @@
         button4.text = proArr[3];
         
     }
-
+    
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     [self setliangdianLabel:button3];
     [self setliangdianLabel:button4];
-
-
-    }
+    
+    
+}
 - (void)landProductionView
 {
     UILabel *label1 = [UILabel new];
@@ -2357,7 +2357,7 @@
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
-//    label6.textColor = [UIColor grayColor];
+    //    label6.textColor = [UIColor grayColor];
     label7.textColor = [UIColor grayColor];
     label9.textColor = [UIColor grayColor];
     label11.textColor = [UIColor grayColor];
@@ -2382,7 +2382,7 @@
     [self.changeView addSubview:label14];
     [self.changeView addSubview:label15];
     [self.changeView addSubview:label16];
- 
+    
     
     
     
@@ -2458,7 +2458,7 @@
     .heightIs(20);
     
     
- 
+    
     
     
     [label1 setSingleLineAutoResizeWithMaxWidth:200];
@@ -2519,7 +2519,7 @@
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
     qitaLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -2586,9 +2586,9 @@
     .heightIs(20);
     [danbaoLabel setSingleLineAutoResizeWithMaxWidth:500];
     
-//    changhuanLabel.sd_layout.rightSpaceToView(qitaBottView,15)
-//    .topEqualToView(danbaoLabel)
-//    .heightIs(20);
+    //    changhuanLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    //    .topEqualToView(danbaoLabel)
+    //    .heightIs(20);
     changhuanLabel.sd_layout.leftEqualToView(danbaoLabel)
     .topSpaceToView(danbaoLabel,15)
     .heightIs(20);
@@ -2600,9 +2600,9 @@
     .heightIs(20);
     [diyaLabel setSingleLineAutoResizeWithMaxWidth:500];
     
-//    pingzhenLabel.sd_layout.rightSpaceToView(qitaBottView,15)
-//    .topEqualToView(diyaLabel)
-//    .heightIs(20);
+    //    pingzhenLabel.sd_layout.rightSpaceToView(qitaBottView,15)
+    //    .topEqualToView(diyaLabel)
+    //    .heightIs(20);
     pingzhenLabel.sd_layout.leftEqualToView(danbaoLabel)
     .topSpaceToView(diyaLabel,15)
     .heightIs(20);
@@ -2629,14 +2629,14 @@
     if ([self.model.Debt isEqualToString:@""]) {
         self.model.Debt = @"未填写";
     }
-
+    
     danbaoLabel.text = [@"有无相关证件："stringByAppendingString:self.model.Credentials];
     changhuanLabel.text = [@"有无担保抵押："stringByAppendingString:self.model.Guaranty];
     diyaLabel.text = [@"有无法律纠纷："stringByAppendingString:self.model.Dispute];
     pingzhenLabel.text = [@"是否拥有全部产权："stringByAppendingString:self.model.Property];
     zhaiwurenLabel.text = [@"有无负债："stringByAppendingString:self.model.Debt];
     
-
+    
     
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
@@ -2670,7 +2670,7 @@
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
     liandianLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)
@@ -2704,8 +2704,8 @@
     .topSpaceToView(button1,15)
     .heightIs(20);
     [button4 setSingleLineAutoResizeWithMaxWidth:200];
-
-   
+    
+    
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     NSLog(@"%ld",proArr.count);
@@ -2713,9 +2713,9 @@
     
     if (proArr.count == 0) {
         [button1 setHidden:NO];
-
+        
         button1.text = @"暂无项目亮点";
-//        [button2 setHidden:YES];
+        //        [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
     {
@@ -2742,7 +2742,7 @@
         button1.text = proArr[0];
         button2.text = proArr[1];
         button3.text = proArr[2];
-
+        
     }
     else if(proArr.count == 4)
     {
@@ -2757,7 +2757,7 @@
     [self setliangdianLabel:button2];
     [self setliangdianLabel:button3];
     [self setliangdianLabel:button4];
- 
+    
 }
 - (void)businesssView
 {
@@ -2781,7 +2781,7 @@
     UILabel *label17 = [UILabel new];
     UILabel *label18 = [UILabel new];
     UILabel *label19 = [UILabel new];
-
+    
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
@@ -2811,13 +2811,13 @@
     [self.changeView addSubview:label15];
     
     [self.changeView addSubview:label16];
-
+    
     [self.changeView addSubview:label17];
-
+    
     [self.changeView addSubview:label18];
-
+    
     [self.changeView addSubview:label19];
-
+    
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -2853,7 +2853,7 @@
     label8.sd_layout.leftSpaceToView(label7,0)
     .topEqualToView(label7)
     .heightIs(20);
- 
+    
     label9.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label7,0)
     .heightIs(0);
@@ -2952,8 +2952,8 @@
     [label17 setSingleLineAutoResizeWithMaxWidth:200];
     [label18 setSingleLineAutoResizeWithMaxWidth:200];
     [label19 setSingleLineAutoResizeWithMaxWidth:200];
- 
-
+    
+    
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     label3.text = @"商账类型：";
@@ -2974,7 +2974,7 @@
     label12.text = @"非诉催收佣金比例：";
     if (self.model.UnLaw != nil) {
         label13.text = self.model.UnLaw;
-
+        
     }
     label14.text = @"债务方地区：";
     label15.text = self.model.ProArea;
@@ -2989,12 +2989,12 @@
     line1.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line2.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     line3.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-
+    
     UIView *qitaView = [UIView new];
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
     qitaLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -3003,8 +3003,8 @@
     UILabel *pingzheng = [UILabel new];
     UILabel *hangyeLabel = [UILabel new];
     UILabel *shesuLabel = [UILabel new];
-//    UILabel *pingzhenLabel = [UILabel new];
-//    UILabel *zhaiwurenLabel = [UILabel new];
+    //    UILabel *pingzhenLabel = [UILabel new];
+    //    UILabel *zhaiwurenLabel = [UILabel new];
     
     [qitaView addSubview:qitaLabel];
     
@@ -3018,7 +3018,7 @@
     [qitaBottView addSubview:pingzheng];
     [qitaBottView addSubview:hangyeLabel];
     [qitaBottView addSubview:shesuLabel];
-   
+    
     
     qitaBottView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
@@ -3065,7 +3065,7 @@
     .rightSpaceToView(qitaBottView,15);
     
     
-//    [hangyeLabel setSingleLineAutoResizeWithMaxWidth:];
+    //    [hangyeLabel setSingleLineAutoResizeWithMaxWidth:];
     
     shesuLabel.sd_layout.leftEqualToView(pingzheng)
     .topSpaceToView(pingzheng,15)
@@ -3088,7 +3088,7 @@
     pingzheng.text = [@"有无债权相关凭证：" stringByAppendingString:self.model.Guaranty];
     hangyeLabel.text = [@"债务方行业："stringByAppendingString:self.model.Industry];
     shesuLabel.text = [@"债权涉诉情况："stringByAppendingString:self.model.State];
-
+    
     UIView *liangdianTopView = [UIView new];
     UILabel *liandianLabel = [UILabel new];
     UIView *liangdianBottomView = [UIView new];
@@ -3114,7 +3114,7 @@
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
     liandianLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)
@@ -3139,11 +3139,11 @@
     .heightIs(20);
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
-   
+    
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
         [button1 setHidden:NO];
-
+        
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
@@ -3170,7 +3170,7 @@
     [self setliangdianLabel:button2];
     
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:15];
- 
+    
 }
 
 - (void)finanCingGuquanView
@@ -3291,7 +3291,7 @@
     label16.sd_layout.leftSpaceToView(label15,0)
     .topEqualToView(label15)
     .heightIs(20);
-
+    
     
     [label1 setSingleLineAutoResizeWithMaxWidth:200];
     [label2 setSingleLineAutoResizeWithMaxWidth:200];
@@ -3342,7 +3342,7 @@
     //    line2.backgroundColor = [UIColor blueColor];
     //    line3.backgroundColor = [UIColor blackColor];
     
- 
+    
     [self.changeView addSubview:line1];
     [self.changeView addSubview:line2];
     [self.changeView addSubview:line3];
@@ -3355,7 +3355,7 @@
     .heightIs(10);
     
     
-  
+    
     
     
     UIView *liangdianTopView = [UIView new];
@@ -3370,7 +3370,7 @@
     .rightEqualToView(line1)
     .topSpaceToView(liangdianTopView,0)
     .heightIs(1);
-
+    
     
     [self.changeView addSubview:liangdianTopView];
     [self.changeView addSubview:liangdianBottomView];
@@ -3392,7 +3392,7 @@
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
     liandianLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
@@ -3417,18 +3417,18 @@
     [button3 setSingleLineAutoResizeWithMaxWidth:200];
     
     
-
+    
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
         [button1 setHidden:NO];
         button1.text = @"暂无项目亮点";
- 
+        
     }
     
     if (proArr.count == 0) {
         [button1 setHidden:NO];
-
+        
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
@@ -3441,8 +3441,8 @@
         }
         else
         {
-        button1.text = proArr[0];
-        [button2 setHidden:YES];
+            button1.text = proArr[0];
+            [button2 setHidden:YES];
         }
     }
     
@@ -3592,20 +3592,20 @@
     //    line1.backgroundColor = [UIColor redColor];
     //    line2.backgroundColor = [UIColor blueColor];
     //    line3.backgroundColor = [UIColor blackColor];
-  
+    
     
     
     [self.changeView addSubview:line1];
     [self.changeView addSubview:line2];
     [self.changeView addSubview:line3];
-  
+    
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
     .topSpaceToView(label11,15)
     .heightIs(10);
     
-  
+    
     
     
     UIView *liangdianTopView = [UIView new];
@@ -3642,7 +3642,7 @@
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
     liandianLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     
     [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
     
@@ -3662,11 +3662,11 @@
     .heightIs(20);
     [button2 setSingleLineAutoResizeWithMaxWidth:200];
     
- 
-        NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
+    
+    NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
         [button1 setHidden:NO];
-
+        
         button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
@@ -3692,8 +3692,8 @@
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     
-
-
+    
+    
 }
 - (void)asetBackView
 {
@@ -3710,7 +3710,7 @@
     UILabel *label10 = [UILabel new];
     UILabel *label11 = [UILabel new];
     UILabel *label12 = [UILabel new];
-  
+    
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
     [self.changeView addSubview:label3];
@@ -3791,7 +3791,7 @@
     [label11 setSingleLineAutoResizeWithMaxWidth:200];
     [label12 setSingleLineAutoResizeWithMaxWidth:200];
     
-
+    
     
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
@@ -3825,7 +3825,7 @@
     UILabel *qitaLabel = [UILabel new];
     qitaLabel.text = @"其他信息";
     qitaLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     qitaView.backgroundColor = [UIColor whiteColor];
     
     UIView *qitaBottView = [UIView new];
@@ -3938,15 +3938,15 @@
         self.model.Pawn = @"未填写";
         
     }
-
+    
     danbaoLabel.text = [[@"本金："stringByAppendingString:self.model.Money]stringByAppendingString:@"万"] ;
-//    danbaoLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
-//    danbaoLabel.font = [UIFont systemFontOfSize:20];
+    //    danbaoLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    //    danbaoLabel.font = [UIFont systemFontOfSize:20];
     
     changhuanLabel.text = [@"是否有尽调报告："stringByAppendingString:self.model.Report];
     diyaLabel.text = [[@"利息："stringByAppendingString:self.model.Rate]stringByAppendingString:@"万"];
-//    diyaLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
-//    diyaLabel.font = [UIFont systemFontOfSize:20];
+    //    diyaLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    //    diyaLabel.font = [UIFont systemFontOfSize:20];
     
     pingzhenLabel.text = [@"出表时间："stringByAppendingString:self.model.Time];
     zhaiwurenLabel.text = [@"户数："stringByAppendingString:self.model.Time];
@@ -3968,7 +3968,7 @@
     [liangdianBottomView addSubview:button1];
     [liangdianBottomView addSubview:button2];
     [liangdianBottomView addSubview:button3];
-
+    
     
     liangdianTopView.sd_layout.leftEqualToView(line3)
     .rightEqualToView(line3)
@@ -3981,7 +3981,7 @@
     [liandianLabel setSingleLineAutoResizeWithMaxWidth:200];
     liandianLabel.text = @"项目亮点";
     liandianLabel.font = [UIFont boldSystemFontOfSize:17];
-
+    
     line4.sd_layout.leftEqualToView(liangdianTopView)
     .rightEqualToView(liangdianTopView)
     .heightIs(1)
@@ -4010,7 +4010,7 @@
     .heightIs(20);
     [button3 setSingleLineAutoResizeWithMaxWidth:200];
     
-   
+    
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
@@ -4048,7 +4048,7 @@
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     [self setliangdianLabel:button3];
-
+    
 }
 
 - (void)setliangdianLabel:(UILabel *)label
@@ -4078,7 +4078,7 @@
         tipVc.ItemID = self.model.ProjectID;
         [self.navigationController pushViewController:tipVc animated:YES];
     }
-
+    
 }
 
 #pragma mark----查看图片手势方法以及代理
@@ -4134,13 +4134,13 @@
     // Dispose of any resources that can be recreated.
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

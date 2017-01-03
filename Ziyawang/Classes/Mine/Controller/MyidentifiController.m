@@ -738,15 +738,15 @@
         NSString *string = [NSString string];
 
             for (NSString *str in array) {
-                if ([str isEqualToString:@"资产包收购"])
+                if ([str isEqualToString:@"收购资产包"])
                 {
                     [TypeIDArray addObject:@"01"];
                 }
-                else if([str isEqualToString:@"催收机构"])
+                else if([str isEqualToString:@"委外催收"])
                 {
                     [TypeIDArray addObject:@"02"];
                 }
-               else if ([str isEqualToString:@"律师事务所"]) {
+               else if ([str isEqualToString:@"法律服务"]) {
                     [TypeIDArray addObject:@"03"];
                     
                 }
@@ -775,7 +775,7 @@
                 {
                     [TypeIDArray addObject:@"14"];
                 }
-                else if([str isEqualToString:@"资产收购"])
+                else if([str isEqualToString:@"收购固产"])
                 {
                     [TypeIDArray addObject:@"12"];
                 }

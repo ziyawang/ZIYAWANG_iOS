@@ -120,7 +120,7 @@
         [self.allshiArray addObject:self.shiArray];
     }
     
-    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
+    NSArray *infonmationType = @[@"收购资产包",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
      NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     NSArray *level = @[@"VIP1"];
     menuView.indexsOneFist = infonmationType;
