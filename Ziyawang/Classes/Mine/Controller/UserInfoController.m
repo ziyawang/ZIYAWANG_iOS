@@ -183,11 +183,10 @@
             
             
             NSArray *rightArr = dic[@"user"][@"showrightios"];
-            NSArray *timearr = dic[@"user"][@"showrightarr"][1];
+//            NSArray *timearr = dic[@"user"][@"showrightarr"][1];
             NSDictionary *timedic = dic[@"user"][@"showright"];
             self.timeDic = [NSMutableDictionary dictionaryWithDictionary:timedic];
-            
-            self.timeArray = [NSMutableArray arrayWithArray:timearr];
+//            self.timeArray = [NSMutableArray arrayWithArray:timearr];
             
             for (NSString *type in rightArr) {
                 if ([type isEqualToString:@"zcb"]) {

@@ -309,8 +309,6 @@
     weituoView.layer.masksToBounds = YES;
     self.PromiseView = mengbanView;
 //    [self.PromiseView setHidden:YES];
-
-    
 }
 - (void)setWeituoView
 {
