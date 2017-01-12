@@ -106,7 +106,7 @@
 - (void)getsmscode
 {
     
-    NSString *postUrl = @"http://api.ziyawang.com/v1/auth/getsmscode";
+    NSString *postUrl = @"https://apis.ziyawang.com/zll/auth/getsmscode";
     NSString *access_token = @"token";
     NSString *phonenumber = self.registNumberTextField.text;
     NSString *act = @"register";
@@ -167,7 +167,7 @@
     NSString *phoneNum = self.registNumberTextField.text;
     NSString *password = self.registPasswordTextField.text;
     NSString *smscode = self.smsCodeTextField.text;
-    NSString *postUrl = @"http://api.ziyawang.com/v1/auth/register";
+    NSString *postUrl = @"https://apis.ziyawang.com/zll/auth/register";
     NSString *access_token = @"token";
     
     
@@ -233,7 +233,7 @@
     NSString *phonenumer = self.loginNumberTextField.text;
     NSString *password = self.loginpasswordTextField.text;
     NSString *access_token = @"token";
-    NSString *posturl = @"http://api.ziyawang.com/v1/auth/login";
+    NSString *posturl = @"https://apis.ziyawang.com/zll/auth/login";
     
     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
     [postDic setObject:phonenumer forKey:@"phonenumber"];
@@ -284,7 +284,7 @@
 //登录获取验证码
 - (void)getsmscodeinLogin
 {
-    NSString *postUrl = @"http://api.ziyawang.com/v1/auth/getsmscode";
+    NSString *postUrl = @"https://apis.ziyawang.com/zll/auth/getsmscode";
     NSString *access_token = @"token";
     NSString *phonenumber = self.smsloginNumTextField.text;
     NSString *action = @"login";
@@ -336,7 +336,7 @@
     NSString *phonenumber = self.smsloginNumTextField.text;
     NSString *accesstoken = @"token";
     NSString *smscode = self.loginsmscodeTextField.text;
-    NSString *postUrl = @"http://api.ziyawang.com/v1/auth/smslogin";
+    NSString *postUrl = @"https://apis.ziyawang.com/zll/auth/smslogin";
     
     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
     [postDic setObject:phonenumber forKey:@"phonenumber"];

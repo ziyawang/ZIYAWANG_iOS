@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoldCertiViewController">
             <connections>
+                <outlet property="rechargeButton" destination="bPP-7N-VXo" id="RBj-Br-ISG"/>
                 <outlet property="view" destination="2YR-JR-KXb" id="6aW-b6-kH3"/>
             </connections>
         </placeholder>

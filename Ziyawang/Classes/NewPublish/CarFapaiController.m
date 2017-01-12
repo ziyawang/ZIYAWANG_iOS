@@ -318,10 +318,8 @@
     UIView *imageBackView = [UIView new];
     
     UIView *bottomView = [UIView new];
-    
     UILabel *pleaseLabel = [UILabel new];
     UILabel *kefuPhoneLabel = [UILabel new];
-    
     UILabel *lianxiren = [UILabel new];
     UILabel *lianxifangshi = [UILabel new];
     
@@ -960,7 +958,7 @@
        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
-    //    http://apitest.ziyawang.com/v1/v2/uploadfile
+    //    http://apitest.ziyawang.com/v1/uploadfile
     NSString *url1= getDataURL;
     //    NSString *url2 = @"/uploadfile?token=";
     NSString *url2 = @"/uploadfile?token=";
@@ -989,16 +987,11 @@
     else if ([self.zichanLabel.text isEqualToString:@"土地"])
     {
         [dic setObject:@"21" forKey:@"TypeID"];
-        
     }
     else
     {
         [dic setObject:@"20" forKey:@"TypeID"];
-
     }
-    
-    
-    
     [dic setObject:self.zichanLabel.text forKey:@"AssetType"];
     [dic setObject:self.qipaijiaTextField.text forKey:@"Money"];
     [dic setObject:self.paimaididianLabel.text forKey:@"ProArea"];
@@ -1013,16 +1006,13 @@
     if ([self.zichanLabel.text isEqualToString:@"汽车"])
     {
         [dic setObject:self.pinpaiTextField.text forKey:@"Brand"];
-        
     }
     else
     {
         [dic setObject:self.mianjiTextField.text forKey:@"Area"];
         [dic setObject:self.xingzhiLabel.text forKey:@"Nature"];
     }
-    
     NSLog(@"%@",dic);
-    
     NSMutableArray *imageArray = [[AddImageManager AddManager]getImageArray];
     [[HttpManager httpManager]postDataWithURL:URL ImageArray:imageArray audioURL:audiourl param:dic];
     

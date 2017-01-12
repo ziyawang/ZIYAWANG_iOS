@@ -197,7 +197,7 @@
 //        
 //        self.manager = [AFHTTPSessionManager manager];
 //        self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+//        NSString *URL = @"https://apis.ziyawang.com/zll/app/uinfo?access_token=token";
 //        NSMutableDictionary *dic = [NSMutableDictionary new];
 //        //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
 //        [dic setObject:userId forKey:@"UserID"];

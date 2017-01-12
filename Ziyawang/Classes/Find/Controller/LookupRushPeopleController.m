@@ -216,7 +216,7 @@
 }
 //- (void)collectButtonAction:(UIButton *)collectButton
 //{
-//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *headurl = @"https://apis.ziyawang.com/zll";
 //    NSString *footurl = @"/project/myrush";
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    NSString *token = [defaults objectForKey:@"token"];
@@ -252,7 +252,7 @@
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    NSString *token = [defaults objectForKey:@"token"];
 //
-//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *headurl = @"https://apis.ziyawang.com/zll";
 //    NSString *footurl = @"/project/cooperate";
 //    self.ProjectID = [NSString stringWithFormat:@"%@",self.ProjectID];
 //    NSLog(@"#################################%@",self.model.ServiceID);

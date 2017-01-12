@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VideoCertiController : UIViewController
-
+@property (nonatomic,strong) NSString *statu;
 @end

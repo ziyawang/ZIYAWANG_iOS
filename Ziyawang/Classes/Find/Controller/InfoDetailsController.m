@@ -367,7 +367,7 @@
 
 - (void)getData
 {
-    //http://api.ziyawang.com/v1/project/list/5?&access_token=token
+    //https://apis.ziyawang.com/zll/project/list/5?&access_token=token
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
     self.HUD.mode = MBProgressHUDModeIndeterminate;
@@ -386,7 +386,7 @@
         URL = [[[[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"]stringByAppendingString:@"&token="]stringByAppendingString:token];
     }
     NSString *getURL = URL;
-    //    NSString *gfetURL = @"http://api.ziyawang.com/v1/project/list/5?&access_token=token";
+    //    NSString *gfetURL = @"https://apis.ziyawang.com/zll/project/list/5?&access_token=token";
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];
@@ -1968,7 +1968,7 @@
         
         NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
         
-        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list?access_token=token";
         NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
         [postdic setObject:access_token forKey:@"access_token"];
         //    [postdic setObject:token forKey:@"token"];
@@ -2030,7 +2030,7 @@
     
     
     //    NSString *url = @"http://ziyawang.com/project/";
-    NSString *url = @"http://api.ziyawang.com/v1/";
+    NSString *url = @"https://apis.ziyawang.com/zll/";
     self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
     NSString *URL = [url stringByAppendingString:self.model.ProjectID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!%@",URL);

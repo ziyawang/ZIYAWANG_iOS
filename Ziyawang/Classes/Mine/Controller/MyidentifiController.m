@@ -560,7 +560,7 @@
     NSString *ServiceType = [defaults objectForKey:@"服务类型"];
     NSString *headurl = getDataURL;
     NSString *footurl = @"/app/service/confirm";
-   //    NSString *str = @"http://api.ziyawang.com/v1app/service/confirm";
+   //    NSString *str = @"https://apis.ziyawang.com/zllapp/service/confirm";
     NSString *token1 = [defaults objectForKey:@"token"];
 
     NSString *token = [@"?token="stringByAppendingString:token1];
@@ -794,7 +794,7 @@
             NSLog(@"-------------------%@",ServiceType);
         NSString *headurl = getDataURL;
         NSString *footurl = @"/app/service/reconfirm";
-        //    NSString *str = @"http://api.ziyawang.com/v1app/service/confirm";
+        //    NSString *str = @"https://apis.ziyawang.com/zllapp/service/confirm";
         NSString *token1 = [defaults objectForKey:@"token"];
         NSString *token = [@"?token="stringByAppendingString:token1];
         NSString *URL = [[headurl stringByAppendingString:footurl]stringByAppendingString:token];

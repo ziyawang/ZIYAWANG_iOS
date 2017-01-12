@@ -75,8 +75,8 @@
     self.imageurl2 = self.model.ConfirmationP2;
     self.imageurl3 = self.model.ConfirmationP3;
     
+    [self setImageViewsWithImageView:self.leftImageView];
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.imageurl1]]];
-    
     
     if ([self.model.showrightiosStr isEqualToString:@""]||self.model.showrightiosStr == nil) {
         [self.noLabel setHidden:NO];
@@ -151,34 +151,53 @@
     
     
     if ([self.model.Level isEqualToString:@""]||self.model.Level == nil) {
-        [self.noLabel setHidden:NO];
+        self.ima1.image = [UIImage imageNamed:@"bao-hui"];
+        self.ima2.image = [UIImage imageNamed:@"shi-hui"];
+        self.ima3.image = [UIImage imageNamed:@"shi-hui-1"];
+        self.ima4.image = [UIImage imageNamed:@"nuo-hui"];
+        self.ima5.image = [UIImage imageNamed:@"zheng-hui"];
+
     }
     else
     {
         NSArray *starArr = [self.model.Level componentsSeparatedByString:@","];
         for (NSString *starStr in starArr)
         {
-            if ([starStr isEqualToString:@"1"]) {
+            if ([starStr isEqualToString:@"1"])
+            {
                 self.ima1.image = [UIImage imageNamed:@"baozhengjin"];
             }
-            if ([starStr isEqualToString:@"2"]) {
+       
+            if ([starStr isEqualToString:@"2"])
+            {
                 self.ima2.image = [UIImage imageNamed:@"shi"];
             }
-            if ([starStr isEqualToString:@"3"]) {
+  
+            if ([starStr isEqualToString:@"3"])
+            {
                 self.ima3.image = [UIImage imageNamed:@"shipin"];
             }
-            if ([starStr isEqualToString:@"4"]) {
-                self.ima4.image = [UIImage imageNamed:@"nuo"];
 
+            if ([starStr isEqualToString:@"4"])
+            {
+                self.ima4.image = [UIImage imageNamed:@"nuo"];
             }
+
             if ([starStr isEqualToString:@"5"]) {
                 self.ima5.image = [UIImage imageNamed:@"zheng"];
-
             }
+
         }
     }
 }
 
+- (void)setImageViewsWithImageView:(UIImageView *)imageView
+{
+    [imageView setContentScaleFactor:[[UIScreen mainScreen] scale]];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    imageView.clipsToBounds = YES;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

@@ -417,15 +417,21 @@
         case 5:
              [self setPromiseViewWithButtonTag:5];
             break;
+            //0 开通 1 审核中 2 已认证 3 未通过
         case 6:
         {
             if ([self.starStatuDic[@"1"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"1"] isEqualToString:@"1"] == NO) {
-                
                 GoldCertiViewController *goldVC = [[GoldCertiViewController alloc]init];
                 [self.navigationController pushViewController:goldVC animated:YES];
             }
-          
+            else
+            {
+                GoldCertiViewController *goldVC = [[GoldCertiViewController alloc]init];
+                goldVC.statu = @"已支付";
+                
+                [self.navigationController pushViewController:goldVC animated:YES];
             
+            }
         }
             break;
         case 7:
@@ -434,12 +440,24 @@
                 AreaCertiController *areaVC = [[AreaCertiController alloc]init];
                 [self.navigationController pushViewController:areaVC animated:YES];
             }
+            else
+            {
+                AreaCertiController *areaVC = [[AreaCertiController alloc]init];
+                areaVC.statu = @"已支付";
+                [self.navigationController pushViewController:areaVC animated:YES];
+            }
         }
             break;
         case 8:
         {
             if ([self.starStatuDic[@"3"] isEqualToString:@"2"] == NO && [self.starStatuDic[@"3"] isEqualToString:@"1"] == NO) {
                 VideoCertiController *videoVC = [[VideoCertiController alloc]init];
+                [self.navigationController pushViewController:videoVC animated:YES];
+            }
+            else
+            {
+                VideoCertiController *videoVC = [[VideoCertiController alloc]init];
+                videoVC.statu = @"已支付";
                 [self.navigationController pushViewController:videoVC animated:YES];
             }
            

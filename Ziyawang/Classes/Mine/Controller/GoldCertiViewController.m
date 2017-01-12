@@ -12,6 +12,7 @@
 @property (nonatomic,strong) NSString *product;
 @property (nonatomic,strong) NSString *payid;
 @property (nonatomic,strong) NSString *payname;
+@property (weak, nonatomic) IBOutlet UIButton *rechargeButton;
 
 
 @end
@@ -28,7 +29,18 @@
     self.payid = @"1";
     self.payname = @"保证金认证";
     self.product = @"i.e.com.ziyawang.Ziya.baozhengjin";
+    NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSLog(@"%@",userID);
     
+    if ([userID isEqualToString:@"889"]) {
+        [self.rechargeButton setTitle:@"再次购买" forState:(UIControlStateNormal)];
+    }
+    else if([self.statu isEqualToString:@"已支付"])
+    {
+        [self.rechargeButton setTitle:@"已支付" forState:(UIControlStateNormal)];
+        self.rechargeButton.userInteractionEnabled = NO;
+    }
+
 
 }
 - (IBAction)rechargeButtonAction:(id)sender {
@@ -42,8 +54,7 @@
     [dic setObject:self.payid forKey:@"payid"];
     [dic setObject:@"star" forKey:@"paytype"];
 
-    
-    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic];
+    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic Button:self.rechargeButton];
     
 }
 

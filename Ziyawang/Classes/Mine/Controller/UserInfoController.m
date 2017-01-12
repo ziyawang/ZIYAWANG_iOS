@@ -111,7 +111,6 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
     
-    
     self.navigationController.navigationBar.titleTextAttributes = dict;
     
     NSArray *lightar = @[@"0",@"0",@"0",@"0",@"0"];
@@ -151,10 +150,9 @@
         LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
         [self presentViewController:loginVC animated:YES completion:nil];
     }
-    
     else
     {
-[self setSubViews];
+    [self setSubViews];
     }
  }
 
@@ -189,41 +187,32 @@
 //            self.timeArray = [NSMutableArray arrayWithArray:timearr];
             
             for (NSString *type in rightArr) {
-                if ([type isEqualToString:@"zcb"]) {
+                if ([type isEqualToString:@"zcb"])
+                {
                     self.image1.image = [UIImage imageNamed:@"huiyuanbao"];
                     self.lightArray[0] = @"1";
-                    
                 }
                 else if([type isEqualToString:@"qysz"])
                 {
                     self.image2.image = [UIImage imageNamed:@"huiyuanqi"];
                     self.lightArray[1] = @"1";
-                                    }
+                }
                 else if([type isEqualToString:@"gdzc"])
                 {
                     self.image3.image = [UIImage imageNamed:@"huiyuangu"];
                     self.lightArray[2] = @"1";
-                    
                 }
                 else if([type isEqualToString:@"rzxx"])
                 {
                     self.image4.image = [UIImage imageNamed:@"huiyuanrong"];
                     self.lightArray[3] = @"1";
-                   
-                    
                 }
                 else if([type isEqualToString:@"grzq"])
                 {
                     self.image5.image = [UIImage imageNamed:@"huiyuange"];
                     self.lightArray[4] = @"1";
-                    
                 }
-                
-                
             }
-            
-            
-
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];

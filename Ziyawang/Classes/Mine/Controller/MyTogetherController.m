@@ -202,7 +202,7 @@
 ////    [self.navigationController pushViewController:cancelVC animated:YES];
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    NSString *token = [defaults objectForKey:@"token"];
-//    NSString *url1 = @"http://api.ziyawang.com/v1";
+//    NSString *url1 = @"https://apis.ziyawang.com/zll";
 //    NSString *url2 = @"/project/cancel";
 //    NSString *URL = [[[url1 stringByAppendingString:url2]stringByAppendingString:@"?token="]stringByAppendingString:token];
 //    NSMutableDictionary *paraDic = [NSMutableDictionary new];

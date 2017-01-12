@@ -11,6 +11,7 @@
 @interface VideoCertiController ()
 @property (nonatomic,strong) NSString *product;
 @property (nonatomic,strong) NSString *payid;
+@property (weak, nonatomic) IBOutlet UIButton *rechargeButton;
 @property (nonatomic,strong) NSString *payname;
 @end
 
@@ -26,7 +27,18 @@
     self.payid = @"3";
     self.payname = @"视频认证";
     self.product = @"i.e.com.ziyawang.Ziya.shipin2";
+    NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSLog(@"%@",userID);
     
+    if ([userID isEqualToString:@"889"]) {
+        [self.rechargeButton setTitle:@"再次购买" forState:(UIControlStateNormal)];
+    }
+    else if([self.statu isEqualToString:@"已支付"])
+    {
+        [self.rechargeButton setTitle:@"已支付" forState:(UIControlStateNormal)];
+        self.rechargeButton.userInteractionEnabled = NO;
+    }
+
 
 
 }
@@ -42,7 +54,7 @@
     [dic setObject:@"star" forKey:@"paytype"];
     
     
-    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic];
+    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic Button:self.rechargeButton];
     
 
 }

@@ -11,6 +11,7 @@
 @interface AreaCertiController ()
 @property (nonatomic,strong) NSString *product;
 @property (nonatomic,strong) NSString *payid;
+@property (weak, nonatomic) IBOutlet UIButton *rechargeButton;
 @property (nonatomic,strong) NSString *payname;
 @end
 
@@ -25,7 +26,19 @@
     self.payid = @"2";
     self.payname = @"实地认证";
     self.product = @"i.e.com.ziyawang.Ziya.shidi";
-  
+    
+    NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSLog(@"%@",userID);
+    
+    if ([userID isEqualToString:@"889"]) {
+        [self.rechargeButton setTitle:@"再次购买" forState:(UIControlStateNormal)];
+    }
+    else if([self.statu isEqualToString:@"已支付"])
+    {
+        [self.rechargeButton setTitle:@"已支付" forState:(UIControlStateNormal)];
+        self.rechargeButton.userInteractionEnabled = NO;
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +56,7 @@
     [dic setObject:self.payid forKey:@"payid"];
     [dic setObject:@"star" forKey:@"paytype"];
     
-    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic];
+    [[PayManager payManager]payForProductWithPruduct:self.product WithURL:URL param:dic Button:self.rechargeButton];
     
 
 }

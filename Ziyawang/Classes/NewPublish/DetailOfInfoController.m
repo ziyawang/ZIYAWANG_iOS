@@ -170,7 +170,7 @@
         NSString *access_token = @"token";
         
         NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
-        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list?access_token=token";
         NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
         [postdic setObject:access_token forKey:@"access_token"];
         //    [postdic setObject:token forKey:@"token"];
@@ -226,7 +226,7 @@
     //    NSArray* imageArray = @[[UIImage imageNamed:@"shareImg.png"]];
     //    （注意：图片必须要在Xcode左边目录里面，名称必须要传正确，如果要分享网络图片，可以这样传iamge参数 images:@[@"http://mob.com/Assets/images/logo.png?v=20150320"]）
     //    NSString *url = @"http://ziyawang.com/project/";
-    NSString *url = @"http://api.ziyawang.com/v1/";
+    NSString *url = @"https://apis.ziyawang.com/zll/";
     self.model.ProjectID = [NSString stringWithFormat:@"%@",self.model.ProjectID];
     NSString *URL = [url stringByAppendingString:self.model.ProjectID];
     NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!%@",URL);
@@ -341,7 +341,7 @@
         URL = [[[[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"]stringByAppendingString:@"&token="]stringByAppendingString:token];
     }
     NSString *getURL = URL;
-    //    NSString *gfetURL = @"http://api.ziyawang.com/v1/project/list/5?&access_token=token";
+    //    NSString *gfetURL = @"https://apis.ziyawang.com/zll/project/list/5?&access_token=token";
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];
@@ -1915,6 +1915,12 @@
     UILabel *label19 = [UILabel new];
     UILabel *label20 = [UILabel new];
     
+    UILabel *label21 = [UILabel new];
+    UILabel *label22 = [UILabel new];
+    UILabel *label23 = [UILabel new];
+    UILabel *label24 = [UILabel new];
+    
+    
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
@@ -1925,6 +1931,9 @@
     label15.textColor = [UIColor grayColor];
     label17.textColor = [UIColor grayColor];
     label19.textColor = [UIColor grayColor];
+    
+    label21.textColor = [UIColor grayColor];
+    label23.textColor = [UIColor grayColor];
     
     
     
@@ -1949,7 +1958,11 @@
     [self.changeView addSubview:label19];
     [self.changeView addSubview:label20];
     
-    
+    [self.changeView addSubview:label21];
+    [self.changeView addSubview:label22];
+    [self.changeView addSubview:label23];
+    [self.changeView addSubview:label24];
+
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -2038,6 +2051,24 @@
     .topEqualToView(label19)
     .heightIs(20);
     
+    label21.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label19,15)
+    .heightIs(20);
+    
+    label22.sd_layout.leftSpaceToView(label21,0)
+    .topEqualToView(label21)
+    .heightIs(20);
+    
+    label23.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label21,15)
+    .heightIs(20);
+    
+    label24.sd_layout.leftSpaceToView(label23,0)
+    .topEqualToView(label23)
+    .heightIs(20);
+    
+    
+    
     
     [label1 setSingleLineAutoResizeWithMaxWidth:200];
     [label2 setSingleLineAutoResizeWithMaxWidth:200];
@@ -2060,6 +2091,11 @@
     [label19 setSingleLineAutoResizeWithMaxWidth:200];
     [label20 setSingleLineAutoResizeWithMaxWidth:200];
     
+    [label21 setSingleLineAutoResizeWithMaxWidth:200];
+    [label22 setSingleLineAutoResizeWithMaxWidth:200];
+    [label23 setSingleLineAutoResizeWithMaxWidth:200];
+    [label24 setSingleLineAutoResizeWithMaxWidth:200];
+
     
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
@@ -2089,10 +2125,17 @@
     label18.text = [self.model.MarketPrice stringByAppendingString:@"万"];
     label18.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label18.font = [UIFont systemFontOfSize:20];
-    label19.text = @"转让价：";
-    label20.text = [self.model.TransferMoney stringByAppendingString:@"万"];
-    label20.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label20.font = [UIFont systemFontOfSize:20];
+    label19.text = @"市场单价：";
+    
+    label22.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+    label22.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label22.font = [UIFont systemFontOfSize:20];
+    
+    label21.text = @"转让价：";
+    label20.text = [[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+    
+    label23.text = @"转让单价：";
+    label24.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -2145,7 +2188,7 @@
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
-    .topSpaceToView(label19,15)
+    .topSpaceToView(label23,15)
     .heightIs(10);
     
     qitaView.sd_layout.leftEqualToView(line1)
@@ -2354,6 +2397,10 @@
     UILabel *label15 = [UILabel new];
     UILabel *label16 = [UILabel new];
     
+    UILabel *label17 = [UILabel new];
+    UILabel *label18 = [UILabel new];
+    
+    
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
@@ -2363,7 +2410,7 @@
     label11.textColor = [UIColor grayColor];
     label13.textColor = [UIColor grayColor];
     label15.textColor = [UIColor grayColor];
-    
+    label17.textColor = [UIColor grayColor];
     
     
     [self.changeView addSubview:label1];
@@ -2382,7 +2429,9 @@
     [self.changeView addSubview:label14];
     [self.changeView addSubview:label15];
     [self.changeView addSubview:label16];
-    
+    [self.changeView addSubview:label17];
+    [self.changeView addSubview:label18];
+
     
     
     
@@ -2457,6 +2506,14 @@
     .topEqualToView(label15)
     .heightIs(20);
     
+    label17.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label15,15)
+    .heightIs(20);
+    
+    label18.sd_layout.leftSpaceToView(label17,0)
+    .topEqualToView(label17)
+    .heightIs(20);
+    
     
     
     
@@ -2478,6 +2535,8 @@
     [label15 setSingleLineAutoResizeWithMaxWidth:200];
     [label16 setSingleLineAutoResizeWithMaxWidth:200];
     
+    [label17 setSingleLineAutoResizeWithMaxWidth:200];
+    [label18 setSingleLineAutoResizeWithMaxWidth:200];
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     
@@ -2503,6 +2562,10 @@
     label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
     label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label16.font = [UIFont systemFontOfSize:20];
+    
+    label17.text = @"转让单价：";
+    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+    
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -2556,7 +2619,7 @@
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
-    .topSpaceToView(label15,15)
+    .topSpaceToView(label17,15)
     .heightIs(10);
     
     qitaView.sd_layout.leftEqualToView(line1)

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoCertiController">
             <connections>
+                <outlet property="rechargeButton" destination="zij-Ps-yNV" id="TDr-SM-Xw5"/>
                 <outlet property="view" destination="FDL-YX-lZs" id="yJE-ex-mBb"/>
             </connections>
         </placeholder>

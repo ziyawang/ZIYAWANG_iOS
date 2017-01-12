@@ -121,7 +121,7 @@
     NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
     
         
-        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list?access_token=token";
     NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
     [postdic setObject:access_token forKey:@"access_token"];
 //    [postdic setObject:token forKey:@"token"];
@@ -333,7 +333,7 @@
         //
         getURL = [[[[[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ServiceID]]stringByAppendingString:@"?token="]stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
         }
-//    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+//    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list?access_token=token";
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];

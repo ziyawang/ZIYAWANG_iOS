@@ -319,27 +319,25 @@
     
     
     
-    if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
+    if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""])
+    {
         [self.liangdianLabel1 setHidden:YES];
         [self.liangdianLabel2 setHidden:YES];
         [self.liangdianLabel3 setHidden:YES];
         [self.liangdianLabel4 setHidden:YES];
         [self.liangdianLabel5 setHidden:YES];
-        
-        
     }
     else
     {
     //亮点布局
     NSArray *liangdianArray = [self.model.ProLabel componentsSeparatedByString:@","];
-    switch (liangdianArray.count) {
+    switch (liangdianArray.count)
+        {
         case 0:
             [self.liangdianLabel1 setHidden:YES];
             [self.liangdianLabel2 setHidden:YES];
             [self.liangdianLabel3 setHidden:YES];
             [self.liangdianLabel4 setHidden:YES];
-            
-            
             break;
         case 1:
         {
@@ -347,7 +345,6 @@
             [self.liangdianLabel2 setHidden:YES];
             [self.liangdianLabel3 setHidden:YES];
             [self.liangdianLabel4 setHidden:YES];
-            
             NSString *liangdian1 = [[@" "stringByAppendingString:liangdianArray[0]]stringByAppendingString:@" "];
             self.liangdianLabel1.text = liangdian1;
             

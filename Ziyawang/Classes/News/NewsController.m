@@ -108,12 +108,12 @@
     //    [dic setObject:accesstoken forKey:@"access_token"];
     //    NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/banner?access_token=token"];
     NSString *getbannerURL = [getDataURL stringByAppendingString:@"/app/twobanner?access_token=token"];
-    //    http://api.ziyawang.com/v1/app/twobanner?access_token=token
+    //    https://apis.ziyawang.com/zll/app/twobanner?access_token=token
     //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //
     //    })
     
-    // @" http://api.ziyawang.com/v1/app/banner?access_token=token"
+    // @" https://apis.ziyawang.com/zll/app/banner?access_token=token"
     [self.manager GET:getbannerURL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress)
      {
          

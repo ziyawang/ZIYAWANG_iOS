@@ -99,7 +99,7 @@
 
 - (void)loadMoreData
 {
-//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *headurl = @"https://apis.ziyawang.com/zll";
 //    NSString *footurl = @"/video/list";
     NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";
@@ -167,7 +167,7 @@
     [self.sourceArray removeAllObjects];
     
     self.startPage = 1;
-//    NSString *headurl = @"http://api.ziyawang.com/v1";
+//    NSString *headurl = @"https://apis.ziyawang.com/zll";
 //    NSString *footurl = @"/video/list";
     NSString *URL =getVideoListURL;
     NSString *accesstoken = @"token";

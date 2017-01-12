@@ -57,7 +57,6 @@
     self.sourceArray = [NSMutableArray array];
     self.vipRightArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
-    [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
 
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -67,8 +66,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource =self;
     self.tableView.separatorStyle = NO;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
+
+    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(findServiceswithDic:)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
+    
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
 
     self.dataDic = [NSMutableDictionary new];
@@ -94,7 +98,7 @@
         [self.sourceArray removeAllObjects];
     }
     NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
-    //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
+    //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list/";
     NSMutableDictionary *getdic = self.dataDic;
     NSLog(@"#############%@",getdic);
     NSString *access_token = @"token";
@@ -140,7 +144,7 @@
 - (void)loadMoreServiceData
 {
     NSString *getURL =[FindServiceURL stringByAppendingString:@"?access_token=token"];
-    //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list/";
+    //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list/";
     NSMutableDictionary *getdic = self.dataDic;
     NSLog(@"#############%@",getdic);
     NSString *access_token = @"token";
@@ -374,11 +378,11 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (nib == nil) {
-        nib = [UINib nibWithNibName:@"FindServiceViewCell" bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:@"FindServiceViewCell"];
-        NSLog(@"我是从nib过来的");
-    }
+//    if (nib == nil) {
+//        nib = [UINib nibWithNibName:@"FindServiceViewCell" bundle:nil];
+//        [tableView registerNib:nib forCellReuseIdentifier:@"FindServiceViewCell"];
+//        NSLog(@"我是从nib过来的");
+//    }
     FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

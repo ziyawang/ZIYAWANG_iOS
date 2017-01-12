@@ -587,7 +587,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
-    //    http://apitest.ziyawang.com/v1/v2/uploadfile
+    //    http://apitest.ziyawang.com/v1/uploadfile
     NSString *url1= getDataURL;
     //    NSString *url2 = @"/uploadfile?token=";
     NSString *url2 = @"/uploadfile?token=";
@@ -628,7 +628,8 @@
     [dic setObject:self.jineTextField.text forKey:@"Money"];
     [dic setObject:self.yuqiTextField.text forKey:@"Month"];
     [dic setObject:self.textView.text forKey:@"WordDes"];
-    
+    [dic setObject:@"IOS" forKey:@"Channel"];
+
     
     
     if ([self.susongLabel.text isEqualToString:@"请选择"] == NO) {
@@ -1151,7 +1152,6 @@
         default:
             break;
     }
-    
     
     
     

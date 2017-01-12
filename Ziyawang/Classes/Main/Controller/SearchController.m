@@ -357,7 +357,6 @@
              if ([self.searchType isEqualToString:@"找信息"]) {
                  PublishModel *model = [[PublishModel alloc]init];
                  [model setValuesForKeysWithDictionary:dic];
-                 
                  [self.sourceArray addObject:model];
                  
              }
@@ -386,6 +385,18 @@
            
 //             [self MBProgressWithString:@"搜索完毕" timer:1 mode:MBProgressHUDModeText];
          }
+         
+         if ([self.searchType isEqualToString:@"找信息"]) {
+             self.statrpage ++;
+             
+         }
+         
+         else if([self.searchType isEqualToString:@"找服务"])
+         {
+             self.startpage2 ++;
+         }
+         
+
          if (self.sourceArray.count == 0) {
              UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有您想要搜索的信息，请尝试更换关键词" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
              [alert show];

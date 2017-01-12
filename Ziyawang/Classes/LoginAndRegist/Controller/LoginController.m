@@ -406,7 +406,7 @@
     NSString *phonenumer = self.userNnameTextField.text;
     NSString *password = self.passWordTextField.text;
     NSString *access_token = @"token";
-//    NSString *loginurl = @"http://api.ziyawang.com/v1/auth/login";
+//    NSString *loginurl = @"https://apis.ziyawang.com/zll/auth/login";
     
     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
     [postDic setObject:phonenumer forKey:@"phonenumber"];
@@ -747,7 +747,7 @@
 //        //        completion(self.otherUserinfo);
 //        self.manager = [AFHTTPSessionManager manager];
 //        self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+//        NSString *URL = @"https://apis.ziyawang.com/zll/app/uinfo?access_token=token";
 //        NSMutableDictionary *dic = [NSMutableDictionary new];
 //        //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
 //        [dic setObject:userId forKey:@"UserID"];
@@ -798,7 +798,7 @@
 //{
 //    self.manager = [AFHTTPSessionManager manager];
 //    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    NSString *URL = @"http://api.ziyawang.com/v1/app/uinfo?access_token=token";
+//    NSString *URL = @"https://apis.ziyawang.com/zll/app/uinfo?access_token=token";
 //    NSMutableDictionary *dic = [NSMutableDictionary new];
 //    //    NSString *URL = [[URL stringByAppendingString:@"&UserID="]stringByAppendingString:userID];
 //    [dic setObject:userID forKey:@"UserID"];

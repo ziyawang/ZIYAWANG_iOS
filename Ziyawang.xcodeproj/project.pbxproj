@@ -1050,9 +1050,6 @@
 		78FD6D421DF151FD001F69BB /* qiye.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D2D1DF151FD001F69BB /* qiye.png */; };
 		78FD6D431DF151FD001F69BB /* qiye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D2E1DF151FD001F69BB /* qiye@2x.png */; };
 		78FD6D441DF151FD001F69BB /* qiye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D2F1DF151FD001F69BB /* qiye@3x.png */; };
-		78FD6D451DF151FD001F69BB /* rong.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D301DF151FD001F69BB /* rong.png */; };
-		78FD6D461DF151FD001F69BB /* rong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D311DF151FD001F69BB /* rong@2x.png */; };
-		78FD6D471DF151FD001F69BB /* rong@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D321DF151FD001F69BB /* rong@3x.png */; };
 		78FD6D4B1DF162E1001F69BB /* labelhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D481DF162E1001F69BB /* labelhui.png */; };
 		78FD6D4C1DF162E1001F69BB /* labelhui@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D491DF162E1001F69BB /* labelhui@2x.png */; };
 		78FD6D4D1DF162E1001F69BB /* labelhui@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78FD6D4A1DF162E1001F69BB /* labelhui@3x.png */; };
@@ -2375,9 +2372,6 @@
 		78FD6D2D1DF151FD001F69BB /* qiye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiye.png; sourceTree = "<group>"; };
 		78FD6D2E1DF151FD001F69BB /* qiye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiye@2x.png"; sourceTree = "<group>"; };
 		78FD6D2F1DF151FD001F69BB /* qiye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiye@3x.png"; sourceTree = "<group>"; };
-		78FD6D301DF151FD001F69BB /* rong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rong.png; sourceTree = "<group>"; };
-		78FD6D311DF151FD001F69BB /* rong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rong@2x.png"; sourceTree = "<group>"; };
-		78FD6D321DF151FD001F69BB /* rong@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rong@3x.png"; sourceTree = "<group>"; };
 		78FD6D481DF162E1001F69BB /* labelhui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labelhui.png; sourceTree = "<group>"; };
 		78FD6D491DF162E1001F69BB /* labelhui@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "labelhui@2x.png"; sourceTree = "<group>"; };
 		78FD6D4A1DF162E1001F69BB /* labelhui@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "labelhui@3x.png"; sourceTree = "<group>"; };
@@ -3266,9 +3260,6 @@
 				78FD6D2D1DF151FD001F69BB /* qiye.png */,
 				78FD6D2E1DF151FD001F69BB /* qiye@2x.png */,
 				78FD6D2F1DF151FD001F69BB /* qiye@3x.png */,
-				78FD6D301DF151FD001F69BB /* rong.png */,
-				78FD6D311DF151FD001F69BB /* rong@2x.png */,
-				78FD6D321DF151FD001F69BB /* rong@3x.png */,
 				782523361D7EC87400F2C0A2 /* red_point.png */,
 				782523371D7EC87400F2C0A2 /* red_point@2x.png */,
 				782523381D7EC87400F2C0A2 /* red_point@3x.png */,
@@ -4995,7 +4986,6 @@
 				781896B51DF6DF35004C47AC /* shoufeiyuan@2x.png in Resources */,
 				78276A6E1E012552000F83B5 /* huiyuanbaohui@3x.png in Resources */,
 				78A125B71DB8BB3000D5E42F /* shenhezhong@2x.png in Resources */,
-				78FD6D461DF151FD001F69BB /* rong@2x.png in Resources */,
 				78FD6D391DF151FD001F69BB /* fapai@2x.png in Resources */,
 				78F3DDD01D461B2C00C1E62E /* kr-video-player-shrinkscreen@2x.png in Resources */,
 				7825225D1D77DE5300F2C0A2 /* fuwufangrezheng@2x.png in Resources */,
@@ -5120,7 +5110,6 @@
 				78D960321D96562F007ECABA /* MyYabiController.xib in Resources */,
 				782523511D80037300F2C0A2 /* year@2x.png in Resources */,
 				78D960B41D98C293007ECABA /* chongzhijian@2x.png in Resources */,
-				78FD6D471DF151FD001F69BB /* rong@3x.png in Resources */,
 				782522C31D77DE5300F2C0A2 /* yuyin@3x.png in Resources */,
 				7825228B1D77DE5300F2C0A2 /* siliao-hong@2x.png in Resources */,
 				78B4A5F01DFE6A7E005F337B /* address.plist in Resources */,
@@ -5188,7 +5177,6 @@
 				78D960591D97A20F007ECABA /* CostViewCell.xib in Resources */,
 				7825231B1D7D72E500F2C0A2 /* cooperation@3x.png in Resources */,
 				78A1259F1DB7230E00D5E42F /* vip_ziyuan.png in Resources */,
-				78FD6D451DF151FD001F69BB /* rong.png in Resources */,
 				78A125A01DB7230E00D5E42F /* vip_ziyuan@2x.png in Resources */,
 				78FD6D431DF151FD001F69BB /* qiye@2x.png in Resources */,
 				7836E9C81D5E041200187E41 /* left.jpg in Resources */,

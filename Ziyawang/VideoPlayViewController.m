@@ -715,7 +715,7 @@
         NSString *URL = [[[[url stringByAppendingString:@"?access_token="]stringByAppendingString:@"token"]stringByAppendingString:@"&token="]stringByAppendingString:token];
         
         
-        //    NSString *getURL = @"http://api.ziyawang.com/v1/service/list?access_token=token";
+        //    NSString *getURL = @"https://apis.ziyawang.com/zll/service/list?access_token=token";
         NSMutableDictionary *postdic = [NSMutableDictionary dictionary];
 //        [postdic setObject:access_token forKey:@"access_token"];
         //    [postdic setObject:token forKey:@"token"];
@@ -726,7 +726,7 @@
         [postdic setObject:@"2" forKey:@"type"];
         [postdic setObject:self.videoID forKey:@"itemID"];
         
-//       NSString *uurl =@"http://api.ziyawang.com/v1/collect?access_token=token&token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQ2LCJpc3MiOiJodHRwOlwvXC9hcGkueml5YS56bGwuc2NpZW5jZVwvdjFcL2F1dGhcL2xvZ2luIiwiaWF0IjoiMTQ3MTc3NzI5NiIsImV4cCI6IjE0NzIzODIwOTYiLCJuYmYiOiIxNDcxNzc3Mjk2IiwianRpIjoiM2M2NmIwYTY5MTI4Mjk0ZWUwNGE2MzFjNGNmNTE0YmUifQ.FOQSAs-4jrAIv87uN65BbvrFOANJsQ1K_4ySop_fcFU&type=2&itemID=13";
+//       NSString *uurl =@"https://apis.ziyawang.com/zll/collect?access_token=token&token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQ2LCJpc3MiOiJodHRwOlwvXC9hcGkueml5YS56bGwuc2NpZW5jZVwvdjFcL2F1dGhcL2xvZ2luIiwiaWF0IjoiMTQ3MTc3NzI5NiIsImV4cCI6IjE0NzIzODIwOTYiLCJuYmYiOiIxNDcxNzc3Mjk2IiwianRpIjoiM2M2NmIwYTY5MTI4Mjk0ZWUwNGE2MzFjNGNmNTE0YmUifQ.FOQSAs-4jrAIv87uN65BbvrFOANJsQ1K_4ySop_fcFU&type=2&itemID=13";
          if ([flag isEqualToString:@"0"])
         {
             NSLog(@"未收藏过,改变button的状态,调用收藏接口");

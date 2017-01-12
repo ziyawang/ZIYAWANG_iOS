@@ -55,6 +55,15 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 
+
+@property (weak, nonatomic) IBOutlet UIView *danjiaView1;
+@property (weak, nonatomic) IBOutlet UILabel *danjiaLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *danjiaLabel2;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *danjiaHeight1;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *danjiaHeight2;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leixingHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shichangjiageHeight;
 @property (weak, nonatomic) IBOutlet UIView *shichangjiageView;
@@ -116,10 +125,12 @@
     self.shichangjiageTextField.delegate = self;
     self.zhuanrangjiageTextField.delegate = self;
     
+    self.mianjiTextField.delegate = self;
+    
     self.scrollView.delegate = self;
     self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
 
-    self.navigationItem.title = @"固产转让";
+    self.navigationItem.title = @"固定资产";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"委托发布" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
     self.SelectedButtonsArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
@@ -619,7 +630,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
-    //    http://apitest.ziyawang.com/v1/v2/uploadfile
+    //    http://apitest.ziyawang.com/v1/uploadfile
     NSString *url1= getDataURL;
     //    NSString *url2 = @"/uploadfile?token=";
     NSString *url2 = @"/uploadfile?token=";
@@ -661,6 +672,7 @@
     [dic setObject:self.zhuanrangfangshiLabel.text forKey:@"TransferType"];
     [dic setObject:self.zhuanrangjiageTextField.text forKey:@"TransferMoney"];
     [dic setObject:@"IOS" forKey:@"Channel"];
+    
     
     if ([self.zhengjianLabel.text isEqualToString:@"请选择"] == NO) {
         [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
@@ -845,7 +857,9 @@
     NSArray *array4 = @[@"住宅",@"商业",@"厂房",@"其他"];
     NSArray *array5 = @[@"工业",@"商业",@"住宅",@"其他"];
     NSArray *array6 = @[@"产权转让",@"股权转让"];
-    NSArray *array7 = @[@"是",@"否"];
+    NSArray *array7 = @[@"有",@"无"];
+    NSArray *array8 = @[@"是",@"否"];
+
     
     [self.AllArray addObject:array1];
     [self.AllArray addObject:array2];
@@ -854,6 +868,7 @@
     [self.AllArray addObject:array5];
     [self.AllArray addObject:array6];
     [self.AllArray addObject:array7];
+    [self.AllArray addObject:array8];
 }
 /**
  *  初始化PickerView
@@ -1110,17 +1125,15 @@
         case 10:
         {
             [self.mengbanView setHidden:NO];
-            
             [UIView animateWithDuration:0.5 animations:^{
                 self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
             }];
             
-            self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[6]];
+            self.sourceArray = [NSMutableArray arrayWithArray:self.AllArray[7]];
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.row = 10;
-            self.selectStr = self.AllArray[6][0];
-
+            self.selectStr = self.AllArray[7][0];
         }
             break;
             
@@ -1205,6 +1218,8 @@
     self.leixingHeight.constant = 0;
     [self.shichangjiageView setHidden:YES];
     self.shichangjiageHeight.constant = 0;
+    [self.danjiaView1 setHidden:YES];
+    self.danjiaHeight1.constant = 0;
     
 }
 
@@ -1214,6 +1229,9 @@
     self.leixingHeight.constant = 50;
     [self.shichangjiageView setHidden:NO];
     self.shichangjiageHeight.constant = 50;
+    [self.danjiaView1 setHidden:NO];
+    self.danjiaHeight1.constant = 50;
+    
 }
 
 #pragma mark - UITextField delegate
@@ -1235,14 +1253,23 @@
 //textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
+    if (textField == self.shichangjiageTextField || textField == self.mianjiTextField) {
+        self.danjiaLabel1.text = [[NSString stringWithFormat:@"%.2f",self.shichangjiageTextField.text.floatValue/self.mianjiTextField.text.floatValue] stringByAppendingString:@"万元/平米"];
+    }
+    if (textField == self.zhuanrangjiageTextField || textField == self.mianjiTextField) {
+        self.danjiaLabel2.text = [[NSString stringWithFormat:@"%.2f",self.zhuanrangjiageTextField.text.floatValue/self.mianjiTextField.text.floatValue]stringByAppendingString:@"万元/平米"];
+    }
+
     if (textField.tag != 11 && textField.tag != 12)
     {
+        
+        
         NSInteger value = [textField.text integerValue];
         if (value > 999999.9) {
             textField.text = [textField.text substringToIndex:6];
             //            [self showError:@"您输入的位数过多"];
         }
-        
         if ([textField.text rangeOfString:@"."].location == NSNotFound) {
             self.isHaveDian = NO;
         }

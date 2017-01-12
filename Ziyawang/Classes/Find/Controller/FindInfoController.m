@@ -452,11 +452,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         else if([self.lastChoose isEqualToString:informationTypeID[1]])
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *substr = [string substringFromIndex:2];
-            if ([substr isEqualToString:@"方式"])
+            NSString *substr = [string substringToIndex:4];
+            if ([substr isEqualToString:@"融资方式"])
             {
-                NSString *findValue = [string substringFromIndex:2];
-                if ([findValue isEqualToString:@"债权"]) {
+                NSString *findValue = [string substringFromIndex:4];
+                if ([findValue isEqualToString:@"债权融资"]) {
                     [self.dataDic setObject:@"17" forKey:@"TypeID"];
                     [self findInfomationsWithDic:self.dataDic];
                 }
@@ -479,10 +479,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             
             if ([substr isEqualToString:@"标的"]) {
                 
-                NSString *findValue = [string substringFromIndex:2];
+                NSString *findValue = [string substringFromIndex:5];
                 if ([findValue isEqualToString:@"土地"]) {
                     [self.dataDic setObject:@"16" forKey:@"TypeID"];
-                    
                 }
                 else
                 {
@@ -500,11 +499,11 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:2];
+            NSString *substr = [string substringToIndex:4];
             if ([substr isEqualToString:@"处置方式"])
             {
-                NSString *findValue = [string substringToIndex:2];
-                if ([findValue isEqualToString:@"诉讼"]) {
+                NSString *findValue = [string substringFromIndex:4];
+                if ([findValue isEqualToString:@"诉讼催收"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
                     [self findInfomationsWithDic:self.dataDic];
@@ -526,9 +525,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"资产"]) {
-                NSString *findValue = [string substringToIndex:2];
+            NSString *substr = [string substringToIndex:4];
+            if ([substr isEqualToString:@"资产类型"]) {
+                NSString *findValue = [string substringFromIndex:4];
                 
                 if ([findValue isEqualToString:@"土地"]) {
                     [self.dataDic setObject:@"21" forKey:@"TypeID"];
@@ -554,8 +553,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
             NSString *substr = [string substringToIndex:4];
             if ([substr isEqualToString:@"处置方式"])
             {
-                NSString *findValue = [string substringToIndex:2];
-                if ([findValue isEqualToString:@"诉讼"]) {
+                NSString *findValue = [string substringFromIndex:4];
+                if ([findValue isEqualToString:@"诉讼催收"]) {
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
                     [self findInfomationsWithDic:self.dataDic];
@@ -1308,7 +1307,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 //        [self.sourceArray removeAllObjects];
 //    }
     self.sourceArray = [NSMutableArray new];
-    //    NSString *getURL = @"http://api.ziyawang.com/v1/project/list?access_token=token";
+    //    NSString *getURL = @"https://apis.ziyawang.com/zll/project/list?access_token=token";
     //    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     //    getdic = self.dataDic;
     //

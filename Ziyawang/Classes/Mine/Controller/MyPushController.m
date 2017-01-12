@@ -71,7 +71,7 @@
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-//    NSString *url1 = @"http://api.ziyawang.com/v1";
+//    NSString *url1 = @"https://apis.ziyawang.com/zll";
 //    NSString *url2 = @"/project/mypro";
     NSString *accesstoken = @"token";
     
@@ -118,7 +118,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-//    NSString *url1 = @"http://api.ziyawang.com/v1";
+//    NSString *url1 = @"https://apis.ziyawang.com/zll";
 //    NSString *url2 = @"/project/mypro";
     
     NSString *accesstoken = @"token";

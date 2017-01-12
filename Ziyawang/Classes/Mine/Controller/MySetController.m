@@ -235,7 +235,7 @@
     NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
     NSString *URL = [ifNeedUpdateURL stringByAppendingString:@"?access_token=token"];
     
-    //    NSString *URL = @"http://api.ziyawang.com/v1/app/iosupdate?access_token=token";
+    //    NSString *URL = @"https://apis.ziyawang.com/zll/app/iosupdate?access_token=token";
     [self.manager GET:URL parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSArray *Array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];

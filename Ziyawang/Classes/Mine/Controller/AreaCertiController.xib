@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AreaCertiController">
             <connections>
+                <outlet property="rechargeButton" destination="eBl-Gw-Pgv" id="fEI-LX-IMj"/>
                 <outlet property="view" destination="Ihl-tD-Wk1" id="jhk-Kn-GoE"/>
             </connections>
         </placeholder>
@@ -42,7 +43,7 @@
                     <rect key="frame" x="0.0" y="130" width="375" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付成功后资芽网客服将及时与您联系，并安排认证人员前往你处开启认证之旅。(客服电话：400-898-8557)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2x-jb-geK">
-                            <rect key="frame" x="10" y="17.5" width="355" height="17"/>
+                            <rect key="frame" x="10" y="8.5" width="355" height="33.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.95528727769999999" green="0.26352882389999999" blue="0.21046414969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>

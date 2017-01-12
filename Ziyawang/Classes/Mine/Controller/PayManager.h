@@ -11,7 +11,7 @@
 @interface PayManager : NSObject
 +(PayManager *)payManager;
 
-- (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param;
+- (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param Button:(UIButton *)button;
 
 
 @end

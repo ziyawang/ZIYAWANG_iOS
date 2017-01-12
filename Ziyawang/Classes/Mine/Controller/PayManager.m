@@ -19,7 +19,7 @@
 @property (nonatomic,strong) NSMutableDictionary *param;
 @property (nonatomic,strong) NSString *URL;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
-
+@property (nonatomic,strong) UIButton *rechargeButton;
 @end
 @implementation PayManager
 +(PayManager *)payManager
@@ -37,13 +37,15 @@
     [self PayForPruduct:pruduct WithURL:url param:param];
 }
 
-- (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param
+- (void)payForProductWithPruduct:(NSString *)pruduct WithURL:(NSString *)url param:(NSMutableDictionary *)param Button:(UIButton *)button
 {
     
 
     self.product = pruduct;
     self.URL = url;
     self.param = param;
+    self.rechargeButton = button;
+    
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -131,6 +133,8 @@
             case SKPaymentTransactionStatePurchased:
                 NSLog(@"交易完成");
                 [self completeTransaction:tran];
+                [self.rechargeButton setTitle:@"再次购买" forState:(UIControlStateNormal)];
+                
                 
                 break;
             case SKPaymentTransactionStatePurchasing:

@@ -21,25 +21,27 @@
  *
  *  @return
  */
-#define getDataURL @"http://api.ziyawang.com/v1"//获取本服务器
+
+//https://apis.ziyawang.com/zll
+#define getDataURL @"https://apis.ziyawang.com/zll"//获取本服务器
 #define getImageURL @"http://images.ziyawang.com"//获取图片
 #define videoPlayerURL @"http://videos.ziyawang.com"//获取视频
 #define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
 
-#define paidURL @"http://api.ziyawang.com/v1/app/consume"//消费接口
-#define rechargeURL @"http://api.ziyawang.com/v1/pay/list"//充值芽币金额类型
-#define CostURL @"http://api.ziyawang.com/v1/mybill"//充值明细
-#define changeNickNameURL @"http://api.ziyawang.com/v1/auth/chusername"//修改昵称
-#define RechargeSussceeURL @"http://api.ziyawang.com/v1/apple/pay"//支付成功回调业务服务器
+#define paidURL @"https://apis.ziyawang.com/zll/app/consume"//消费接口
+#define rechargeURL @"https://apis.ziyawang.com/zll/pay/list"//充值芽币金额类型
+#define CostURL @"https://apis.ziyawang.com/zll/mybill"//充值明细
+#define changeNickNameURL @"https://apis.ziyawang.com/zll/auth/chusername"//修改昵称
+#define RechargeSussceeURL @"https://apis.ziyawang.com/zll/apple/pay"//支付成功回调业务服务器
 
-#define TipURL @"http://api.ziyawang.com/v1/report"//举报
-#define IfHadPayMessageURL @"http://api.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
-#define ServiceConnectCountURL @"http://api.ziyawang.com/v1/count/service"//联系服务方次数
+#define TipURL @"https://apis.ziyawang.com/zll/report"//举报
+#define IfHadPayMessageURL @"https://apis.ziyawang.com/zll/ispay"//针对某一条收费信息是否已支付
+#define ServiceConnectCountURL @"https://apis.ziyawang.com/zll/count/service"//联系服务方次数
 
-#define WeituoFabuURL @"http://api.ziyawang.com/v1/v2/entrust"//委托发布
-#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
-#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
-#define UploadStarImagesURL [getDataURL stringByAppendingString:@"/v2/lds/star"]//星级认证上传图片
+#define WeituoFabuURL @"https://apis.ziyawang.com/zll/entrust"//委托发布
+#define VipRechargeURL [getDataURL stringByAppendingString:@"/apple/pay"]//充值会员成功回调
+#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/pay/member/list"]//充值会员记录
+#define UploadStarImagesURL [getDataURL stringByAppendingString:@"/lds/star"]//星级认证上传图片
 
 /**
  *  测试服API
@@ -64,9 +66,9 @@
 //#define IfHadPayMessageURL @"http://apitest.ziyawang.com/v1/ispay"//针对某一条收费信息是否已支付
 //#define ServiceConnectCountURL @"http://apitest.ziyawang.com/v1/count/service"//联系服务方次数
 //
-//#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/v2/entrust"//委托发布
-//#define VipRechargeURL [getDataURL stringByAppendingString:@"/v2/apple/pay"]//充值会员成功回调
-//#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/v2/pay/member/list"]//充值会员记录
+//#define WeituoFabuURL @"http://apitest.ziyawang.com/v1/entrust"//委托发布
+//#define VipRechargeURL [getDataURL stringByAppendingString:@"/apple/pay"]//充值会员成功回调
+//#define VipRechargeLogURL [getDataURL stringByAppendingString:@"/pay/member/list"]//充值会员记录
 //#define uploadStarImagesURL [getDataURL stringByAppendingString:@"/star"]//星级认证上传图片
 
 
@@ -80,13 +82,13 @@
 #define registURL [getDataURL stringByAppendingString:@"/auth/register"]//注册
 #define changePaswordURL [getDataURL stringByAppendingString:@"/auth/resetpwd"]//忘记密码
 
-#define FindInformationURL [getDataURL stringByAppendingString:@"/v2/project/list"]//找信息
-#define InformationDetailURL [getDataURL stringByAppendingString:@"/v2/project/list/"]//信息详情
-#define FindServiceURL [getDataURL stringByAppendingString:@"/v2/service/list"]//找服务
-#define ServiceDetailURL [getDataURL stringByAppendingString:@"/v2/service/list/"]//服务详情
+#define FindInformationURL [getDataURL stringByAppendingString:@"/project/list"]//找信息
+#define InformationDetailURL [getDataURL stringByAppendingString:@"/project/list/"]//信息详情
+#define FindServiceURL [getDataURL stringByAppendingString:@"/service/list"]//找服务
+#define ServiceDetailURL [getDataURL stringByAppendingString:@"/service/list/"]//服务详情
 
 
-#define getUserInfoURL [getDataURL stringByAppendingString:@"/v2/auth/me"]//获取用户信
+#define getUserInfoURL [getDataURL stringByAppendingString:@"/auth/me"]//获取用户信
 #define getUserInfoWithUseridURL [getDataURL stringByAppendingString:@"/app/uinfo"]//根据UserID获取用户信息
 #define getRongCloudTokenURL [getDataURL stringByAppendingString:@"/rctoken"]//获取融云TOken
 #define getMyPushURL [getDataURL stringByAppendingString:@"/project/mypro"]//我的发布列表
@@ -110,23 +112,23 @@
 
 
 
-//#define loginURL @"http://api.ziyawang.com/v1/auth/login"//登录
-//#define getsmscodeURL @"http://api.ziyawang.com/v1/auth/getsmscode"//获取验证码
-//#define registURL @"http://api.ziyawang.com/v1/auth/register"//注册
-//#define changePaswordURL @"http://api.ziyawang.com/v1/auth/resetpwd"//修改密码
-//#define FindInformationURL @"http://api.ziyawang.com/v1/project/list/"//找信息
-//#define FindServiceURL @"http://api.ziyawang.com/v1/service/list"//找服务
+//#define loginURL @"https://apis.ziyawang.com/zll/auth/login"//登录
+//#define getsmscodeURL @"https://apis.ziyawang.com/zll/auth/getsmscode"//获取验证码
+//#define registURL @"https://apis.ziyawang.com/zll/auth/register"//注册
+//#define changePaswordURL @"https://apis.ziyawang.com/zll/auth/resetpwd"//修改密码
+//#define FindInformationURL @"https://apis.ziyawang.com/zll/project/list/"//找信息
+//#define FindServiceURL @"https://apis.ziyawang.com/zll/service/list"//找服务
 ////
-//#define SentCommentContentURL @"http://api.ziyawang.com/v1/video/comment/create"//提交视频评论
-//#define getUserInfoURL @"http://api.ziyawang.com/v1/auth/me"//获取用户信
-//#define getRongCloudTokenURL @"http://api.ziyawang.com/v1/rctoken"//获取融云TOken
+//#define SentCommentContentURL @"https://apis.ziyawang.com/zll/video/comment/create"//提交视频评论
+//#define getUserInfoURL @"https://apis.ziyawang.com/zll/auth/me"//获取用户信
+//#define getRongCloudTokenURL @"https://apis.ziyawang.com/zll/rctoken"//获取融云TOken
 #define getImageURL @"http://images.ziyawang.com"//获取图片
 //// public static final String FileIP =  "http://images.ziyawang.com"
-//#define getMyPushURL @"http://api.ziyawang.com/v1/project/mypro"//我的发布列表
+//#define getMyPushURL @"https://apis.ziyawang.com/zll/project/mypro"//我的发布列表
 //#define videoPlayerURL @"http://videos.ziyawang.com"
 //#define FindVideoURL @"";
-//#define CommentAdviceURL @"http://api.ziyawang.com/v1/app/advice"
-//#define AllURL @"http://api.ziyawang.com/v1"
+//#define CommentAdviceURL @"https://apis.ziyawang.com/zll/app/advice"
+//#define AllURL @"https://apis.ziyawang.com/zll"
 
 
 #endif /* PrefixHeader_pch */

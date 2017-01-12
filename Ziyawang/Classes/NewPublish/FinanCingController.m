@@ -643,7 +643,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
-    //    http://apitest.ziyawang.com/v1/v2/uploadfile
+    //    http://apitest.ziyawang.com/v1/uploadfile
     NSString *url1= getDataURL;
     //    NSString *url2 = @"/uploadfile?token=";
     NSString *url2 = @"/uploadfile?token=";
