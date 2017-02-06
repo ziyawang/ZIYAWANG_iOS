@@ -361,7 +361,10 @@
 - (void)getUserInfoFromDomin
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    
+    
+       NSLog(@"%@",token);
+
     if (token != nil) {
         NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];

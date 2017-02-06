@@ -259,6 +259,8 @@
      */
     NSString *key = @"CFBundleVersion";
     NSString *lastVersion = [[NSUserDefaults standardUserDefaults]objectForKey:key];
+    
+    NSLog(@"%@",lastVersion);
     NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
     if ([currentVersion isEqualToString:lastVersion]==NO) {
         NSLog(@"第一次启动");
@@ -409,7 +411,12 @@
  */
 - (void)ifNeedUpdate
 {
-    NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
+//    NSString *version = [[NSUserDefaults standardUserDefaults]objectForKey:@"Version"];
+    
+    NSString *key = @"CFBundleShortVersionString";
+    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
+    NSLog(@"%@",currentVersion);
+    
     NSString *URL = [ifNeedUpdateURL stringByAppendingString:@"?access_token=token"];
     
 //    NSString *URL = @"https://apis.ziyawang.com/zll/app/iosupdate?access_token=token";
@@ -419,7 +426,7 @@
         NSDictionary *dic = Array.lastObject;
         NSLog(@"----%@",dic);
         NSString *newVersion = dic[@"VersionCode"];
-        if (newVersion.integerValue > version.integerValue && [dic[@"choose"] isEqualToString:@"强制"]) {
+        if (newVersion.integerValue > currentVersion.integerValue && [dic[@"choose"] isEqualToString:@"强制"]) {
             UpdateAppController *updateVC = [[UpdateAppController alloc]init];
             updateVC.updateDes = dic[@"UpdateDes"];
             

@@ -746,7 +746,10 @@
 
 - (void)commCountButtonAction:(UIButton *)button
 {
+    if(self.sourceArray.count != 0)
+    {
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 - (void)didClickShareButtonAction:(UIButton *)button
@@ -890,7 +893,6 @@
             [self.HUD hideAnimated:YES];
             [self MBProgressWithString:@"评论发送成功！" timer:1 mode:MBProgressHUDModeText];
             
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
             NSLog(@"评论成功");
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"评论失败");
@@ -1133,6 +1135,7 @@
     NSLog(@"!!!!!!!!!%@",self.sourceArray);
 
     [self.tableView reloadData];
+    
     [self.tableView setTableHeaderView:self.HeadView];
 
        [self.tableView.mj_header endRefreshing];

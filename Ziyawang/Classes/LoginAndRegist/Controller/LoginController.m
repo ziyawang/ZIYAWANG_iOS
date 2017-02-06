@@ -388,15 +388,8 @@
 //登录
 - (void)loginFromDomin
 {
-    
-    
-    
-    
-    
     if (_isPhoneNumber == YES) {
         
-    
-
 //    [RCIM sharedRCIM].userInfoDataSource = self;
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;
@@ -491,8 +484,6 @@
             [self.HUD hideAnimated:YES];
             NSLog(@"登录失败");
         }
-        
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 
         NSLog(@"请求失败");

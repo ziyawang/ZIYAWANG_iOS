@@ -609,7 +609,6 @@ self.title = @"aaa";
     self.HUD.delegate = self;
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     
-    
     NSString *phoneNum = self.phoneNumTextfield.text;
     NSString *password = self.passwordTextField.text;
     NSString *smscode = self.smsCodeTextField.text;

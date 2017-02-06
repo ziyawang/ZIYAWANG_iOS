@@ -358,13 +358,12 @@
     NSString *url2 = @"/upload";
     NSString *URL = [[[[[url1 stringByAppendingString:url2]stringByAppendingString:@"?token="]stringByAppendingString:token]stringByAppendingString:@"&access_token="]stringByAppendingString:@"token"];
     NSLog(@"%@",URL);
-    
-
     NSMutableDictionary *dic = [NSMutableDictionary new];
-//    [dic setObject:@"token" forKey:@"access_token"];
+    //[dic setObject:@"token" forKey:@"access_token"];
     NSData *imageData = UIImageJPEGRepresentation(self.usericonImageView.image, 1.0f);
  [self.manager POST:URL parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
      [formData appendPartWithFileData:imageData name:@"UserPicture"fileName:@"image1.png" mimeType:@"image/jpg/png/jpeg"];
+     
  } progress:^(NSProgress * _Nonnull uploadProgress) {
      
  } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

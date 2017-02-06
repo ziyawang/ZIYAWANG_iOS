@@ -196,6 +196,7 @@
         [self.requestDic setObject:@"2" forKey:@"Type"];
         [self loadNewData];
         self.selectedButtonTag = 3;
+        
     }
 }
 - (void)loadNewData

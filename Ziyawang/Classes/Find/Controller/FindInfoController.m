@@ -416,7 +416,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 [weakSelf findInfomationsWithDic:weakSelf.dataDic];
             }
         }
-        
         //        for (NSArray *arr1 in allTypeArray) {
         //            for (NSArray arr3 in arr1) {
         //                for (NSString *str in arr3) {
@@ -428,7 +427,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         //        }
         //
         //资产包转让
-        
         NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",self.lastChoose);
         if ([self.lastChoose isEqualToString:informationTypeID[0]]) {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
@@ -452,8 +450,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         else if([self.lastChoose isEqualToString:informationTypeID[1]])
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"融资方式"])
+            NSLog(@"%@",string);
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"融资"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"债权融资"]) {
@@ -499,8 +498,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"处置方式"])
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"处置"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"诉讼催收"]) {
@@ -525,8 +524,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"资产类型"]) {
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"资产"]) {
                 NSString *findValue = [string substringFromIndex:4];
                 
                 if ([findValue isEqualToString:@"土地"]) {
@@ -550,8 +549,8 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             //类型 求购方
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"处置方式"])
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"处置"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"诉讼催收"]) {
@@ -647,7 +646,6 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                 else if([sstr isEqualToString:infonmationType[5]])
                 {
                     self.dataDic = [NSMutableDictionary new];
-                    
                     [self.dataDic setObject:informationTypeID[5] forKey:@"TypeID"];
                     [self findInfomationsWithDic:self.dataDic];
                     

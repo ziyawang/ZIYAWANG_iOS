@@ -137,8 +137,6 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
-    
-
     NSString *headurl = getDataURL;
     NSString *footurl = @"/video/list/";
     NSLog(@"^^^^^^^^^^^^^^^^%@",self.videoID);
@@ -877,7 +875,6 @@
 
 - (void)sendButtonAction:(UIButton *)button
 {
-    
     if ([self.textView.text isEqualToString:@""]||[self.textView.text isEqualToString:@"请输入评论内容"]) {
         NSLog(@"评论内容不能为空，请重新输入!");
         [self MBProgressWithString:@"评论内容不能为空，请重新输入!" timer:1 mode:MBProgressHUDModeText];

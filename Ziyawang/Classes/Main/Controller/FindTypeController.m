@@ -434,6 +434,7 @@
         
         //资产包转让
         
+        //资产包转让
         NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",self.lastChoose);
         if ([self.lastChoose isEqualToString:informationTypeID[0]]) {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
@@ -457,8 +458,9 @@
         else if([self.lastChoose isEqualToString:informationTypeID[1]])
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"融资方式"])
+            NSLog(@"%@",string);
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"融资"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"债权融资"]) {
@@ -504,8 +506,8 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"处置方式"])
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"处置"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"诉讼催收"]) {
@@ -530,8 +532,8 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"资产类型"]) {
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"资产"]) {
                 NSString *findValue = [string substringFromIndex:4];
                 
                 if ([findValue isEqualToString:@"土地"]) {
@@ -555,8 +557,8 @@
         {
             [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
             //类型 求购方
-            NSString *substr = [string substringToIndex:4];
-            if ([substr isEqualToString:@"处置方式"])
+            NSString *substr = [string substringToIndex:2];
+            if ([substr isEqualToString:@"处置"])
             {
                 NSString *findValue = [string substringFromIndex:4];
                 if ([findValue isEqualToString:@"诉讼催收"]) {
