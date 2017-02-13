@@ -1034,12 +1034,8 @@
     }
     else if([role isEqualToString:@"1"])
     {
-        UIWebView *webView = [[UIWebView alloc]init];
-        NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
-        NSURL *url = [NSURL URLWithString:telString];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        [self.view addSubview:webView];
-        NSLog(@"认证过的服务方，调用打电话");
+        
+        [self connectSomeOne];
     }
     else
     {
@@ -1048,6 +1044,65 @@
     }
     
 }
+- (void)connectSomeOne
+{
+    
+    [self payForMessage];
+    
+}
+- (void)payForMessage
+{
+  
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    NSMutableDictionary *dataDic = [NSMutableDictionary new];
+    [dataDic setObject:@"token" forKey:@"access_token"];
+    [dataDic setObject:self.model.ProjectID forKey:@"ProjectID"];
+    NSString *URL = [[paidURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+    NSLog(@"-----%@",URL);
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [self.manager POST:URL parameters:dataDic progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+         NSString *status_code = dic[@"status_code"];
+         if ([status_code isEqualToString:@"417"]) {
+             UIWebView *webView = [[UIWebView alloc]init];
+             NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
+             NSURL *url = [NSURL URLWithString:telString];
+             [webView loadRequest:[NSURLRequest requestWithURL:url]];
+             [self.ContentView addSubview:webView];
+             NSLog(@"认证过的服务方，调用打电话");
+             NSLog(@"已支付");
+         }
+         else if ([status_code isEqualToString:@"416"])
+         {
+             UIWebView *webView = [[UIWebView alloc]init];
+             NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
+             NSURL *url = [NSURL URLWithString:telString];
+             [webView loadRequest:[NSURLRequest requestWithURL:url]];
+             [self.ContentView addSubview:webView];
+             NSLog(@"认证过的服务方，调用打电话");
+             NSLog(@"非收费信息");
+         }
+         else if ([status_code isEqualToString:@"200"])
+         {
+             UIWebView *webView = [[UIWebView alloc]init];
+             NSString *telString = [@"tel:"stringByAppendingString:self.model.ConnectPhone];
+             NSURL *url = [NSURL URLWithString:telString];
+             [webView loadRequest:[NSURLRequest requestWithURL:url]];
+             
+             [self.ContentView addSubview:webView];
+             NSLog(@"认证过的服务方，调用打电话");
+         }
+      
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"%@",error);
+         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"支付失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+     }];
+}
+
 - (void)talkViewAction:(UITapGestureRecognizer *)gesture
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];

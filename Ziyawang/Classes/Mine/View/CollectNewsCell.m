@@ -37,8 +37,9 @@
     self.titleLabel.text = self.model.NewsTitle;
     NSString *htmlString = self.model.Brief;
     NSAttributedString * attrStr =  [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    NSString *str = [NSString stringWithFormat:@"%@",attrStr];
-    self.BriefLabel.text = str;
+//    NSString *str = [NSString stringWithFormat:@"%@",attrStr];
+    self.BriefLabel.attributedText = attrStr;
+    
 
 }
 

@@ -91,8 +91,8 @@
             self.bigImageView.image = [UIImage imageNamed:self.imageNameArray[2]];
             [self.yearView setHidden:YES];
             self.backViewHeight.constant = 52;
-            self.monthMoneyLabel.text = @"¥3998";
-            
+            self.monthMoneyLabel.text = @"¥6498";
+            self.topLabel.text = @"月度会员";
             self.payid = @"5";
             self.product = self.productsArray[3];
             self.payname = @"固定资产";
@@ -150,7 +150,7 @@
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.zichanbaoyuedu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyejidu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyenianduhuiyuan2"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanjidu2"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanyuedu"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongzijidu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongziniandu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenjidu2"];

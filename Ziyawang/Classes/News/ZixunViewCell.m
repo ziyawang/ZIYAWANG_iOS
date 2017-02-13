@@ -39,8 +39,10 @@
     self.titleLabel.text = self.model.NewsTitle;
         NSString *htmlString = self.model.Brief;
         NSAttributedString * attrStr =  [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-    NSString *str = [NSString stringWithFormat:@"%@",attrStr];
-    self.contentLabel.text = str;
+//    NSString *str = [NSString stringWithFormat:@"%@",attrStr];
+//    self.contentLabel.text = str;
+    self.contentLabel.attributedText = attrStr;
+    
     NSLog(@"%@",self.contentLabel.text);
     self.timeLabel.text = [ZixunViewCell getDateWithString:self.model.PublishTime];
     self.viewCountLabel.text = self.model.ViewCount;
@@ -62,7 +64,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -22,13 +22,10 @@
     [webView loadRequest:self.request];
     [self.view addSubview:webView];
     webView.scalesPageToFit = YES;
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*

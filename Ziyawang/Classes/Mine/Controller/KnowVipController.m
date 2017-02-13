@@ -44,7 +44,7 @@
         case 3:
             self.bigImageView.image = [UIImage imageNamed:self.imageNameArray[2]];
             self.label1.text = @"在会员期间内，可免费查看本网站所有固定资产类VIP和收费信息。";
-            self.label2.text = @"按办理会员的价格赠送芽币（例：季度会员3998元赠送3998芽币）。可方便您查看其他类型信息。";
+            self.label2.text = @"按办理会员的价格赠送芽币（例：月度会员6498元赠送6498芽币）。可方便您查看其他类型信息。";
             self.label3.text = @"系统会根据您的指定需求帮您筛选指定的固定资产信息，并推送到您的系统消息或手机短信中（客服人员会主动联系您录入需求）。";
             self.label4.text = @"升级为会员后，您服务方的展示页面联系方式将公开，会有更多用户第一时间主动联系您。";
             break;

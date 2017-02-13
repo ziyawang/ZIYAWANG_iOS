@@ -271,7 +271,6 @@
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"token"];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"role"];
         NSString *str = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-        
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserPicture"];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"登录状态"];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserName"];

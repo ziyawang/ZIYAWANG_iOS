@@ -19,6 +19,7 @@
 #import "MyUItextField.h"
 #import "ChooseServiceViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "SkyerCityPicker.h"
 
 @interface MyidentifiController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIScrollViewDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userIconImageView;
@@ -68,6 +69,7 @@
 @property (nonatomic,strong) UIView *pickerBackView;
 @property (nonatomic,strong) UIView *DatepickerBackView;
 @property (nonatomic,strong) UIDatePicker *datePicker;
+@property (nonatomic,strong) SkyerCityPicker *cityPicker;
 
 
 @end
@@ -90,10 +92,10 @@
 {
     [super viewWillAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     NSString *companyLocation = @"a";
+//     NSString *companyLocation = @"a";
     NSString *ServiceArea = @"b";
      NSString *ServiceType = @"c";
-    companyLocation = [defaults objectForKey:@"企业地区"];
+//    companyLocation = [defaults objectForKey:@"企业地区"];
     ServiceArea =[defaults objectForKey:@"服务地区"];
     ServiceType = [defaults objectForKey:@"服务的类型"];
 
@@ -102,7 +104,7 @@
     NSLog(@"!!!!!!!!!!!!!!!!!!!!!SERviceType%@",ServiceType);
     NSLog(@"~~~~~~~%@",self.ViewType);
     if ([self.ViewType isEqualToString:@"服务"]==NO) {
-        self.qiyesuozai.text = companyLocation;
+//        self.qiyesuozai.text = companyLocation;
         self.fuwudiqu.text = ServiceArea;
         self.fuwuleixing.text = ServiceType;
     }
@@ -111,14 +113,15 @@
 
     NSLog(@"--------%@",self.comPanyDesTextView.text);
     if ([self.role isEqualToString:@"2"]) {
-    if([defaults objectForKey:@"企业地区"] == nil)
-    {
- self.qiyesuozai.text = self.ServiceLocation;
-    }
-        else
-        {
-        self.qiyesuozai.text = companyLocation;
-        }
+//    if([defaults objectForKey:@"企业地区"] == nil)
+//    {
+// self.qiyesuozai.text = self.ServiceLocation;
+//    }
+//        else
+//        {
+////        self.qiyesuozai.text = companyLocation;
+//        }
+        
     if ([defaults objectForKey:@"服务地区"]== nil)
     {
         self.fuwudiqu.text = self.ServiceArea;
@@ -351,6 +354,16 @@
     
 //    self.ViewType =@"非服务";
     [self setDatePicker];
+    
+    self.cityPicker = [[SkyerCityPicker alloc]init];
+    [self.cityPicker cityPikerGetSelectCity:^(NSMutableDictionary *dicSelectCity)
+     {
+         [self.mengbanView setHidden:YES];
+         NSLog(@"%@",dicSelectCity);
+         self.qiyesuozai.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+         
+     }];
+
   }
 - (void)setDatePicker
 {
@@ -522,11 +535,15 @@
 
 - (void)chooseLoaction:(UIGestureRecognizer *)gesture1
 {
-    [self.view endEditing:YES];
-    ChooseAreaController *choosAreaVc = [[ChooseAreaController alloc]init];
-    choosAreaVc.type = @"服务";
+//    [self.view endEditing:YES];
+//    ChooseAreaController *choosAreaVc = [[ChooseAreaController alloc]init];
+//    choosAreaVc.type = @"服务";
+//    
+//    [self.navigationController pushViewController:choosAreaVc animated:YES];
+//    [self.mengbanView setHidden:NO];
     
-    [self.navigationController pushViewController:choosAreaVc animated:YES];
+    [self.view addSubview:self.cityPicker]
+    ;
 }
 - (void)chooseServiceArea:(UIGestureRecognizer *)gesture2
 {
@@ -555,7 +572,9 @@
     NSString *phoneNumber = self.phoneNumTextField.text;
     NSString *companyName = self.companyTextField.text;
     NSString *companyDes = self.comPanyDesTextView.text;
-    NSString *companyLocation = [defaults objectForKey:@"企业地区"];
+//    NSString *companyLocation = [defaults objectForKey:@"企业地区"];
+    NSString *companyLocation = self.qiyesuozai.text;
+        
     NSString *ServiceArea = [defaults objectForKey:@"服务地区"];
     NSString *ServiceType = [defaults objectForKey:@"服务类型"];
     NSString *headurl = getDataURL;
@@ -639,9 +658,9 @@
     [paraDic setObject:companyLocation forKey:@"ServiceLocation"];
     [paraDic setObject:ServiceArea forKey:@"ServiceArea"];
     [paraDic setObject:ServiceType forKey:@"ServiceType"];
-        [paraDic setObject:self.zhuceTimeLabel.text forKey:@"RegTime"];
-        [paraDic setObject:self.sizeTextField.text forKey:@"Size"];
-        [paraDic setObject:self.foundsTextField.text forKey:@"Founds"];
+    [paraDic setObject:self.zhuceTimeLabel.text forKey:@"RegTime"];
+    [paraDic setObject:self.sizeTextField.text forKey:@"Size"];
+    [paraDic setObject:self.foundsTextField.text forKey:@"Founds"];
     [self.manager POST:URL parameters:paraDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         //上传四张图片
         if (self.imagearray.count == 1) {
