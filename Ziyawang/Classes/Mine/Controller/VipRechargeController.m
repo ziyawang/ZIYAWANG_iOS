@@ -150,7 +150,7 @@
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.zichanbaoyuedu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyejidu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.qiyenianduhuiyuan2"];
-    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanyuedu"];
+    [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.guchanyuedu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongzijidu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.rongziniandu2"];
     [self.productsArray addObject:@"i.e.com.ziyawang.Ziya.gerenjidu2"];
