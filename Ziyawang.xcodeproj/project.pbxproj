@@ -643,6 +643,8 @@
 		78746D691D6ADB8B00AD60FF /* jiantou-r.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D661D6ADB8B00AD60FF /* jiantou-r.png */; };
 		78746D6A1D6ADB8B00AD60FF /* jiantou-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D671D6ADB8B00AD60FF /* jiantou-r@2x.png */; };
 		78746D6B1D6ADB8B00AD60FF /* jiantou-r@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D681D6ADB8B00AD60FF /* jiantou-r@3x.png */; };
+		7879DC921E553848004CA809 /* OtherStarIdentiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7879DC901E553848004CA809 /* OtherStarIdentiController.m */; };
+		7879DC931E553848004CA809 /* OtherStarIdentiController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7879DC911E553848004CA809 /* OtherStarIdentiController.xib */; };
 		787DD1B81D52CD7300132B3B /* LxGridViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 787DD1B51D52CD7300132B3B /* LxGridViewFlowLayout.m */; };
 		787DD1C21D52E03D00132B3B /* MessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787DD1BF1D52E03D00132B3B /* MessageListViewController.m */; };
 		787DD1C31D52E03D00132B3B /* talkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787DD1C11D52E03D00132B3B /* talkViewController.m */; };
@@ -1835,6 +1837,9 @@
 		78746D661D6ADB8B00AD60FF /* jiantou-r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r.png"; sourceTree = "<group>"; };
 		78746D671D6ADB8B00AD60FF /* jiantou-r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r@2x.png"; sourceTree = "<group>"; };
 		78746D681D6ADB8B00AD60FF /* jiantou-r@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r@3x.png"; sourceTree = "<group>"; };
+		7879DC8F1E553848004CA809 /* OtherStarIdentiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherStarIdentiController.h; sourceTree = "<group>"; };
+		7879DC901E553848004CA809 /* OtherStarIdentiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherStarIdentiController.m; sourceTree = "<group>"; };
+		7879DC911E553848004CA809 /* OtherStarIdentiController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherStarIdentiController.xib; sourceTree = "<group>"; };
 		787DD1B41D52CD7300132B3B /* LxGridViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LxGridViewFlowLayout.h; sourceTree = "<group>"; };
 		787DD1B51D52CD7300132B3B /* LxGridViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LxGridViewFlowLayout.m; sourceTree = "<group>"; };
 		787DD1BE1D52E03D00132B3B /* MessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageListViewController.h; sourceTree = "<group>"; };
@@ -3927,6 +3932,9 @@
 				7836E8131D5B0A0C00187E41 /* CSChooseServiceTypeViewController.m */,
 				78C593221E160E2E002D77BC /* ChooseServiceViewController.h */,
 				78C593231E160E2E002D77BC /* ChooseServiceViewController.m */,
+				7879DC8F1E553848004CA809 /* OtherStarIdentiController.h */,
+				7879DC901E553848004CA809 /* OtherStarIdentiController.m */,
+				7879DC911E553848004CA809 /* OtherStarIdentiController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4716,6 +4724,7 @@
 				78FD6D161DF0485C001F69BB /* shouc@2x.png in Resources */,
 				782523221D7D72E500F2C0A2 /* modify.png in Resources */,
 				786C4DF31DE717C000C19373 /* zhang@2x.png in Resources */,
+				7879DC931E553848004CA809 /* OtherStarIdentiController.xib in Resources */,
 				78D95FD71D901A26007ECABA /* shenqing_black.png in Resources */,
 				78D9604F1D96995D007ECABA /* dahuangkuang.png in Resources */,
 				78276AA31E012595000F83B5 /* dage@2x.png in Resources */,
@@ -5391,6 +5400,7 @@
 				783392051DCB1D2100E4C8B6 /* DebtsChoosePersonTypeController.m in Sources */,
 				7836E8D71D5D900400187E41 /* SearchTypeController.m in Sources */,
 				78D9604A1D968701007ECABA /* RechargeController.m in Sources */,
+				7879DC921E553848004CA809 /* OtherStarIdentiController.m in Sources */,
 				78F3DD861D45ADB400C1E62E /* SuPhotoAblumCell.m in Sources */,
 				787DD1C21D52E03D00132B3B /* MessageListViewController.m in Sources */,
 				7889626E1D8680BE008DC681 /* KNPhotoBrowerCell.m in Sources */,

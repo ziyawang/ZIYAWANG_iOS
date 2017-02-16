@@ -1,11 +1,12 @@
 //
-//  StaridentiController.m
+//  OtherStarIdentiController.m
 //  Ziyawang
 //
-//  Created by Mr.Xu on 2016/12/22.
-//  Copyright © 2016年 Mr.Xu. All rights reserved.
+//  Created by Mr.Xu on 2017/2/16.
+//  Copyright © 2017年 Mr.Xu. All rights reserved.
 //
 
+#import "OtherStarIdentiController.h"
 #import "StaridentiController.h"
 #import "GoldCertiViewController.h"
 #import "AreaCertiController.h"
@@ -14,7 +15,9 @@
 #import "ThreeBookController.h"
 #import "MyidentifiController.h"
 #import "UserInfoModel.h"
-@interface StaridentiController ()
+
+
+@interface OtherStarIdentiController ()
 @property (weak, nonatomic) IBOutlet UIImageView *usericon;
 @property (weak, nonatomic) IBOutlet UIImageView *starima1;
 @property (weak, nonatomic) IBOutlet UIImageView *starima2;
@@ -41,15 +44,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *label1;
 @property (nonatomic,strong) UserInfoModel *model;
 
+
 @end
 
-@implementation StaridentiController
+@implementation OtherStarIdentiController
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self getUserInfoFromDomin];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIColor *color = [UIColor blackColor];
@@ -62,11 +61,9 @@
     self.model = [[UserInfoModel alloc]init];
     self.usericon.layer.masksToBounds = YES;
     self.usericon.layer.cornerRadius = [UIScreen mainScreen].bounds.size.width/8;
-    
+    [self getUserInfoFromDomin];
     [self setViews];
-    
-  }
-
+}
 - (void)getUserInfoFromDomin
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
@@ -89,7 +86,8 @@
             [self.model setValuesForKeysWithDictionary:dic[@"service"]];
             
             [self.usericon sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
-
+            
+            
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
             
             NSDictionary *starDic = dic[@"service"][@"showlevelarr"];
@@ -100,7 +98,7 @@
             starArray[@"3"] = [NSString stringWithFormat:@"%@",starArray[@"3"]];
             starArray[@"4"] = [NSString stringWithFormat:@"%@",starArray[@"4"]];
             starArray[@"5"] = [NSString stringWithFormat:@"%@",starArray[@"5"]];
-
+            
             self.starStatuDic = starArray;
             
             if ([starArray[@"1"] isEqualToString:@"2"]) {
@@ -111,7 +109,7 @@
             else if([starArray[@"1"] isEqualToString:@"0"])
             {
                 self.openButton1.titleLabel.text = @"开通";
-
+                
             }
             else if([starArray[@"1"] isEqualToString:@"1"])
             {
@@ -120,80 +118,80 @@
             else
             {
                 [self.openButton1 setTitle:@"未通过" forState:(UIControlStateNormal)];
-   
+                
             }
             
             if ([starArray[@"2"] isEqualToString:@"2"]) {
                 [self.openButton2 setTitle:@"已开通" forState:(UIControlStateNormal)];
-
+                
                 self.starima2.image = [UIImage imageNamed:@"shi"];
             }
             else if([starArray[@"2"] isEqualToString:@"0"])
             {
                 self.openButton2.titleLabel.text = @"开通";
-
+                
             }
             else if([starArray[@"2"] isEqualToString:@"1"])
             {
                 [self.openButton2 setTitle:@"审核中" forState:(UIControlStateNormal)];
-
+                
             }
             else
             {
                 [self.openButton2 setTitle:@"未通过" forState:(UIControlStateNormal)];
-
+                
             }
             
             if ([starArray[@"3"] isEqualToString:@"2"]) {
                 [self.openButton3 setTitle:@"已开通" forState:(UIControlStateNormal)];
-
+                
                 self.starima3.image = [UIImage imageNamed:@"shipin"];
             }
             else if([starArray[@"3"] isEqualToString:@"0"])
             {
                 self.openButton3.titleLabel.text = @"开通";
-
+                
             }
             else if([starArray[@"3"] isEqualToString:@"1"])
             {
                 [self.openButton3 setTitle:@"审核中" forState:(UIControlStateNormal)];
-
+                
             }
             else
             {
                 [self.openButton3 setTitle:@"未通过" forState:(UIControlStateNormal)];
-
+                
             }
             if ([starArray[@"4"] isEqualToString:@"2"]) {
                 [self.openButton4 setTitle:@"已开通" forState:(UIControlStateNormal)];
-
+                
                 self.starima4.image = [UIImage imageNamed:@"nuo"];
             }
             else if([starArray[@"4"] isEqualToString:@"0"])
             {
                 self.openButton4.titleLabel.text = @"开通";
-
+                
             }
             else if([starArray[@"4"] isEqualToString:@"1"])
             {
                 [self.openButton4 setTitle:@"审核中" forState:(UIControlStateNormal)];
-
+                
             }
             else
             {
                 [self.openButton4 setTitle:@"未通过" forState:(UIControlStateNormal)];
-
+                
             }
             if ([starArray[@"5"] isEqualToString:@"2"]) {
                 self.starima5.image = [UIImage imageNamed:@"zheng"];
                 [self.openButton5 setTitle:@"已开通" forState:(UIControlStateNormal)];
-
+                
             }
-        
+            
             else if([starArray[@"5"] isEqualToString:@"0"])
             {
                 self.openButton5.titleLabel.text = @"开通";
-
+                
             }
             else if([starArray[@"5"] isEqualToString:@"1"])
             {
@@ -202,7 +200,7 @@
             else
             {
                 [self.openButton5 setTitle:@"未通过" forState:(UIControlStateNormal)];
-
+                
             }
             
             
@@ -221,7 +219,7 @@
     [self setButtonWithButton:self.detailButton3];
     [self setButtonWithButton:self.detailButton4];
     [self setButtonWithButton:self.detailButton5];
-
+    
     [self setButtonWithButton:self.openButton1];
     [self setButtonWithButton:self.openButton2];
     [self setButtonWithButton:self.openButton3];
@@ -240,12 +238,9 @@
         [self.openButton3 setHidden:YES];
         [self.openButton4 setHidden:YES];
         [self.openButton5 setHidden:YES];
-
+        
     }
-
-
-
-}
+    }
 
 - (void)setPromiseViewWithButtonTag:(NSInteger)tag
 {
@@ -364,7 +359,7 @@
         default:
             break;
     }
-
+    
     
     
     
@@ -386,28 +381,28 @@
     [bottomView setupAutoHeightWithBottomView:label3 bottomMargin:15];
     [weituoView setupAutoHeightWithBottomView:bottomView bottomMargin:10];
     
-
     
-//    fanhuiButton.sd_layout.leftEqualToView(label2)
-//    .rightEqualToView(label2)
-//    .topSpaceToView(fabuButton,20)
-//    .heightIs(40*kHeightScale);
-//    fanhuiButton.layer.borderWidth = 1.5;
-//    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
-//    
     
-//    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
-//    .topSpaceToView(imageBackView,10)
-//    .heightIs(25)
-//    .widthIs(25);
-//    
-//    
-//    
-//    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
-//    [cancelButton addTarget:self action:@selector(weituoCancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
-//    
-//    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
-//    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    //    fanhuiButton.sd_layout.leftEqualToView(label2)
+    //    .rightEqualToView(label2)
+    //    .topSpaceToView(fabuButton,20)
+    //    .heightIs(40*kHeightScale);
+    //    fanhuiButton.layer.borderWidth = 1.5;
+    //    fanhuiButton.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
+    //
+    
+    //    cancelButton.sd_layout.rightSpaceToView(imageBackView,10)
+    //    .topSpaceToView(imageBackView,10)
+    //    .heightIs(25)
+    //    .widthIs(25);
+    //
+    //
+    //
+    //    [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
+    //    [cancelButton addTarget:self action:@selector(weituoCancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
+    //
+    //    [fanhuiButton setTitle:@"不承诺" forState:(UIControlStateNormal)];
+    //    [fanhuiButton addTarget:self action:@selector(didClickFanhuiButtonAction2:) forControlEvents:(UIControlEventTouchUpInside)];
     
     [fabuButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
@@ -438,9 +433,9 @@
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius = 4;
     [button addTarget:self action:@selector(didClickButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
- 
-
-   
+    
+    
+    
     
 }
 - (void)didClickButtonAction:(UIButton *)button
@@ -450,16 +445,16 @@
             [self setPromiseViewWithButtonTag:1];
             break;
         case 2:
-             [self setPromiseViewWithButtonTag:2];
+            [self setPromiseViewWithButtonTag:2];
             break;
         case 3:
-             [self setPromiseViewWithButtonTag:3];
+            [self setPromiseViewWithButtonTag:3];
             break;
         case 4:
-             [self setPromiseViewWithButtonTag:4];
+            [self setPromiseViewWithButtonTag:4];
             break;
         case 5:
-             [self setPromiseViewWithButtonTag:5];
+            [self setPromiseViewWithButtonTag:5];
             break;
             //0 开通 1 审核中 2 已认证 3 未通过
         case 6:
@@ -474,7 +469,7 @@
                 goldVC.statu = @"已支付";
                 
                 [self.navigationController pushViewController:goldVC animated:YES];
-            
+                
             }
         }
             break;
@@ -504,7 +499,7 @@
                 videoVC.statu = @"已支付";
                 [self.navigationController pushViewController:videoVC animated:YES];
             }
-           
+            
         }
             break;
         case 9:
@@ -543,15 +538,14 @@
             identifiVC.Founds = self.model.Founds;
             identifiVC.Size = self.model.Size;
             [self.navigationController pushViewController:identifiVC animated:YES];
-
         }
             break;
-            
         default:
             break;
     }
     
 }
+
 /*
 #pragma mark - Navigation
 

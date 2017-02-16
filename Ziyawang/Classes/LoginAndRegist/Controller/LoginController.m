@@ -111,7 +111,6 @@
     }
     [self checkMobilePhoneNumber:self.userNnameTextField.text];
     
-    
     if ([self.userNnameTextField.text isEqualToString:@""]||[self.passWordTextField.text isEqualToString:@""]) {
       if([self.passWordTextField.text isEqualToString:@""])
         {

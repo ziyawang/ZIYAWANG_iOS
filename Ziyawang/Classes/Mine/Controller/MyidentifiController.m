@@ -276,6 +276,17 @@
     self.foundsTextField.text = [self.Founds stringByAppendingString:@"万"];
     self.zhuceTimeLabel.text = self.RegTime;
     
+    if ([self.Size isEqualToString:@"0"]) {
+        self.sizeTextField.text = @"未填写";
+    }
+    self.foundsTextField.text = [self.Founds stringByAppendingString:@"万"];
+    if ([self.Founds isEqualToString:@"0"]) {
+        self.foundsTextField.text = @"未填写";
+    }
+    self.zhuceTimeLabel.text = self.RegTime;
+    if ([self.RegTime isEqualToString:@"0000-00-00 00:00:00"]) {
+        self.zhuceTimeLabel.text = @"未填写";
+    }
     
     [self.comPanyDesTextView setText:self.ServiceIntroduction];
     NSLog(@"--------%@",self.comPanyDesTextView.text);

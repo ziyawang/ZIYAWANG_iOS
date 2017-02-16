@@ -36,7 +36,6 @@
 - (void)getRechargeLogData
 {
     self.startpage = 1;
-    
     [self.sourceArray removeAllObjects];
     self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.HUD.delegate = self;

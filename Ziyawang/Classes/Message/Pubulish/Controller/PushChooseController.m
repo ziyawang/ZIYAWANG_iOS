@@ -79,7 +79,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 44;
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,7 +86,9 @@
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell"];
     if([self.touqixian isEqualToString:@"投资期限"])
     {
+        
     cell.textLabel.text = self.dataArray[indexPath.row];
+        
     }
     else
     {
@@ -95,7 +96,6 @@
     }
     cell.textLabel.font = [UIFont systemFontOfSize:14];
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     return cell;
 
 

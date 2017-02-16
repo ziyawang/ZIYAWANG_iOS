@@ -10,6 +10,8 @@
 #import "VipRechargeController.h"
 #import "VipRechargeLogController.h"
 #import "UserInfoModel.h"
+#import "KnowVipController.h"
+#import "MyidentifiController.h"
 @interface VipViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *noLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userIcon;
@@ -26,6 +28,12 @@
 @property (weak, nonatomic) IBOutlet UIView *view6;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
 @property (nonatomic,strong) UserInfoModel *model;
+@property (weak, nonatomic) IBOutlet UILabel *label1;
+@property (weak, nonatomic) IBOutlet UILabel *label2;
+@property (weak, nonatomic) IBOutlet UILabel *label3;
+@property (weak, nonatomic) IBOutlet UIButton *renzhengButton;
+@property (nonatomic,strong) NSString *role;
+
 @end
 
 @implementation VipViewController
@@ -43,6 +51,10 @@
     self.navigationItem.title = @"会员中心";
     [self.noLabel setHidden:YES];
     
+    self.label1.font = [UIFont FontForSmallLabel];
+//    self.renzhengButton.titleLabel.font = [UIFont FontForSmallLabel];
+    self.label2.font = [UIFont FontForSmallLabel];
+
     self.userIcon.layer.masksToBounds = YES;
     self.userIcon.layer.cornerRadius = 17.5;
 
@@ -50,7 +62,7 @@
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[UserInfoModel alloc]init];
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+//    self.view.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
 //    self.view6.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     UITapGestureRecognizer *gesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction:)];
     
@@ -71,8 +83,32 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"充值记录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonItemAction:)];
     
+    self.renzhengButton.layer.masksToBounds = YES;
+    self.renzhengButton.layer.cornerRadius = 4;
+    
     
     // Do any additional setup after loading the view from its nib.
+}
+- (void)setViews
+{
+    
+    if ([self.role isEqualToString:@"1"]) {
+        [self.label1 setHidden:YES];
+        [self.renzhengButton setHidden:YES];
+        [self.label2 setHidden:NO];
+        self.label3.text = @"请选择您需要的会员类型：";
+        
+        
+
+    }
+    else
+    {
+        [self.label1 setHidden:NO];
+        [self.renzhengButton setHidden:NO];
+        [self.label2 setHidden:YES];
+        self.label3.text = @"可选择以下会员类型来了解会员特权";
+
+    }
 }
 
 - (void)getUserInfoFromDomin
@@ -92,10 +128,14 @@
             [self.model setValuesForKeysWithDictionary:dic[@"user"]];
             NSLog(@"%@",dic[@"user"]);
             
+            self.role = dic[@"role"];
+            
             [self.model setValuesForKeysWithDictionary:dic[@"service"]];
             if (self.model.UserPicture != nil) {
                 [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.UserPicture]]];
             }
+            [self setViews];
+            
             NSArray *rightArr = dic[@"user"][@"showrightios"];
             switch (rightArr.count) {
                 case 0:
@@ -148,6 +188,28 @@
     }
     
 }
+- (IBAction)renzhengButtonAction:(id)sender {
+    MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+
+    identifiVC.ConnectPhone = self.model.ConnectPhone;
+    identifiVC.ServiceName = self.model.ServiceName;
+    identifiVC.ServiceLocation = self.model.ServiceLocation;
+    identifiVC.ServiceType = self.model.ServiceType;
+    identifiVC.ServiceIntroduction = self.model.ServiceIntroduction;
+    identifiVC.ConnectPerson = self.model.ConnectPerson;
+    identifiVC.ServiceArea = self.model.ServiceArea;
+    identifiVC.ConfirmationP1 = self.model.ConfirmationP1;
+    identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
+    identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
+    identifiVC.ViewType = @"服务";
+    identifiVC.role = self.role;
+    identifiVC.RegTime = self.model.RegTime;
+    identifiVC.Founds = self.model.Founds;
+    identifiVC.Size = self.model.Size;
+    [self.navigationController pushViewController:identifiVC animated:YES];
+
+    
+}
 
 - (void)rightBarButtonItemAction:(UIBarButtonItem *)barbutton
 {
@@ -155,39 +217,61 @@
     [self.navigationController pushViewController:vipVC animated:YES];
     
 }
+
 - (void)gestureAction:(UITapGestureRecognizer *)gesture
 {
+    
     VipRechargeController *viprechargeVC = [[VipRechargeController alloc]init];
+    KnowVipController *knowVC = [[KnowVipController alloc]init];
+    
     
     switch (gesture.view.tag) {
         case 1:
             viprechargeVC.vipType = @"1";
+            knowVC.vipType = @"1";
             break;
         case 2:
             viprechargeVC.vipType = @"2";
+            knowVC.vipType = @"2";
+
 
             break;
         case 3:
             viprechargeVC.vipType = @"3";
+            knowVC.vipType = @"3";
+
 
             break;
         case 4:
             viprechargeVC.vipType = @"4";
+            knowVC.vipType = @"4";
+
 
             break;
         case 5:
             viprechargeVC.vipType = @"5";
+            knowVC.vipType = @"5";
+
 
             break;
         case 6:
             viprechargeVC.vipType = @"6";
+            knowVC.vipType = @"6";
+
 
             break;
             
         default:
             break;
     }
-    [self.navigationController pushViewController:viprechargeVC animated:YES];
+    if ([self.role isEqualToString:@"1"]) {
+        [self.navigationController pushViewController:viprechargeVC animated:YES];
+    }
+    else
+    {
+        [self.navigationController pushViewController:knowVC animated:YES];
+    }
+    
     
 }
 - (void)didReceiveMemoryWarning {

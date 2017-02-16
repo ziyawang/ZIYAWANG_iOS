@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -48,7 +48,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="494" height="1947"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYR-Cj-tPi" customClass="ContentView">
-                            <rect key="frame" x="0.0" y="0.0" width="494" height="2000"/>
+                            <rect key="frame" x="0.0" y="0.0" width="494" height="1000"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjL-MQ-wdy">
                                     <rect key="frame" x="0.0" y="529" width="494" height="44"/>
@@ -527,7 +527,7 @@
                                 <constraint firstItem="gBd-4v-uUa" firstAttribute="leading" secondItem="AYR-Cj-tPi" secondAttribute="leading" id="CQi-jV-uSg"/>
                                 <constraint firstAttribute="trailing" secondItem="ZC4-is-hOD" secondAttribute="trailing" id="EhV-67-BXo"/>
                                 <constraint firstItem="suN-UG-pMK" firstAttribute="leading" secondItem="AYR-Cj-tPi" secondAttribute="leading" id="H3I-iq-yRh"/>
-                                <constraint firstAttribute="height" constant="2000" id="I4N-sx-tBI"/>
+                                <constraint firstAttribute="height" constant="1000" id="I4N-sx-tBI"/>
                                 <constraint firstItem="0SM-Uy-kCe" firstAttribute="top" secondItem="gBd-4v-uUa" secondAttribute="bottom" constant="1" id="IR1-jt-lqD"/>
                                 <constraint firstItem="YRs-ct-Ua7" firstAttribute="leading" secondItem="AYR-Cj-tPi" secondAttribute="leading" id="Los-rT-A83"/>
                                 <constraint firstItem="FeL-g1-mdt" firstAttribute="leading" secondItem="AYR-Cj-tPi" secondAttribute="leading" id="Rv7-Yq-whG"/>

@@ -25,7 +25,7 @@
 #import "MessageListViewController.h"
 #import "VipViewController.h"
 #import "StaridentiController.h"
-
+#import "OtherStarIdentiController.h"
 #import "UITabBar+CustomBadge.h"
 
 #import "AppDelegate.h"
@@ -437,21 +437,22 @@
 
 - (void)setTableViewHight
 {
-    if ([self.role isEqualToString:@"1"]) {
-        self.tableViewHeight.constant = 308;
-        self.contentViewHeight.constant = 533;
-        
-        [self.tableView reloadData];
-        
-    }
-    else
-    {
-        self.tableViewHeight.constant = 176;
-        self.contentViewHeight.constant = 401;
-
-        [self.tableView reloadData];
-        
-    }
+    self.tableViewHeight.constant = 308;
+    self.contentViewHeight.constant = 533;
+//    if ([self.role isEqualToString:@"1"]) {
+//      
+//        
+//        [self.tableView reloadData];
+//        
+//    }
+//    else
+//    {
+//        self.tableViewHeight.constant = 176;
+//        self.contentViewHeight.constant = 401;
+//
+//        [self.tableView reloadData];
+//        
+//    }
     
 }
 
@@ -533,15 +534,15 @@
     NSString *role = self.role;
     
     
-    if ([role isEqualToString:@"1"]) {
+//    if ([role isEqualToString:@"1"]) {
         return 7;
-    }
+//    }
     
     
-    else
-    {
-        return 4;
-    }
+//    else
+//    {
+//        return 4;
+//    }
     
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -573,7 +574,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     NSString *role = self.role;
-    if ([role isEqualToString:@"1"]) {
+//    if ([role isEqualToString:@"1"]) {
         switch (indexPath.row)
         {
             case 0:
@@ -634,41 +635,41 @@
                 break;
         }
         
-    }
-    else
-    {
-        switch (indexPath.row)
-        {
-            case 0:
-                cell.imageView.image = [UIImage imageNamed:@"Serviceidentification"];
-                cell.textLabel.text = @"服务方认证";
-                
-                break;
-//            case 1:
-//                cell.imageView.image = [UIImage imageNamed:@"vipCenter"];
-//                cell.textLabel.text = @"会员中心";
+//    }
+//    else
+//    {
+//        switch (indexPath.row)
+//        {
+//            case 0:
+//                cell.imageView.image = [UIImage imageNamed:@"Serviceidentification"];
+//                cell.textLabel.text = @"服务方认证";
 //                
 //                break;
-            case 1:
-                cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
-                cell.textLabel.text = @"消息中心";
-                
-                break;
-            case 2:
-                cell.imageView.image = [UIImage imageNamed:@"help"];
-                cell.textLabel.text = @"帮助与反馈";
-                
-                break;
-            case 3:
-                cell.imageView.image = [UIImage imageNamed:@"set"];
-                cell.textLabel.text = @"设置";
-                
-                break;
-            default:
-                break;
-        }
-        
-    }
+////            case 1:
+////                cell.imageView.image = [UIImage imageNamed:@"vipCenter"];
+////                cell.textLabel.text = @"会员中心";
+////                
+////                break;
+//            case 1:
+//                cell.imageView.image = [UIImage imageNamed:@"xiaoxizhongxin"];
+//                cell.textLabel.text = @"消息中心";
+//                
+//                break;
+//            case 2:
+//                cell.imageView.image = [UIImage imageNamed:@"help"];
+//                cell.textLabel.text = @"帮助与反馈";
+//                
+//                break;
+//            case 3:
+//                cell.imageView.image = [UIImage imageNamed:@"set"];
+//                cell.textLabel.text = @"设置";
+//                
+//                break;
+//            default:
+//                break;
+//        }
+//        
+//    }
     
     
     cell.textLabel.font = [UIFont systemFontOfSize:14];
@@ -697,8 +698,8 @@
     NSString *role = self.role;
     
     //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
-    if ([role isEqualToString:@"1"]) {
-        
+//    if ([role isEqualToString:@"1"]) {
+    
         switch (indexPath.row) {
             case 0:
             {
@@ -766,9 +767,20 @@
                 }
                 else
                 {
-                    StaridentiController *roblistVC = [[StaridentiController alloc]init];
-                    
-                    [self.navigationController pushViewController:roblistVC animated:YES];
+                    self.role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+                    if ([role isEqualToString:@"1"]) {
+                        StaridentiController *roblistVC = [[StaridentiController alloc]init];
+                        
+                        [self.navigationController pushViewController:roblistVC animated:YES];
+                    }
+                    else
+                    {
+                        OtherStarIdentiController *roblistVC = [[OtherStarIdentiController alloc]init];
+                        
+                        [self.navigationController pushViewController:roblistVC animated:YES];
+                    }
+             
+                 
                 }
                 
             }
@@ -799,12 +811,19 @@
             case 4:
             {
                 
-                
-                
+                if ([self ifNeedLogin] == YES) {
+                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                    //        [self.navigationController pushViewController:loginVC animated:YES];
+                    [self presentViewController:loginVC animated:YES completion:nil];
+                }
+else
+{
+    
                 MessageListViewController *messageVC = [[MessageListViewController alloc]init];
                 
                 
                 [self.navigationController pushViewController:messageVC animated:YES];
+            }
             }
                 break;
             case 5:
@@ -827,39 +846,54 @@
             default:
                 break;
         }
-    }
-    else
-    {
-        
-        switch (indexPath.row) {
-            case 0:
-            {
-                if ([self ifNeedLogin] == YES) {
-                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-                    //        [self.navigationController pushViewController:loginVC animated:YES];
-                    [self presentViewController:loginVC animated:YES completion:nil];
-                }
-                else
-                {
-                    MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
-                    identifiVC.ConnectPhone = self.model.ConnectPhone;
-                    identifiVC.ServiceName = self.model.ServiceName;
-                    identifiVC.ServiceLocation = self.model.ServiceLocation;
-                    identifiVC.ServiceType = self.model.ServiceType;
-                    identifiVC.ServiceIntroduction = self.model.ServiceIntroduction;
-                    identifiVC.ConnectPerson = self.model.ConnectPerson;
-                    identifiVC.ServiceArea = self.model.ServiceArea;
-                    identifiVC.ConfirmationP1 = self.model.ConfirmationP1;
-                    identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
-                    identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
-                    identifiVC.ViewType = @"服务";
-                    identifiVC.role = self.role;
-                    
-                    [self.navigationController pushViewController:identifiVC animated:YES];
-                    
-                }
-            }
-                break;
+//    }
+//    else
+//    {
+//        
+//        switch (indexPath.row) {
+//            case 0:
+//            {
+//                if ([self ifNeedLogin] == YES) {
+//                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+//                    //        [self.navigationController pushViewController:loginVC animated:YES];
+//                    [self presentViewController:loginVC animated:YES completion:nil];
+//                }
+//                else
+//                {
+//                    MyidentifiController *identifiVC = [[MyidentifiController alloc]init];
+//                    identifiVC.ConnectPhone = self.model.ConnectPhone;
+//                    identifiVC.ServiceName = self.model.ServiceName;
+//                    identifiVC.ServiceLocation = self.model.ServiceLocation;
+//                    identifiVC.ServiceType = self.model.ServiceType;
+//                    identifiVC.ServiceIntroduction = self.model.ServiceIntroduction;
+//                    identifiVC.ConnectPerson = self.model.ConnectPerson;
+//                    identifiVC.ServiceArea = self.model.ServiceArea;
+//                    identifiVC.ConfirmationP1 = self.model.ConfirmationP1;
+//                    identifiVC.ConfirmationP2 = self.model.ConfirmationP2;
+//                    identifiVC.ConfirmationP3 = self.model.ConfirmationP3;
+//                    identifiVC.ViewType = @"服务";
+//                    identifiVC.role = self.role;
+//                    
+//                    [self.navigationController pushViewController:identifiVC animated:YES];
+//                    
+//                }
+//            }
+//                break;
+////            case 1:
+////            {
+////                if ([self ifNeedLogin] == YES) {
+////                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+////                    //        [self.navigationController pushViewController:loginVC animated:YES];
+////                    [self presentViewController:loginVC animated:YES completion:nil];
+////                }
+////                else
+////                {
+////                    VipViewController *VipVC = [[VipViewController alloc]init];
+////                    [self.navigationController pushViewController:VipVC animated:YES];
+////                }
+////            }
+////                break;
+////                
 //            case 1:
 //            {
 //                if ([self ifNeedLogin] == YES) {
@@ -869,43 +903,28 @@
 //                }
 //                else
 //                {
-//                    VipViewController *VipVC = [[VipViewController alloc]init];
-//                    [self.navigationController pushViewController:VipVC animated:YES];
+//                    MessageListViewController *helpVC = [[MessageListViewController alloc]init];
+//                    [self.navigationController pushViewController:helpVC animated:YES];
 //                }
 //            }
 //                break;
+//            case 2:
+//            {
+//                CSBackMessageController *messageVC = [[CSBackMessageController alloc]init];
+//                [self.navigationController pushViewController:messageVC animated:YES];
+//            }
+//                break;
+//            case 3:
+//            {
+//                MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
+//                [self.navigationController pushViewController:setVc animated:YES];
+//            }
+//                break;
 //                
-            case 1:
-            {
-                if ([self ifNeedLogin] == YES) {
-                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-                    //        [self.navigationController pushViewController:loginVC animated:YES];
-                    [self presentViewController:loginVC animated:YES completion:nil];
-                }
-                else
-                {
-                    MessageListViewController *helpVC = [[MessageListViewController alloc]init];
-                    [self.navigationController pushViewController:helpVC animated:YES];
-                }
-            }
-                break;
-            case 2:
-            {
-                CSBackMessageController *messageVC = [[CSBackMessageController alloc]init];
-                [self.navigationController pushViewController:messageVC animated:YES];
-            }
-                break;
-            case 3:
-            {
-                MySetController *setVc = [[MySetController alloc]initWithNibName:@"MySetController" bundle:nil];
-                [self.navigationController pushViewController:setVc animated:YES];
-            }
-                break;
-                
-            default:
-                break;
-        }
-    }
+//            default:
+//                break;
+//        }
+//    }
     
 }
 
