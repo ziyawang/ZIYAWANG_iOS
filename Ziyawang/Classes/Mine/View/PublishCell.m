@@ -102,6 +102,8 @@
 //    NSLog(@"--------------------%@",self.model.Member);
     self.model.Member = [NSString stringWithFormat:@"%@",self.model.Member];
     
+    
+    
     if ([self.model.Member isEqualToString:@"0"]) {
         [self.VipImage setHidden:YES];
         [self.PriceLabel setHidden:YES];

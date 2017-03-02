@@ -14,6 +14,7 @@
 #import "FindServiceViewCell.h"
 #import "FindServiceModel.h"
 #import "ServiceDetailController.h"
+#import "FindView.h"
 @interface FindServicesController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 {
     UINib *nib;
@@ -40,7 +41,8 @@
 
 @property (nonatomic,strong) NSMutableArray *vipRightArray;
 
-
+@property (nonatomic,strong) FindView *findV;
+@property (nonatomic,strong) NSString *chooseType;
 @end
 
 @implementation FindServicesController
@@ -52,12 +54,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"找服务";
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
-
+    self.view.backgroundColor = [UIColor whiteColor];
+    //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+    
     self.sourceArray = [NSMutableArray array];
     self.vipRightArray = [NSMutableArray new];
     self.manager = [AFHTTPSessionManager manager];
-
+    
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
@@ -68,18 +71,19 @@
     self.tableView.separatorStyle = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FindServiceViewCell" bundle:nil] forCellReuseIdentifier:@"FindServiceViewCell"];
-
+    
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(findServiceswithDic:)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
     
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
-
+    
     self.dataDic = [NSMutableDictionary new];
-    [self setHeadView];
+    //    [self setHeadView];
+    [self setHeadFindView];
     
     [self findServiceswithDic:self.dataDic];
-
+    
 }
 
 - (void)findServiceswithDic:(NSMutableDictionary *)dataDic
@@ -89,7 +93,7 @@
     self.HUD.delegate = self;
     self.HUD.mode = MBProgressHUDModeIndeterminate;
     
-
+    
     self.startPage = 1;
     
     NSLog(@"@@@@@@@@@@@@@@@@@@@@@%@",dataDic);
@@ -125,12 +129,12 @@
             [self.vipRightArray addObject:dic[@"showrightios"]];
             
         }
-       
+        
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
         [self.tableView reloadData];
         [self.tableView setContentOffset:CGPointMake(0,0) animated:NO];
-         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -175,35 +179,140 @@
             //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
-//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            //            [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView.mj_footer endRefreshing];
         }
         else
         {
-        [self.sourceArray addObjectsFromArray:addArray];
-        [self.vipRightArray addObjectsFromArray:addvipArray];
+            [self.sourceArray addObjectsFromArray:addArray];
+            [self.vipRightArray addObjectsFromArray:addvipArray];
             
-        [self.tableView.mj_footer endRefreshing];
-    
-        [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
+            
+            [self.tableView reloadData];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.tableView.mj_footer endRefreshing];
-
+        
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求信息失败，请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-     
+        
         
     }];
-
+    
 }
+- (void)creatFindViewWithString:(NSString *)string
+{
+    NSArray *arr = @[@"a"];
+    self.findV = [[FindView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) titles:arr];
+    [self.view addSubview:self.findV];
+    self.findV.titleArray = @[string,@"地区",@"等级"];
+    self.findV.sourArrayOne = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+    self.findV.sourArrayTwo = @[@"全国",@"北京",@"上海",@"广东",@"江苏",@"浙江",@"河南",@"河北",@"辽宁",@"四川",@"湖北",@"湖南",@"福建",@"安徽",@"陕西",@"天津",@"江西",@"重庆",@"吉林",@"云南",@"山西",@"新疆",@"贵州",@"甘肃",@"海南",@"宁夏",@"青海",@"西藏",@"黑龙江",@"内蒙古",@"山东",@"广西"];
+    
+    self.findV.strblock1 = ^(NSString *string)
+    {
+        self.dataDic = [NSMutableDictionary new];
+        
+        NSArray *serviceType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+        NSArray *seviceTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
+        
+        NSLog(@"%@",string);
+        if ([string isEqualToString:serviceType[0]])
+        {
+            
+            [self.dataDic setObject:seviceTypeID[0] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[1]])
+        {
+            [self.dataDic setObject:seviceTypeID[1] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[2]])
+        {
+            [self.dataDic setObject:seviceTypeID[2] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[3]])
+        {
+            [self.dataDic setObject:seviceTypeID[3] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[4]])
+        {
+            [self.dataDic setObject:seviceTypeID[4] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[5]])
+        {
+            [self.dataDic setObject:seviceTypeID[5] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[6]])
+        {
+            [self.dataDic setObject:seviceTypeID[6] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[7]])
+        {
+            [self.dataDic setObject:seviceTypeID[7] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[8]])
+        {
+            [self.dataDic setObject:seviceTypeID[8] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[9]])
+        {
+            [self.dataDic setObject:seviceTypeID[9] forKey:@"ServiceType"];
+            
+        }
+        
+        NSArray *array = @[@"不限",@"会员"];
+        NSDictionary *dic = @{@"data":array,@"title":@"筛选条件"};
+        NSMutableArray *sourArr = [NSMutableArray new];
+        [sourArr addObject:dic];
+        self.findV.sourArrayThree = sourArr;
+        
+        self.chooseType = string;
+        self.findV.titleArray = @[string,@"地区",@"等级"];
+        [self findServiceswithDic:self.dataDic];
+    };
+    self.findV.strblock2 = ^(NSString *string)
+    {
+        [self.dataDic setObject:string forKey:@"ServiceArea"];
+        [self findServiceswithDic:self.dataDic];
+    };
+    self.findV.strblock3 = ^(NSString *string,NSString *string2)
+    {
+        if ([string isEqualToString:@"会员"]) {
+            [self.dataDic setObject:@"1" forKey:@"ServiceLevel"];
+        }
+        else
+        {
+            [self.dataDic removeObjectForKey:@"ServiceLevel"];
+        }
+        [self findServiceswithDic:self.dataDic];
+        
+    };
+}
+- (void)setHeadFindView
+{
+    [self creatFindViewWithString:@"服务类型"];
+}
+
 - (void)setHeadView
 {
     NSArray *titles = @[@"服务类型",@"地区",@"等级"];
-MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:titles];
+    MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:titles];
     menuView.cornerMarkLocationType = CornerMarkLocationTypeRight;
-
+    
     [self.view addSubview:menuView];
     
     NSString *path =  [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
@@ -225,17 +334,17 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
         [self.allshiArray addObject:self.shiArray];
     }
     
-//    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
-//    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
+    //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
+    //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
     
-//    
-//    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
-//    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
+    //
+    //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
+    //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
     NSArray *infonmationType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
     NSArray *informationTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
-  
+    
     NSArray *level = @[@"不限",@"会员"];
     menuView.indexsOneFist = infonmationType;
     menuView.indexsTwoFist = self.shengArray;
@@ -358,7 +467,7 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{
 //    return self.headView;
-//    
+//
 //}
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
@@ -378,15 +487,15 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (nib == nil) {
-//        nib = [UINib nibWithNibName:@"FindServiceViewCell" bundle:nil];
-//        [tableView registerNib:nib forCellReuseIdentifier:@"FindServiceViewCell"];
-//        NSLog(@"我是从nib过来的");
-//    }
+    //    if (nib == nil) {
+    //        nib = [UINib nibWithNibName:@"FindServiceViewCell" bundle:nil];
+    //        [tableView registerNib:nib forCellReuseIdentifier:@"FindServiceViewCell"];
+    //        NSLog(@"我是从nib过来的");
+    //    }
     FindServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FindServiceViewCell" forIndexPath:indexPath];
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-   
+    
     return cell;
 }
 
@@ -402,7 +511,7 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
     
     ServiceDetailController *ServiceDetailVC = [[UIStoryboard storyboardWithName:@"Find" bundle:nil] instantiateViewControllerWithIdentifier:@"ServiceDetailController"];
     ServiceDetailVC.ServiceID = model.ServiceID;
-//    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
+    //    ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.ServiceName];
     
     ServiceDetailVC.userid = [NSString stringWithFormat:@"%@",model.UserID];
     [self.navigationController pushViewController:ServiceDetailVC animated:YES];
@@ -410,13 +519,13 @@ MoreMenuView *menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGR
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

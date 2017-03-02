@@ -39,7 +39,7 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *specialImageWidth;
 @property (weak, nonatomic) IBOutlet UILabel *yabi;
-
+@property (weak, nonatomic) IBOutlet UIImageView *cooStateIma;
 
 @end
 
@@ -50,6 +50,7 @@
     [super awakeFromNib];
     // Initialization code
 }
+
 - (void)setModel:(PublishModel *)model
 {
     if (_model != model)
@@ -62,6 +63,7 @@
 
 - (void)setDataForCell
 {
+    
     //总体布局
     NSString *ImageURL = [getImageURL stringByAppendingString:self.model.PictureDes1];
     [self.imageview sd_setImageWithURL:[NSURL URLWithString:ImageURL]];
@@ -118,6 +120,37 @@
     
     self.model.Hide = [NSString stringWithFormat:@"%@",self.model.Hide];
     
+    
+    if ([self.model.CooperateState isEqualToString:@"2"]) {
+        [self.cooStateIma setHidden:NO];
+        if ([self.model.TypeName isEqualToString:@"融资信息"]) {
+        self.cooStateIma.image = [UIImage imageNamed:@"yiwancheng"];
+        }
+        else
+        {
+        self.cooStateIma.image = [UIImage imageNamed:@"chuzhichenggong"];
+        }
+    }
+    else if([self.model.CooperateState isEqualToString:@"1"])
+    {
+        [self.cooStateIma setHidden:NO];
+
+        self.cooStateIma.image = [UIImage imageNamed:@"hezuozhong"];
+    }
+    else
+    {
+//        cooStateIma.alpha = 0;
+        
+        [self.cooStateIma setHidden:YES];
+//        cooStateIma.image = [UIImage imageNamed:@"hezuozhong"];
+
+//        self.cooStateIma = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//        self.cooStateIma.image = [UIImage imageNamed:@"cuowu"];
+//        [self.imageview addSubview:self.cooStateIma];
+
+    }
+    
+
     if ([self.model.Member isEqualToString:@"1"] && [self.model.Hide isEqualToString:@"0"]) {
       
         self.specialImage.image = [UIImage imageNamed:@"xinvip"];

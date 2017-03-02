@@ -14,6 +14,7 @@
 #import "FindServiceViewCell.h"
 #import "FindServiceModel.h"
 #import "ServiceDetailController.h"
+#import "FindView.h"
 @interface FindServiceTypeController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 {
     UINib *nib;
@@ -37,7 +38,8 @@
 @property (nonatomic,strong) MBProgressHUD *HUD;
 
 @property (nonatomic,assign) NSInteger startPage;
-
+@property (nonatomic,strong) FindView *findV;
+@property (nonatomic,strong) NSString *chooseType;
 
 @end
 
@@ -46,7 +48,6 @@
 - (void)popAction:(UIBarButtonItem *)barbutton
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 - (void)setupTitle {
     
@@ -86,7 +87,9 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreServiceData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
     self.dataDic = [NSMutableDictionary new];
-    [self setHeadView];
+    //    [self setHeadView];
+    [self setHeadFindView];
+    
     [self.dataDic setObject:self.searchValue forKey:@"ServiceType"];
     [self findServiceswithDic:self.dataDic];
 }
@@ -202,6 +205,121 @@
     }];
     
 }
+- (void)creatFindViewWithString:(NSString *)string
+{
+    NSArray *arr = @[self.type];
+    self.findV = [[FindView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) titles:arr];
+    [self.view addSubview:self.findV];
+    self.findV.sourArrayOne = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+    self.findV.sourArrayTwo = @[@"全国",@"北京",@"上海",@"广东",@"江苏",@"浙江",@"河南",@"河北",@"辽宁",@"四川",@"湖北",@"湖南",@"福建",@"安徽",@"陕西",@"天津",@"江西",@"重庆",@"吉林",@"云南",@"山西",@"新疆",@"贵州",@"甘肃",@"海南",@"宁夏",@"青海",@"西藏",@"黑龙江",@"内蒙古",@"山东",@"广西"];
+    
+    NSArray *serviceType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+    NSArray *seviceTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
+    
+    NSArray *array = @[@"不限",@"会员"];
+    NSDictionary *dic = @{@"data":array,@"title":@"筛选条件"};
+    NSMutableArray *sourArr = [NSMutableArray new];
+    [sourArr addObject:dic];
+    self.findV.sourArrayThree = sourArr;
+    self.chooseType = string;
+    self.findV.titleArray = @[string,@"地区",@"等级"];
+    
+    
+    self.findV.strblock1 = ^(NSString *string)
+    {
+        self.dataDic = [NSMutableDictionary new];
+        
+        NSArray *serviceType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
+        NSArray *seviceTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
+        
+        NSLog(@"%@",string);
+        if ([string isEqualToString:serviceType[0]])
+        {
+            
+            [self.dataDic setObject:seviceTypeID[0] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[1]])
+        {
+            [self.dataDic setObject:seviceTypeID[1] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[2]])
+        {
+            [self.dataDic setObject:seviceTypeID[2] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[3]])
+        {
+            [self.dataDic setObject:seviceTypeID[3] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[4]])
+        {
+            [self.dataDic setObject:seviceTypeID[4] forKey:@"ServiceType"];
+            
+            
+        }
+        else if([string isEqualToString:serviceType[5]])
+        {
+            [self.dataDic setObject:seviceTypeID[5] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[6]])
+        {
+            [self.dataDic setObject:seviceTypeID[6] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[7]])
+        {
+            [self.dataDic setObject:seviceTypeID[7] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[8]])
+        {
+            [self.dataDic setObject:seviceTypeID[8] forKey:@"ServiceType"];
+            
+        }
+        else if([string isEqualToString:serviceType[9]])
+        {
+            [self.dataDic setObject:seviceTypeID[9] forKey:@"ServiceType"];
+            
+        }
+        
+        NSArray *array = @[@"不限",@"会员"];
+        NSDictionary *dic = @{@"data":array,@"title":@"筛选条件"};
+        NSMutableArray *sourArr = [NSMutableArray new];
+        [sourArr addObject:dic];
+        self.findV.sourArrayThree = sourArr;
+        
+        self.chooseType = string;
+        self.findV.titleArray = @[string,@"地区",@"等级"];
+        [self findServiceswithDic:self.dataDic];
+    };
+    self.findV.strblock2 = ^(NSString *string)
+    {
+        [self.dataDic setObject:string forKey:@"ServiceArea"];
+        [self findServiceswithDic:self.dataDic];
+    };
+    self.findV.strblock3 = ^(NSString *string,NSString *string2)
+    {
+        if ([string isEqualToString:@"会员"]) {
+            [self.dataDic setObject:@"1" forKey:@"ServiceLevel"];
+        }
+        else
+        {
+            [self.dataDic removeObjectForKey:@"ServiceLevel"];
+        }
+        [self findServiceswithDic:self.dataDic];
+        
+    };
+}
+- (void)setHeadFindView
+{
+    [self creatFindViewWithString:self.type];
+}
 - (void)setHeadView
 {
     NSArray *titles = @[self.type,@"地区",@"等级"];
@@ -237,8 +355,8 @@
     //    NSArray *infonmationType = @[@"资产包收购",@"催收机构",@"律师事务所",@"保理公司",@"典当担保",@"投融资服务",@"尽职调查",@"资产收购",@"债权收购"];
     //    NSArray *informationTypeID = @[@"01",@"02",@"03",@"04",@"05",@"06",@"10",@"12",@"14"];
     
-//    NSArray *infonmationType = @[@"收购资产包",@"投融资服务",@"法律服务",@"保理公司",@"典当公司",@"担保公司",@"委外催收",@"尽职调查",@"收购固产",@"债权收购"];
-//    NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"05",@"02",@"10",@"12",@"14"];
+    //    NSArray *infonmationType = @[@"收购资产包",@"投融资服务",@"法律服务",@"保理公司",@"典当公司",@"担保公司",@"委外催收",@"尽职调查",@"收购固产",@"债权收购"];
+    //    NSArray *informationTypeID = @[@"01",@"06",@"03",@"04",@"05",@"05",@"02",@"10",@"12",@"14"];
     
     NSArray *infonmationType = @[@"收购资产包",@"投融资服务",@"法律服务",@"收购固产",@"委外催收",@"典当公司",@"担保公司",@"尽职调查",@"保理公司",@"债权收购"];
     NSArray *informationTypeID = @[@"01",@"06",@"03",@"12",@"02",@"05",@"05",@"10",@"04",@"14"];
@@ -290,7 +408,7 @@
                 [weakSelf findServiceswithDic:self.dataDic];
             }
         }
-
+        
         for (NSString *sstr in infonmationType) {
             if ([sstr isEqualToString:string]) {
                 if ([sstr isEqualToString:infonmationType[0]]) {

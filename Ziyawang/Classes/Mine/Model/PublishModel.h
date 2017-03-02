@@ -161,5 +161,5 @@
 
 @property (nonatomic,strong) NSString *Hide;
 @property (nonatomic,strong) NSString *right;
-
+@property (nonatomic,strong) NSString *CooperateState;
 @end

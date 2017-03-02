@@ -1044,7 +1044,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.searchType isEqualToString:@"找信息"]) {
-        NewPublishCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
+        static NSString *CellIdentifier = @"NewPublishCell";
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (cell == nil) {
+            cell= (NewPublishCell *)[[[NSBundle  mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]  lastObject];
+        }
         cell.model = self.sourceArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -1109,7 +1113,10 @@
         infoDetailsVC.typeName = model.TypeName;
         self.selectTypeName = model.TypeName;
 
-
+        if ([model.CooperateState isEqualToString:@"0"] == NO) {
+            [self.navigationController pushViewController:infoDetailsVC animated:YES];
+            return;
+        }
         model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
 
         NSArray *TypeIDArray = [model.right componentsSeparatedByString:@","];

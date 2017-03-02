@@ -39,6 +39,9 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *specialImageWidth;
 @property (weak, nonatomic) IBOutlet UILabel *yabi;
+
+@property (weak, nonatomic) IBOutlet UIImageView *cooStateIma;
+
 @end
 @implementation MyPushCell
 - (void)setModel:(PublishModel *)model
@@ -66,9 +69,7 @@
     {
         return 80;
     }
-    
     return 40;
-    
 }
 - (void)setDataForCell
 {
@@ -89,6 +90,36 @@
     }
     
     
+    
+    if ([self.model.CooperateState isEqualToString:@"2"]) {
+        [self.cooStateIma setHidden:NO];
+        if ([self.model.TypeName isEqualToString:@"融资信息"]) {
+            self.cooStateIma.image = [UIImage imageNamed:@"yiwancheng"];
+        }
+        else
+        {
+            self.cooStateIma.image = [UIImage imageNamed:@"chuzhichenggong"];
+        }
+    }
+    else if([self.model.CooperateState isEqualToString:@"1"])
+    {
+        [self.cooStateIma setHidden:NO];
+
+        self.cooStateIma.image = [UIImage imageNamed:@"hezuozhong"];
+    }
+    else
+    {
+        //        cooStateIma.alpha = 0;
+        
+        [self.cooStateIma setHidden:YES];
+        //        cooStateIma.image = [UIImage imageNamed:@"hezuozhong"];
+        
+        //        self.cooStateIma = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+        //        self.cooStateIma.image = [UIImage imageNamed:@"cuowu"];
+        //        [self.imageview addSubview:self.cooStateIma];
+        
+    }
+
     
     //    NSLog(@"--------------------%@",self.model.Member);
     //总体布局

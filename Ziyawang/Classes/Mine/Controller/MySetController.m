@@ -61,6 +61,8 @@
             [defaults removeObjectForKey:@"UserPicture"];
             [defaults removeObjectForKey:@"UserName"];
             [defaults removeObjectForKey:@"rcToken"];
+            [defaults removeObjectForKey:@"right"];
+            [defaults removeObjectForKey:@"UserID"];
             [defaults synchronize];
             
 //            [[SDImageCache sharedImageCache] clearDisk];  //清楚磁盘缓存

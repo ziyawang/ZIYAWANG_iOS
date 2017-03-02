@@ -69,7 +69,7 @@
  self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
 //    [self.tableView registerNib:[UINib nibWithNibName:@"LookUpMyRushCell" bundle:nil] forCellReuseIdentifier:@"LookUpMyRushCell"];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     self.tableView.separatorStyle = NO;
     
     
@@ -218,7 +218,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NewPublishCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
+    NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell"];
+    if (cell == nil) {
+        cell= (NewPublishCell *)[[[NSBundle  mainBundle]  loadNibNamed:@"NewPublishCell" owner:self options:nil]  lastObject];
+    }
+    else
+    {
+        //删除cell的所有子视图
+        while ([cell.contentView.subviews lastObject] != nil)
+        {
+            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+        }
+    }
+    
     cell.model = self.sourceArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 

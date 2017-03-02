@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -193,6 +193,13 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jeb-Cd-l0K">
+                                <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6oa-eY-1Wo"/>
+                                    <constraint firstAttribute="width" constant="40" id="OVf-KB-yUF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -216,6 +223,7 @@
                             <constraint firstItem="Ahl-8N-oeq" firstAttribute="bottom" secondItem="iho-6w-BPF" secondAttribute="bottom" id="PgI-BI-X0X"/>
                             <constraint firstItem="tXn-hP-sg1" firstAttribute="centerY" secondItem="qMN-wP-Pk4" secondAttribute="centerY" id="QrG-wM-cAH"/>
                             <constraint firstItem="aQw-8j-uf8" firstAttribute="top" secondItem="KhV-SC-k2h" secondAttribute="bottom" constant="5" id="Rdl-U8-xhx"/>
+                            <constraint firstItem="Jeb-Cd-l0K" firstAttribute="top" secondItem="bqF-cF-mgr" secondAttribute="top" constant="10" id="S6v-RP-Q5v"/>
                             <constraint firstItem="j96-vH-lq1" firstAttribute="centerY" secondItem="KhV-SC-k2h" secondAttribute="centerY" id="Vxc-XY-xfH"/>
                             <constraint firstItem="KhV-SC-k2h" firstAttribute="leading" secondItem="iho-6w-BPF" secondAttribute="trailing" constant="5" id="XSF-ct-IcO"/>
                             <constraint firstItem="iho-6w-BPF" firstAttribute="leading" secondItem="bqF-cF-mgr" secondAttribute="leading" constant="10" id="Y57-Sc-NhA"/>
@@ -234,6 +242,7 @@
                             <constraint firstItem="NA2-dM-8pZ" firstAttribute="centerY" secondItem="b0T-Ib-qO4" secondAttribute="centerY" id="oSe-MJ-mhz"/>
                             <constraint firstItem="sgl-mL-PUG" firstAttribute="leading" secondItem="aQw-8j-uf8" secondAttribute="trailing" constant="10" id="v8U-83-1oD"/>
                             <constraint firstItem="uHw-1o-ubD" firstAttribute="leading" secondItem="Ahl-8N-oeq" secondAttribute="trailing" constant="5" id="wTk-j3-ZUi"/>
+                            <constraint firstItem="Jeb-Cd-l0K" firstAttribute="leading" secondItem="bqF-cF-mgr" secondAttribute="leading" constant="10" id="ynI-KI-rQ9"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -249,6 +258,7 @@
                 <outlet property="LiangdianLabel1" destination="aQw-8j-uf8" id="6dL-sB-1v7"/>
                 <outlet property="bottomImageView" destination="qMN-wP-Pk4" id="9rR-Az-j1H"/>
                 <outlet property="bottomLabel" destination="tXn-hP-sg1" id="vMn-Km-nOZ"/>
+                <outlet property="cooStateIma" destination="Jeb-Cd-l0K" id="8Dk-KF-ysz"/>
                 <outlet property="diquLabel" destination="KhV-SC-k2h" id="iH4-gL-QPt"/>
                 <outlet property="imageview" destination="iho-6w-BPF" id="IxB-AO-Dn7"/>
                 <outlet property="leftImageView" destination="Ahl-8N-oeq" id="uhI-YB-3sL"/>

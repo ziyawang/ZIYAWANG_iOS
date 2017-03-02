@@ -30,6 +30,7 @@
 #import "ChuzhiCell.h"
 #import "ChuzhiDetailController.h"
 #import "VipViewController.h"
+#import "FindView.h"
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
 @interface FindInfoController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
@@ -87,6 +88,9 @@
 @property (nonatomic,strong) NSString *selectTypeName;
 @property (nonatomic,strong) NSString *vipStr;
 @property (nonatomic,strong) NSString *right;
+
+@property (nonatomic,strong) FindView *findV;
+@property (nonatomic,strong) NSString *chooseType;
 @end
 
 @implementation FindInfoController
@@ -111,38 +115,38 @@
 - (void)rightButtonAction:(UIButton *)sender
 {
     if (self.isInView == NO) {
-//        CLDropDownMenu *dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
-//            NSLog(@"点击了第%ld个btn",index+1);
-//        }];
-         self.dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
+        //        CLDropDownMenu *dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
+        //            NSLog(@"点击了第%ld个btn",index+1);
+        //        }];
+        self.dropMenu = [[CLDropDownMenu alloc] initWithBtnPressedByWindowFrame:((UIButton *)sender).frame Pressed:^(NSInteger index) {
             NSLog(@"点击了第%ld个btn",index+1);
-             if (index  == 0) {
-                 [self.dataDic setObject:@"" forKey:@"Vip"];
-                 [self findInfomationsWithDic:self.dataDic];
-                  self.isInView = NO;
-                 self.vipStr = @"";
-             }
-             else if(index == 1)
-             {
-                 [self.dataDic setObject:@"0" forKey:@"Vip"];
-                  [self findInfomationsWithDic:self.dataDic];
-                 self.isInView = NO;
-                 self.vipStr = @"0";
-             }
-             else if(index == 2)
-             {
-                 [self.dataDic setObject:@"1" forKey:@"Vip"];
-                 [self findInfomationsWithDic:self.dataDic];
-                 self.isInView = NO;
-                 self.vipStr = @"1";
-             }
-             else if (index == 3)
-             {
-                 [self.dataDic setObject:@"2" forKey:@"Vip"];
-                 [self findInfomationsWithDic:self.dataDic];
-                 self.isInView = NO;
-                 self.vipStr = @"2";
-             }
+            if (index  == 0) {
+                [self.dataDic setObject:@"" forKey:@"Vip"];
+                [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+                self.vipStr = @"";
+            }
+            else if(index == 1)
+            {
+                [self.dataDic setObject:@"0" forKey:@"Vip"];
+                [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+                self.vipStr = @"0";
+            }
+            else if(index == 2)
+            {
+                [self.dataDic setObject:@"1" forKey:@"Vip"];
+                [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+                self.vipStr = @"1";
+            }
+            else if (index == 3)
+            {
+                [self.dataDic setObject:@"2" forKey:@"Vip"];
+                [self findInfomationsWithDic:self.dataDic];
+                self.isInView = NO;
+                self.vipStr = @"2";
+            }
         }];
         self.dropMenu.direction = CLDirectionTypeBottom;
         self.dropMenu.titleList = @[@"全部",@"普通",@"VIP",@"收费"];
@@ -150,12 +154,12 @@
         [self.view addSubview:self.dropMenu];
         self.isInView = YES;
     }
-   else if(self.isInView == YES)
+    else if(self.isInView == YES)
     {
         [self.dropMenu removeFromSuperview];
         self.isInView = NO;
     }
-   }
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -163,7 +167,7 @@
     [self getUserInfoFromDomin];
     
     self.right = [[NSUserDefaults standardUserDefaults]objectForKey:@"right"];
-    
+    self.automaticallyAdjustsScrollViewInsets =NO;
     
     
 }
@@ -186,81 +190,267 @@
             self.USERID = dic[@"user"][@"userid"];
             
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
-
+            
             [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
             [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
             
             
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         
-
-        }];        
+            
+            
+        }];
     }
-
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.isInView = NO;
     self.vipStr = @"";
     self.navigationItem.title = @"找信息";
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
-//    [self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"icon_left_jt"] forState:(UIControlStateNormal) barMetrics:UIBarMetricsDefault];
-   
+    //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(popAction:)];
+    //    [self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"icon_left_jt"] forState:(UIControlStateNormal) barMetrics:UIBarMetricsDefault];
+    
     CGRect backframe = CGRectMake(0,0,30,30);
     UIButton* backButton= [[UIButton alloc] initWithFrame:backframe];
     [backButton setTitle:@"筛选" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [backButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
-//    backButton.titleLabel.font=[UIFont systemFontOfSize:13];
+    //    backButton.titleLabel.font=[UIFont systemFontOfSize:13];
     [backButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     UIBarButtonItem* rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    UIBarButtonItem* rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
-     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, self.view.bounds.size.width, self.view.bounds.size.height)];
+    //    self.automaticallyAdjustsScrollViewInsets = NO;
+    //    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource =self;
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"NewPublishCell" bundle:nil] forCellReuseIdentifier:@"NewPublishCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"ChuzhiCell" bundle:nil] forCellReuseIdentifier:@"ChuzhiCell"];
-
+    
     
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
-
+    
     self.tableView.contentInset = UIEdgeInsetsMake(0,0,94,0);
     self.tableView.separatorStyle = NO;
     //self.tableView.mj_footer.hidden = YES;
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-
+    
     self.sourceArray = [NSMutableArray array];
     self.manager = [AFHTTPSessionManager manager];
-    [self setHeadView];
+    //    [self setHeadView];
+    [self setHeadFindView];
+    
     self.dataDic = [NSMutableDictionary new];
     [self loadNewData];
-   }
+}
 - (void)loadNewData
 {
     self.startpage = 1;
     [self findInfomationsWithDic:self.dataDic];
- }
+}
 - (void)loadMoreData
 {
     [self InfomationsWithDic:self.dataDic];
 }
-
+- (void)creatFindViewWithString:(NSString *)string
+{
+    NSArray *arr = @[@"a"];
+    self.findV = [[FindView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40) titles:arr];
+    [self.view addSubview:self.findV];
+    self.findV.titleArray = @[string,@"地区",@"更多"];
+    self.findV.sourArrayOne = @[@"资产包",@"融资信息",@"固定资产",@"企业商账",@"法拍资产",@"个人债权",@"处置公告"];
+    self.findV.sourArrayTwo = @[@"全国",@"北京",@"上海",@"广东",@"江苏",@"浙江",@"河南",@"河北",@"辽宁",@"四川",@"湖北",@"湖南",@"福建",@"安徽",@"陕西",@"天津",@"江西",@"重庆",@"吉林",@"云南",@"山西",@"新疆",@"贵州",@"甘肃",@"海南",@"宁夏",@"青海",@"西藏",@"黑龙江",@"内蒙古",@"山东",@"广西"];
+    
+    self.findV.strblock1 = ^(NSString *string)
+    {
+        self.dataDic = [NSMutableDictionary new];
+        NSArray *informationTypeID = @[@"1",@"rzxx",@"gdzc",@"18",@"fpzc",@"19",@"czgg"];
+        
+        NSLog(@"%@",string);
+        if ([string isEqualToString:@"资产包"])
+        {
+            NSArray *array = @[@"抵押",@"信用",@"综合类",@"其他"];
+            NSArray *array2 = @[@"银行",@"非银行机构",@"企业",@"其他"];
+            NSDictionary *dic = @{@"data":array,@"title":@"类型"};
+            NSDictionary *dic2 = @{@"data":array2,@"title":@"来源"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            [sourArr addObject:dic2];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"1" forKey:@"TypeID"];
+            
+        }
+        else if([string isEqualToString:@"融资信息"])
+        {
+            NSArray *array = @[@"债权融资",@"股权融资"];
+            NSDictionary *dic = @{@"data":array,@"title":@"融资方式"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"rzxx" forKey:@"TypeID"];
+            
+        }
+        else if([string isEqualToString:@"固定资产"])
+        {
+            NSArray *array = @[@"土地",@"房产"];
+            NSDictionary *dic = @{@"data":array,@"title":@"标的物类型"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"gdzc" forKey:@"TypeID"];
+            
+        }
+        else if([string isEqualToString:@"企业商账"])
+        {
+            NSArray *array = @[@"诉讼催收",@"非诉讼催收"];
+            NSDictionary *dic = @{@"data":array,@"title":@"处置方式"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"18" forKey:@"TypeID"];
+            
+        }
+        else if([string isEqualToString:@"法拍资产"])
+        {
+            NSArray *array = @[@"土地",@"房产",@"汽车"];
+            NSDictionary *dic = @{@"data":array,@"title":@"资产类型"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"fpzc" forKey:@"TypeID"];
+            
+        }
+        else if([string isEqualToString:@"个人债权"])
+        {
+            NSArray *array = @[@"诉讼催收",@"非诉讼催收"];
+            NSDictionary *dic = @{@"data":array,@"title":@"处置方式"};
+            NSMutableArray *sourArr = [NSMutableArray new];
+            [sourArr addObject:dic];
+            self.findV.sourArrayThree = sourArr;
+            [self.dataDic setObject:@"19" forKey:@"TypeID"];
+        }
+        else if([string isEqualToString:@"处置公告"])
+        {
+            [self.dataDic setObject:@"czgg" forKey:@"TypeID"];
+            
+        }
+        self.chooseType = string;
+        self.findV.titleArray = @[string,@"地区",@"更多"];
+        [self findInfomationsWithDic:self.dataDic];
+    };
+    self.findV.strblock2 = ^(NSString *string)
+    {
+        [self.dataDic setObject:string forKey:@"ProArea"];
+        [self findInfomationsWithDic:self.dataDic];
+    };
+    self.findV.strblock3 = ^(NSString *string,NSString *string2)
+    {
+        NSLog(@"%@,%@",string,string2);
+        if ([self.chooseType isEqualToString:@"资产包"])
+        {
+            if ([string2 isEqualToString:@"0"]) {
+                [self.dataDic removeObjectForKey:@"FromWhere"];
+                [self.dataDic setObject:string forKey:@"AssetType"];
+            }
+            else
+            {
+                [self.dataDic removeObjectForKey:@"AssetType"];
+                [self.dataDic setObject:string forKey:@"FromWhere"];
+            }
+        }
+        else if([self.chooseType isEqualToString:@"融资信息"])
+        {
+            if ([string isEqualToString:@"债权融资"])
+            {
+                [self.dataDic setObject:@"17" forKey:@"TypeID"];
+            }
+            else
+            {
+                [self.dataDic setObject:@"6" forKey:@"TypeID"];
+                
+            }
+            
+        }
+        else if([self.chooseType isEqualToString:@"固定资产"])
+        {
+            if ([string isEqualToString:@"土地"]) {
+                [self.dataDic setObject:@"16" forKey:@"TypeID"];
+            }
+            else
+            {
+                [self.dataDic setObject:@"12" forKey:@"TypeID"];
+                
+            }
+            
+        }
+        else if([self.chooseType isEqualToString:@"企业商账"])
+        {
+            if ([string isEqualToString:@"诉讼催收"]) {
+                [self.dataDic removeObjectForKey:@"UnLaw"];
+                [self.dataDic setObject:@"1" forKey:@"Law"];
+            }
+            else
+            {
+                [self.dataDic removeObjectForKey:@"Law"];
+                [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+            }
+        }
+        else if([self.chooseType isEqualToString:@"法拍资产"])
+        {
+            if ([string isEqualToString:@"土地"]) {
+                [self.dataDic setObject:@"21" forKey:@"TypeID"];
+            }
+            else if([string isEqualToString:@"房产"])
+            {
+                [self.dataDic setObject:@"20" forKey:@"TypeID"];
+                
+            }
+            else
+            {
+                [self.dataDic setObject:@"22" forKey:@"TypeID"];
+                
+            }
+        }
+        else if([self.chooseType isEqualToString:@"个人债权"])
+        {
+            if ([string isEqualToString:@"诉讼催收"]) {
+                [self.dataDic removeObjectForKey:@"UnLaw"];
+                [self.dataDic setObject:@"1" forKey:@"Law"];
+                
+            }
+            else
+            {
+                [self.dataDic removeObjectForKey:@"Law"];
+                [self.dataDic setObject:@"1" forKey:@"UnLaw"];
+            }
+        }
+        else if([self.chooseType isEqualToString:@"处置公告"])
+        {
+            
+        }
+        
+        [self findInfomationsWithDic:self.dataDic];
+    };
+}
+- (void)setHeadFindView
+{
+    [self creatFindViewWithString:@"信息类型"];
+}
 - (void)createNewMoreMenuViewWithArray:(NSArray *)array
 {
-  
-self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:array];
+    
+    self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 45) titles:array];
     self.menuView.cornerMarkLocationType = CornerMarkLocationTypeRight;
     NSString *path =  [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
     
@@ -287,7 +477,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     
     
-     NSArray *level = @[@""];
+    NSArray *level = @[@""];
     //资产包
     NSArray *typearray1 = @[@"类型",@"来源"];
     //融资信息
@@ -506,14 +696,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
                     [self findInfomationsWithDic:self.dataDic];
-
+                    
                 }
                 else
                 {
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
                     [self findInfomationsWithDic:self.dataDic];
-
+                    
                 }
             }
             
@@ -557,7 +747,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                     [self.dataDic removeObjectForKey:@"UnLaw"];
                     [self.dataDic setObject:@"1" forKey:@"Law"];
                     [self findInfomationsWithDic:self.dataDic];
-
+                    
                     
                 }
                 else
@@ -565,7 +755,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
                     [self.dataDic removeObjectForKey:@"Law"];
                     [self.dataDic setObject:@"1" forKey:@"UnLaw"];
                     [self findInfomationsWithDic:self.dataDic];
-
+                    
                     
                 }
             }
@@ -888,392 +1078,392 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [allTypeArray addObject:jinzhi];
     [allTypeArray addObject:weiwai];
     [allTypeArray addObject:diandang];
-     //投资需求
+    //投资需求
     [allTypeArray addObject:touzi];
-//
-//
-//    menuView.indexsOneFist = infonmationType;
-//    menuView.indexsTwoFist = self.shengArray;
-//    //    menuView.indexsTwoSecond = self.allshiArray;
-//    menuView.indexsThirFist = level;
+    //
+    //
+    //    menuView.indexsOneFist = infonmationType;
+    //    menuView.indexsTwoFist = self.shengArray;
+    //    //    menuView.indexsTwoSecond = self.allshiArray;
+    //    menuView.indexsThirFist = level;
     
     NSArray *array = @[@"信息类型",@"地区",@"更多"];
     [self createNewMoreMenuViewWithArray:array];
-        [self.view addSubview:self.menuView];
+    [self.view addSubview:self.menuView];
     
     /*
-    __weak typeof(self) weakSelf = self;
-    
-    
-    
-    //    self.headView = menuView;
-    
-    self.menuView.selectedIndex = ^(NSString *string){
-        for (NSString *str in weakSelf.shengArray) {
-            if ([str isEqualToString:string]) {
-                [weakSelf.dataDic setObject:string forKey:@"ProArea"];
-                NSLog(@"得到的数据为%@",string);
-                [weakSelf findInfomationsWithDic:self.dataDic];
-                
-            }
-        }
-        //        for (NSArray *arr1 in allTypeArray) {
-//            for (NSArray arr3 in arr1) {
-//                for (NSString *str in arr3) {
-//                    if ([str isEqualToString:string]) {
-//                        [self.dataDic setObject:string forKey:@""];
-//                    }
-//                }
-//            }
-//        }
-//
-        //资产包转让
-       
-        NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",self.lastChoose);
-        if ([self.lastChoose isEqualToString:informationTypeID[0]]) {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            [self findInfomationsWithDic:self.dataDic];
-                    NSString *substr = [string substringToIndex:2];
-                if ([substr isEqualToString:@"类型"]) {
-                    NSString *findValue = [string substringFromIndex:2];
-                    [self.dataDic setObject:findValue forKey:@"AssetType"];
-                    [self findInfomationsWithDic:self.dataDic];
-                }
-                else if([substr isEqualToString:@"资产"]&&[string isEqualToString:@"资产包转让"]==NO)
-                {
-                    NSString *findValue = [string substringFromIndex:5];
-                    [self.dataDic setObject:findValue forKey:@"FromWhere"];
-                    [self findInfomationsWithDic:self.dataDic];
-                    
-                }
-        }
-        //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[1]])
-        {
-            NSString *substr = [string substringToIndex:2];
-
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-          }
-        
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[2]])
-        {              NSString *substr = [string substringToIndex:2];
-
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-            }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[3]])
-        {
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"买方"])
-            {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic setObject:findValue forKey:@"BuyerNature"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-        }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[4]])
-        {
-            NSString *substr = [string substringToIndex:2];
-            if ([substr isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-           
-        }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[5]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-
-            //类型 求购方
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-            else if([Str isEqualToString:@"求购"])
-            {
-                NSString *findValue = [string substringFromIndex:3];
-                [self.dataDic setObject:findValue forKey:@"Buyer"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-        
-            
-        }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[6]])
-        {
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"方式"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-                
-            }
-                    }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[7]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-            else if([Str isEqualToString:@"需求"])
-            {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"Requirement"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-        
-        }
-                 //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[8]])
-        {
-            NSString *Str = [string substringToIndex:2];
-
-            if ([Str isEqualToString:@"类型"]) {
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-            }
-      
-        }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[9]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-            else if([string isEqualToString:@"被调"])
-            {
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic setObject:findValue forKey:@"Informant"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-        }
-         //---------------
-        else if([self.lastChoose isEqualToString:informationTypeID[10]])
-        {
-            [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
-
-            NSString *Str = [string substringToIndex:2];
-            if ([Str isEqualToString:@"类型"]) {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"AssetType"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-            else if([Str isEqualToString:@"佣金"])
-            {
-                NSString *findValue = [string substringFromIndex:4];
-                [self.dataDic setObject:findValue forKey:@"Rate"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-            else if([Str isEqualToString:@"状态"])
-            {
-                NSString *findValue = [string substringFromIndex:2];
-                [self.dataDic setObject:findValue forKey:@"Status"];
-                [self findInfomationsWithDic:self.dataDic];
-
-            }
-        }
-         for (NSString *sstr in infonmationType) {
-            if ([sstr isEqualToString:string]) {
-                
-                if ([sstr isEqualToString:infonmationType[0]]) {
-                    self.dataDic = [NSMutableDictionary new];
-                    [self.dataDic setObject:informationTypeID[0] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-                    NSArray *array = @[infonmationType[0],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray1;
-                    self,menuView.indexsThirSecond = zichan;
-                    
-
-                    self.lastChoose = informationTypeID[0];
-                }
-                else if([sstr isEqualToString:infonmationType[1]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-                    [self.dataDic setObject:informationTypeID[1] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[1],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray2;
-                    self.menuView.indexsThirSecond = zhaiquan;
-                    self.lastChoose = informationTypeID[1];
-                    
-                }
-                else if([sstr isEqualToString:infonmationType[2]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[2] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[2],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray3;
-                    self.menuView.indexsThirSecond = guchan;
-                    self.lastChoose = informationTypeID[2];
-                }
-                else if([sstr isEqualToString:infonmationType[3]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[3] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[3],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray4;
-                    self.menuView.indexsThirSecond = shangye;
-                    self.lastChoose = informationTypeID[3];
-                }
-                else if([sstr isEqualToString:infonmationType[4]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[4] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[4],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray5;
-                    self.menuView.indexsThirSecond = qiugou;
-                    self.lastChoose = informationTypeID[4];
-                }
-                else if([sstr isEqualToString:infonmationType[5]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[5] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[5],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray6;
-                    self.menuView.indexsThirSecond = rongzi;
-                    self.lastChoose = informationTypeID[5];
-                }
-                else if([sstr isEqualToString:infonmationType[6]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[6] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[6],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray7;
-                    self.menuView.indexsThirSecond = falv;
-                    self.lastChoose = informationTypeID[6];
-                }
-                else if([sstr isEqualToString:infonmationType[7]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[7] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[7],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray8;
-                    self.menuView.indexsThirSecond = xuanshang;
-                    self.lastChoose = informationTypeID[7];
-                }
-                else if([sstr isEqualToString:infonmationType[8]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[8] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[8],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray9;
-                    self.menuView.indexsThirSecond = jinzhi;
-                    self.lastChoose = informationTypeID[8];
-                }
-                else if([sstr isEqualToString:infonmationType[9]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[9] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-
-                    NSArray *array = @[infonmationType[9],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray10;
-                    self.menuView.indexsThirSecond = weiwai;
-                    self.lastChoose = informationTypeID[9];
-                }
-                else if([sstr isEqualToString:infonmationType[10]])
-                {
-                    self.dataDic = [NSMutableDictionary new];
-
-                    [self.dataDic setObject:informationTypeID[10] forKey:@"TypeID"];
-                    [self findInfomationsWithDic:self.dataDic];
-                    NSArray *array = @[infonmationType[10],@"地区",@"更多"];
-                    [self createNewMoreMenuViewWithArray:array];
-                    [self.view addSubview:self.menuView];
-                    self.menuView.indexsThirFist = typearray11;
-                    self.menuView.indexsThirSecond = diandang;
-                    self.lastChoose = informationTypeID[10];
-                }
-                NSLog(@"得到的数据为%@",string);
-//                [weakSelf findInfomationsWithDic:self.dataDic];
-            }
-        }
-        
-        
-    };
-    */
+     __weak typeof(self) weakSelf = self;
+     
+     
+     
+     //    self.headView = menuView;
+     
+     self.menuView.selectedIndex = ^(NSString *string){
+     for (NSString *str in weakSelf.shengArray) {
+     if ([str isEqualToString:string]) {
+     [weakSelf.dataDic setObject:string forKey:@"ProArea"];
+     NSLog(@"得到的数据为%@",string);
+     [weakSelf findInfomationsWithDic:self.dataDic];
+     
+     }
+     }
+     //        for (NSArray *arr1 in allTypeArray) {
+     //            for (NSArray arr3 in arr1) {
+     //                for (NSString *str in arr3) {
+     //                    if ([str isEqualToString:string]) {
+     //                        [self.dataDic setObject:string forKey:@""];
+     //                    }
+     //                }
+     //            }
+     //        }
+     //
+     //资产包转让
+     
+     NSLog(@"!!!!!!!!!!!!!!!!!!!!!!%@",self.lastChoose);
+     if ([self.lastChoose isEqualToString:informationTypeID[0]]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     NSString *substr = [string substringToIndex:2];
+     if ([substr isEqualToString:@"类型"]) {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     else if([substr isEqualToString:@"资产"]&&[string isEqualToString:@"资产包转让"]==NO)
+     {
+     NSString *findValue = [string substringFromIndex:5];
+     [self.dataDic setObject:findValue forKey:@"FromWhere"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[1]])
+     {
+     NSString *substr = [string substringToIndex:2];
+     
+     if ([substr isEqualToString:@"类型"]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     }
+     
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[2]])
+     {              NSString *substr = [string substringToIndex:2];
+     
+     if ([substr isEqualToString:@"类型"]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[3]])
+     {
+     NSString *substr = [string substringToIndex:2];
+     if ([substr isEqualToString:@"买方"])
+     {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:4];
+     [self.dataDic setObject:findValue forKey:@"BuyerNature"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[4]])
+     {
+     NSString *substr = [string substringToIndex:2];
+     if ([substr isEqualToString:@"类型"]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[5]])
+     {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     
+     //类型 求购方
+     NSString *Str = [string substringToIndex:2];
+     if ([Str isEqualToString:@"类型"]) {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     else if([Str isEqualToString:@"求购"])
+     {
+     NSString *findValue = [string substringFromIndex:3];
+     [self.dataDic setObject:findValue forKey:@"Buyer"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     
+     
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[6]])
+     {
+     NSString *Str = [string substringToIndex:2];
+     if ([Str isEqualToString:@"方式"]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[7]])
+     {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *Str = [string substringToIndex:2];
+     if ([Str isEqualToString:@"类型"]) {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     else if([Str isEqualToString:@"需求"])
+     {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"Requirement"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[8]])
+     {
+     NSString *Str = [string substringToIndex:2];
+     
+     if ([Str isEqualToString:@"类型"]) {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     }
+     
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[9]])
+     {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     
+     NSString *Str = [string substringToIndex:2];
+     if ([Str isEqualToString:@"类型"]) {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     else if([string isEqualToString:@"被调"])
+     {
+     NSString *findValue = [string substringFromIndex:4];
+     [self.dataDic setObject:findValue forKey:@"Informant"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     }
+     //---------------
+     else if([self.lastChoose isEqualToString:informationTypeID[10]])
+     {
+     [self.dataDic setObject:self.lastChoose forKey:@"TypeID"];
+     
+     NSString *Str = [string substringToIndex:2];
+     if ([Str isEqualToString:@"类型"]) {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"AssetType"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     else if([Str isEqualToString:@"佣金"])
+     {
+     NSString *findValue = [string substringFromIndex:4];
+     [self.dataDic setObject:findValue forKey:@"Rate"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     else if([Str isEqualToString:@"状态"])
+     {
+     NSString *findValue = [string substringFromIndex:2];
+     [self.dataDic setObject:findValue forKey:@"Status"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     }
+     }
+     for (NSString *sstr in infonmationType) {
+     if ([sstr isEqualToString:string]) {
+     
+     if ([sstr isEqualToString:infonmationType[0]]) {
+     self.dataDic = [NSMutableDictionary new];
+     [self.dataDic setObject:informationTypeID[0] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     NSArray *array = @[infonmationType[0],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray1;
+     self,menuView.indexsThirSecond = zichan;
+     
+     
+     self.lastChoose = informationTypeID[0];
+     }
+     else if([sstr isEqualToString:infonmationType[1]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     [self.dataDic setObject:informationTypeID[1] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[1],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray2;
+     self.menuView.indexsThirSecond = zhaiquan;
+     self.lastChoose = informationTypeID[1];
+     
+     }
+     else if([sstr isEqualToString:infonmationType[2]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[2] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[2],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray3;
+     self.menuView.indexsThirSecond = guchan;
+     self.lastChoose = informationTypeID[2];
+     }
+     else if([sstr isEqualToString:infonmationType[3]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[3] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[3],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray4;
+     self.menuView.indexsThirSecond = shangye;
+     self.lastChoose = informationTypeID[3];
+     }
+     else if([sstr isEqualToString:infonmationType[4]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[4] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[4],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray5;
+     self.menuView.indexsThirSecond = qiugou;
+     self.lastChoose = informationTypeID[4];
+     }
+     else if([sstr isEqualToString:infonmationType[5]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[5] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[5],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray6;
+     self.menuView.indexsThirSecond = rongzi;
+     self.lastChoose = informationTypeID[5];
+     }
+     else if([sstr isEqualToString:infonmationType[6]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[6] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[6],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray7;
+     self.menuView.indexsThirSecond = falv;
+     self.lastChoose = informationTypeID[6];
+     }
+     else if([sstr isEqualToString:infonmationType[7]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[7] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[7],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray8;
+     self.menuView.indexsThirSecond = xuanshang;
+     self.lastChoose = informationTypeID[7];
+     }
+     else if([sstr isEqualToString:infonmationType[8]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[8] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[8],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray9;
+     self.menuView.indexsThirSecond = jinzhi;
+     self.lastChoose = informationTypeID[8];
+     }
+     else if([sstr isEqualToString:infonmationType[9]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[9] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     
+     NSArray *array = @[infonmationType[9],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray10;
+     self.menuView.indexsThirSecond = weiwai;
+     self.lastChoose = informationTypeID[9];
+     }
+     else if([sstr isEqualToString:infonmationType[10]])
+     {
+     self.dataDic = [NSMutableDictionary new];
+     
+     [self.dataDic setObject:informationTypeID[10] forKey:@"TypeID"];
+     [self findInfomationsWithDic:self.dataDic];
+     NSArray *array = @[infonmationType[10],@"地区",@"更多"];
+     [self createNewMoreMenuViewWithArray:array];
+     [self.view addSubview:self.menuView];
+     self.menuView.indexsThirFist = typearray11;
+     self.menuView.indexsThirSecond = diandang;
+     self.lastChoose = informationTypeID[10];
+     }
+     NSLog(@"得到的数据为%@",string);
+     //                [weakSelf findInfomationsWithDic:self.dataDic];
+     }
+     }
+     
+     
+     };
+     */
     
 }
 - (void)findInfomationsWithDic:(NSMutableDictionary *)dataDic
@@ -1300,10 +1490,10 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     //    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //    self.HUD.delegate = self;
     //    self.HUD.mode = MBProgressHUDModeIndeterminate;
-//    if (self.sourceArray != nil)
-//    {
-//        [self.sourceArray removeAllObjects];
-//    }
+    //    if (self.sourceArray != nil)
+    //    {
+    //        [self.sourceArray removeAllObjects];
+    //    }
     self.sourceArray = [NSMutableArray new];
     //    NSString *getURL = @"https://apis.ziyawang.com/zll/project/list?access_token=token";
     //    NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
@@ -1335,7 +1525,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-                NSLog(@"--------%@",dic);
+        NSLog(@"--------%@",dic);
         
         NSArray *array = dic[@"data"];
         for (NSDictionary *dic in array) {
@@ -1378,14 +1568,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 {
     
     NSString *getURL =FindInformationURL;
-                       
+    
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-
+    
     if (token != nil) {
         getURL = [[getURL stringByAppendingString:@"?token="]stringByAppendingString:token];
         
     }
-
+    
     NSLog(@"%@",getURL);
     
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
@@ -1394,7 +1584,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     [getdic setObject:access_token forKey:@"access_token"];
     NSString *starPage = [NSString stringWithFormat:@"%ld",self.startpage];
     [getdic setObject:starPage forKey:@"startpage"];
-//    [getdic setObject:@"5" forKey:@"pagecount"];
+    //    [getdic setObject:@"5" forKey:@"pagecount"];
     
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -1406,7 +1596,7 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         NSMutableArray *array = [NSMutableArray new];
-
+        
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSMutableArray *sourceArray = dic[@"data"];
         for (NSDictionary *dic in sourceArray) {
@@ -1417,26 +1607,26 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
         }
         
         if (array.count == 0) {
-//            [self.tableView.mj_footer resetNoMoreData];
+            //            [self.tableView.mj_footer resetNoMoreData];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
-//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            //            [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView.mj_footer endRefreshing];
-
+            
         }
-      
+        
         else
         {
-        [self.sourceArray addObjectsFromArray:array];
-        [self.tableView reloadData];
-        [self.tableView.mj_footer endRefreshing];
+            [self.sourceArray addObjectsFromArray:array];
+            [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
         }
-
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.tableView.mj_footer endRefreshing];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
-
+        
     }];
 }
 
@@ -1455,9 +1645,9 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
 //{
 //    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 60)];
 //    self.headView.backgroundColor = [UIColor whiteColor];
-//    
+//
 //    return self.headView;
-//    
+//
 //}
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
@@ -1477,16 +1667,16 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     model = self.sourceArray[indexPath.row];
     model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
-
-//    if ([model.TypeID isEqualToString:@"1"]||[model.TypeID isEqualToString:@"12"]) {
-//        return 135;
-//    }
-//    
-//    else
-//    {
-//        return 115;
-//    }
-
+    
+    //    if ([model.TypeID isEqualToString:@"1"]||[model.TypeID isEqualToString:@"12"]) {
+    //        return 135;
+    //    }
+    //
+    //    else
+    //    {
+    //        return 115;
+    //    }
+    
     
     if([SDiOSVersion deviceVersion] == iPhone4||[SDiOSVersion deviceVersion] == iPhone5 || [SDiOSVersion deviceVersion] == iPhone5C || [SDiOSVersion deviceVersion] == iPhone5S || [SDiOSVersion deviceVersion] == iPhoneSE)
     {
@@ -1514,26 +1704,33 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     model.TypeID = [NSString stringWithFormat:@"%@",model.TypeID];
     if ([model.TypeID isEqualToString:@"99"]) {
         ChuzhiCell *cell2 = [self.tableView dequeueReusableCellWithIdentifier:@"ChuzhiCell" forIndexPath:indexPath];
-
+        
         cell2.model = self.sourceArray[indexPath.row];
         cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
         return cell2;
     }
     
     else
     {
-       NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
 
-         cell.model = self.sourceArray[indexPath.row];
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        static NSString *CellIdentifier = @"NewPublishCell";
+        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (cell == nil) {
+            cell= (NewPublishCell *)[[[NSBundle  mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]  lastObject];
+        }
+        
 
+        cell.model = self.sourceArray[indexPath.row];
+
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         return cell;
     }
     
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-//    return cell;
+    //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    //    return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1555,10 +1752,14 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     
     self.infoDetailsVC = infoDetailsVC;
-
     
+    NSLog(@"%@",model.CooperateState);
+    if ([model.CooperateState isEqualToString:@"0"] == NO) {
+        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+        return;
+    }
     
-   NSArray *TypeIDArray = [self.right componentsSeparatedByString:@","];
+    NSArray *TypeIDArray = [self.right componentsSeparatedByString:@","];
     for (NSString *typeID in TypeIDArray) {
         if ([model.TypeID isEqualToString:typeID]) {
             [self.navigationController pushViewController:infoDetailsVC animated:YES];
@@ -1568,13 +1769,13 @@ self.menuView = [[MoreMenuView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWid
     
     model.Hide = [NSString stringWithFormat:@"%@",model.Hide];
     
-if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
-    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    if (token == nil) {
-        LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-        [self presentViewController:loginVC animated:YES completion:nil];
-        
-    }
+    if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
+        NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+        if (token == nil) {
+            LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+            [self presentViewController:loginVC animated:YES completion:nil];
+            
+        }
         else if ([self.role isEqualToString:@"1"])
         {
             [self setPromiseView];
@@ -1587,114 +1788,112 @@ if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
     else
     {
         
-        
-        
-    if ([model.TypeID isEqualToString:@"99"]) {
-        [self.navigationController pushViewController:chuzhiVC animated:YES];
-        chuzhiVC.NewsID = model.NewsID;
-    }
-    else
-    {
-    self.pubModel = model;
-        
-      
-    model.Member = [NSString stringWithFormat:@"%@",model.Member];
-    
-    if ([self.USERID isEqualToString:model.UserID])
-    {
-        [self.navigationController pushViewController:infoDetailsVC animated:YES];
-        return;
-    }
-    
-    if ([model.Member isEqualToString:@"2"] == NO)
-    {
-        [self.navigationController pushViewController:infoDetailsVC animated:YES];
-    }
-    else
-    {
-        NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-        if (token == nil)
-        {
-            NSLog(@"未登录,提示登录");
-            LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
-            [self presentViewController:loginVC animated:YES completion:nil];
+        if ([model.TypeID isEqualToString:@"99"]) {
+            [self.navigationController pushViewController:chuzhiVC animated:YES];
+            chuzhiVC.NewsID = model.NewsID;
         }
-        else if([self.role isEqualToString:@"1"])
+        else
         {
-            self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
-            if ([self.pubModel.Member isEqualToString:@"2"] == NO )
+            self.pubModel = model;
+            
+            
+            model.Member = [NSString stringWithFormat:@"%@",model.Member];
+            
+            if ([self.USERID isEqualToString:model.UserID])
             {
-                //                    if([self.pubModel.PayFlag isEqualToString:@"1"]== NO)
-                //                    {
-                //                        [self payForMessage];
-                //                    }
+                [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                return;
+            }
+            
+            if ([model.Member isEqualToString:@"2"] == NO)
+            {
                 [self.navigationController pushViewController:infoDetailsVC animated:YES];
             }
             else
             {
                 NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-                NSString *URL = IfHadPayMessageURL;
-                if (token != nil) {
-                    URL = [[URL stringByAppendingString:@"?token="]stringByAppendingString:token];
-                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                    [dic setObject:@"token" forKey:@"access_token"];
-                    [dic setObject:self.pubModel.ProjectID forKey:@"ProjectID"];
-                    
-                    [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-                        
-                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-                        if ([dic[@"status_code"] isEqualToString:@"200"]) {
-                            self.pubModel.PayFlag = dic[@"PayFlag"];
-                            self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
+                if (token == nil)
+                {
+                    NSLog(@"未登录,提示登录");
+                    LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+                    [self presentViewController:loginVC animated:YES completion:nil];
+                }
+                else if([self.role isEqualToString:@"1"])
+                {
+                    self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
+                    if ([self.pubModel.Member isEqualToString:@"2"] == NO )
+                    {
+                        //                    if([self.pubModel.PayFlag isEqualToString:@"1"]== NO)
+                        //                    {
+                        //                        [self payForMessage];
+                        //                    }
+                        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                    }
+                    else
+                    {
+                        NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+                        NSString *URL = IfHadPayMessageURL;
+                        if (token != nil) {
+                            URL = [[URL stringByAppendingString:@"?token="]stringByAppendingString:token];
+                            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                            [dic setObject:@"token" forKey:@"access_token"];
+                            [dic setObject:self.pubModel.ProjectID forKey:@"ProjectID"];
                             
+                            [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+                                
+                            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                                if ([dic[@"status_code"] isEqualToString:@"200"]) {
+                                    self.pubModel.PayFlag = dic[@"PayFlag"];
+                                    self.pubModel.PayFlag = [NSString stringWithFormat:@"%@",self.pubModel.PayFlag];
+                                    
+                                    
+                                    if ([self.pubModel.PayFlag isEqualToString:@"1"] == NO)
+                                    {
+                                        [self createViewForLessMoney];
+                                    }
+                                    else
+                                    {
+                                        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                                    }
+                                }
+                                
+                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                
+                                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络状况" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                                [alert show];
+                            }];
                             
-                            if ([self.pubModel.PayFlag isEqualToString:@"1"] == NO)
-                            {
-                                [self createViewForLessMoney];
-                            }
-                            else
-                            {
-                                [self.navigationController pushViewController:infoDetailsVC animated:YES];
-                            }
                         }
                         
-                    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                         
-                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络状况" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                        [alert show];
-                    }];
-                    
+                        
+                        
+                    }
                 }
                 
                 
                 
+                else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
+                {
+                    if([self.pubModel.TypeName isEqualToString:@"投资需求"] || [self.pubModel.TypeName isEqualToString:@"资产求购"])
+                    {
+                        [self.navigationController pushViewController:infoDetailsVC animated:YES];
+                        
+                    }
+                    else
+                    {
+                        [self ShowAlertViewControllerWithMessage:@"您需要先通过服务方认证才可查看收费类信息"];
+                    }
+                }
+                
                 
             }
+            
         }
-        
-        
-        
-        else if([self.role isEqualToString:@"0"]||[self.role isEqualToString:@"2"])
-        {
-            if([self.pubModel.TypeName isEqualToString:@"投资需求"] || [self.pubModel.TypeName isEqualToString:@"资产求购"])
-            {
-                [self.navigationController pushViewController:infoDetailsVC animated:YES];
-                
-            }
-            else
-            {
-                [self ShowAlertViewControllerWithMessage:@"您需要先通过服务方认证才可查看收费类信息"];
-            }
-        }
-        
-        
     }
     
-    }
-    }
     
-   
 }
 
 - (void)payForMessage
@@ -1738,8 +1937,8 @@ if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
              self.pubModel.PayFlag = @"1";
              
              [self.navigationController pushViewController:self.infoDetailsVC animated:YES];
-     
-           
+             
+             
              //             [self.connectButton setTitle:@"已约谈" forState:(UIControlStateNormal)];
              [self.blackBackView2 removeFromSuperview];
              [self.alertView2 removeFromSuperview];
@@ -2015,8 +2214,8 @@ if ([model.Member isEqualToString:@"1"] && [model.Hide isEqualToString:@"0"]) {
     .autoHeightRatio(0);
     
     label2.text = [[@"本条VIP信息只针对"stringByAppendingString:self.selectTypeName]stringByAppendingString:@"类型会员免费开放，详情请咨询会员专线：010-56052557"];
-
-//    label2.text = @"本条VIP信息只针对本类型会员免费开放，开通相应类型会员后即可查看";
+    
+    //    label2.text = @"本条VIP信息只针对本类型会员免费开放，开通相应类型会员后即可查看";
     label2.font = [UIFont systemFontOfSize:13];
     
     fabuButton.sd_layout.leftEqualToView(label2)

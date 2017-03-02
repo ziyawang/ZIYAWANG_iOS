@@ -564,16 +564,38 @@
     
     self.model.Hide = [NSString stringWithFormat:@"%@",self.model.Hide];
     
-    if ([self.model.Member isEqualToString:@"2"]) {
-        specialImageView.image = [UIImage imageNamed:@"shoufeiyuan"];
+    if ([self.model.CooperateState isEqualToString:@"0"]) {
+        if ([self.model.Member isEqualToString:@"2"]) {
+            specialImageView.image = [UIImage imageNamed:@"shoufeiyuan"];
+        }
+        if ([self.model.Member isEqualToString:@"1"] && [self.model.Hide isEqualToString:@"0"]) {
+            specialImageView.image = [UIImage imageNamed:@"vipyuan"];
+        }
+        if ([self.model.Member isEqualToString:@"0"]) {
+            specialImageView.image = [UIImage imageNamed:@"mianfeiyuan"];
+        }
     }
-    if ([self.model.Member isEqualToString:@"1"] && [self.model.Hide isEqualToString:@"0"]) {
-        specialImageView.image = [UIImage imageNamed:@"vipyuan"];
+    else
+    {
+        if ([self.model.CooperateState isEqualToString:@"1"]) {
+            specialImageView.image = [UIImage imageNamed:@"hezuozhongd"];
+        }
+        if ([self.model.CooperateState isEqualToString:@"2"]) {
+            if ([self.model.TypeName isEqualToString:@"融资信息"]) {
+                specialImageView.image = [UIImage imageNamed:@"yiwanchengd"];
+
+            }
+            else
+            {
+                specialImageView.image = [UIImage imageNamed:@"chuzhichenggongd"];
+
+            }
+            
+        }
     }
-    if ([self.model.Member isEqualToString:@"0"]) {
-        specialImageView.image = [UIImage imageNamed:@"mianfeiyuan"];
-        
-    }
+  
+    
+    
     UIView *wordDesView = [UIView new];
     UIView *wenziView = [UIView new];
     
@@ -836,13 +858,20 @@
     //判断是自己还是别人
     NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
     
+    
     if ([self.model.UserID isEqualToString:userID]) {
         [jubaoButton setHidden:YES];
         [self MySelfView];
     }
     else
     {
-        [self otherView];
+        if ([self.model.CooperateState isEqualToString:@"0"]) {
+            [self otherView];
+        }
+        else
+        {
+        
+        }
     }
     
     
@@ -1034,13 +1063,11 @@
     }
     else if([role isEqualToString:@"1"])
     {
-        
         [self connectSomeOne];
     }
     else
     {
         [self ShowAlertViewController];
-        
     }
     
 }
