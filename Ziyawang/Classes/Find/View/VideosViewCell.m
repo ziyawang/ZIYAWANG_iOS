@@ -10,6 +10,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
+
+
 @implementation VideosViewCell
 - (IBAction)didClickPlayButton:(id)sender {
     NSLog(@"%@",self.Mydelegate);
@@ -41,17 +43,29 @@
 - (void)setModelData
 {
     NSString *headURL = @"http://images.ziyawang.com";
-
     [self.VideoImageView sd_setImageWithURL:[NSURL URLWithString:[headURL stringByAppendingString:self.model.VideoLogo]]];
     self.ViedoDesLabel.text = self.model.VideoTitle;
     NSString *str1= @"已播放";
     NSString *str2 = @"次";
-    
     self.VideoCountLabel.text =  [[str1 stringByAppendingString:[NSString stringWithFormat:@"%@",self.model.ViewCount]]stringByAppendingString:str2] ;
     NSLog(@"!!!!!!!!!!!视频观看次数：：：：：：%@",self.model.ViewCount);
     [self.contentView bringSubviewToFront:self.playButton];
     
-    
+    if ([self.model.Member isEqualToString:@"0"]) {
+        [self.smallImage setHidden:YES];
+        self.smallImageWidth.constant = 0;
+        self.memberLabel.text = @"免费";
+        [self.memberLabel setTextColor:[UIColor colorWithHexString:@"#4bbd66"]];
+    }
+    else
+    {
+        [self.smallImage setHidden:NO];
+        self.smallImageWidth.constant = 15;
+        self.memberLabel.text = [self.model.Price stringByAppendingString:@"芽币"];
+        self.memberLabel.text = [@" "stringByAppendingString:self.memberLabel.text];
+
+        [self.memberLabel setTextColor:[UIColor colorWithHexString:@"#fc8200"]];
+    }
 }
 - (IBAction)shareButtonAction:(id)sender {
     

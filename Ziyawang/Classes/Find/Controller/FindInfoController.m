@@ -1734,6 +1734,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     DetailOfInfoController *infoDetailsVC = [[DetailOfInfoController alloc]init];
     
     ChuzhiDetailController *chuzhiVC = [[ChuzhiDetailController alloc]init];

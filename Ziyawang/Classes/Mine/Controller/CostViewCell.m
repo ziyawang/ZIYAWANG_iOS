@@ -41,7 +41,13 @@
     }
     else
     {
-    self.rechargeTitle.text = @"付费约谈";
+        if ([self.model.ProjectID isEqualToString:@"0"]) {
+            self.rechargeTitle.text = @"付费视频";
+        }
+        else
+        {
+            self.rechargeTitle.text = @"付费约谈";
+        }
         self.rechargeAccount.text = [@"-"stringByAppendingString:self.model.Money];
         self.rechargeAccount.textColor = [UIColor colorWithHexString:@"#eb6155"];
         self.yabiLabel.textColor = [UIColor colorWithHexString:@"#eb6155"];
@@ -51,7 +57,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
 }
 
 @end

@@ -589,6 +589,9 @@
 		78469B331D54B4E100F3DE4C /* MyrobListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78469B321D54B4E100F3DE4C /* MyrobListController.m */; };
 		78469B3C1D54BB4D00F3DE4C /* UserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78469B3A1D54BB4D00F3DE4C /* UserInfoController.m */; };
 		78469B3D1D54BB4D00F3DE4C /* UserInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78469B3B1D54BB4D00F3DE4C /* UserInfoController.xib */; };
+		7854DAA11E6E7DE800F33F43 /* xiaoyabi.png in Resources */ = {isa = PBXBuildFile; fileRef = 7854DA9E1E6E7DE800F33F43 /* xiaoyabi.png */; };
+		7854DAA21E6E7DE800F33F43 /* xiaoyabi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7854DA9F1E6E7DE800F33F43 /* xiaoyabi@2x.png */; };
+		7854DAA31E6E7DE800F33F43 /* xiaoyabi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7854DAA01E6E7DE800F33F43 /* xiaoyabi@3x.png */; };
 		78579D461DEBFDE10054D0C7 /* TUZI.png in Resources */ = {isa = PBXBuildFile; fileRef = 78579D431DEBFDE10054D0C7 /* TUZI.png */; };
 		78579D471DEBFDE10054D0C7 /* TUZI@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78579D441DEBFDE10054D0C7 /* TUZI@2x.png */; };
 		78579D481DEBFDE10054D0C7 /* TUZI@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78579D451DEBFDE10054D0C7 /* TUZI@3x.png */; };
@@ -867,6 +870,7 @@
 		78DB144C1DF581030051F73A /* CollectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78DB144A1DF581030051F73A /* CollectNewsCell.xib */; };
 		78E2255D1DE8029900CB5D16 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255C1DE8029900CB5D16 /* RecordManager.m */; };
 		78E225601DE8149300CB5D16 /* AddImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E2255F1DE8149300CB5D16 /* AddImageManager.m */; };
+		78E9ED1A1E6D0B6A0040F39C /* FufukechengController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E9ED191E6D0B6A0040F39C /* FufukechengController.m */; };
 		78EA8B441DC832DD005658A1 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B411DC832DD005658A1 /* eye.png */; };
 		78EA8B451DC832DD005658A1 /* eye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B421DC832DD005658A1 /* eye@2x.png */; };
 		78EA8B461DC832DD005658A1 /* eye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78EA8B431DC832DD005658A1 /* eye@3x.png */; };
@@ -1786,6 +1790,9 @@
 		78469B391D54BB4D00F3DE4C /* UserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoController.h; sourceTree = "<group>"; };
 		78469B3A1D54BB4D00F3DE4C /* UserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoController.m; sourceTree = "<group>"; };
 		78469B3B1D54BB4D00F3DE4C /* UserInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoController.xib; sourceTree = "<group>"; };
+		7854DA9E1E6E7DE800F33F43 /* xiaoyabi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoyabi.png; sourceTree = "<group>"; };
+		7854DA9F1E6E7DE800F33F43 /* xiaoyabi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoyabi@2x.png"; sourceTree = "<group>"; };
+		7854DAA01E6E7DE800F33F43 /* xiaoyabi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoyabi@3x.png"; sourceTree = "<group>"; };
 		78579D431DEBFDE10054D0C7 /* TUZI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TUZI.png; sourceTree = "<group>"; };
 		78579D441DEBFDE10054D0C7 /* TUZI@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TUZI@2x.png"; sourceTree = "<group>"; };
 		78579D451DEBFDE10054D0C7 /* TUZI@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TUZI@3x.png"; sourceTree = "<group>"; };
@@ -2148,6 +2155,8 @@
 		78E2255C1DE8029900CB5D16 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		78E2255E1DE8149300CB5D16 /* AddImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImageManager.h; sourceTree = "<group>"; };
 		78E2255F1DE8149300CB5D16 /* AddImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddImageManager.m; sourceTree = "<group>"; };
+		78E9ED181E6D0B6A0040F39C /* FufukechengController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FufukechengController.h; sourceTree = "<group>"; };
+		78E9ED191E6D0B6A0040F39C /* FufukechengController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FufukechengController.m; sourceTree = "<group>"; };
 		78EA8B411DC832DD005658A1 /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		78EA8B421DC832DD005658A1 /* eye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@2x.png"; sourceTree = "<group>"; };
 		78EA8B431DC832DD005658A1 /* eye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye@3x.png"; sourceTree = "<group>"; };
@@ -2484,6 +2493,9 @@
 		780E51021D73E1120083A3E1 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				7854DA9E1E6E7DE800F33F43 /* xiaoyabi.png */,
+				7854DA9F1E6E7DE800F33F43 /* xiaoyabi@2x.png */,
+				7854DAA01E6E7DE800F33F43 /* xiaoyabi@3x.png */,
 				78CA93931E651F6100831738 /* chuzhichenggongd.png */,
 				78CA93941E651F6100831738 /* chuzhichenggongd@2x.png */,
 				78CA93951E651F6100831738 /* chuzhichenggongd@3x.png */,
@@ -3708,6 +3720,8 @@
 				7836E7FE1D5AF75E00187E41 /* HahaController.m */,
 				7836E8001D5AF77200187E41 /* YifenzhongController.h */,
 				7836E8011D5AF77200187E41 /* YifenzhongController.m */,
+				78E9ED181E6D0B6A0040F39C /* FufukechengController.h */,
+				78E9ED191E6D0B6A0040F39C /* FufukechengController.m */,
 				78F3DDE91D461D5C00C1E62E /* VideoPlayViewController.h */,
 				78F3DDEA1D461D5C00C1E62E /* VideoPlayViewController.m */,
 				782F81791DB5D49E00AB5F39 /* TipTableViewController.h */,
@@ -5035,6 +5049,7 @@
 				781047781E0BC83D00A9B5A4 /* zheng.png in Resources */,
 				78EE248B1D5F49EE00DB1A5D /* 9@2x.png in Resources */,
 				782523351D7E8A2700F2C0A2 /* lunbotu1@2x.png in Resources */,
+				7854DAA11E6E7DE800F33F43 /* xiaoyabi.png in Resources */,
 				7825239D1D801A2400F2C0A2 /* VideosViewCell.xib in Resources */,
 				78D960F31D9CEDAB007ECABA /* shoufeiziyuan.png in Resources */,
 				78FD6CF61DEFC0DB001F69BB /* qipaijia@3x.png in Resources */,
@@ -5129,6 +5144,7 @@
 				78EA8B5C1DC8671B005658A1 /* xiaoxizhongxin@2x.png in Resources */,
 				782522711D77DE5300F2C0A2 /* jingxuanfuwu@3x.png in Resources */,
 				78EE24971D5F49EE00DB1A5D /* 14@2x.png in Resources */,
+				7854DAA21E6E7DE800F33F43 /* xiaoyabi@2x.png in Resources */,
 				78746D571D68895A00AD60FF /* pic02.png in Resources */,
 				782522BD1D77DE5300F2C0A2 /* xuqiu@3x.png in Resources */,
 				78A125BE1DB8BB3000D5E42F /* weitongguo@3x.png in Resources */,
@@ -5299,6 +5315,7 @@
 				78D9603F1D967FA8007ECABA /* xiaobai@2x.png in Resources */,
 				78276AAB1E012595000F83B5 /* darong.png in Resources */,
 				781E656E1DE2D5B900C13C2B /* PersonalDebtsController.xib in Resources */,
+				7854DAA31E6E7DE800F33F43 /* xiaoyabi@3x.png in Resources */,
 				78A125BB1DB8BB3000D5E42F /* tongguoshenhe@3x.png in Resources */,
 				786C4DF61DE717C000C19373 /* zi@2x.png in Resources */,
 				78FD6D421DF151FD001F69BB /* qiye.png in Resources */,
@@ -5682,6 +5699,7 @@
 				786BD3801DD2EDDF00C6AF9F /* TestResultController.m in Sources */,
 				78CFFA261D3DAD0C002A22C8 /* main.m in Sources */,
 				782523921D801A2400F2C0A2 /* FindInfoCell.m in Sources */,
+				78E9ED1A1E6D0B6A0040F39C /* FufukechengController.m in Sources */,
 				78F3DDE41D461B2C00C1E62E /* ZXVideoPlayerBrightnessView.m in Sources */,
 				783735D11D530A540045D27E /* ServiceDetailController.m in Sources */,
 				7836E81C1D5B0B1100187E41 /* CSCancelOperationModel.m in Sources */,

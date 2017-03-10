@@ -115,7 +115,6 @@
     NSLog(@"%@",urlStr);
     NSString *fileName = @"lll.wav";
     NSString *urlpath = [urlStr stringByAppendingString:fileName];
-    NSURL *url2 = [NSURL URLWithString:urlpath];
     
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/lll.wav",urlStr]];
     self.aurl = url;

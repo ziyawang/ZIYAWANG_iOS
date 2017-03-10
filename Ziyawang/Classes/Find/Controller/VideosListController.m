@@ -13,9 +13,12 @@
 #import "HangyeVideoController.h"
 #import "HahaController.h"
 #import "YifenzhongController.h"
+#import "FufukechengController.h"
 #import "VideosModel.h"
 #import "ZXVideo.h"
 #import "VideoPlayViewController.h"
+#import "LoginController.h"
+#import "RechargeController.h"
 #define ScreeFrame [UIScreen mainScreen].bounds
 
 @interface VideosListController ()<SegmentTapViewDelegate,FlipTableViewDelegate>
@@ -65,6 +68,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationAction:) name:@"PushToMovieDentailControllerNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationAction2:) name:@"PresentToLoginControllerNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationAction3:) name:@"PushToReacharControllerNotifi" object:nil];
+
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -145,9 +152,19 @@
     [self.navigationController pushViewController:videoPlayVC animated:YES];
     
 }
+- (void)notificationAction2:(NSNotification *)sender {
+            LoginController *loginVC = [UIStoryboard storyboardWithName:@"LoginAndRegist" bundle:nil].instantiateInitialViewController;
+            [self presentViewController:loginVC animated:YES completion:nil];
+}
+- (void)notificationAction3:(NSNotification *)sender {
+    RechargeController *recharVC = [[RechargeController alloc]init];
+    [self.navigationController pushViewController:recharVC animated:YES];
+    
+}
+
 
 -(void)initSegment{
-    self.segment = [[SegmentTapView alloc] initWithFrame:CGRectMake(0, 0, ScreeFrame.size.width, 40) withDataArray:[NSArray arrayWithObjects:@"推荐",@"行业说",@"资芽哈哈哈",@"资芽一分钟",nil] withFont:14];
+    self.segment = [[SegmentTapView alloc] initWithFrame:CGRectMake(0, 0, ScreeFrame.size.width, 40) withDataArray:[NSArray arrayWithObjects:@"推荐",@"行业说",@"资芽哈哈哈",@"资芽一分钟",@"付费课程",nil] withFont:14];
     
     self.segment.delegate = self;
     [self.view addSubview:self.segment];
@@ -170,10 +187,12 @@
     
     YifenzhongController *v4 = [[YifenzhongController alloc]init];
 //    UINavigationController *yifenzhongVC = [[UINavigationController alloc]initWithRootViewController:v4];
+    FufukechengController *v5 = [[FufukechengController alloc]init];
     [self.controllsArray addObject:v1];
     [self.controllsArray addObject:v2];
     [self.controllsArray addObject:v3];
     [self.controllsArray addObject:v4];
+    [self.controllsArray addObject:v5];
     
     self.flipView = [[FlipTableView alloc] initWithFrame:CGRectMake(0, 40, ScreeFrame.size.width, self.view.frame.size.height - 40) withArray:_controllsArray];
     self.flipView.delegate = self;

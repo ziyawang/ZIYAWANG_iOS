@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *pinglunCountLable;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *smallImageWidth;
+@property (weak, nonatomic) IBOutlet UILabel *memberLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *smallImage;
 
 @property (nonatomic,strong) ZXVideo *zvideo;
 

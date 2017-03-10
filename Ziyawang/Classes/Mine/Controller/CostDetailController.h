@@ -14,5 +14,6 @@
 @property (nonatomic,strong) NSString *costTime;
 @property (nonatomic,strong) NSString *ordernumber;
 @property (nonatomic,strong) NSString *operate;
+@property (nonatomic,strong) NSString *ProjectID;
 
 @end

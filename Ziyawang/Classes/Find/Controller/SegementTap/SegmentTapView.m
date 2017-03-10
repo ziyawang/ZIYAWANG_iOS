@@ -16,13 +16,11 @@
         self.backgroundColor = [UIColor whiteColor];
         _buttonsArray = [[NSMutableArray alloc] init];
         _dataArray = dataArray;
-        _titleFont = font;
-        
+        _titleFont = [UIFont FontForLabel].pointSize;
         //默认
         self.textNomalColor    = [UIColor blackColor];
         self.textSelectedColor = [UIColor blackColor];
         self.lineColor = [UIColor colorWithHexString:@"fdd000"];
-        
         [self addSubSegmentView];
     }
     return self;

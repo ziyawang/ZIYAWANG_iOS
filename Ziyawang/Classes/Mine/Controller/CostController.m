@@ -137,9 +137,6 @@
 - (void)rightBarbuttonAction:(UIBarButtonItem *)barbutton
 {
     
-    
-
-   
     if (self.barselected == NO) {
 //           [self setChooseView];
 //                    [self.view addSubview:self.chooseView2];
@@ -325,7 +322,7 @@
     costDeatilVC.costTime = model.created_at;
     costDeatilVC.operate = model.Operates;
     costDeatilVC.ordernumber = model.OrderNumber;
-    
+    costDeatilVC.ProjectID = model.ProjectID;
     [self.navigationController pushViewController:costDeatilVC animated:YES];
     
 

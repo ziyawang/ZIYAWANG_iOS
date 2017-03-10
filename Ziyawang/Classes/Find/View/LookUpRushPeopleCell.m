@@ -153,7 +153,6 @@
     NSString *Token = @"?token=";
     NSString *url = getDataURL;
     NSString *url2 = @"/collect";
-    NSString *access_token = @"token";
     
     NSString *URL = [[[url stringByAppendingString:url2]stringByAppendingString:Token]stringByAppendingString:token];
     NSMutableDictionary *paraDic = [NSMutableDictionary new];

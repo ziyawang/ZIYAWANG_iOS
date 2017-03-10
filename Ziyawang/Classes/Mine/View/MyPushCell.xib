@@ -194,7 +194,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yps-Ix-nNL">
-                                <rect key="frame" x="10" y="10" width="47" height="42"/>
+                                <rect key="frame" x="10" y="10" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="5Uc-GO-Bwi"/>
                                     <constraint firstAttribute="width" constant="40" id="Xu1-Gg-NTb"/>

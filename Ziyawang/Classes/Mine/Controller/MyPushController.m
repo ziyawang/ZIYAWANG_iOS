@@ -51,7 +51,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
-//    [self.tableView registerNib:[UINib nibWithNibName:@"MyPushCell" bundle:nil] forCellReuseIdentifier:@"MyPushCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"MyPushCell" bundle:nil] forCellReuseIdentifier:@"MyPushCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getMypushData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -219,29 +219,29 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    MyPushCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyPushCell" forIndexPath:indexPath];
-    
-    
-    MyPushCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyPushCell"];
+    static NSString *CellIdentifier = @"MyPushCell";
+    MyPushCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil) {
-        cell= (MyPushCell *)[[[NSBundle  mainBundle]  loadNibNamed:@"MyPushCell" owner:self options:nil]  lastObject];
+        cell= (MyPushCell *)[[[NSBundle  mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]  lastObject];
     }
-    else
-    {
-        //删除cell的所有子视图
-        while ([cell.contentView.subviews lastObject] != nil)
-        {
-            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
-        }
-    }
+//    MyPushCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyPushCell" forIndexPath:indexPath];
     
+//    if (cell == nil) {
+//        cell= (MyPushCell *)[[[NSBundle  mainBundle]  loadNibNamed:@"MyPushCell" owner:self options:nil]  lastObject];
+//    }
+//    else
+//    {
+//        //删除cell的所有子视图
+//        while ([cell.contentView.subviews lastObject] != nil)
+//        {
+//            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+//        }
+//    }
+//    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.model = self.sourceArray[indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
     return cell;
-    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

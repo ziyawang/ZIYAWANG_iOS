@@ -29,6 +29,9 @@
 #define AudioURL @"http://files.ziyawang.com"//获取文件（语音以及资芽公约）
 
 #define paidURL @"https://apis.ziyawang.com/zll/app/consume"//消费接口
+#define paidVideoURL @"https://apis.ziyawang.com/zll/video/consume"//消费接口
+
+
 #define rechargeURL @"https://apis.ziyawang.com/zll/pay/list"//充值芽币金额类型
 #define CostURL @"https://apis.ziyawang.com/zll/mybill"//充值明细
 #define changeNickNameURL @"https://apis.ziyawang.com/zll/auth/chusername"//修改昵称

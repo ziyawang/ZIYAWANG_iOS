@@ -158,13 +158,11 @@
     self.diquLabel.text = areaArr[0];
     self.typeLabel.text = self.model.TypeName;
     self.yabiCountLabel.text = self.model.Price;
-    
     self.diquLabel.font = [UIFont FontForLabel];
     self.typeLabel.font = [UIFont FontForLabel];
     self.yabi.font = [UIFont FontForLabel];
     self.yabiCountLabel.font = [UIFont FontForLabel];
     self.otherTypeLabel.font = [UIFont FontForLabel];
-    
     
     self.liangdianLabel1.font = [UIFont FontForLabel2];
     self.liangdianLabel2.font = [UIFont FontForLabel2];

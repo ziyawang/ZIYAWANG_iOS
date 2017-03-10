@@ -1770,6 +1770,7 @@ self.navigationItem.title = @"首页";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
+//[[SDImageCache sharedImageCache] clearMemory];
     [self.searchBar resignFirstResponder];
     
     if (scrollView.contentOffset.y > [self getImageViewHight]||scrollView.contentOffset.y == [self getImageViewHight]) {
@@ -2394,7 +2395,6 @@ self.navigationItem.title = @"首页";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.sourceArray.count;
 }
@@ -2469,9 +2469,13 @@ self.navigationItem.title = @"首页";
         else
         {
         
-        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
+//        NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NewPublishCell" forIndexPath:indexPath];
         
-        
+            static NSString *CellIdentifier = @"NewPublishCell";
+            NewPublishCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            if (cell == nil) {
+                cell= (NewPublishCell *)[[[NSBundle  mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]  lastObject];
+            }
         //        if (cell == nil)
         //        {
         //            cell = [[PublishCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"PublishCell"];
@@ -2701,6 +2705,7 @@ self.navigationItem.title = @"首页";
     
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

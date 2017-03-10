@@ -411,7 +411,7 @@
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(460 * kHeightScale);
+    .heightIs(500 * kHeightScale);
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
     .rightSpaceToView(weituoView,0)
@@ -656,7 +656,16 @@
 - (void)didClickWeituoFabuAction:(UIButton *)button
 {
     [self.view endEditing:YES];
-    [self weituoFabu];
+    if ([self.lianxirenTextField.text isEqualToString:@""]||self.lianxifangshiTextfield.text == nil || [self.lianxifangshiTextfield.text isEqualToString:@""]||self.lianxifangshiTextfield.text == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您填写的信息不完整，请重新填写" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+    }
+    else
+    {
+        [self weituoFabu];
+        
+    }
     
 }
 - (void)didClickFanhuiButtonAction:(UIButton *)button

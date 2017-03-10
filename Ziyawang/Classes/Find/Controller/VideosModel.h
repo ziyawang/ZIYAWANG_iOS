@@ -20,6 +20,9 @@
 
 @property (nonatomic,strong) NSString *PublishTime;
 @property (nonatomic,strong) NSString  *CollectFlag;
+@property (nonatomic,strong) NSString *Member;
+@property (nonatomic,strong) NSString *Price;
+@property (nonatomic,strong) NSString *PayFlag;
 
 
 @end

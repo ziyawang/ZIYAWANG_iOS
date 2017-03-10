@@ -11,7 +11,7 @@
 @implementation TextFieldViewAnimate
 + (void)textFieldAnimateWithView:(UIView *)view up:(BOOL)up
 {
-    const int movementDistance = 120;
+    const int movementDistance = 250;
     int movenment = (up ? -movementDistance : movementDistance);
     [UIView beginAnimations:@"Animation" context:nil];
     [UIView setAnimationBeginsFromCurrentState:YES];

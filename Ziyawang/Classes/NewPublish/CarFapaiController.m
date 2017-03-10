@@ -372,7 +372,10 @@
     weituoView.sd_layout.centerXEqualToView(mengbanView)
     .centerYIs(self.view.centerY)
     .widthIs(285 * kWidthScale)
-    .heightIs(460 * kHeightScale);
+    .heightIs(500 * kHeightScale);
+    
+    
+//    [weituoView setupAutoHeightWithBottomView:bottomView bottomMargin:20];
     
     imageBackView.sd_layout.leftSpaceToView(weituoView,0)
     .rightSpaceToView(weituoView,0)
@@ -538,7 +541,16 @@
 - (void)didClickWeituoFabuAction:(UIButton *)button
 {
     [self.view endEditing:YES];
-    [self weituoFabu];
+    if ([self.lianxirenTextField.text isEqualToString:@""]||self.lianxifangshiTextfield.text == nil || [self.lianxifangshiTextfield.text isEqualToString:@""]||self.lianxifangshiTextfield.text == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您填写的信息不完整，请重新填写" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+    }
+    else
+    {
+        [self weituoFabu];
+
+    }
     
 }
 - (void)didClickFanhuiButtonAction:(UIButton *)button
@@ -954,7 +966,6 @@
 
 - (void)postDataToDomainWithPromise:(NSString *)promise
 {
-    
        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults objectForKey:@"token"];
     //    http://apitest.ziyawang.com/v1/test/project/create
@@ -1020,12 +1031,10 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     };
-    
 }
 - (IBAction)sendButtonAction:(id)sender
 {
     [self.view endEditing:YES];
-    
     if ([self.zichanLabel.text isEqualToString:@"请选择"]) {
         [MyMBHud MBProgressWithString:@"请选择资产类型" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
@@ -1037,8 +1046,6 @@
         [MyMBHud MBProgressWithString:@"请输入品牌型号" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
-        
-    
     }
     else
     {
@@ -1052,8 +1059,6 @@
             [MyMBHud MBProgressWithString:@"请选择性质" timer:1 mode:(MBProgressHUDModeText) target:self];
             return;
         }
-        
-        
     }
     
     if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.qipaijiaTextField] == NO) {
@@ -1077,6 +1082,7 @@
     }
     if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:_chuzhidanweiTextField] == NO) {
         [MyMBHud MBProgressWithString:@"请输入处置单位" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
     }
     if (self.textView.text == nil || [self.textView.text isEqualToString:@"请输入文字描述"] ||[self.textView.text isEqualToString:@""]) {
         [MyMBHud MBProgressWithString:@"请输入文字描述" timer:1 mode:(MBProgressHUDModeText) target:self];
@@ -1096,7 +1102,6 @@
     }
     
     [self setPromiseView];
-    
 }
 
 
@@ -1139,14 +1144,12 @@
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.selectStr = self.AllArray[0][0];
-            
             self.row = 0;
         }
             break;
         case 1:
         {
             [self.mengbanView setHidden:NO];
-
             [UIView animateWithDuration:0.5 animations:^{
                 self.pickerBackView.y = [UIScreen mainScreen].bounds.size.height - 300;
             }];
@@ -1155,7 +1158,6 @@
             [self.pickerView reloadAllComponents];
             [self.pickerView selectRow:0 inComponent:0 animated:NO];
             self.selectStr = self.AllArray[1][0];
-
             self.row = 1;
         }
             break;

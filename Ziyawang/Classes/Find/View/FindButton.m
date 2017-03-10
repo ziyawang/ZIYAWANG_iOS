@@ -45,7 +45,6 @@
     CGFloat button_width = self.frame.size.width;
     CGFloat button_height = CGRectGetHeight(self.frame);
     
-    CGFloat imageView_width = button_width / 7;
     
     self.imgView.frame = CGRectMake(button_width * 6 / 7 - 10 - 1, 0, 15, 8);
     

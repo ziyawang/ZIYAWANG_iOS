@@ -41,7 +41,15 @@
     }
     else
     {
+        self.ProjectID = [NSString stringWithFormat:@"%@",self.ProjectID];
+        
+        if ([self.ProjectID isEqualToString:@"0"]) {
+            self.CostType.text = @"付费视频";
+        }
+        else
+        {
         self.CostType.text = @"付费约谈";
+        }
         self.CountLabel.text = [@"-"stringByAppendingString:self.costCount];
         self.yabiLabel.textColor = [UIColor colorWithHexString:@"#eb6155"];
         self.CountLabel.textColor = [UIColor colorWithHexString:@"#eb6155"];

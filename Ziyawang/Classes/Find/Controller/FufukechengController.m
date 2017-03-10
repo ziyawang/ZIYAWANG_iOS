@@ -1,12 +1,12 @@
 //
-//  YifenzhongController.m
+//  FufukechengController.m
 //  Ziyawang
 //
-//  Created by Mr.Xu on 16/8/10.
-//  Copyright © 2016年 Mr.Xu. All rights reserved.
+//  Created by Mr.Xu on 2017/3/6.
+//  Copyright © 2017年 Mr.Xu. All rights reserved.
 //
 
-#import "YifenzhongController.h"
+#import "FufukechengController.h"
 #import "VideosViewCell.h"
 #import "AFNetWorking.h"
 #import "VideosModel.h"
@@ -19,7 +19,7 @@
 #import "PublishModel.h"
 #define kWidthScale ([UIScreen mainScreen].bounds.size.width/375)
 #define kHeightScale ([UIScreen mainScreen].bounds.size.height/667)
-@interface YifenzhongController ()<UITableViewDelegate,UITableViewDataSource,playDelegate,MBProgressHUDDelegate>
+@interface FufukechengController ()<UITableViewDelegate,UITableViewDataSource,playDelegate,MBProgressHUDDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *sourceArray;
 @property (nonatomic,strong) AFHTTPSessionManager *manager;
@@ -42,10 +42,9 @@
 @property (nonatomic,strong) NSString *USERID;
 @property (nonatomic,strong) VideosModel *pubModel;
 @property (nonatomic,assign) NSInteger row;
-
 @end
 
-@implementation YifenzhongController
+@implementation FufukechengController
 
 - (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
 {
@@ -86,6 +85,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+   
+
     [self getUserInfoFromDomin];
     [self getNewVideosList];
 
@@ -99,21 +100,22 @@
 
     
     [self.tableView registerNib:[UINib nibWithNibName:@"VideosViewCell" bundle:nil] forCellReuseIdentifier:@"VideosViewCell"];
-
+    
     [self.view addSubview:self.tableView];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 104, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.view.backgroundColor = [UIColor whiteColor];
 //    [self getUserInfoFromDomin];
 
-     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
-
+    
 }
 - (void)getUserInfoFromDomin
 {
@@ -133,34 +135,27 @@
             self.USERID = dic[@"user"][@"userid"];
             
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
-            
             //            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
             //            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
-            
-            
-            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
-            
         }];
     }
-    
 }
 
 //
 - (void)loadMoreData
 {
-//    NSString *headurl = @"https://apis.ziyawang.com/zll";
-//    NSString *footurl = @"/video/list";
+    //    NSString *headurl = @"https://apis.ziyawang.com/zll";
+    //    NSString *footurl = @"/video/list";
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     
     NSString *URL = getVideoListURL;
     if (token != nil) {
         URL =[[getVideoListURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-        
     }
     NSString *accesstoken = @"token";
-    NSString *VideoLabel = @"zyyfz";
+    NSString *pagecount = @"10";
+    NSString *VideoLabel = @"ffkc";
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:accesstoken forKey:@"access_token"];
     
@@ -168,8 +163,8 @@
     [dic setObject:VideoLabel forKey:@"VideoLabel"];
     [dic setObject:[NSString stringWithFormat:@"%ld",self.startPage] forKey:@"startpage"];
     
-    [self.manager GET:URL parameters:dic progress:^(NSProgress * _Nonnull downloadProgress) {
-        
+    [self.manager GET:URL parameters:dic progress:^(NSProgress * _Nonnull downloadProgress)
+    {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"获取信息成功");
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -190,21 +185,21 @@
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有更多数据了" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
-
+            
         }
         else
         {
-        [self.sourceArray addObjectsFromArray:addArray];
-        NSLog(@"%@",self.sourceArray);
-        [self.tableView reloadData];
-        [self.tableView.mj_footer endRefreshing];
+            [self.sourceArray addObjectsFromArray:addArray];
+            NSLog(@"%@",self.sourceArray);
+            [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"获取信息失败");
         NSLog(@"%@",error);
         [self.tableView.mj_footer endRefreshing];
-
+        
         [self showAlertWithMessage:@"信息获取失败，请检查您的网络状态"];
         
     }];
@@ -223,8 +218,8 @@
     [self.sourceArray removeAllObjects];
     
     self.startPage = 1;
-//    NSString *headurl = @"https://apis.ziyawang.com/zll";
-//    NSString *footurl = @"/video/list";
+    //    NSString *headurl = @"https://apis.ziyawang.com/zll";
+    //    NSString *footurl = @"/video/list";
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
     
     NSString *URL = getVideoListURL;
@@ -233,7 +228,7 @@
         
     }
     NSString *accesstoken = @"token";
-    NSString *VideoLabel = @"zyyfz";
+    NSString *VideoLabel = @"ffkc";
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:accesstoken forKey:@"access_token"];
@@ -249,17 +244,18 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
         NSArray *dataArray = dic[@"data"];
-        
-    
-            for (NSDictionary *dic in dataArray) {
-                VideosModel *model = [[VideosModel alloc]init];
-                [model setValuesForKeysWithDictionary:dic];
-                [self.sourceArray addObject:model];
-            }
-            self.startPage ++;
-            NSLog(@"%@",self.sourceArray);
+        for (NSDictionary *dic in dataArray) {
+            VideosModel *model = [[VideosModel alloc]init];
+            [model setValuesForKeysWithDictionary:dic];
+            [self.sourceArray addObject:model];
+        }
+        self.startPage ++;
+        NSLog(@"%@",self.sourceArray);
+        if (self.sourceArray.count == 0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"暂时没有付费课程视频" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
             [self.tableView reloadData];
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"获取信息失败");
         NSLog(@"%@",error);
@@ -608,5 +604,16 @@
     [self.HUD hideAnimated:YES afterDelay:timer];
 }
 
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

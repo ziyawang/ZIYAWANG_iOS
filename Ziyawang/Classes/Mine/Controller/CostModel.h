@@ -15,5 +15,5 @@
 @property (nonatomic,strong) NSString *created_at;
 @property (nonatomic,strong) NSString *Money;
 @property (nonatomic,strong) NSString *Operates;
-
+@property (nonatomic,strong) NSString *ProjectID;
 @end

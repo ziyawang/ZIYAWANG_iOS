@@ -94,7 +94,6 @@
      object:nil];
 }
 - (void)didReceiveMessageNotification2:(NSNotification *)notification {
-    RCMessage *message = notification.object;
     
 //    [[self.tabBar.items objectAtIndex:2] setBadgeValue:@"3"];
 //    [self.tabBar setTabIconWidth:0];
@@ -176,7 +175,6 @@
     ZiyaMainController *MainVC = [[ZiyaMainController alloc]init];
     
     FindController *FindVC = [[FindController alloc]init];
-    MessageListViewController *MessageVC = [[MessageListViewController alloc]init];
 
     MineViewController *MineVC = [UIStoryboard storyboardWithName:@"Mine" bundle:nil].instantiateInitialViewController;
     
