@@ -64,6 +64,31 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *danjiaHeight2;
 
 
+
+@property (weak, nonatomic) IBOutlet UIView *mianjiView;
+@property (weak, nonatomic) IBOutlet UIView *tudimianjiView;
+@property (weak, nonatomic) IBOutlet UIView *jianzhumianjiView;
+@property (weak, nonatomic) IBOutlet UIView *rongjiView;
+@property (weak, nonatomic) IBOutlet UIView *zhuanrangjiaView;
+@property (weak, nonatomic) IBOutlet UIView *zhuanrangdanjiaView;
+
+
+
+@property (weak, nonatomic) IBOutlet UITextField *tudimianjiTextField;
+@property (weak, nonatomic) IBOutlet UITextField *jianzhumianjiTextField;
+@property (weak, nonatomic) IBOutlet UITextField *rongjiTextField;
+@property (weak, nonatomic) IBOutlet UITextField *cankaoshijiaTextField;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *guihuaHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mianjiHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tudimianjiHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *jianzhumianjiHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rongjiHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shichangdanjiaHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yixiangzhuanrangjiaHeight;
+
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leixingHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shichangjiageHeight;
 @property (weak, nonatomic) IBOutlet UIView *shichangjiageView;
@@ -126,6 +151,7 @@
     self.zhuanrangjiageTextField.delegate = self;
     
     self.mianjiTextField.delegate = self;
+    self.cankaoshijiaTextField.delegate = self;
     
     self.scrollView.delegate = self;
     self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
@@ -668,61 +694,61 @@
     NSMutableDictionary *dic = [NSMutableDictionary new];
     [dic setObject:promise forKey:@"Promise"];
 
-    [dic setObject:self.liangdianStr forKey:@"ProLabel"];
+//    [dic setObject:self.liangdianStr forKey:@"ProLabel"];
   
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
     
     [dic setObject:self.diquLabel.text forKey:@"ProArea"];
     [dic setObject:self.biaodiwuLabel.text forKey:@"AssetType"];
-    [dic setObject:self.guihuaLabel.text forKey:@"Usefor"];
-    [dic setObject:self.mianjiTextField.text forKey:@"Area"];
-    [dic setObject:self.yearTextField.text forKey:@"Year"];
-    [dic setObject:self.zhuanrangfangshiLabel.text forKey:@"TransferType"];
     [dic setObject:self.zhuanrangjiageTextField.text forKey:@"TransferMoney"];
     [dic setObject:@"IOS" forKey:@"Channel"];
-    
-    
-    if ([self.zhengjianLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
-
-    }
-    if ([self.jiufenLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.jiufenLabel.text forKey:@"Dispute"];
-
-    }
-    if ([self.fuzhaiLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.fuzhaiLabel.text forKey:@"Debt"];
-
-    }
-    if ([self.danbaoLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.danbaoLabel.text forKey:@"Guaranty"];
-
-    }
-    if ([self.caichanLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.caichanLabel.text forKey:@"Property"];
-
-    }
-    
-    
-    
-    
     [dic setObject:self.textView.text forKey:@"WordDes"];
-    
-    
     [dic setObject:self.nameTextField.text forKey:@"ConnectPerson"];
     [dic setObject:self.phoneTextField.text forKey:@"ConnectPhone"];
-    
+ 
     if ([self.biaodiwuLabel.text isEqualToString:@"房产"])
     {
+        [dic setObject:self.cankaoshijiaTextField.text forKey:@"MarketPrice"];
+        [dic setObject:self.mianjiTextField.text forKey:@"Area"];
         [dic setObject:self.leixingLabel.text forKey:@"Type"];
-        [dic setObject:self.shichangjiageTextField.text forKey:@"MarketPrice"];
         [dic setObject:@"12" forKey:@"TypeID"];
     }
     else
     {
+        [dic setObject:self.guihuaLabel.text forKey:@"Usefor"];
+        [dic setObject:self.tudimianjiTextField.text forKey:@"Area"];
+        [dic setObject:self.jianzhumianjiTextField.text forKey:@"BuildArea"];
+        [dic setObject:self.rongjiTextField.text forKey:@"FloorRatio"];
         [dic setObject:@"16" forKey:@"TypeID"];
     }
+
+//    if ([self.zhengjianLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.zhengjianLabel.text forKey:@"Credentials"];
+//
+//    }
+//    if ([self.jiufenLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.jiufenLabel.text forKey:@"Dispute"];
+//
+//    }
+//    if ([self.fuzhaiLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.fuzhaiLabel.text forKey:@"Debt"];
+//
+//    }
+//    if ([self.danbaoLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.danbaoLabel.text forKey:@"Guaranty"];
+//
+//    }
+//    if ([self.caichanLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.caichanLabel.text forKey:@"Property"];
+//
+//    }
+//    
+    
+    
+    
+
+    
     
     
     
@@ -746,7 +772,6 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     };
-    
 }
 - (IBAction)sendButtonAction:(id)sender {
     [self.view endEditing:YES];
@@ -755,47 +780,67 @@
         [MyMBHud MBProgressWithString:@"请选择您的身份" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
-    if ([self.diquLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请选择地区" timer:1 mode:(MBProgressHUDModeText) target:self];
-        return;
-    }
     if ([self.biaodiwuLabel.text isEqualToString:@"请选择"]) {
         [MyMBHud MBProgressWithString:@"请选择标的物类型" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
+    if ([self.diquLabel.text isEqualToString:@"请选择"]) {
+        [MyMBHud MBProgressWithString:@"请选择地区" timer:1 mode:(MBProgressHUDModeText) target:self];
+        return;
+    }
+  
     
     if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
         if ([self.leixingLabel.text isEqualToString:@"请选择"]) {
-            [MyMBHud MBProgressWithString:@"请选择类型" timer:1 mode:(MBProgressHUDModeText) target:self];
+            [MyMBHud MBProgressWithString:@"请选择房产类型" timer:1 mode:(MBProgressHUDModeText) target:self];
             return;
         }
     }
-   
-    if ([self.guihuaLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请输入规划用途" timer:1 mode:(MBProgressHUDModeText) target:self];
-        return;
+    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+        if ([self.guihuaLabel.text isEqualToString:@"请选择"]) {
+            [MyMBHud MBProgressWithString:@"请选择规划用途" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
     }
+    if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
+
     if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.mianjiTextField] == NO) {
         [MyMBHud MBProgressWithString:@"请输入面积" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
-    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.yearTextField] == NO) {
-        [MyMBHud MBProgressWithString:@"请输入剩余使用年限" timer:1 mode:(MBProgressHUDModeText) target:self];
-        return;
     }
+//    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.yearTextField] == NO) {
+//        [MyMBHud MBProgressWithString:@"请输入剩余使用年限" timer:1 mode:(MBProgressHUDModeText) target:self];
+//        return;
+//    }
     
-    if ([self.zhuanrangfangshiLabel.text isEqualToString:@"请选择"]) {
-        [MyMBHud MBProgressWithString:@"请选择转让方式" timer:1 mode:(MBProgressHUDModeText) target:self];
-        return;
-    }
+//    if ([self.zhuanrangfangshiLabel.text isEqualToString:@"请选择"]) {
+//        [MyMBHud MBProgressWithString:@"请选择转让方式" timer:1 mode:(MBProgressHUDModeText) target:self];
+//        return;
+//    }
     if ([self.biaodiwuLabel.text isEqualToString:@"房产"]) {
-        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.shichangjiageTextField] == NO) {
-            [MyMBHud MBProgressWithString:@"请输入市场价格" timer:1 mode:(MBProgressHUDModeText) target:self];
+        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.cankaoshijiaTextField] == NO) {
+            [MyMBHud MBProgressWithString:@"请输入参考市价" timer:1 mode:(MBProgressHUDModeText) target:self];
             return;
         }
     }
+    if ([self.biaodiwuLabel.text isEqualToString:@"土地"]) {
+        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.tudimianjiTextField] == NO) {
+            [MyMBHud MBProgressWithString:@"请输入土地面积" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.jianzhumianjiTextField] == NO) {
+            [MyMBHud MBProgressWithString:@"请输入建筑面积" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+        if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.rongjiTextField] == NO) {
+            [MyMBHud MBProgressWithString:@"请输入容积率" timer:1 mode:(MBProgressHUDModeText) target:self];
+            return;
+        }
+
+    }
     if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.zhuanrangjiageTextField] == NO) {
-        [MyMBHud MBProgressWithString:@"请输入转让价格" timer:1 mode:(MBProgressHUDModeText) target:self];
+        [MyMBHud MBProgressWithString:@"请输入意向转让价" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
 
     }
@@ -940,7 +985,7 @@
 //    @property (weak, nonatomic) IBOutlet UIView *danbaoView;
 //    @property (weak, nonatomic) IBOutlet UIView *quanbucaichanView;
 
-    NSArray *viewArray = @[self.shenfengView,self.diquView,self.biaodiwuView,self.leixingView,self.guihuaView,self.zhuanrangfangshiView,self.zhengjianView,self.jiufenView,self.fuzhaiView,self.danbaoView,self.quanbucaichanView];
+    NSArray *viewArray = @[self.shenfengView,self.diquView,self.biaodiwuView,self.leixingView,self.guihuaView];
 
 
     //    for (int i = 0; i < viewArray.count; i++) {
@@ -1223,12 +1268,29 @@
 
 - (void)feiFangchanViews
 {
+    
     [self.leixingView setHidden:YES];
     self.leixingHeight.constant = 0;
+    [self.mianjiView setHidden:YES];
+    self.mianjiHeight.constant = 0;
     [self.shichangjiageView setHidden:YES];
     self.shichangjiageHeight.constant = 0;
     [self.danjiaView1 setHidden:YES];
-    self.danjiaHeight1.constant = 0;
+    self.shichangdanjiaHeight.constant = 0;
+    [self.zhuanrangdanjiaView setHidden:YES];
+    self.yixiangzhuanrangjiaHeight.constant = 0;
+    
+    [self.guihuaView setHidden:NO];
+    [self.tudimianjiView setHidden:NO];
+    [self.jianzhumianjiView setHidden:NO];
+    [self.rongjiView setHidden:NO];
+    self.guihuaHeight.constant = 50;
+    self.tudimianjiHeight.constant = 50;
+    self.jianzhumianjiHeight.constant = 50;
+    self.rongjiHeight.constant = 50;
+    
+    
+   
     
 }
 
@@ -1236,11 +1298,23 @@
 {
     [self.leixingView setHidden:NO];
     self.leixingHeight.constant = 50;
+    [self.mianjiView setHidden:NO];
+    self.mianjiHeight.constant = 50;
     [self.shichangjiageView setHidden:NO];
     self.shichangjiageHeight.constant = 50;
     [self.danjiaView1 setHidden:NO];
-    self.danjiaHeight1.constant = 50;
+    self.shichangdanjiaHeight.constant = 50;
+    [self.zhuanrangdanjiaView setHidden:NO];
+    self.yixiangzhuanrangjiaHeight.constant = 50;
     
+    [self.guihuaView setHidden:YES];
+    [self.tudimianjiView setHidden:YES];
+    [self.jianzhumianjiView setHidden:YES];
+    [self.rongjiView setHidden:YES];
+    self.guihuaHeight.constant = 0;
+    self.tudimianjiHeight.constant = 0;
+    self.jianzhumianjiHeight.constant = 0;
+    self.rongjiHeight.constant = 0;
 }
 
 #pragma mark - UITextField delegate
@@ -1255,6 +1329,26 @@
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (textField == self.cankaoshijiaTextField || textField == self.mianjiTextField) {
+        if (self.mianjiTextField.text.integerValue == 0||[self.mianjiTextField.text isEqualToString:@""]) {
+            
+        }
+        else
+        {
+            NSLog(@"%@",_cankaoshijiaTextField.text);
+            self.danjiaLabel1.text = [[NSString stringWithFormat:@"%.2f",self.cankaoshijiaTextField.text.floatValue/self.mianjiTextField.text.floatValue] stringByAppendingString:@"万元/平米"];
+        }
+    }
+    if (textField == self.zhuanrangjiageTextField || textField == self.mianjiTextField) {
+        if (self.mianjiTextField.text.integerValue == 0) {
+            
+        }
+        else
+        {
+            self.danjiaLabel2.text = [[NSString stringWithFormat:@"%.2f",self.zhuanrangjiageTextField.text.floatValue/self.mianjiTextField.text.floatValue]stringByAppendingString:@"万元/平米"];
+        }
+    }
+
     if (textField.tag == 11 || textField.tag == 12) {
         [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:NO];
     }
@@ -1262,14 +1356,9 @@
 //textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    NSLog(@"%@",string);
     
-    if (textField == self.shichangjiageTextField || textField == self.mianjiTextField) {
-        self.danjiaLabel1.text = [[NSString stringWithFormat:@"%.2f",self.shichangjiageTextField.text.floatValue/self.mianjiTextField.text.floatValue] stringByAppendingString:@"万元/平米"];
-    }
-    if (textField == self.zhuanrangjiageTextField || textField == self.mianjiTextField) {
-        self.danjiaLabel2.text = [[NSString stringWithFormat:@"%.2f",self.zhuanrangjiageTextField.text.floatValue/self.mianjiTextField.text.floatValue]stringByAppendingString:@"万元/平米"];
-    }
-
+   
     if (textField.tag != 11 && textField.tag != 12)
     {
         

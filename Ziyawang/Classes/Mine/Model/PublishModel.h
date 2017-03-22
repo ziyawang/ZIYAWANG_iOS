@@ -162,4 +162,7 @@
 @property (nonatomic,strong) NSString *Hide;
 @property (nonatomic,strong) NSString *right;
 @property (nonatomic,strong) NSString *CooperateState;
+@property (nonatomic,strong) NSString *BuildArea;
+@property (nonatomic,strong) NSString *PictureDet;
+@property (nonatomic,strong) NSString *FloorRatio;
 @end

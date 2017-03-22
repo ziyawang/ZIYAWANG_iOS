@@ -129,9 +129,7 @@
     self.recorder = [[AVAudioRecorder alloc]initWithURL:url settings:setting error:nil];
     self.recorder.meteringEnabled = YES;
     self.recorder.delegate = self;
-    
     [self recordWithView:recordView url:urlStr];
-    
 }
 
 /**

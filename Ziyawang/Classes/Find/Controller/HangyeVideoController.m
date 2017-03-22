@@ -47,7 +47,8 @@
 @implementation HangyeVideoController
 - (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
 {
-    
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
+
       NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     
     userInfo[@"zvideoModel"] = zvideo;
@@ -125,6 +126,8 @@
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             self.account = dic[@"user"][@"Account"];
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"Account"] forKey:@"account"];
+
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
@@ -293,6 +296,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
     VideosModel *model = [[VideosModel alloc]init];
     model = self.sourceArray[indexPath.row];
     self.pubModel = model;

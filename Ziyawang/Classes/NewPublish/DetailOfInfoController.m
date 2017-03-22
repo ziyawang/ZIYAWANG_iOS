@@ -24,6 +24,8 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "TipTableViewController.h"
+
+#import "CLAmplifyView.h"
 @interface DetailOfInfoController ()<KNPhotoBrowerDelegate>
 {
     
@@ -56,7 +58,11 @@
 @property (nonatomic,strong) AVPlayer *player;
 
 @property (nonatomic,strong) NSMutableDictionary *dataDic;
-
+@property (nonatomic,strong) UIView *xiangmuView;
+@property (nonatomic,strong) UIImageView *tapImageView;
+@property (nonatomic,strong) UILabel *tapLabel;
+@property (nonatomic,strong) UIView *audioView;
+@property (nonatomic,strong) UILabel *xiangmuLabel;
 @end
 
 @implementation DetailOfInfoController
@@ -552,7 +558,8 @@
     
     self.changeView.sd_layout.topSpaceToView(infoView,1)
     .leftSpaceToView(self.scrollView,0)
-    .rightSpaceToView(self.scrollView,0);
+    .rightSpaceToView(self.scrollView,0)
+    .heightIs(0);
     
     specialImageView.sd_layout.rightSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -581,7 +588,7 @@
             specialImageView.image = [UIImage imageNamed:@"hezuozhongd"];
         }
         if ([self.model.CooperateState isEqualToString:@"2"]) {
-            if ([self.model.TypeName isEqualToString:@"融资信息"]) {
+            if ([self.model.TypeName isEqualToString:@"融资信息"] || [self.model.TypeName isEqualToString:@"法拍资产"]) {
                 specialImageView.image = [UIImage imageNamed:@"yiwanchengd"];
 
             }
@@ -642,23 +649,23 @@
     
     
     
-    UIView *audioView = [UIView new];
-    audioView.backgroundColor = [UIColor whiteColor];
+    self.audioView = [UIView new];
+    self.audioView.backgroundColor = [UIColor whiteColor];
     
     UILabel *yuyinLabel = [UILabel new];
     UIButton *recordButton = [UIButton new];
     
-    [self.scrollView addSubview:audioView];
-    [audioView addSubview:yuyinLabel];
-    [audioView addSubview:recordButton];
+    [self.scrollView addSubview:self.audioView];
+    [self.audioView addSubview:yuyinLabel];
+    [self.audioView addSubview:recordButton];
     
-    audioView.sd_layout.leftSpaceToView(self.scrollView,0)
+    self.audioView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
     .topSpaceToView(wordDesView,10)
     .heightIs(70);
     
-    yuyinLabel.sd_layout.leftSpaceToView(audioView,15)
-    .centerYEqualToView(audioView);
+    yuyinLabel.sd_layout.leftSpaceToView(self.audioView,15)
+    .centerYEqualToView(self.audioView);
     [yuyinLabel setSingleLineAutoResizeWithMaxWidth:200];
     
     yuyinLabel.text = @"语音描述";
@@ -684,6 +691,53 @@
         [recordButton setBackgroundImage:[UIImage imageNamed:@"yuyin"] forState:(UIControlStateNormal)];
         
     }
+    
+    self.xiangmuLabel = [UILabel new];
+    self.xiangmuLabel.text = @"项目详情";
+    self.xiangmuLabel.font = [UIFont boldSystemFontOfSize:17];
+
+    self.xiangmuView = [UIView new];
+    self.tapImageView = [UIImageView new];
+    [self.scrollView addSubview:self.tapImageView];
+    [self.scrollView addSubview:self.xiangmuView];
+    [self.xiangmuView addSubview:self.xiangmuLabel];
+    self.xiangmuView.backgroundColor = [UIColor whiteColor];
+    
+    self.xiangmuView.sd_layout.leftEqualToView(self.audioView)
+    .rightEqualToView(self.audioView)
+    .heightIs(0)
+    .topSpaceToView(self.audioView,0);
+    self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+    .rightEqualToView(self.xiangmuView)
+    .heightIs(0)
+    .topSpaceToView(self.xiangmuView,0);
+//    self.tapImageView.backgroundColor = [UIColor redColor];
+    self.xiangmuLabel.sd_layout.leftSpaceToView(self.xiangmuView,15)
+    .centerYEqualToView(self.xiangmuView)
+    .heightIs(20);
+    [self.xiangmuLabel setSingleLineAutoResizeWithMaxWidth:200];
+
+    self.tapLabel = [UILabel new];
+    [self.tapImageView addSubview:self.tapLabel];
+    self.tapLabel.sd_layout.centerXEqualToView(self.tapImageView)
+    .bottomSpaceToView(self.tapImageView,25)
+    .heightIs(30);
+    [self.tapLabel setSingleLineAutoResizeWithMaxWidth:400];
+    self.tapLabel.text = @"   点击查看大图   ";
+    self.tapLabel.textColor = [UIColor whiteColor];
+    self.tapLabel.backgroundColor = [UIColor colorWithHexString:@"#b2b2b2"];
+    self.tapLabel.layer.masksToBounds = YES;
+    self.tapLabel.layer.cornerRadius = 15;
+    
+    
+    [self.xiangmuLabel setHidden:YES];
+    [self.tapLabel setHidden:YES];
+    UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageViewAction:)];
+    
+    self.tapImageView.userInteractionEnabled = YES;
+    [self.tapImageView addGestureRecognizer:tapG];
+    
+    
     UIView *xiangguanView = [UIView new];
     xiangguanView.backgroundColor = [UIColor whiteColor];
     
@@ -790,7 +844,7 @@
     
     xiangguanView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
-    .topSpaceToView(audioView,10)
+    .topSpaceToView(self.tapImageView,10)
     .heightIs(50);
     
     xiangguanLabel.sd_layout.leftSpaceToView(xiangguanView,15)
@@ -1976,6 +2030,25 @@
 }
 - (void)HouseProductionView
 {
+    if (self.model.PictureDet == nil || [self.model.PictureDet isEqualToString:@""]) {
+        
+    }
+    else
+    {
+        self.xiangmuView.sd_layout.leftEqualToView(self.audioView)
+        .rightEqualToView(self.audioView)
+        .heightIs(50)
+        .topSpaceToView(self.audioView,10);
+        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+        .rightEqualToView(self.xiangmuView)
+        .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
+        .topSpaceToView(self.xiangmuView,0);
+        [self.xiangmuLabel setHidden:NO];
+        [self.tapLabel setHidden:NO];
+        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+
+    }
+    
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
@@ -2125,30 +2198,30 @@
     .topEqualToView(label17)
     .heightIs(20);
     
-    label19.sd_layout.leftSpaceToView(self.changeView,15)
-    .topSpaceToView(label17,15)
-    .heightIs(20);
-    
-    label20.sd_layout.leftSpaceToView(label19,0)
-    .topEqualToView(label19)
-    .heightIs(20);
-    
-    label21.sd_layout.leftSpaceToView(self.changeView,15)
-    .topSpaceToView(label19,15)
-    .heightIs(20);
-    
-    label22.sd_layout.leftSpaceToView(label21,0)
-    .topEqualToView(label21)
-    .heightIs(20);
-    
-    label23.sd_layout.leftSpaceToView(self.changeView,15)
-    .topSpaceToView(label21,15)
-    .heightIs(20);
-    
-    label24.sd_layout.leftSpaceToView(label23,0)
-    .topEqualToView(label23)
-    .heightIs(20);
-    
+//    label19.sd_layout.leftSpaceToView(self.changeView,15)
+//    .topSpaceToView(label17,15)
+//    .heightIs(20);
+//    
+//    label20.sd_layout.leftSpaceToView(label19,0)
+//    .topEqualToView(label19)
+//    .heightIs(20);
+//    
+//    label21.sd_layout.leftSpaceToView(self.changeView,15)
+//    .topSpaceToView(label19,15)
+//    .heightIs(20);
+//    
+//    label22.sd_layout.leftSpaceToView(label21,0)
+//    .topEqualToView(label21)
+//    .heightIs(20);
+//    
+//    label23.sd_layout.leftSpaceToView(self.changeView,15)
+//    .topSpaceToView(label21,15)
+//    .heightIs(20);
+//    
+//    label24.sd_layout.leftSpaceToView(label23,0)
+//    .topEqualToView(label23)
+//    .heightIs(20);
+//    
     
     
     
@@ -2182,42 +2255,42 @@
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     
-    label3.text = @"地区：";
-    label4.text =self.model.ProArea;
-    
-    label5.text = @"标的物类型：";
-    label6.text = self.model.AssetType;
+    label3.text = @"标的物类型：";
+    label4.text = self.model.AssetType;
+
+    label5.text = @"地区：";
+    label6.text =self.model.ProArea;
     
     label7.text = @"房产类型：";
     label8.text = self.model.Type;
     
-    label9.text = @"规划用途：";
-    label10.text = self.model.Usefor;
+//    label9.text = @"规划用途：";
+//    label10.text = self.model.Usefor;
     
-    label11.text = @"面积：";
-    label12.text = [self.model.Area stringByAppendingString:@"平米"];
+    label9.text = @"面积：";
+    label10.text = [self.model.Area stringByAppendingString:@"平米"];
     
-    label13.text = @"剩余使用年限：";
-    label14.text = [self.model.Year stringByAppendingString:@"年"];
+//    label13.text = @"剩余使用年限：";
+//    label14.text = [self.model.Year stringByAppendingString:@"年"];
     
-    label15.text = @"转让方式：";
-    label16.text = self.model.TransferType;
+//    label15.text = @"转让方式：";
+//    label16.text = self.model.TransferType;
     
-    label17.text = @"市场价：";
-    label18.text = [self.model.MarketPrice stringByAppendingString:@"万"];
-    label18.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label18.font = [UIFont systemFontOfSize:20];
-    label19.text = @"市场单价：";
+    label11.text = @"参考市价：";
+    label12.text = [self.model.MarketPrice stringByAppendingString:@"万"];
+    label12.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label12.font = [UIFont systemFontOfSize:20];
+    label13.text = @"市场单价：";
+    label14.text = [[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+
+    label15.text = @"意向转让价：";
+
+    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label16.font = [UIFont systemFontOfSize:20];
     
-    label22.text = [self.model.TransferMoney stringByAppendingString:@"万"];
-    label22.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label22.font = [UIFont systemFontOfSize:20];
-    
-    label21.text = @"转让价：";
-    label20.text = [[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
-    
-    label23.text = @"转让单价：";
-    label24.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+    label17.text = @"意向转让单价：";
+    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -2248,13 +2321,13 @@
     
     [qitaView addSubview:qitaLabel];
     
-    [self.changeView addSubview:qitaView];
-    [self.changeView addSubview:qitaBottView];
-    
+//    [self.changeView addSubview:qitaView];
+//    [self.changeView addSubview:qitaBottView];
+//    
     [self.changeView addSubview:line1];
-    [self.changeView addSubview:line2];
-    [self.changeView addSubview:line3];
-    
+//    [self.changeView addSubview:line2];
+//    [self.changeView addSubview:line3];
+//    
     [qitaBottView addSubview:danbaoLabel];
     [qitaBottView addSubview:changhuanLabel];
     [qitaBottView addSubview:diyaLabel];
@@ -2270,7 +2343,7 @@
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
-    .topSpaceToView(label23,15)
+    .topSpaceToView(label17,15)
     .heightIs(10);
     
     qitaView.sd_layout.leftEqualToView(line1)
@@ -2361,9 +2434,9 @@
     [liangdianBottomView addSubview:button2];
     [liangdianBottomView addSubview:button3];
     [liangdianBottomView addSubview:button4];
-    liangdianTopView.sd_layout.leftEqualToView(line3)
-    .rightEqualToView(line3)
-    .topSpaceToView(line3,0)
+    liangdianTopView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
     .heightIs(50);
     
     liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
@@ -2379,7 +2452,7 @@
     .topSpaceToView(liangdianTopView,0);
     
     line4.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:10];
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
@@ -2461,6 +2534,25 @@
 }
 - (void)landProductionView
 {
+    if (self.model.PictureDet == nil || [self.model.PictureDet isEqualToString:@""]) {
+        
+    }
+    else
+    {
+        self.xiangmuView.sd_layout.leftEqualToView(self.audioView)
+        .rightEqualToView(self.audioView)
+        .heightIs(50)
+        .topSpaceToView(self.audioView,10);
+        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+        .rightEqualToView(self.xiangmuView)
+        .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
+        .topSpaceToView(self.xiangmuView,0);
+        [self.xiangmuLabel setHidden:NO];
+        [self.tapLabel setHidden:NO];
+        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+
+    }
+
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
@@ -2622,31 +2714,47 @@
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     
-    label3.text = @"地区：";
-    label4.text = self.model.ProArea;
+    label3.text = @"标的物类型：";
+    label4.text = self.model.AssetType;
     
-    label5.text = @"标的物类型：";
-    label6.text = self.model.AssetType;
+    label5.text = @"地区：";
+    label6.text = self.model.ProArea;
+    
+
     
     label7.text = @"规划用途：";
     label8.text = self.model.Usefor;
     
-    label9.text = @"面积：";
+    label9.text = @"土地面积：";
     label10.text = [self.model.Area stringByAppendingString:@"平米"];
     
-    label11.text = @"剩余使用年限：";
-    label12.text = [self.model.Year stringByAppendingString:@"年"];
+    label11.text = @"建筑面积：";
     
-    label13.text = @"转让方式：";
-    label14.text = self.model.TransferType;
+    label13.text = @"容积率：";
+    self.model.FloorRatio = [NSString stringWithFormat:@"%@",self.model.FloorRatio];
+    if (self.model.BuildArea.floatValue == 0) {
+    label12.text = @"";
+    }
+    else
+    {
+        label12.text = [self.model.BuildArea stringByAppendingString:@"平米"];
+    }
+    if (self.model.FloorRatio == nil || [self.model.FloorRatio isEqualToString:@""] || [self.model.FloorRatio isEqualToString:@"0.00"]) {
+        label14.text = @"";
+    }
+    else
+    {
+        label14.text = self.model.FloorRatio;
+
+    }
     
-    label15.text = @"转让价：";
+    label15.text = @"意向转让价：";
     label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
     label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label16.font = [UIFont systemFontOfSize:20];
-    
-    label17.text = @"转让单价：";
-    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+//    
+//    label17.text = @"转让单价：";
+//    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
     
     
     UIView *line1 = [UIView new];
@@ -2678,12 +2786,12 @@
     
     [qitaView addSubview:qitaLabel];
     
-    [self.changeView addSubview:qitaView];
-    [self.changeView addSubview:qitaBottView];
-    
+//    [self.changeView addSubview:qitaView];
+//    [self.changeView addSubview:qitaBottView];
+//    
     [self.changeView addSubview:line1];
-    [self.changeView addSubview:line2];
-    [self.changeView addSubview:line3];
+//    [self.changeView addSubview:line2];
+//    [self.changeView addSubview:line3];
     
     [qitaBottView addSubview:danbaoLabel];
     [qitaBottView addSubview:changhuanLabel];
@@ -2804,9 +2912,9 @@
     [liangdianBottomView addSubview:button3];
     [liangdianBottomView addSubview:button4];
     
-    liangdianTopView.sd_layout.leftEqualToView(line3)
-    .rightEqualToView(line3)
-    .topSpaceToView(line3,0)
+    liangdianTopView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
     .heightIs(50);
     
     liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
@@ -2822,7 +2930,7 @@
     .topSpaceToView(liangdianTopView,0);
     
     line4.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:10];
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
@@ -3842,6 +3950,25 @@
 }
 - (void)asetBackView
 {
+    if (self.model.PictureDet == nil || [self.model.PictureDet isEqualToString:@""] ) {
+        
+    }
+    else
+    {
+    self.xiangmuView.sd_layout.leftEqualToView(self.audioView)
+    .rightEqualToView(self.audioView)
+    .heightIs(50)
+    .topSpaceToView(self.audioView,10);
+    self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+    .rightEqualToView(self.xiangmuView)
+    .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
+    .topSpaceToView(self.xiangmuView,0);
+    [self.xiangmuLabel setHidden:NO];
+    [self.tapLabel setHidden:NO];
+    [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+
+    }
+    
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
     UILabel *label3 = [UILabel new];
@@ -3855,7 +3982,11 @@
     UILabel *label10 = [UILabel new];
     UILabel *label11 = [UILabel new];
     UILabel *label12 = [UILabel new];
-    
+    UILabel *label13 = [UILabel new];
+    UILabel *label14 = [UILabel new];
+    UILabel *label15 = [UILabel new];
+    UILabel *label16 = [UILabel new];
+
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
     [self.changeView addSubview:label3];
@@ -3868,6 +3999,11 @@
     [self.changeView addSubview:label10];
     [self.changeView addSubview:label11];
     [self.changeView addSubview:label12];
+    [self.changeView addSubview:label13];
+    [self.changeView addSubview:label14];
+    [self.changeView addSubview:label15];
+    [self.changeView addSubview:label16];
+
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -3923,6 +4059,22 @@
     .topEqualToView(label11)
     .heightIs(20);
     
+    label13.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label11,15)
+    .heightIs(20);
+    
+    label14.sd_layout.leftSpaceToView(label13,0)
+    .topEqualToView(label13)
+    .heightIs(20);
+    
+    label15.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label13,15)
+    .heightIs(20);
+    
+    label16.sd_layout.leftSpaceToView(label15,0)
+    .topEqualToView(label15)
+    .heightIs(20);
+    
     [label1 setSingleLineAutoResizeWithMaxWidth:200];
     [label2 setSingleLineAutoResizeWithMaxWidth:200];
     [label3 setSingleLineAutoResizeWithMaxWidth:200];
@@ -3935,25 +4087,38 @@
     [label10 setSingleLineAutoResizeWithMaxWidth:200];
     [label11 setSingleLineAutoResizeWithMaxWidth:200];
     [label12 setSingleLineAutoResizeWithMaxWidth:200];
-    
+    [label13 setSingleLineAutoResizeWithMaxWidth:200];
+    [label14 setSingleLineAutoResizeWithMaxWidth:200];
+    [label15 setSingleLineAutoResizeWithMaxWidth:200];
+    [label16 setSingleLineAutoResizeWithMaxWidth:200];
+
     
     
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
-    label3.text = @"资产包类型：";
-    label4.text = self.model.AssetType;
-    label5.text = @"来源：";
-    label6.text = self.model.FromWhere;
+    label3.text = @"卖家类型：";
+    label4.text = self.model.FromWhere;
+    label5.text = @"资产包类型：";
+    label6.text = self.model.AssetType;
     label7.text = @"地区：";
     label8.text = self.model.ProArea;
     label9.text = @"总金额：";
     label10.text = [self.model.TotalMoney stringByAppendingString:@"万"];
     label10.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label10.font = [UIFont systemFontOfSize:20];
-    label11.text = @"转让价：";
-    label12.text = [self.model.TransferMoney stringByAppendingString:@"万"];
-    label12.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    
+    label11.text = @"本金：";
+    label12.text = [self.model.Money stringByAppendingString:@"万元"];
     label12.font = [UIFont systemFontOfSize:20];
+
+    label13.text = @"利息：";
+    label14.text = [self.model.Rate stringByAppendingString:@"万元"];
+    label14.font = [UIFont systemFontOfSize:20];
+
+    label15.text = @"意向转让价：";
+    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label16.font = [UIFont systemFontOfSize:20];
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -3984,14 +4149,14 @@
     UILabel *diyawuLeiXing = [UILabel new];
     
     
-    [qitaView addSubview:qitaLabel];
-    
-    [self.changeView addSubview:qitaView];
-    [self.changeView addSubview:qitaBottView];
-    
+//    [qitaView addSubview:qitaLabel];
+//    
+//    [self.changeView addSubview:qitaView];
+//    [self.changeView addSubview:qitaBottView];
+//    
     [self.changeView addSubview:line1];
-    [self.changeView addSubview:line2];
-    [self.changeView addSubview:line3];
+//    [self.changeView addSubview:line2];
+//    [self.changeView addSubview:line3];
     
     [qitaBottView addSubview:danbaoLabel];
     [qitaBottView addSubview:changhuanLabel];
@@ -4010,7 +4175,7 @@
     
     line1.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
-    .topSpaceToView(label11,15)
+    .topSpaceToView(label15,15)
     .heightIs(10);
     
     qitaView.sd_layout.leftEqualToView(line1)
@@ -4105,19 +4270,20 @@
     UILabel *button3 = [UILabel new];
     UIView *line4 = [UIView new];
     
-    
+//    
     [self.changeView addSubview:liangdianTopView];
     [self.changeView addSubview:liangdianBottomView];
     [self.changeView addSubview:line4];
+    
     [liangdianTopView addSubview:liandianLabel];
     [liangdianBottomView addSubview:button1];
     [liangdianBottomView addSubview:button2];
     [liangdianBottomView addSubview:button3];
     
     
-    liangdianTopView.sd_layout.leftEqualToView(line3)
-    .rightEqualToView(line3)
-    .topSpaceToView(line3,0)
+    liangdianTopView.sd_layout.leftEqualToView(line1)
+    .rightEqualToView(line1)
+    .topSpaceToView(line1,0)
     .heightIs(50);
     
     liandianLabel.sd_layout.leftSpaceToView(liangdianTopView,15)
@@ -4133,7 +4299,7 @@
     .topSpaceToView(liangdianTopView,0);
     
     line4.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
-    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:35];
+    [self.changeView setupAutoHeightWithBottomView:liangdianBottomView bottomMargin:20];
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
@@ -4224,6 +4390,13 @@
         [self.navigationController pushViewController:tipVc animated:YES];
     }
     
+}
+                        
+                        
+- (void)tapImageViewAction:(UITapGestureRecognizer *)gesture
+{
+    CLAmplifyView *amplifyView = [[CLAmplifyView alloc] initWithFrame:self.view.bounds andGesture:gesture andSuperView:self.scrollView];
+    [[UIApplication sharedApplication].keyWindow addSubview:amplifyView];
 }
 
 #pragma mark----查看图片手势方法以及代理

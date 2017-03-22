@@ -75,10 +75,7 @@
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             NSLog(@"获取用户信息失败");
-            //        NSString *userName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
-            //        NSString *userPicture = [[NSUserDefaults standardUserDefaults]objectForKey:@""];
-            //        NSString *
-            
+  
         }];
         
     }
@@ -92,6 +89,7 @@
 }
 - (IBAction)rechargeButtonAction:(id)sender {
     RechargeController *recharVC = [[RechargeController alloc]init];
+    recharVC.type = @"充值";
     [self.navigationController pushViewController:recharVC animated:YES];
 }
 - (IBAction)xiyiButtonAction:(id)sender {

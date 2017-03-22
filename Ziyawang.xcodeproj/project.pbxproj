@@ -646,6 +646,7 @@
 		78746D691D6ADB8B00AD60FF /* jiantou-r.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D661D6ADB8B00AD60FF /* jiantou-r.png */; };
 		78746D6A1D6ADB8B00AD60FF /* jiantou-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D671D6ADB8B00AD60FF /* jiantou-r@2x.png */; };
 		78746D6B1D6ADB8B00AD60FF /* jiantou-r@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78746D681D6ADB8B00AD60FF /* jiantou-r@3x.png */; };
+		7879C58B1E767AD600F742D1 /* CLAmplifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7879C58A1E767AD600F742D1 /* CLAmplifyView.m */; };
 		7879DC921E553848004CA809 /* OtherStarIdentiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7879DC901E553848004CA809 /* OtherStarIdentiController.m */; };
 		7879DC931E553848004CA809 /* OtherStarIdentiController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7879DC911E553848004CA809 /* OtherStarIdentiController.xib */; };
 		787DD1B81D52CD7300132B3B /* LxGridViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 787DD1B51D52CD7300132B3B /* LxGridViewFlowLayout.m */; };
@@ -1867,6 +1868,8 @@
 		78746D661D6ADB8B00AD60FF /* jiantou-r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r.png"; sourceTree = "<group>"; };
 		78746D671D6ADB8B00AD60FF /* jiantou-r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r@2x.png"; sourceTree = "<group>"; };
 		78746D681D6ADB8B00AD60FF /* jiantou-r@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou-r@3x.png"; sourceTree = "<group>"; };
+		7879C5891E767AD600F742D1 /* CLAmplifyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAmplifyView.h; sourceTree = "<group>"; };
+		7879C58A1E767AD600F742D1 /* CLAmplifyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAmplifyView.m; sourceTree = "<group>"; };
 		7879DC8F1E553848004CA809 /* OtherStarIdentiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherStarIdentiController.h; sourceTree = "<group>"; };
 		7879DC901E553848004CA809 /* OtherStarIdentiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherStarIdentiController.m; sourceTree = "<group>"; };
 		7879DC911E553848004CA809 /* OtherStarIdentiController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherStarIdentiController.xib; sourceTree = "<group>"; };
@@ -3852,6 +3855,8 @@
 		78CFFA881D3DAD76002A22C8 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				7879C5891E767AD600F742D1 /* CLAmplifyView.h */,
+				7879C58A1E767AD600F742D1 /* CLAmplifyView.m */,
 				78EA8B671DC9E6C0005658A1 /* AttributedMarkup */,
 				78CFFA271D3DAD0C002A22C8 /* AppDelegate.h */,
 				78CFFA281D3DAD0C002A22C8 /* AppDelegate.m */,
@@ -5537,6 +5542,7 @@
 				78469B1E1D54B33200F3DE4C /* CancelTogetherController.m in Sources */,
 				7810479D1E0CCE4100A9B5A4 /* GoldCertiViewController.m in Sources */,
 				7889627B1D86D0DA008DC681 /* ZiyaServiceModel.m in Sources */,
+				7879C58B1E767AD600F742D1 /* CLAmplifyView.m in Sources */,
 				78F624501D5AC13E002E21B3 /* MASCompositeConstraint.m in Sources */,
 				78469B181D54B2A600F3DE4C /* MyPushController.m in Sources */,
 				78163D941E02405E00E46B87 /* VipRechargeLogCell.m in Sources */,

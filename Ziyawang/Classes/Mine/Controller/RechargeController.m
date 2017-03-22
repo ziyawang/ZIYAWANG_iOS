@@ -72,7 +72,6 @@
     
     // Do any additional setup after loading the view from its nib.
 }
-
 - (void)createButtons
 {
 
@@ -246,7 +245,6 @@
 - (void)sendReceiptToDomainWithReceipt:(NSString *)receipt
 {
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    
     NSString *URL = [[RechargeSussceeURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     NSLog(@"--------%@",URL);
     NSMutableDictionary *dic = [NSMutableDictionary new];
@@ -257,8 +255,10 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         if ([dic[@"status_code"] isEqualToString:@"200"]) {
             NSLog(@"发送成功");
+            [self getUserInfoFromDomin];
         }
         else
         {
@@ -275,6 +275,36 @@
 //        [self sendReceiptToDomainWithReceipt:receipt];
     }];
 }
+- (void)getUserInfoFromDomin
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //    NSString *role = [[NSUserDefaults standardUserDefaults]objectForKey:@"role"];
+    if (token != nil) {
+        NSString *URL = [[getUserInfoURL stringByAppendingString:@"?token="]stringByAppendingString:token];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"token" forKey:@"access_token"];
+        [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"Account"] forKey:@"account"];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
+//            if ([self.type isEqualToString:@"充值"]) {
+//                
+//            }
+//            else
+//            {
+//            [self.navigationController popViewControllerAnimated:YES];
+//            }
+            //            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
+            //            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        }];
+    }
+}
+
 
 //持久化存储用户购买凭证(这里最好还要存储当前日期，用户id等信息，用于区分不同的凭证)
 -(void)saveReceiptWithReceipt:(NSString *)receipt{
@@ -423,7 +453,7 @@
     
     if (button.tag != 0 && button.tag != 1) {
 
-        label.sd_layout.bottomSpaceToView(middleLabel,5)
+        label.sd_layout.bottomSpaceToView(middleLabel,3)
         .centerXEqualToView(button)
         .heightIs(15);
         [label setSingleLineAutoResizeWithMaxWidth:200];
@@ -433,7 +463,7 @@
         .heightIs(11);
         [middleLabel setSingleLineAutoResizeWithMaxWidth:300];
         
-        longLabel.sd_layout.topSpaceToView(middleLabel,5)
+        longLabel.sd_layout.topSpaceToView(middleLabel,3)
         .centerXEqualToView(button)
         .heightIs(11);
         [longLabel setSingleLineAutoResizeWithMaxWidth:300];
@@ -471,12 +501,14 @@
     
     label.text = [longText stringByAppendingString:@"芽币"];
     longLabel.text = [[@"充值:"stringByAppendingString:text]stringByAppendingString:@"元"];
-    label.font = [UIFont systemFontOfSize:15];
-    longLabel.font = [UIFont systemFontOfSize:12];
+    label.font = [UIFont systemFontOfSize:14];
+    longLabel.font = [UIFont systemFontOfSize:11];
+    middleLabel.font = [UIFont systemFontOfSize:11];
+
     longLabel.textColor = [UIColor grayColor];
     
-    middleLabel.font = [UIFont systemFontOfSize:12];
     middleLabel.textColor = [UIColor colorWithHexString:@"#ff2f2f"];
+    
     middleLabel.text = [[[[@"("stringByAppendingString:@"赠送"]stringByAppendingString:add]stringByAppendingString:@"芽币"]stringByAppendingString:@")"];
     
     

@@ -48,6 +48,8 @@
 
 - (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
 {
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
+
     
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     
@@ -130,10 +132,11 @@
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            self.account = dic[@"user"][@"Account"];
+//            self.account = dic[@"user"][@"Account"];
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
-            
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"Account"] forKey:@"account"];
+
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
             //            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
             //            [self.userModel setValuesForKeysWithDictionary:dic[@"service"]];
@@ -216,16 +219,13 @@
 - (void)getNewVideosList
 {
     [self.sourceArray removeAllObjects];
-    
     self.startPage = 1;
     //    NSString *headurl = @"https://apis.ziyawang.com/zll";
     //    NSString *footurl = @"/video/list";
     NSString *token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    
     NSString *URL = getVideoListURL;
     if (token != nil) {
         URL =[[getVideoListURL stringByAppendingString:@"?token="]stringByAppendingString:token];
-        
     }
     NSString *accesstoken = @"token";
     NSString *VideoLabel = @"ffkc";
@@ -300,6 +300,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     VideosModel *model = [[VideosModel alloc]init];
     model = self.sourceArray[indexPath.row];
     self.pubModel = model;
@@ -309,6 +310,7 @@
     userInfo[@"zvideoModel"] = _zvideo;
     userInfo[@"model"] = model;
     
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
     if ([model.Member isEqualToString:@"0"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PushToMovieDentailControllerNotification" object:nil userInfo:userInfo];
     }

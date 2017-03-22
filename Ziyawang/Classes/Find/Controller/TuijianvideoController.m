@@ -55,7 +55,8 @@
 - (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
 {
    
-    
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
+
     
     //    model = self.sourceArray[indexPath.row];
     //    NSString *headURL = @"http://videos.ziyawang.com";
@@ -109,25 +110,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
-//        self.extendedLayoutIncludesOpaqueBars = NO;
-//        self.modalPresentationCapturesStatusBarAppearance = NO;
-//    }
     [self getUserInfoFromDomin];
     [self getNewVideosList];
-
- 
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //    self.navigationController.navigationBar.hidden = YES;
-    //    self.edgesForExtendedLayout = UIRectEdgeNone;
-    //            self.extendedLayoutIncludesOpaqueBars = NO;
-    //            self.modalPresentationCapturesStatusBarAppearance = NO;
     self.sourceArray = [NSMutableArray new];
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:(UITableViewStylePlain)];
     self.zvideo = [[ZXVideo alloc]init];
@@ -343,6 +331,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
       //
     VideosModel *model = [[VideosModel alloc]init];
     model = self.sourceArray[indexPath.row];

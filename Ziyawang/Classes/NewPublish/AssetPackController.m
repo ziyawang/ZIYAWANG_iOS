@@ -14,13 +14,14 @@
 @interface AssetPackController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *shenfenView;
-@property (weak, nonatomic) IBOutlet UIView *zichanleixingView;
+@property (nonatomic,strong) UIView *zichanleixingView;
 @property (weak, nonatomic) IBOutlet UIView *laiyuanView;
 @property (weak, nonatomic) IBOutlet UIView *diquView;
 @property (weak, nonatomic) IBOutlet UIView *baogaoView;
 @property (weak, nonatomic) IBOutlet UIView *shijianView;
 @property (weak, nonatomic) IBOutlet UIView *diyawuleixingView;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+@property (weak, nonatomic) IBOutlet UILabel *lixiLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *shenfenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zichanleixingLabel;
@@ -602,7 +603,7 @@
     [dic setObject:@"token" forKey:@"access_token"];
     [dic setObject:self.shenfenLabel.text forKey:@"Identity"];
     [dic setObject:self.diquLabel.text forKey:@"ProArea"];
-    [dic setObject:self.zichanleixingLabel.text forKey:@"AssetType"];
+//    [dic setObject:self.zichanleixingLabel.text forKey:@"AssetType"];
     [dic setObject:@"IOS" forKey:@"Channel"];
     [dic setObject:self.textView.text forKey:@"WordDes"];
     [dic setObject:self.connectPersonTextfield.text forKey:@"ConnectPerson"];
@@ -610,28 +611,26 @@
     [dic setObject:self.laiyuanLabel.text forKey:@"FromWhere"];
     [dic setObject:self.zongjineTextField.text forKey:@"TotalMoney"];
     [dic setObject:self.zhuanrangjiaTextField.text forKey:@"TransferMoney"];
-    
-    
+    [dic setObject:self.lixiLabel.text forKey:@"Rate"];
+
     
     if (self.benjiTextField.text != nil) {
         [dic setObject:self.benjiTextField.text forKey:@"Money"];
     }
-    if (self.lixiTextField.text != nil) {
-        [dic setObject:self.lixiTextField.text forKey:@"Rate"];
-    }
-    if (self.hushuTextField.text != nil) {
-        [dic setObject:self.hushuTextField.text forKey:@"Counts"];
-    }
-    if ([self.baogaoLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.baogaoLabel.text forKey:@"Report"];
-    }
-    if ([self.shijianLabel.text isEqualToString:@"请选择"] == NO) {
-        [dic setObject:self.shijianLabel.text forKey:@"Time"];
-    }
-    if ([self.diyawuleixingLabel.text isEqualToString:@"请选择"] == NO) {
-    [dic setObject:self.diyawuleixingLabel.text forKey:@"Pawn"];
 
-    }
+//    if (self.hushuTextField.text != nil) {
+//        [dic setObject:self.hushuTextField.text forKey:@"Counts"];
+//    }
+//    if ([self.baogaoLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.baogaoLabel.text forKey:@"Report"];
+//    }
+//    if ([self.shijianLabel.text isEqualToString:@"请选择"] == NO) {
+//        [dic setObject:self.shijianLabel.text forKey:@"Time"];
+//    }
+//    if ([self.diyawuleixingLabel.text isEqualToString:@"请选择"] == NO) {
+//    [dic setObject:self.diyawuleixingLabel.text forKey:@"Pawn"];
+//
+//    }
     
     
     
@@ -649,7 +648,6 @@
 }
 - (void)weituoCancelAction2:(UIButton *)button
 {
-    
     [self.PromiseView removeFromSuperview];
 }
 
@@ -736,7 +734,7 @@
         return;
     }
     if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.laiyuanLabel] == NO) {
-        [MyMBHud MBProgressWithString:@"请选择来源" timer:1 mode:(MBProgressHUDModeText) target:self];
+        [MyMBHud MBProgressWithString:@"请选择卖家类型" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
     if ([CheckTextFieldAndLabelText checkLabelTextWithLabel:self.diquLabel] == NO) {
@@ -751,6 +749,14 @@
         [MyMBHud MBProgressWithString:@"请输入转让价" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
     }
+//    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.benjiTextField] == NO) {
+//        [MyMBHud MBProgressWithString:@"请输入本金" timer:1 mode:(MBProgressHUDModeText) target:self];
+//        return;
+//    }
+//    if ([CheckTextFieldAndLabelText checkTextFieldTextWithTextField:self.lixiTextField] == NO) {
+//        [MyMBHud MBProgressWithString:@"请输入利息" timer:1 mode:(MBProgressHUDModeText) target:self];
+//        return;
+//    }
     if (self.textView.text == nil || [self.textView.text isEqualToString:@"请输入文字描述"] ||[self.textView.text isEqualToString:@""]) {
         [MyMBHud MBProgressWithString:@"请输入文字描述" timer:1 mode:(MBProgressHUDModeText) target:self];
         return;
@@ -992,7 +998,9 @@
 //    @property (weak, nonatomic) IBOutlet UIView *baogaoView;
 //    @property (weak, nonatomic) IBOutlet UIView *shijianView;
 //    @property (weak, nonatomic) IBOutlet UIView *diyawuleixingView;
-    NSArray *viewArray = @[self.shenfenView,self.zichanleixingView,self.laiyuanView,self.diquView,self.baogaoView,self.shijianView,self.diyawuleixingView];
+    self.zichanleixingView = [[UIView alloc]init];
+    
+    NSArray *viewArray = @[self.shenfenView,self.zichanleixingView,self.laiyuanView,self.diquView];
     
     //    for (int i = 0; i < viewArray.count; i++) {
     //        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction:)];
@@ -1152,6 +1160,8 @@
 //textField.text 输入之前的值 string 输入的字符
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+   
+   
     if (textField.tag == 11 || textField.tag == 12) {
         [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:YES];
     }
@@ -1159,6 +1169,19 @@
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (textField == self.zongjineTextField || textField == self.benjiTextField) {
+        if ([self.zongjineTextField.text isEqualToString:@""]==NO && [self.benjiTextField.text isEqualToString:@""]==NO)
+        {
+            
+            NSLog(@"%@,%@",self.zongjineTextField.text,self.benjiTextField.text);
+            self.lixiLabel.text = [NSString stringWithFormat:@"%.2f",self.zongjineTextField.text.floatValue - self.benjiTextField.text.floatValue];
+        }
+        else
+        {
+            self.lixiLabel.text = @"0.0";
+        }
+    }
+    
     if (textField.tag == 11 || textField.tag == 12) {
         [TextFieldViewAnimate textFieldAnimateWithView:[[textField superview] superview] up:NO];
     }
@@ -1166,6 +1189,8 @@
 //textField.text 输入之前的值 string 输入的字符
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
+    
     if (textField.tag != 11 && textField.tag != 12)
     {
         NSInteger value = [textField.text integerValue];

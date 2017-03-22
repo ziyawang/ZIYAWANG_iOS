@@ -93,7 +93,7 @@
     
     if ([self.model.CooperateState isEqualToString:@"2"]) {
         [self.cooStateIma setHidden:NO];
-        if ([self.model.TypeName isEqualToString:@"融资信息"]) {
+        if ([self.model.TypeName isEqualToString:@"融资信息"] ||[self.model.TypeName isEqualToString:@"法拍资产"]) {
             self.cooStateIma.image = [UIImage imageNamed:@"yiwancheng"];
         }
         else

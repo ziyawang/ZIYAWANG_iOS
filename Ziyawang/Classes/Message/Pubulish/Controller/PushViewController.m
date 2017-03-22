@@ -47,6 +47,10 @@ self.navigationItem.title = @"发布";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
 
     self.navigationController.navigationBar.shadowImage=[UIImage new];
@@ -206,7 +210,26 @@ self.navigationItem.title = @"发布";
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSFileManager *fieManager = [NSFileManager defaultManager];
+    NSString *urlStr = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    NSLog(@"%@",urlStr);
+    NSString *fileName = @"lll.wav";
+    NSString *urlpath = [urlStr stringByAppendingPathComponent:fileName];
+    BOOL ifHave = [[NSFileManager defaultManager]fileExistsAtPath:urlpath];
+    if (!ifHave) {
+        NSLog(@"不存在语音");
+    }
+    else
+    {
+        NSLog(@"存在语音");
+        BOOL blDele= [fieManager removeItemAtPath:urlpath error:nil];
+        if (blDele) {
+            NSLog(@"删除语音成功");
+        }else {
+            NSLog(@"删除语音失败");
+        }
+    }
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"0"];
     [defaults removeObjectForKey:@"1"];

@@ -48,7 +48,8 @@
 
 - (void)pushToControllerWithZXVideo:(ZXVideo *)zvideo model:(VideosModel *)model
 {
-    
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
+
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     
     userInfo[@"zvideoModel"] = zvideo;
@@ -134,6 +135,8 @@
             self.role = dic[@"role"];
             self.USERID = dic[@"user"][@"userid"];
             
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"Account"] forKey:@"account"];
+
             [[NSUserDefaults standardUserDefaults] setObject:dic[@"user"][@"right"] forKey:@"right"];
             
             //            [self.userModel setValuesForKeysWithDictionary:dic[@"user"]];
@@ -306,10 +309,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.account = [[NSUserDefaults standardUserDefaults]objectForKey:@"account"];
     VideosModel *model = [[VideosModel alloc]init];
     model = self.sourceArray[indexPath.row];
     self.pubModel = model;
-    
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     self.row = indexPath.row;
     userInfo[@"zvideoModel"] = _zvideo;
@@ -320,7 +323,6 @@
     }
     else
     {
-        
         if ([[NSUserDefaults standardUserDefaults]objectForKey:@"token"] == nil) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentToLoginControllerNotification" object:nil userInfo:userInfo];
         }

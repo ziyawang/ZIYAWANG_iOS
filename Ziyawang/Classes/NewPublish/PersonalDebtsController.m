@@ -225,7 +225,6 @@
     if (self.isHave == YES)
     {
         [self setstatuForButtonsWithType:@"0" button:button];
-        
         [self.SelectedButtonsArray removeObject:button];
         [self.liangdianArray removeObject:button.titleLabel.text];
         NSLog(@"%@",button.titleLabel.text);
@@ -238,7 +237,6 @@
         [self.liangdianArray addObject:button.titleLabel.text];
         NSLog(@"%@",button.titleLabel.text);
         NSLog(@"%@",self.liangdianArray);
-        
     }
 }
 
@@ -256,7 +254,6 @@
         button.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
         [button setTitleColor:[UIColor colorWithHexString:@"fdd000"] forState:(UIControlStateNormal)];
     }
-
 }
 - (void)setPromiseView
 {
@@ -264,12 +261,10 @@
     UIView *weituoView = [UIView new];
     UIImageView *tuziImage = [UIImageView new];
     UIView *imageBackView = [UIView new];
-    
     UIView *bottomView = [UIView new];
     
     UILabel *label1 = [UILabel new];
     UILabel *label2 = [UILabel new];
-    
     
     UIButton *fabuButton = [UIButton new];
     UIButton *fanhuiButton = [UIButton new];
@@ -294,7 +289,6 @@
     
     imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
     weituoView.backgroundColor = [UIColor whiteColor];
-    
     
     
     mengbanView.sd_layout.leftSpaceToView(window,0)
@@ -361,8 +355,6 @@
     .heightIs(25)
     .widthIs(25);
     
-    
-    
     [cancelButton setBackgroundImage:[UIImage imageNamed:@"popup-cuowu"] forState:(UIControlStateNormal)];
     [cancelButton addTarget:self action:@selector(weituoCancelAction2:) forControlEvents:(UIControlEventTouchUpInside)];
     
@@ -373,15 +365,11 @@
     [fanhuiButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
     
     [fabuButton addTarget:self action:@selector(didClickWeituoFabuAction2:) forControlEvents:(UIControlEventTouchUpInside)];
-    
-    
     //    self.weituoView = weituoView;
     weituoView.layer.cornerRadius = 10;
     weituoView.layer.masksToBounds = YES;
     self.PromiseView = mengbanView;
-    //    [self.PromiseView setHidden:YES];
-    
-    
+    //    [self.PromiseView setHidden:YES];    
 }
 - (void)setWeituoView
 {
