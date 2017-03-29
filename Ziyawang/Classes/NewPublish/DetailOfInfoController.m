@@ -43,11 +43,17 @@
 @property (nonatomic,strong) PublishModel *model;
 
 @property (nonatomic,strong) NSMutableArray *itemsArray;
+@property (nonatomic,strong) NSMutableArray *itemsArray2;
+
 @property (nonatomic, strong) KNPhotoBrower *photoBrower;
 
 @property (nonatomic,strong) UIImageView *imageView1;
 @property (nonatomic,strong) UIImageView *imageView2;
 @property (nonatomic,strong) UIImageView *imageView3;
+@property (nonatomic,strong) UIView *imageViewb1;
+@property (nonatomic,strong) UIView *imageViewb2;
+@property (nonatomic,strong) UIView *imageViewb3;
+
 @property (nonatomic,strong) UserInfoModel *userModel;
 @property (nonatomic,strong) NSString *role;
 
@@ -63,6 +69,7 @@
 @property (nonatomic,strong) UILabel *tapLabel;
 @property (nonatomic,strong) UIView *audioView;
 @property (nonatomic,strong) UILabel *xiangmuLabel;
+@property (nonatomic,assign) CGSize imageSize;
 @end
 
 @implementation DetailOfInfoController
@@ -122,6 +129,7 @@
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.model = [[PublishModel alloc]init];
     self.itemsArray = [NSMutableArray new];
+    self.itemsArray2 = [NSMutableArray new];
     self.photoBrower = [[KNPhotoBrower alloc]init];
     self.userModel = [[UserInfoModel alloc]init];
     [self getUserInfoFromDomin];
@@ -390,7 +398,6 @@
 }
 - (void)setViews
 {
-    
     self.scrollView = [UIView new];
     self.scrollBackView = [UIScrollView new];
     
@@ -462,8 +469,17 @@
     UILabel *viewCountLabel = [UILabel new];
     UILabel *timeLabel = [UILabel new];
     UIButton *jubaoButton = [UIButton new];
+    UIButton *jubaobutton2= [UIButton new];
+    UIImageView *countIma = [UIImageView new];
+    UIImageView *timeIma = [UIImageView new];
     
-    numberLabel.textColor = [UIColor lightGrayColor];
+    [jubaobutton2 setBackgroundImage:[UIImage imageNamed:@"jubao"] forState:(UIControlStateNormal)];
+    [jubaobutton2 addTarget:self action:@selector(jubaoButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    countIma.image = [UIImage imageNamed:@"liulan"];
+    timeIma.image = [UIImage imageNamed:@"shizhong"];
+    
+    
+    numberLabel.textColor = [UIColor grayColor];
     viewCountLabel.textColor = [UIColor grayColor];
     timeLabel.textColor = [UIColor grayColor];
     
@@ -476,6 +492,11 @@
     [infoView addSubview:viewCountLabel];
     [infoView addSubview:timeLabel];
     [infoView addSubview:jubaoButton];
+    [infoView addSubview:jubaobutton2];
+    [infoView addSubview:countIma];
+    [infoView addSubview:timeIma];
+
+    
     
     nameLabel.text = self.model.username;
     if (self.model.username == nil || [self.model.username isEqualToString:@""]) {
@@ -488,7 +509,7 @@
     timeLabel.font = [UIFont systemFontOfSize:14];
     
     if (self.model.ViewCount != nil) {
-        viewCountLabel.text = [@"浏览"stringByAppendingString:self.model.ViewCount];
+        viewCountLabel.text = self.model.ViewCount;
     }
     
     NSArray *textarr = [self.model.PublishTime componentsSeparatedByString:@" "];
@@ -524,29 +545,50 @@
     .heightIs(20);
     [nameLabel setSingleLineAutoResizeWithMaxWidth:200];
     
-    numberLabel.sd_layout.leftSpaceToView(nameLabel,10)
-    .bottomEqualToView(nameLabel)
+    numberLabel.sd_layout.leftSpaceToView(imageview,10)
+    .topSpaceToView(nameLabel,10)
     .heightIs(15);
+    
     [numberLabel setSingleLineAutoResizeWithMaxWidth:200];
     
-    viewCountLabel.sd_layout.leftSpaceToView(imageview,10)
-    .topSpaceToView(nameLabel,10)
-    .heightIs(20);
-    [viewCountLabel setSingleLineAutoResizeWithMaxWidth:200];
-    timeLabel.sd_layout.leftSpaceToView(viewCountLabel,10)
-    .topSpaceToView(numberLabel,10)
-    .heightIs(20);
-    
-    [timeLabel setSingleLineAutoResizeWithMaxWidth:200];
-    
-    jubaoButton.sd_layout.centerYEqualToView(imageview)
+    jubaoButton.sd_layout.centerYEqualToView(nameLabel)
     .rightSpaceToView(infoView,15)
     .heightIs(20)
-    .widthIs(60);
+    .widthIs(33);
     [jubaoButton setTitle:@"举报" forState:(UIControlStateNormal)];
-    [jubaoButton setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
+    [jubaoButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+    jubaoButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    
     
     [jubaoButton addTarget:self action:@selector(jubaoButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    jubaobutton2.sd_layout.rightSpaceToView(jubaoButton,2)
+    .topSpaceToView(infoView,15)
+    .heightIs(15)
+    .widthIs(20);
+    
+   
+    timeLabel.sd_layout.rightEqualToView(jubaoButton)
+    .centerYEqualToView(numberLabel)
+    .heightIs(20);
+    [timeLabel setSingleLineAutoResizeWithMaxWidth:200];
+
+    timeIma.sd_layout.rightSpaceToView(timeLabel,2)
+    .centerYEqualToView(timeLabel)
+    .heightIs(15)
+    .widthIs(15);
+    viewCountLabel.sd_layout.rightSpaceToView(timeIma,20)
+    .centerYEqualToView(timeLabel)
+    .heightIs(20);
+    [viewCountLabel setSingleLineAutoResizeWithMaxWidth:200];
+    
+    countIma.sd_layout.rightSpaceToView(viewCountLabel,2)
+    .centerYEqualToView(viewCountLabel)
+    .widthIs(22)
+    .heightIs(13);
+    
+    
+    
+   
     
     
     self.changeView = [UIView new];
@@ -684,7 +726,7 @@
         //        recordButton.backgroundColor = [UIColor redColor];
         [recordButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
         
-        [recordButton setTitle:@"无语音" forState:(UIControlStateNormal)];
+        [recordButton setTitle:@"无语音描述" forState:(UIControlStateNormal)];
     }
     else
     {
@@ -732,10 +774,27 @@
     
     [self.xiangmuLabel setHidden:YES];
     [self.tapLabel setHidden:YES];
-    UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageViewAction:)];
     
+    
+    
+    
+    UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageViewAction:)];
+    self.tapImageView.tag = 0;
     self.tapImageView.userInteractionEnabled = YES;
+
+    self.tapImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
     [self.tapImageView addGestureRecognizer:tapG];
+    KNPhotoItems *item = [[KNPhotoItems alloc] init];
+    NSString *tapimageURL = @"1";
+    if ([self.model.PictureDet isEqualToString:@""] == NO && self.model.PictureDet != nil) {
+        [self.imageView1 setHidden:NO];
+        tapimageURL = [getImageURL stringByAppendingString:self.model.PictureDet];
+        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:tapimageURL]];
+        item.url = tapimageURL;
+        item.sourceView =self.tapImageView;
+        [self.itemsArray2 addObject:item];
+    }
     
     
     UIView *xiangguanView = [UIView new];
@@ -749,14 +808,25 @@
     self.imageBackView = [UIView new];
     self.imageBackView.backgroundColor = [UIColor whiteColor];
     
+    
+    
     UIImageView *imageView1 = [UIImageView new];
     UIImageView *imageView2 = [UIImageView new];
     UIImageView *imageView3 = [UIImageView new];
+    
+    self.imageViewb1 = [UIView new];
+    self.imageViewb2 = [UIView new];
+    self.imageViewb3 = [UIView new];
+    
     
     [imageView1 setHidden:YES];
     [imageView2 setHidden:YES];
     [imageView3 setHidden:YES];
     
+    [self.imageViewb1 setHidden:YES];
+    [self.imageViewb2 setHidden:YES];
+    [self.imageViewb3 setHidden:YES];
+
     self.imageView1 = imageView1;
     self.imageView2 = imageView2;
     self.imageView3 = imageView3;
@@ -773,6 +843,8 @@
     
     if ([self.model.PictureDes1 isEqualToString:@""] == NO && self.model.PictureDes1 != nil) {
         [self.imageView1 setHidden:NO];
+        [self.imageViewb1 setHidden:NO];
+        
         imageURL1 = [getImageURL stringByAppendingString:self.model.PictureDes1];
         [imageView1 sd_setImageWithURL:[NSURL URLWithString:imageURL1]];
         items1.url = imageURL1;
@@ -783,6 +855,8 @@
     if ([self.model.PictureDes2 isEqualToString:@""] == NO && self.model.PictureDes2 != nil) {
         imageURL2 = [getImageURL stringByAppendingString:self.model.PictureDes2];
         [imageView2 setHidden:NO];
+        [self.imageViewb2 setHidden:NO];
+        
         [imageView2 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes2]]];
         items2.url = imageURL2;
         items2.sourceView =imageView2;
@@ -792,6 +866,7 @@
         imageURL3 = [getImageURL stringByAppendingString:self.model.PictureDes3];
         
         [imageView3 setHidden:NO];
+        [self.imageViewb3 setHidden:NO];
         [imageView3 sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDes3]]];
         items3.url = imageURL3;
         items3.sourceView =imageView3;
@@ -822,25 +897,54 @@
     
     
     [self.scrollView addSubview:self.imageBackView];
-    [self.imageBackView addSubview:imageView1];
-    [self.imageBackView addSubview:imageView2];
-    [self.imageBackView addSubview:imageView3];
+    [self.imageBackView addSubview:self.imageViewb1];
+    [self.imageBackView addSubview:self.imageViewb2];
+    [self.imageBackView addSubview:self.imageViewb3];
+
     
-    imageView2.sd_layout.centerXEqualToView(self.imageBackView)
+    [self.imageViewb1 addSubview:imageView1];
+    [self.imageViewb2 addSubview:imageView2];
+    [self.imageViewb3 addSubview:imageView3];
+    
+//    self.imageViewb1.layer.masksToBounds = YES;
+    
+    self.imageViewb1.layer.borderWidth = 1;
+    self.imageViewb1.layer.borderColor = [UIColor colorWithHexString:@"#f3f3f3"].CGColor;
+    
+    self.imageViewb2.layer.borderWidth = 1;
+    self.imageViewb2.layer.borderColor = [UIColor colorWithHexString:@"#f3f3f3"].CGColor;
+    self.imageViewb3.layer.borderWidth = 1;
+    self.imageViewb3.layer.borderColor = [UIColor colorWithHexString:@"#f3f3f3"].CGColor;
+    
+    self.imageViewb1.sd_layout.leftSpaceToView(self.imageBackView,10)
     .centerYEqualToView(self.imageBackView)
+    .heightIs(110)
+    .widthIs(110);
+  
+    self.imageViewb2.sd_layout.leftSpaceToView(self.imageViewb1,10)
+    .centerYEqualToView(self.imageBackView)
+    .heightIs(110)
+    .widthIs(110);
+    
+    self.imageViewb3.sd_layout.leftSpaceToView(self.imageViewb2,10)
+    .centerYEqualToView(self.imageBackView)
+    .heightIs(110)
+    .widthIs(110);
+    
+    imageView1.sd_layout.centerXEqualToView(self.imageViewb1)
+    .centerYEqualToView(self.imageViewb1)
     .heightIs(90)
     .widthIs(90);
     
-    imageView1.sd_layout.rightSpaceToView(imageView2,30)
-    .centerYEqualToView(self.imageBackView)
+    imageView2.sd_layout.centerXEqualToView(self.imageViewb2)
+    .centerYEqualToView(self.imageViewb2)
     .heightIs(90)
     .widthIs(90);
     
-    imageView3.sd_layout.leftSpaceToView(imageView2,30)
-    .centerYEqualToView(self.imageBackView)
+    imageView3.sd_layout.centerXEqualToView(self.imageViewb3)
+    .centerYEqualToView(self.imageViewb3)
     .heightIs(90)
     .widthIs(90);
-    
     
     xiangguanView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
@@ -856,7 +960,7 @@
     self.imageBackView.sd_layout.leftSpaceToView(self.scrollView,0)
     .rightSpaceToView(self.scrollView,0)
     .topSpaceToView(xiangguanView,1)
-    .heightIs(110);
+    .heightIs(130);
     
     
     if ([self.model.Promise isEqualToString:@"承诺"]) {
@@ -912,7 +1016,6 @@
     //判断是自己还是别人
     NSString *userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
     
-    
     if ([self.model.UserID isEqualToString:userID]) {
         [jubaoButton setHidden:YES];
         [self MySelfView];
@@ -927,7 +1030,6 @@
         
         }
     }
-    
     
     switch (self.model.TypeID.integerValue) {
         case 1:
@@ -1981,9 +2083,9 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
     }
     else if(proArr.count == 1)
@@ -2039,13 +2141,19 @@
         .rightEqualToView(self.audioView)
         .heightIs(50)
         .topSpaceToView(self.audioView,10);
-        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
-        .rightEqualToView(self.xiangmuView)
-        .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
-        .topSpaceToView(self.xiangmuView,0);
+        
+       
+        
+//        self.tapImageView.sd_layout.leftSpaceToView(self.scrollView,10)
+//        .rightSpaceToView(self.scrollView,10)
+//        .heightIs((self.scrollView.bounds.size.width -20)*self.tapImageView.image.size.height/self.tapImageView.image.size.width)
+//        .topSpaceToView(self.xiangmuView,0);
+        [self ifExistImage];
+        
+        
         [self.xiangmuLabel setHidden:NO];
         [self.tapLabel setHidden:NO];
-        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+//        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
     
@@ -2074,7 +2182,13 @@
     UILabel *label22 = [UILabel new];
     UILabel *label23 = [UILabel new];
     UILabel *label24 = [UILabel new];
+    UILabel *wan1 = [UILabel new];
+    UILabel *wan2 = [UILabel new];
     
+    
+    UIImageView *ima1 = [UIImageView new];
+    UIImageView *ima2 = [UIImageView new];
+
     
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
@@ -2118,7 +2232,10 @@
     [self.changeView addSubview:label23];
     [self.changeView addSubview:label24];
 
-    
+    [self.changeView addSubview:ima1];
+    [self.changeView addSubview:ima2];
+    [self.changeView addSubview:wan1];
+    [self.changeView addSubview:wan2];
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
     .heightIs(20);
@@ -2164,12 +2281,16 @@
     .topEqualToView(label9)
     .heightIs(20);
     
+    
+
+    
     label11.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label9,15)
     .heightIs(20);
+ 
     
-    label12.sd_layout.leftSpaceToView(label11,0)
-    .topEqualToView(label11)
+    label12.sd_layout.leftSpaceToView(ima1,7.5)
+    .centerYEqualToView(ima1)
     .heightIs(20);
     
     
@@ -2177,8 +2298,10 @@
     .topSpaceToView(label11,15)
     .heightIs(20);
     
-    label14.sd_layout.leftSpaceToView(label13,0)
-    .topEqualToView(label13)
+    
+    
+    label14.sd_layout.leftSpaceToView(ima2,7.5)
+    .centerYEqualToView(ima2)
     .heightIs(20);
     
     label15.sd_layout.leftSpaceToView(self.changeView,15)
@@ -2198,6 +2321,35 @@
     .topEqualToView(label17)
     .heightIs(20);
     
+    ima1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(24)
+    .widthIs(85);
+    ima2.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label11,15)
+    .heightIs(24)
+    .widthIs(85);
+    ima1.image = [UIImage imageNamed:@"shichangjia2"];
+    ima2.image = [UIImage imageNamed:@"zhuangrangjia2"];
+    
+    wan1.sd_layout.leftSpaceToView(label12,0)
+    .bottomEqualToView(ima1)
+    .heightIs (22);
+    wan1.text = @"万元";
+    [wan1 setTextColor:[UIColor colorWithHexString:@"ef8200"]];
+    
+    [wan1 setSingleLineAutoResizeWithMaxWidth:100];
+    
+    
+    wan2.sd_layout.leftSpaceToView(label14,0)
+    .bottomEqualToView(ima2)
+    .heightIs (22);
+    wan2.text = @"万元";
+    [wan2 setTextColor:[UIColor colorWithHexString:@"ef8200"]];
+    [wan2 setSingleLineAutoResizeWithMaxWidth:100];
+
+    label18.font = [UIFont systemFontOfSize:20];
+
 //    label19.sd_layout.leftSpaceToView(self.changeView,15)
 //    .topSpaceToView(label17,15)
 //    .heightIs(20);
@@ -2276,22 +2428,40 @@
 //    label15.text = @"转让方式：";
 //    label16.text = self.model.TransferType;
     
-    label11.text = @"参考市价：";
-    label12.text = [self.model.MarketPrice stringByAppendingString:@"万"];
+//    label11.text = @"参考市价：";
+//    label12.text = [self.model.MarketPrice stringByAppendingString:@"万"];
+//    label12.textColor = [UIColor colorWithHexString:@"#ef8200"];
+//    label12.font = [UIFont boldSystemFontOfSize:20];
+//    label13.text = @"市场单价：";
+//    label14.text = [[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+//
+//    label15.text = @"意向转让价：";
+//
+//    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+//    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
+//    label16.font = [UIFont systemFontOfSize:20];
+//    
+//    label17.text = @"意向转让单价：";
+//    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+    
+    
+    label11.text = @"市场价格：";
+    label12.text = self.model.MarketPrice;
     label12.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label12.font = [UIFont systemFontOfSize:20];
-    label13.text = @"市场单价：";
-    label14.text = [[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
+    label12.font = [UIFont boldSystemFontOfSize:20];
+    label13.text = @"转让价：";
+    label14.text = self.model.TransferMoney;
+    label14.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label14.font = [UIFont boldSystemFontOfSize:20];
 
-    label15.text = @"意向转让价：";
-
-    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
-    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    
+    label15.text = @"市场单价：";
+    
+    label16.text =[[NSString stringWithFormat:@"%.2f",self.model.MarketPrice.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
     label16.font = [UIFont systemFontOfSize:20];
     
-    label17.text = @"意向转让单价：";
+    label17.text = @"转让单价：";
     label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
-    
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
     UIView *line3 = [UIView new];
@@ -2456,8 +2626,10 @@
     
     liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
     .rightSpaceToView(self.changeView,0)
-    .heightIs(60)
+    .heightIs(80)
     .topSpaceToView(line4,0);
+    
+
     
     button1.sd_layout.leftSpaceToView(liangdianBottomView,15)
     .centerYEqualToView(liangdianBottomView)
@@ -2543,13 +2715,14 @@
         .rightEqualToView(self.audioView)
         .heightIs(50)
         .topSpaceToView(self.audioView,10);
-        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
-        .rightEqualToView(self.xiangmuView)
-        .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
-        .topSpaceToView(self.xiangmuView,0);
+//        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+//        .rightEqualToView(self.xiangmuView)
+//        .heightIs((self.scrollView.bounds.size.width -20)*self.tapImageView.image.size.height/self.tapImageView.image.size.width)
+//        .topSpaceToView(self.xiangmuView,0);
+        [self ifExistImage];
         [self.xiangmuLabel setHidden:NO];
         [self.tapLabel setHidden:NO];
-        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+//        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
 
@@ -2574,6 +2747,10 @@
     UILabel *label17 = [UILabel new];
     UILabel *label18 = [UILabel new];
     
+    UIImageView *ima1 = [UIImageView new];
+    ima1.image = [UIImage imageNamed:@"zhuangrangjia2"];
+    UILabel *wan = [UILabel new];
+    wan.text = @"万";
     
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
@@ -2605,8 +2782,8 @@
     [self.changeView addSubview:label16];
     [self.changeView addSubview:label17];
     [self.changeView addSubview:label18];
-
-    
+    [self.changeView addSubview:ima1];
+    [self.changeView addSubview:wan];
     
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
@@ -2672,13 +2849,27 @@
     .topEqualToView(label13)
     .heightIs(20);
     
+    ima1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label13,15)
+    .heightIs(24)
+    .widthIs(85);
+    
+    
     label15.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label13,15)
     .heightIs(20);
     
-    label16.sd_layout.leftSpaceToView(label15,0)
-    .topEqualToView(label15)
+    label16.sd_layout.leftSpaceToView(ima1,7.5)
+    .centerYEqualToView(ima1)
     .heightIs(20);
+    
+    wan.sd_layout.leftSpaceToView(label16,0)
+    .bottomEqualToView(ima1)
+    .heightIs(20);
+    
+    [wan setSingleLineAutoResizeWithMaxWidth:50];
+    wan.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    
     
     label17.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label15,15)
@@ -2748,10 +2939,10 @@
 
     }
     
-    label15.text = @"意向转让价：";
-    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
+    label15.text = @"转让价：";
+    label16.text = self.model.TransferMoney;
     label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label16.font = [UIFont systemFontOfSize:20];
+    label16.font = [UIFont boldSystemFontOfSize:20];
 //    
 //    label17.text = @"转让单价：";
 //    label18.text = [[NSString stringWithFormat:@"%.2f",self.model.TransferMoney.floatValue/self.model.Area.floatValue]stringByAppendingString:@"万元/平米"];
@@ -3959,13 +4150,16 @@
     .rightEqualToView(self.audioView)
     .heightIs(50)
     .topSpaceToView(self.audioView,10);
-    self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
-    .rightEqualToView(self.xiangmuView)
-    .heightIs([UIScreen mainScreen].bounds.size.width * (529/375))
-    .topSpaceToView(self.xiangmuView,0);
+//    self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+//    .rightEqualToView(self.xiangmuView)
+//    .heightIs((self.scrollView.bounds.size.width -20)*self.tapImageView.image.size.height/self.tapImageView.image.size.width)
+//    .topSpaceToView(self.xiangmuView,0);
+        [self ifExistImage];
+        
+       
     [self.xiangmuLabel setHidden:NO];
     [self.tapLabel setHidden:NO];
-    [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
+//    [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
     
@@ -3986,6 +4180,14 @@
     UILabel *label14 = [UILabel new];
     UILabel *label15 = [UILabel new];
     UILabel *label16 = [UILabel new];
+    
+    UILabel *wan1 = [UILabel new];
+    UILabel *wan2 = [UILabel new];
+    
+    
+    UIImageView *ima1 = [UIImageView new];
+    UIImageView *ima2 = [UIImageView new];
+    
 
     [self.changeView addSubview:label1];
     [self.changeView addSubview:label2];
@@ -4003,7 +4205,11 @@
     [self.changeView addSubview:label14];
     [self.changeView addSubview:label15];
     [self.changeView addSubview:label16];
-
+    [self.changeView addSubview:ima1];
+    [self.changeView addSubview:ima2];
+    [self.changeView addSubview:wan1];
+    [self.changeView addSubview:wan2];
+    
     
     label1.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(self.changeView,15)
@@ -4047,18 +4253,45 @@
     .topSpaceToView(label7,15)
     .heightIs(20);
     
-    label10.sd_layout.leftSpaceToView(label9,0)
-    .topEqualToView(label9)
-    .heightIs(20);
+    ima1.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label7,15)
+    .heightIs(24)
+    .widthIs(85);
+    
+    
+    label10.sd_layout.leftSpaceToView(ima1,7.5)
+    .topEqualToView(ima1)
+    .heightIs(24);
+    wan1.sd_layout.leftSpaceToView(label10,0)
+    .bottomEqualToView(label10)
+    .heightIs (22);
+    wan1.text = @"万元";
+    [wan1 setTextColor:[UIColor colorWithHexString:@"ef8200"]];
+    
+    [wan1 setSingleLineAutoResizeWithMaxWidth:100];
     
     label11.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label9,15)
     .heightIs(20);
+    ima2.sd_layout.leftSpaceToView(self.changeView,15)
+    .topSpaceToView(label9,15)
+    .heightIs(24)
+    .widthIs(85);
     
-    label12.sd_layout.leftSpaceToView(label11,0)
-    .topEqualToView(label11)
-    .heightIs(20);
     
+    
+    ima1.image = [UIImage imageNamed:@"zongjine2"];
+    ima2.image = [UIImage imageNamed:@"zhuangrangjia2"];
+    label12.sd_layout.leftSpaceToView(ima2,7.5)
+    .topEqualToView(ima2)
+    .heightIs(24);
+    wan2.sd_layout.leftSpaceToView(label12,0)
+    .bottomEqualToView(label12)
+    .heightIs (22);
+    wan2.text = @"万元";
+    [wan2 setTextColor:[UIColor colorWithHexString:@"ef8200"]];
+    [wan2 setSingleLineAutoResizeWithMaxWidth:100];
+
     label13.sd_layout.leftSpaceToView(self.changeView,15)
     .topSpaceToView(label11,15)
     .heightIs(20);
@@ -4093,7 +4326,6 @@
     [label16 setSingleLineAutoResizeWithMaxWidth:200];
 
     
-    
     label1.text = @"发布方身份：";
     label2.text = self.model.Identity;
     label3.text = @"卖家类型：";
@@ -4103,22 +4335,41 @@
     label7.text = @"地区：";
     label8.text = self.model.ProArea;
     label9.text = @"总金额：";
-    label10.text = [self.model.TotalMoney stringByAppendingString:@"万"];
+    label10.text = self.model.TotalMoney;
     label10.textColor = [UIColor colorWithHexString:@"#ef8200"];
-    label10.font = [UIFont systemFontOfSize:20];
+    label10.font = [UIFont boldSystemFontOfSize:20];
     
-    label11.text = @"本金：";
-    label12.text = [self.model.Money stringByAppendingString:@"万元"];
-    label12.font = [UIFont systemFontOfSize:20];
+    
+    label11.text = @"转让价：";
+    label12.text = self.model.TransferMoney;
+    label12.font = [UIFont boldSystemFontOfSize:20];
+    label12.textColor = [UIColor colorWithHexString:@"#ef8200"];
 
-    label13.text = @"利息：";
-    label14.text = [self.model.Rate stringByAppendingString:@"万元"];
+
+    label13.text = @"本金：";
+    label14.text = [self.model.Money stringByAppendingString:@"万元"];
     label14.font = [UIFont systemFontOfSize:20];
 
-    label15.text = @"意向转让价：";
-    label16.text = [self.model.TransferMoney stringByAppendingString:@"万"];
-    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    label15.text = @"利息：";
+    label16.text =[[NSString stringWithFormat:@"%.2f",self.model.TotalMoney.floatValue - self.model.Money.floatValue]stringByAppendingString:@"万元"];
+    
+    
+    
+//    label16.text = [self.model.Rate stringByAppendingString:@"万元"];
+//    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label16.font = [UIFont systemFontOfSize:20];
+    
+    label1.textColor = [UIColor grayColor];
+    label3.textColor = [UIColor grayColor];
+    label5.textColor = [UIColor grayColor];
+
+    label7.textColor = [UIColor grayColor];
+    label9.textColor = [UIColor grayColor];
+    label11.textColor = [UIColor grayColor];
+    label13.textColor = [UIColor grayColor];
+    label15.textColor = [UIColor grayColor];
+
+    
     
     UIView *line1 = [UIView new];
     UIView *line2 = [UIView new];
@@ -4361,17 +4612,69 @@
     [self setliangdianLabel:button3];
     
 }
+- (void)ifExistImage
+{
 
+        NSString *absoluteString = [getImageURL stringByAppendingString:self.model.PictureDet];
+        if([[SDImageCache sharedImageCache] diskImageExistsWithKey:absoluteString])
+            
+        {
+            UIImage* image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:absoluteString];
+            
+            if(!image)
+                
+            {
+                //            NSData* data = [[SDImageCache sharedImageCache] performSelector:@selector(diskImageDataBySearchingAllPathsForKey:) withObject:absoluteString];
+                NSData* data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:absoluteString]];
+                image = [UIImage imageWithData:data];
+                self.imageSize = image.size;
+                self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+                .rightEqualToView(self.xiangmuView)
+                .heightIs((self.scrollView.bounds.size.width -20)*self.imageSize.height/self.imageSize.width)
+                .topSpaceToView(self.xiangmuView,0);
+            }
+            
+            if(image)
+                
+            {
+                NSLog(@"!!!!!!%f",image.size.height);
+                self.imageSize = image.size;
+                self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+                .rightEqualToView(self.xiangmuView)
+                .heightIs((self.scrollView.bounds.size.width)*self.imageSize.height/self.imageSize.width)
+                .topSpaceToView(self.xiangmuView,0);
+                
+                
+            }
+            
+        }
+    else
+    {
+        NSData* data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:absoluteString]];
+       UIImage *image = [UIImage imageWithData:data];
+        self.imageSize = image.size;
+        self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
+        .rightEqualToView(self.xiangmuView)
+        .heightIs((self.scrollView.bounds.size.width)*self.imageSize.height/self.imageSize.width)
+        .topSpaceToView(self.xiangmuView,0);
+    
+    }
+
+
+}
 - (void)setliangdianLabel:(UILabel *)label
 {
+    
     if (label.text != nil && [label.text isEqualToString:@""]==NO) {
         label.text = [[@" "stringByAppendingString:label.text]stringByAppendingString:@" "];
     }
+    label.font = [UIFont systemFontOfSize:15];
     label.layer.borderWidth = 1;
     label.textColor = [UIColor colorWithHexString:@"fdd000"];
     label.layer.borderColor = [UIColor colorWithHexString:@"fdd000"].CGColor;
     label.layer.cornerRadius = 4;
     label.layer.masksToBounds = YES;
+//    label.backgroundColor = [UIColor colorWithHexString:@"#fef8d3"];
 }
 
 - (void)jubaoButtonAction:(UIButton *)button
@@ -4391,12 +4694,26 @@
     }
     
 }
-                        
-                        
 - (void)tapImageViewAction:(UITapGestureRecognizer *)gesture
 {
-    CLAmplifyView *amplifyView = [[CLAmplifyView alloc] initWithFrame:self.view.bounds andGesture:gesture andSuperView:self.scrollView];
-    [[UIApplication sharedApplication].keyWindow addSubview:amplifyView];
+//    CLAmplifyView *amplifyView = [[CLAmplifyView alloc] initWithFrame:self.view.bounds andGesture:gesture andSuperView:self.scrollView];
+//    [[UIApplication sharedApplication].keyWindow addSubview:amplifyView];
+    KNPhotoBrower *photoBrower = [[KNPhotoBrower alloc] init];
+    photoBrower.itemsArr = self.itemsArray2;
+    photoBrower.currentIndex = gesture.view.tag;
+    // 如果设置了 photoBrower中的 actionSheetArr 属性. 那么 isNeedRightTopBtn 就应该是默认 YES, 如果设置成NO, 这个actionSheetArr 属性就没有意义了
+    //    photoBrower.actionSheetArr = [self.actionSheetArray mutableCopy];
+    
+    [photoBrower present];
+    
+    _photoBrower = photoBrower;
+    
+    // 设置代理方法 --->可不写
+    [photoBrower setDelegate:self];
+    
+    // 这里是 设置 状态栏的 隐藏 ---> 可不写
+    _ApplicationStatusIsHidden = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 #pragma mark----查看图片手势方法以及代理

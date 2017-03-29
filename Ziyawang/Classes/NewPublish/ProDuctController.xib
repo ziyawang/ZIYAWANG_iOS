@@ -33,6 +33,7 @@
                 <outlet property="mianjiHeight" destination="8HP-4e-xg7" id="7dR-sH-2xn"/>
                 <outlet property="mianjiTextField" destination="Rc6-ff-tTS" id="Kxl-ec-n2H"/>
                 <outlet property="mianjiView" destination="IRX-bT-E8o" id="7G7-YT-kiP"/>
+                <outlet property="miaoshuView" destination="XGA-ux-uww" id="Dhd-hh-YeW"/>
                 <outlet property="nameTextField" destination="O5E-mb-dcg" id="OWl-UM-Vgo"/>
                 <outlet property="phoneTextField" destination="Qsg-Sg-Y8b" id="B9z-1D-WNS"/>
                 <outlet property="recordView" destination="rYr-am-DHf" id="NYb-2x-Vew"/>

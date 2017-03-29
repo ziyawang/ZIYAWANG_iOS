@@ -29,6 +29,7 @@
                 <outlet property="falvButton" destination="aJ5-HK-pTq" id="SVu-Da-n8m"/>
                 <outlet property="feisusongLabel" destination="KdO-z7-xye" id="27J-nD-vET"/>
                 <outlet property="feisusongView" destination="5yJ-g3-vnd" id="BxH-Cx-Uyq"/>
+                <outlet property="miaoshuView" destination="JUJ-cI-giK" id="o7G-WO-OyJ"/>
                 <outlet property="pingzhengLabel" destination="aM8-nT-XOC" id="oZz-pk-bN5"/>
                 <outlet property="pingzhengView" destination="pNv-F0-uq4" id="OuX-Ay-ABm"/>
                 <outlet property="recordView" destination="y6b-BB-swU" id="0tU-RI-nC5"/>
@@ -58,7 +59,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="542" height="1567"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q5h-to-SC9" userLabel="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="542" height="1567"/>
+                            <rect key="frame" x="0.0" y="0.0" width="542" height="1767"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNH-96-uHI">
                                     <rect key="frame" x="0.0" y="0.0" width="542" height="50"/>
@@ -731,7 +732,7 @@
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1567" id="1lc-22-WfR"/>
+                                <constraint firstAttribute="height" constant="1767" id="1lc-22-WfR"/>
                                 <constraint firstItem="PkL-jH-59e" firstAttribute="leading" secondItem="q5h-to-SC9" secondAttribute="leading" id="2PG-Vq-J33"/>
                                 <constraint firstItem="JUJ-cI-giK" firstAttribute="leading" secondItem="q5h-to-SC9" secondAttribute="leading" id="3Qm-Gu-wXL"/>
                                 <constraint firstItem="tvv-7i-rYZ" firstAttribute="leading" secondItem="q5h-to-SC9" secondAttribute="leading" id="6SV-E1-KZm"/>

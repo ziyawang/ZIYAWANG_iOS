@@ -11,6 +11,7 @@
 #import "AddImageManager.h"
 #import "HttpManager.h"
 #import "ChooseAreaController.h"
+#import "SkyerCityPicker.h"
 
 @interface PersonalDebtsController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -96,6 +97,10 @@
 @property (nonatomic,assign)   BOOL isHaveDian;
 
 @property (nonatomic,strong) UILabel *yongjinLabel;
+@property (nonatomic,strong) SkyerCityPicker *cityPicker;
+
+@property (weak, nonatomic) IBOutlet UIView *miaoshuView;
+@property (nonatomic,assign) NSInteger zhaiquantag;
 @end
 
 @implementation PersonalDebtsController
@@ -123,9 +128,22 @@
         self.zhaiwurenLabel.text = suozai1;
     }
 }
+- (void)viewGestureAction:(UITapGestureRecognizer *)gesture
+{
+    [self.view endEditing:YES];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *viewGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    
+    [self.recordView addGestureRecognizer:viewGesture1];
+    [self.ImageBackView addGestureRecognizer:viewGesture2];
+    [self.miaoshuView addGestureRecognizer:viewGesture3];
+
     self.sendButton.backgroundColor = [UIColor colorWithHexString:@"fdd000"];
 
     self.scrollView.delegate = self;
@@ -179,7 +197,21 @@
 
     self.zongjineTextField.delegate = self;
     
-    
+    self.cityPicker = [[SkyerCityPicker alloc]init];
+
+    [self.cityPicker cityPikerGetSelectCity:^(NSMutableDictionary *dicSelectCity)
+     {
+         [self.mengbanView setHidden:YES];
+         NSLog(@"%@",dicSelectCity);
+     
+         if (self.zhaiquantag == 11) {
+             self.zhaiquanrenLabel.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+         }
+         else
+         {
+         self.zhaiwurenLabel.text =[[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+         }
+     }];
     
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -928,10 +960,13 @@
 //            self.row = 3;
             
             {
-                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
-                chooseVC.type = @"信息";
-                [self.navigationController pushViewController:chooseVC animated:YES];
+//                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
+//                chooseVC.type = @"信息";
+//                [self.navigationController pushViewController:chooseVC animated:YES];
                 
+                [self.view addSubview:self.cityPicker];
+                self.zhaiquantag = 11;
+
                 
             }
 
@@ -940,11 +975,14 @@
         case 4:
         {
             {
-                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
-                chooseVC.type = @"信息1";
-                [self.navigationController pushViewController:chooseVC animated:YES];
+//                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
+//                chooseVC.type = @"信息1";
+//                [self.navigationController pushViewController:chooseVC animated:YES];
                 
-                
+                [self.view addSubview:self.cityPicker];
+                self.zhaiquantag = 12;
+
+
             }
 //            [self.mengbanView setHidden:NO];
 //            [UIView animateWithDuration:0.5 animations:^{

@@ -20,6 +20,7 @@
                 <outlet property="laiyuanLabel" destination="Eey-na-wua" id="ght-Ad-UFP"/>
                 <outlet property="laiyuanView" destination="jL6-d0-FNe" id="JrM-jS-lG2"/>
                 <outlet property="lixiLabel" destination="GJc-ld-YaC" id="JiY-fr-jze"/>
+                <outlet property="miaoshuView" destination="G8k-yl-yq8" id="2fV-f6-cUR"/>
                 <outlet property="phoneTextField" destination="PpH-ff-VgP" id="REn-lr-dTj"/>
                 <outlet property="recordView" destination="nEd-bo-9RW" id="voO-dE-wrW"/>
                 <outlet property="scrollView" destination="oGs-xa-8Y3" id="bUB-b8-W8H"/>
@@ -41,7 +42,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="459" height="909"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vnr-KK-ccC" userLabel="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="459" height="950"/>
+                            <rect key="frame" x="0.0" y="0.0" width="459" height="1200"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I21-o4-6Fj">
                                     <rect key="frame" x="0.0" y="0.0" width="459" height="50"/>
@@ -464,7 +465,7 @@
                                 <constraint firstItem="SJj-bs-xrA" firstAttribute="top" secondItem="X1y-95-8Bx" secondAttribute="bottom" id="RHZ-HI-0PT"/>
                                 <constraint firstAttribute="trailing" secondItem="E06-gc-YKB" secondAttribute="trailing" id="RNF-fy-NF6"/>
                                 <constraint firstAttribute="trailing" secondItem="1Mh-zk-Qf8" secondAttribute="trailing" id="UL8-U8-PGG"/>
-                                <constraint firstAttribute="height" constant="950" id="WC4-We-fhd"/>
+                                <constraint firstAttribute="height" constant="1200" id="WC4-We-fhd"/>
                                 <constraint firstAttribute="trailing" secondItem="ymw-Iy-WZ0" secondAttribute="trailing" id="Zct-13-RNE"/>
                                 <constraint firstItem="G8k-yl-yq8" firstAttribute="top" secondItem="WD1-Ux-xYQ" secondAttribute="bottom" constant="10" id="aC4-d1-Jbe"/>
                                 <constraint firstAttribute="trailing" secondItem="WD1-Ux-xYQ" secondAttribute="trailing" id="buX-Oc-r53"/>

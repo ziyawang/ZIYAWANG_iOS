@@ -11,6 +11,8 @@
 #import "AddImageManager.h"
 #import "HttpManager.h"
 #import "ChooseAreaController.h"
+#import "SkyerCityPicker.h"
+
 @interface FinanCingController ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *shenfenView;
@@ -97,6 +99,8 @@
 @property (nonatomic,strong) UIView *PromiseView;
 
 @property (nonatomic,assign)   BOOL isHaveDian;
+@property (nonatomic,strong) SkyerCityPicker *cityPicker;
+@property (weak, nonatomic) IBOutlet UIView *miaoshuView;
 
 @end
 
@@ -171,8 +175,20 @@
     [self.zijinyongtuView setHidden:NO];
     self.zijinyongtuHeight.constant = 50;
 }
+- (void)viewGestureAction:(UITapGestureRecognizer *)gesture
+{
+    [self.view endEditing:YES];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *viewGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    
+    [self.recordView addGestureRecognizer:viewGesture1];
+    [self.ImageBackView addGestureRecognizer:viewGesture2];
+    [self.miaoshuView addGestureRecognizer:viewGesture3];
 
     self.scrollView.delegate = self;
     self.jineTextField.delegate = self;
@@ -224,6 +240,16 @@
     self.textView.text = @"请输入文字描述";
     self.textView.textColor = [UIColor grayColor];
     self.textView.delegate = self;
+    
+    self.cityPicker = [[SkyerCityPicker alloc]init];
+
+    [self.cityPicker cityPikerGetSelectCity:^(NSMutableDictionary *dicSelectCity)
+     {
+         [self.mengbanView setHidden:YES];
+         NSLog(@"%@",dicSelectCity);
+         self.suozaidLabel.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+         
+     }];
 
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -938,10 +964,11 @@
 //            
 //            self.row = 1;
             {
-                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
-                chooseVC.type = @"信息";
-                [self.navigationController pushViewController:chooseVC animated:YES];
-                
+//                ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
+//                chooseVC.type = @"信息";
+//                [self.navigationController pushViewController:chooseVC animated:YES];
+                [self.view addSubview:self.cityPicker];
+
                 
             }
         }

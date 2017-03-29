@@ -19,6 +19,7 @@
                 <outlet property="mianjiTextField" destination="rab-3c-3lF" id="gWU-sI-sk3"/>
                 <outlet property="mianjiView" destination="0cD-9X-Ou1" id="L3L-kA-H3l"/>
                 <outlet property="mianjiViewHeight" destination="xeu-TW-Rni" id="2L6-wR-NNp"/>
+                <outlet property="miaoshuView" destination="Nsr-GN-O5n" id="TBr-mF-6gf"/>
                 <outlet property="paimaididianLabel" destination="Zch-dB-TwE" id="Oa0-Vg-x1F"/>
                 <outlet property="paimaididianView" destination="fmb-qF-x6t" id="9J3-jz-DUU"/>
                 <outlet property="paimaijieduanLabel" destination="AOw-Fo-XWc" id="wem-Iu-9PQ"/>
@@ -52,7 +53,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="433" height="1101"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YO3-uZ-ywB" userLabel="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="433" height="1101"/>
+                            <rect key="frame" x="0.0" y="0.0" width="433" height="1130"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DwR-lL-B0v">
                                     <rect key="frame" x="0.0" y="0.0" width="433" height="50"/>
@@ -623,7 +624,7 @@
                                 <constraint firstAttribute="trailing" secondItem="9ds-4J-lxZ" secondAttribute="trailing" id="oxz-II-8ra"/>
                                 <constraint firstItem="gmh-7w-B4E" firstAttribute="top" secondItem="0cD-9X-Ou1" secondAttribute="bottom" id="qsr-IV-87W"/>
                                 <constraint firstItem="z1w-fH-yXa" firstAttribute="top" secondItem="Nsr-GN-O5n" secondAttribute="bottom" constant="1" id="qv6-Pu-BdD"/>
-                                <constraint firstAttribute="height" constant="1101" id="rUA-ne-EeK"/>
+                                <constraint firstAttribute="height" constant="1130" id="rUA-ne-EeK"/>
                                 <constraint firstItem="Nsr-GN-O5n" firstAttribute="top" secondItem="Vyw-L9-yJl" secondAttribute="bottom" constant="10" id="tJ1-Hh-RUs"/>
                                 <constraint firstItem="DwR-lL-B0v" firstAttribute="leading" secondItem="YO3-uZ-ywB" secondAttribute="leading" id="u0j-jj-s47"/>
                                 <constraint firstAttribute="trailing" secondItem="fmb-qF-x6t" secondAttribute="trailing" id="uET-S1-OHr"/>

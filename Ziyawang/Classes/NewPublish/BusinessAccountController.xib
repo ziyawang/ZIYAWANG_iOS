@@ -25,6 +25,7 @@
                 <outlet property="jineTextField" destination="8YG-kR-ZzG" id="qYa-YK-Zfv"/>
                 <outlet property="jingyingzhuangLabel" destination="tBg-TJ-yJ4" id="h2e-1A-BzK"/>
                 <outlet property="jingyingzhuangView" destination="uK7-BF-Ph1" id="px6-JB-Gcw"/>
+                <outlet property="miaoshuView" destination="fuC-v6-fz9" id="nnM-u8-3w2"/>
                 <outlet property="nameTextField" destination="csE-2z-EOs" id="hxl-Zq-fzD"/>
                 <outlet property="phoneTextField" destination="09d-Mq-JgS" id="MpZ-B1-X8m"/>
                 <outlet property="pingzhengLabel" destination="frA-II-jZ5" id="8Hw-yb-bo2"/>
@@ -57,7 +58,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="542" height="1567"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwX-QU-gGX" userLabel="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="542" height="1567"/>
+                            <rect key="frame" x="0.0" y="0.0" width="542" height="1767"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkM-tj-5Vk">
                                     <rect key="frame" x="0.0" y="0.0" width="542" height="50"/>
@@ -759,7 +760,7 @@
                                 <constraint firstAttribute="trailing" secondItem="huu-DV-H0o" secondAttribute="trailing" id="LIu-TG-S9H"/>
                                 <constraint firstItem="GUc-4D-GGl" firstAttribute="top" secondItem="Mj0-90-Pnm" secondAttribute="bottom" constant="1" id="LPf-PP-TlO"/>
                                 <constraint firstItem="rdf-bg-Bxu" firstAttribute="leading" secondItem="cwX-QU-gGX" secondAttribute="leading" id="Myg-5y-VHz"/>
-                                <constraint firstAttribute="height" constant="1567" id="Nkr-ji-8Li"/>
+                                <constraint firstAttribute="height" constant="1767" id="Nkr-ji-8Li"/>
                                 <constraint firstItem="HXt-JC-QU3" firstAttribute="top" secondItem="S1O-L2-yCh" secondAttribute="bottom" constant="1" id="O6N-N2-d7g"/>
                                 <constraint firstItem="1OP-1V-654" firstAttribute="top" secondItem="uK7-BF-Ph1" secondAttribute="bottom" constant="10" id="OeY-c5-WXE"/>
                                 <constraint firstItem="GAn-il-nbR" firstAttribute="top" secondItem="nxC-aZ-ThR" secondAttribute="bottom" constant="1" id="Pas-lW-Nh6"/>

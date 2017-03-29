@@ -31,6 +31,7 @@
                 <outlet property="liangdianHeight2" destination="un9-bA-FVq" id="GPP-Gx-y8U"/>
                 <outlet property="liangdianView1" destination="89R-zA-zVf" id="QgG-os-rIu"/>
                 <outlet property="liangdianView2" destination="N7I-jE-5Sp" id="qVh-dE-4Ri"/>
+                <outlet property="miaoshuView" destination="KbW-Wn-t8s" id="Cku-Q6-Tv5"/>
                 <outlet property="nameTextField" destination="wdf-zt-0Yx" id="xxa-bN-QHf"/>
                 <outlet property="phoneTextField" destination="6ft-VB-zef" id="jL7-II-aZ9"/>
                 <outlet property="qixianTextField" destination="qLE-ki-CFg" id="jvU-tv-Mro"/>

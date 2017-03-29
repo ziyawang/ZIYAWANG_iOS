@@ -12,6 +12,8 @@
 #import "AddImageManager.h"
 #import "HttpManager.h"
 #import "ChooseAreaController.h"
+#import "SkyerCityPicker.h"
+
 @interface CarFapaiController ()<UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -105,6 +107,8 @@
 @property (nonatomic,assign) CGFloat scrollY;
 
 @property (nonatomic,assign)   BOOL isHaveDian;
+@property (nonatomic,strong) SkyerCityPicker *cityPicker;
+@property (weak, nonatomic) IBOutlet UIView *miaoshuView;
 
 @end
 
@@ -125,8 +129,21 @@
     
     
 }
+- (void)viewGestureAction:(UITapGestureRecognizer *)gesture
+{
+    [self.view endEditing:YES];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *viewGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    UITapGestureRecognizer *viewGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
+    
+    [self.recordView addGestureRecognizer:viewGesture1];
+    [self.ImageBackView addGestureRecognizer:viewGesture2];
+    [self.miaoshuView addGestureRecognizer:viewGesture3];
+
     self.isHaveDian = NO;
     
     self.scrollView.delegate = self;
@@ -172,6 +189,14 @@
     [[RecordManager recordManager] setaudioWithView:self.view recordView:self.recordView];
 //    [[AddImageManager AddManager] setAddimageViewWithView:self.ImageBackView];
     [[AddImageManager AddManager]setAddimageViewWithView:self.ImageBackView target:self];
+    self.cityPicker = [[SkyerCityPicker alloc]init];
+
+    [self.cityPicker cityPikerGetSelectCity:^(NSMutableDictionary *dicSelectCity)
+     {
+        [self.mengbanView setHidden:YES];
+         NSLog(@"%@",dicSelectCity);
+        self.paimaididianLabel.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
+     }];
     
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -206,7 +231,6 @@
     
     UIWindow *window = [[UIApplication sharedApplication]keyWindow];
     [window addSubview:mengbanView];
-    
     [mengbanView addSubview:weituoView];
     [weituoView addSubview:imageBackView];
     [imageBackView addSubview:tuziImage];
@@ -223,9 +247,6 @@
     
     imageBackView.backgroundColor = [UIColor colorWithHexString:@"#5dc1cf"];
     weituoView.backgroundColor = [UIColor whiteColor];
-    
-    
-    
     mengbanView.sd_layout.leftSpaceToView(window,0)
     .rightSpaceToView(window,0)
     .topSpaceToView(window,0)
@@ -252,8 +273,6 @@
     .topSpaceToView(imageBackView,0)
     .bottomSpaceToView(weituoView,0);
     
-    
-
     label1.sd_layout.centerXEqualToView(bottomView)
     .topSpaceToView(bottomView,15)
     .heightIs(20);
@@ -266,9 +285,6 @@
     .autoHeightRatio(0);
     
     label2.text = @"您是否对您发布的信息进行真实性承诺，承诺后更能吸引服务方主动联系您，更有助于达成您的需求。无论承诺与否都不影响您的正常发布。";
-    
-    
-    
     
     fabuButton.sd_layout.leftEqualToView(label2)
     .rightEqualToView(label2)
@@ -1179,10 +1195,11 @@
             break;
         case 3:
         {
-            ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
-            chooseVC.type = @"信息";
-            [self.navigationController pushViewController:chooseVC animated:YES];
-            
+//            ChooseAreaController *chooseVC = [[ChooseAreaController alloc]init];
+//            chooseVC.type = @"信息";
+//            [self.navigationController pushViewController:chooseVC animated:YES];
+            [self.view addSubview:self.cityPicker];
+  
         
         }
             break;
@@ -1383,6 +1400,11 @@
     
     return 40;
     
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {

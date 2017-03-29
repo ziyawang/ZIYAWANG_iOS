@@ -118,7 +118,6 @@
      [self.mengbanView setHidden:YES];
         NSLog(@"%@",dicSelectCity);
          self.areaLabel.text = [[dicSelectCity[@"Province"] stringByAppendingString:@"-"]stringByAppendingString:dicSelectCity[@"City"]];
-         
      
     }];
     
@@ -169,8 +168,7 @@
     [self.accountTextField resignFirstResponder];
 //    [self.mengbanView setHidden:NO];
 
-    [self.view addSubview:self.cityPicker]
-    ;
+    [self.view addSubview:self.cityPicker];
 //    [self.mengbanView addSubview:self.cityPicker];
 
 //    ChooseAreaController *choosAreaVC =  [[ChooseAreaController alloc]init];
