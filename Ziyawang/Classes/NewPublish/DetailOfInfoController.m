@@ -26,6 +26,8 @@
 #import "TipTableViewController.h"
 
 #import "CLAmplifyView.h"
+#define HEIGHT [ [ UIScreen mainScreen ] bounds ].size.height
+
 @interface DetailOfInfoController ()<KNPhotoBrowerDelegate>
 {
     
@@ -70,6 +72,7 @@
 @property (nonatomic,strong) UIView *audioView;
 @property (nonatomic,strong) UILabel *xiangmuLabel;
 @property (nonatomic,assign) CGSize imageSize;
+@property (nonatomic,strong) UIImageView *ziyaIma;
 @end
 
 @implementation DetailOfInfoController
@@ -396,7 +399,41 @@
     }];
     
 }
-- (void)setViews
+
+
+-(void)setLabelSpace:(UILabel*)label withValue:(NSString*)str withFont:(UIFont*)font {
+    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+    paraStyle.lineBreakMode = NSLineBreakByCharWrapping;
+    paraStyle.alignment = NSTextAlignmentLeft;
+    paraStyle.lineSpacing = 10; //设置行间距
+    paraStyle.hyphenationFactor = 1.0;
+    paraStyle.firstLineHeadIndent = 0.0;
+    paraStyle.paragraphSpacingBefore = 0.0;
+    paraStyle.headIndent = 0;
+    paraStyle.tailIndent = 0;
+    //设置字间距 NSKernAttributeName:@1.5f
+    NSDictionary *dic = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle, NSKernAttributeName:@1.5f
+                          };
+    
+    NSAttributedString *attributeStr = [[NSAttributedString alloc] initWithString:str attributes:dic];
+    label.attributedText = attributeStr;
+}
+-(CGFloat)getSpaceLabelHeight:(NSString*)str withFont:(UIFont*)font withWidth:(CGFloat)width {
+    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+    paraStyle.lineBreakMode = NSLineBreakByCharWrapping;
+    paraStyle.alignment = NSTextAlignmentLeft;
+    paraStyle.lineSpacing = 10;
+    paraStyle.hyphenationFactor = 1.0;
+    paraStyle.firstLineHeadIndent = 0.0;
+    paraStyle.paragraphSpacingBefore = 0.0;
+    paraStyle.headIndent = 0;
+    paraStyle.tailIndent = 0;
+    NSDictionary *dic = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle, NSKernAttributeName:@1.5f
+                          };
+    CGSize size = [str boundingRectWithSize:CGSizeMake(width, HEIGHT) options:NSStringDrawingUsesLineFragmentOrigin attributes:dic context:nil].size;
+//    CGSize size = [str boundingRectWithSize:CGSizeMake(width, HEIGHT) options:NSStringDrawingUsesLineFragmentOriginattributes:dic context:nil].size;
+    return size.height;
+}- (void)setViews
 {
     self.scrollView = [UIView new];
     self.scrollBackView = [UIScrollView new];
@@ -682,13 +719,33 @@
     
     
     [wordDesView setupAutoHeightWithBottomView:desLabel bottomMargin:15];
+    NSString *text = self.model.WordDes;
+
+    desLabel.numberOfLines = 0;
+    [self setLabelSpace:desLabel withValue:text withFont:[UIFont systemFontOfSize:17]];
+
+    CGFloat tableH = [self getSpaceLabelHeight:text withFont:[UIFont systemFontOfSize:17] withWidth:[UIScreen mainScreen].bounds.size.width - 20];
+    
     desLabel.sd_layout.leftSpaceToView(wordDesView,15)
     .rightSpaceToView(wordDesView,15)
     .topSpaceToView(wordDesView,15)
-    .autoHeightRatio(0);
+    .heightIs(tableH + 35);
+
+
     
-    desLabel.text = self.model.WordDes;
-    
+//    desLabel.text = self.model.WordDes;
+//    [desLabel setNumberOfLines:0];
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    
+//    [paragraphStyle setLineSpacing:10];//调整行间距
+//    
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
+//    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:NSMakeRange(0, [text length])];
+//    
+//
+//    desLabel.attributedText = attributedString;
+//    [desLabel sizeToFit];
     
     
     self.audioView = [UIView new];
@@ -735,6 +792,7 @@
     }
     
     self.xiangmuLabel = [UILabel new];
+    self.ziyaIma = [UIImageView new];
     self.xiangmuLabel.text = @"项目详情";
     self.xiangmuLabel.font = [UIFont boldSystemFontOfSize:17];
 
@@ -743,6 +801,8 @@
     [self.scrollView addSubview:self.tapImageView];
     [self.scrollView addSubview:self.xiangmuView];
     [self.xiangmuView addSubview:self.xiangmuLabel];
+    [self.xiangmuView addSubview:self.ziyaIma];
+    
     self.xiangmuView.backgroundColor = [UIColor whiteColor];
     
     self.xiangmuView.sd_layout.leftEqualToView(self.audioView)
@@ -752,13 +812,19 @@
     self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
     .rightEqualToView(self.xiangmuView)
     .heightIs(0)
-    .topSpaceToView(self.xiangmuView,0);
+    .topSpaceToView(self.xiangmuView,1);
 //    self.tapImageView.backgroundColor = [UIColor redColor];
     self.xiangmuLabel.sd_layout.leftSpaceToView(self.xiangmuView,15)
     .centerYEqualToView(self.xiangmuView)
     .heightIs(20);
     [self.xiangmuLabel setSingleLineAutoResizeWithMaxWidth:200];
 
+    self.ziyaIma.sd_layout.rightSpaceToView(self.xiangmuView,20)
+    .centerYEqualToView(self.xiangmuView)
+    .heightIs(30)
+    .widthIs(75);
+    self.ziyaIma.image = [UIImage imageNamed:@"ziyasmall"];
+    
     self.tapLabel = [UILabel new];
     [self.tapImageView addSubview:self.tapLabel];
     self.tapLabel.sd_layout.centerXEqualToView(self.tapImageView)
@@ -774,7 +840,7 @@
     
     [self.xiangmuLabel setHidden:YES];
     [self.tapLabel setHidden:YES];
-    
+    [self.ziyaIma setHidden:YES];
     
     
     
@@ -2087,13 +2153,23 @@
         
 //        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        line3.sd_layout.heightIs(0);
+        [line4 setHidden:YES];
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:qitaBottView bottomMargin:0];
+        
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
+            [button1 setHidden:YES];
+            //line3.sd_layout.heightIs(0);
+            [line4 setHidden:YES];
+            liangdianTopView.sd_layout.heightIs(0);
+            liangdianBottomView.sd_layout.heightIs(0);
+            [self.changeView setupAutoHeightWithBottomView:qitaBottView bottomMargin:0];
             button1.text = @"暂无项目亮点";
-            
         }
         else
         {
@@ -2153,6 +2229,7 @@
         
         [self.xiangmuLabel setHidden:NO];
         [self.tapLabel setHidden:NO];
+        [self.ziyaIma setHidden:NO];
 //        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
@@ -2655,17 +2732,48 @@
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     NSLog(@"%ld",proArr.count);
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        [line1 setHidden:YES];
+        [line2 setHidden:YES];
+        [line4 setHidden:YES];
+        [liandianLabel setHidden:YES];
+        
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.leftEqualToView(line1)
+        .rightEqualToView(line1)
+        .topSpaceToView(line1,0)
+        .heightIs(0);
+        
+        liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+        .rightSpaceToView(self.changeView,0)
+        .heightIs(0)
+        .topSpaceToView(line4,0);
+        [self.changeView setupAutoHeightWithBottomView:label18 bottomMargin:20];
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
+            [line1 setHidden:YES];
+            [line2 setHidden:YES];
+            [line4 setHidden:YES];
+            [liandianLabel setHidden:YES];
             
+            [liandianLabel setHidden:YES];
+            liangdianTopView.sd_layout.leftEqualToView(line1)
+            .rightEqualToView(line1)
+            .topSpaceToView(line1,0)
+            .heightIs(0);
+            
+            liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+            .rightSpaceToView(self.changeView,0)
+            .heightIs(0)
+            .topSpaceToView(line4,0);
+            [self.changeView setupAutoHeightWithBottomView:label18 bottomMargin:20];
         }
         else
         {
@@ -2722,6 +2830,7 @@
         [self ifExistImage];
         [self.xiangmuLabel setHidden:NO];
         [self.tapLabel setHidden:NO];
+        [self.ziyaIma setHidden:NO];
 //        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
@@ -3156,17 +3265,57 @@
     
     
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         //        [button2 setHidden:YES];
+//        line1.sd_layout.leftSpaceToView(self.changeView,0)
+//        .rightSpaceToView(self.changeView,0)
+//        .topSpaceToView(label17,15)
+//        .heightIs(0);
+        [line1 setHidden:YES];
+        [line2 setHidden:YES];
+        [line4 setHidden:YES];
+        [liandianLabel setHidden:YES];
+        
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.leftEqualToView(line1)
+        .rightEqualToView(line1)
+        .topSpaceToView(line1,0)
+        .heightIs(0);
+        
+        liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+        .rightSpaceToView(self.changeView,0)
+        .heightIs(0)
+        .topSpaceToView(line4,0);
+        [self.changeView setupAutoHeightWithBottomView:ima1 bottomMargin:20];
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
+//            line1.sd_layout.leftSpaceToView(self.changeView,0)
+//            .rightSpaceToView(self.changeView,0)
+//            .topSpaceToView(label17,15)
+//            .heightIs(0);
+            [line1 setHidden:YES];
+            [line2 setHidden:YES];
+            [line4 setHidden:YES];
+
+            [liandianLabel setHidden:YES];
+
+            liangdianTopView.sd_layout.leftEqualToView(line1)
+            .rightEqualToView(line1)
+            .topSpaceToView(line1,0)
+            .heightIs(0);
             
+            liangdianBottomView.sd_layout.leftSpaceToView(self.changeView,0)
+            .rightSpaceToView(self.changeView,0)
+            .heightIs(0)
+            .topSpaceToView(line4,0);
+            [self.changeView setupAutoHeightWithBottomView:ima1 bottomMargin:20];
+
         }
         else
         {
@@ -3586,17 +3735,33 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        
+//        [line1 setHidden:YES];
+//        [line2 setHidden:YES];
+        line3.sd_layout.heightIs(0);
+        [line4 setHidden:YES];
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:qitaBottView bottomMargin:0];
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
-            
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
+//            [line1 setHidden:YES];
+//            [line2 setHidden:YES];
+            line3.sd_layout.heightIs(0);
+            [line4 setHidden:YES];
+            [liandianLabel setHidden:YES];
+            liangdianTopView.sd_layout.heightIs(0);
+            liangdianBottomView.sd_layout.heightIs(0);
+            [self.changeView setupAutoHeightWithBottomView:qitaBottView bottomMargin:0];
         }
         else
         {
@@ -3865,22 +4030,35 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-        [button1 setHidden:NO];
-        button1.text = @"暂无项目亮点";
+        [button1 setHidden:YES];
+//        button1.text = @"暂无项目亮点";
+        line1.sd_layout.heightIs(0);
+        [line2 setHidden:YES];
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
         
     }
     
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        
+        line1.sd_layout.heightIs(0);
+        [line2 setHidden:YES];
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
             
         }
         else
@@ -4109,17 +4287,30 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
+        [button1 setHidden:YES];
         
-        button1.text = @"暂无项目亮点";
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        line1.sd_layout.heightIs(0);
+        [line2 setHidden:YES];
+
+        [liandianLabel setHidden:YES];
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:label12 bottomMargin:20];
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
-            
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
+            line1.sd_layout.heightIs(0);
+            [line2 setHidden:YES];
+            [liandianLabel setHidden:YES];
+            liangdianTopView.sd_layout.heightIs(0);
+            liangdianBottomView.sd_layout.heightIs(0);
+            [self.changeView setupAutoHeightWithBottomView:label12 bottomMargin:20];
+
         }
         else
         {
@@ -4159,6 +4350,7 @@
        
     [self.xiangmuLabel setHidden:NO];
     [self.tapLabel setHidden:NO];
+    [self.ziyaIma setHidden:NO];
 //    [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
 
     }
@@ -4576,16 +4768,31 @@
     
     NSArray *proArr = [self.model.ProLabel componentsSeparatedByString:@","];
     if (proArr.count == 0) {
-        [button1 setHidden:NO];
-        button1.text = @"暂无项目亮点";
+        [button1 setHidden:YES];
+//        button1.text = @"暂无项目亮点";
         [button2 setHidden:YES];
+        line1.sd_layout.heightIs(0);
+        [line2 setHidden:YES];
+        [line4 setHidden:YES];
+        
+        liangdianTopView.sd_layout.heightIs(0);
+        liangdianBottomView.sd_layout.heightIs(0);
+        [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
+        
     }
     else if(proArr.count == 1)
     {
         if (self.model.ProLabel == nil || [self.model.ProLabel isEqualToString:@""]) {
-            [button1 setHidden:NO];
-            button1.text = @"暂无项目亮点";
-            
+            [button1 setHidden:YES];
+//            button1.text = @"暂无项目亮点";
+            line1.sd_layout.heightIs(0);
+            [line2 setHidden:YES];
+            [line4 setHidden:YES];
+            [liandianLabel setHidden:YES];
+            liangdianTopView.sd_layout.heightIs(0);
+            liangdianBottomView.sd_layout.heightIs(0);
+            [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
+
         }
         else
         {
@@ -4631,7 +4838,7 @@
                 self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
                 .rightEqualToView(self.xiangmuView)
                 .heightIs((self.scrollView.bounds.size.width -20)*self.imageSize.height/self.imageSize.width)
-                .topSpaceToView(self.xiangmuView,0);
+                .topSpaceToView(self.xiangmuView,1);
             }
             
             if(image)
@@ -4642,7 +4849,7 @@
                 self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
                 .rightEqualToView(self.xiangmuView)
                 .heightIs((self.scrollView.bounds.size.width)*self.imageSize.height/self.imageSize.width)
-                .topSpaceToView(self.xiangmuView,0);
+                .topSpaceToView(self.xiangmuView,1);
                 
                 
             }
@@ -4656,7 +4863,7 @@
         self.tapImageView.sd_layout.leftEqualToView(self.xiangmuView)
         .rightEqualToView(self.xiangmuView)
         .heightIs((self.scrollView.bounds.size.width)*self.imageSize.height/self.imageSize.width)
-        .topSpaceToView(self.xiangmuView,0);
+        .topSpaceToView(self.xiangmuView,1);
     
     }
 

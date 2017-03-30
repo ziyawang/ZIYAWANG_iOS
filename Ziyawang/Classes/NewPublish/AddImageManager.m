@@ -61,9 +61,9 @@
     self.imageTwo.userInteractionEnabled = YES;
     self.imageThree.userInteractionEnabled = YES;
 
-    self.imageOne.image = [UIImage imageNamed:@"shangchuan"];
-    self.imageTwo.image = [UIImage imageNamed:@"shangchuan"];
-    self.imageThree.image = [UIImage imageNamed:@"shangchuan"];
+    self.imageOne.image = [UIImage imageNamed:@"camera"];
+    self.imageTwo.image = [UIImage imageNamed:@"camera"];
+    self.imageThree.image = [UIImage imageNamed:@"camera"];
 
    
     [imageBackView addSubview:self.imageOne];
@@ -145,13 +145,13 @@
     }
     else if(self.imageArray.count == 1)
     {
-        self.imageOne.image = [UIImage imageNamed:@"shangchuan"];
+        self.imageOne.image = [UIImage imageNamed:@"camera"];
         [self.imageTwo setHidden:YES];
         [self.imageArray removeObjectAtIndex:0];
     }
     else if(self.imageArray.count == 2)
     {
-        self.imageTwo.image = [UIImage imageNamed:@"shangchuan"];
+        self.imageTwo.image = [UIImage imageNamed:@"camera"];
         [self.imageThree setHidden:YES];
         [self.imageArray removeObjectAtIndex:1];
         
@@ -159,7 +159,7 @@
   
     else if(self.imageArray.count == 3)
     {
-        self.imageThree.image = [UIImage imageNamed:@"shangchuan"];
+        self.imageThree.image = [UIImage imageNamed:@"camera"];
         [self.imageArray removeObjectAtIndex:2];
     }
 }

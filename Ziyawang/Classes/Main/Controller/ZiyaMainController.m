@@ -2545,7 +2545,7 @@ self.navigationItem.title = @"首页";
 
         self.selectTypeName = model.TypeName;
 
-        if ([model.CooperateState isEqualToString:@"0"] == NO) {
+        if ([model.CooperateState isEqualToString:@"0"] == NO&& [model.TypeID isEqualToString:@"99"] == NO) {
             [self.navigationController pushViewController:infoDetailsVC animated:YES];
             return;
         }

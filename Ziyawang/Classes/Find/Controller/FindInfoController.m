@@ -1756,7 +1756,7 @@
     self.infoDetailsVC = infoDetailsVC;
     
     NSLog(@"%@",model.CooperateState);
-    if ([model.CooperateState isEqualToString:@"0"] == NO) {
+    if ([model.CooperateState isEqualToString:@"0"] == NO && [model.TypeID isEqualToString:@"99"] == NO) {
         [self.navigationController pushViewController:infoDetailsVC animated:YES];
         return;
     }

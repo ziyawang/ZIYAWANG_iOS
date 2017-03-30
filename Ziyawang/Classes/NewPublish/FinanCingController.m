@@ -182,6 +182,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.sendButton.layer.masksToBounds = YES;
+    self.sendButton.layer.cornerRadius = 25;
     UITapGestureRecognizer *viewGesture1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
     UITapGestureRecognizer *viewGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];
     UITapGestureRecognizer *viewGesture3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewGestureAction:)];

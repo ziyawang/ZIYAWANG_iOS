@@ -33,6 +33,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 104, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer
