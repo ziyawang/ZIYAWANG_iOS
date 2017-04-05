@@ -4539,22 +4539,23 @@
 
 
     label13.text = @"本金：";
-    label14.text = [self.model.Money stringByAppendingString:@"万元"];
+    if ([self.model.Money isEqualToString:@"0.00"] == NO)
+    {
+        label14.text = [self.model.Money stringByAppendingString:@"万元"];
+    }
     label14.font = [UIFont systemFontOfSize:20];
-
     label15.text = @"利息：";
-    label16.text =[[NSString stringWithFormat:@"%.2f",self.model.TotalMoney.floatValue - self.model.Money.floatValue]stringByAppendingString:@"万元"];
-    
-    
-    
+    if ([self.model.Rate isEqualToString:@"0.00"] == NO)
+    {
+        label16.text = [self.model.Rate stringByAppendingString:@"万元"];
+    }
+//    label16.text =[[NSString stringWithFormat:@"%.2f",self.model.TotalMoney.floatValue - self.model.Money.floatValue]stringByAppendingString:@"万元"];
 //    label16.text = [self.model.Rate stringByAppendingString:@"万元"];
 //    label16.textColor = [UIColor colorWithHexString:@"#ef8200"];
     label16.font = [UIFont systemFontOfSize:20];
-    
     label1.textColor = [UIColor grayColor];
     label3.textColor = [UIColor grayColor];
     label5.textColor = [UIColor grayColor];
-
     label7.textColor = [UIColor grayColor];
     label9.textColor = [UIColor grayColor];
     label11.textColor = [UIColor grayColor];
@@ -4777,7 +4778,7 @@
         
         liangdianTopView.sd_layout.heightIs(0);
         liangdianBottomView.sd_layout.heightIs(0);
-        [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
+        [self.changeView setupAutoHeightWithBottomView:label15 bottomMargin:20];
         
     }
     else if(proArr.count == 1)
@@ -4791,7 +4792,7 @@
             [liandianLabel setHidden:YES];
             liangdianTopView.sd_layout.heightIs(0);
             liangdianBottomView.sd_layout.heightIs(0);
-            [self.changeView setupAutoHeightWithBottomView:label16 bottomMargin:20];
+            [self.changeView setupAutoHeightWithBottomView:label15 bottomMargin:20];
 
         }
         else

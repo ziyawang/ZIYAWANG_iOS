@@ -1797,8 +1797,6 @@
         else
         {
             self.pubModel = model;
-            
-            
             model.Member = [NSString stringWithFormat:@"%@",model.Member];
             
             if ([self.USERID isEqualToString:model.UserID])
