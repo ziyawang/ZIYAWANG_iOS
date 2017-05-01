@@ -156,6 +156,7 @@
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.shadowImage=[UIImage new];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:0];
+    
     UIButton *rightbutton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [rightbutton setBackgroundImage:[UIImage imageNamed:@"modify"] forState:(UIControlStateNormal)];
     [rightbutton setFrame:CGRectMake(0, 0, 20, 25)];

@@ -330,7 +330,7 @@
         NSArray *array = @[@"抵押",@"信用",@"综合类",@"其他"];
         NSArray *array2 = @[@"银行",@"非银行机构",@"企业",@"其他"];
         NSDictionary *dic = @{@"data":array,@"title":@"类型"};
-        NSDictionary *dic2 = @{@"data":array2,@"title":@"来源"};
+        NSDictionary *dic2 = @{@"data":array2,@"title":@"卖家类型"};
         NSMutableArray *sourArr = [NSMutableArray new];
         [sourArr addObject:dic];
         [sourArr addObject:dic2];
@@ -398,7 +398,7 @@
             NSArray *array = @[@"抵押",@"信用",@"综合类",@"其他"];
             NSArray *array2 = @[@"银行",@"非银行机构",@"企业",@"其他"];
             NSDictionary *dic = @{@"data":array,@"title":@"类型"};
-            NSDictionary *dic2 = @{@"data":array2,@"title":@"来源"};
+            NSDictionary *dic2 = @{@"data":array2,@"title":@"卖家类型"};
             NSMutableArray *sourArr = [NSMutableArray new];
             [sourArr addObject:dic];
             [sourArr addObject:dic2];
@@ -592,7 +592,7 @@
     
     NSArray *level = @[@""];
     //资产包
-    NSArray *typearray1 = @[@"类型",@"来源"];
+    NSArray *typearray1 = @[@"类型",@"卖家类型"];
     //融资信息
     NSArray *typearray2 = @[@"融资方式"];
     //固定资产
@@ -745,7 +745,7 @@
                 [self.dataDic setObject:findValue forKey:@"AssetType"];
                 [self findInfomationsWithDic:self.dataDic];
             }
-            else if([substr isEqualToString:@"来源"])
+            else if([substr isEqualToString:@"卖家"])
             {
                 [self.dataDic removeObjectForKey:@"AssetType"];
                 NSString *findValue = [string substringFromIndex:2];
@@ -1064,7 +1064,7 @@
     
     NSArray *level = @[@""];
     //资产包
-    NSArray *typearray1 = @[@"类型",@"来源"];
+    NSArray *typearray1 = @[@"类型",@"卖家类型"];
     //融资信息
     NSArray *typearray2 = @[@"融资方式"];
     //固定资产

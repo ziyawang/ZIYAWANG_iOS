@@ -1318,8 +1318,6 @@ self.navigationItem.title = @"首页";
     if (token != nil) {
         getURL = [[getURL stringByAppendingString:@"?token="]stringByAppendingString:token];
     }
-    
-    
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     NSString *startPage = [NSString stringWithFormat:@"%ld",self.startPage];
@@ -1332,7 +1330,8 @@ self.navigationItem.title = @"首页";
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSMutableArray *sourceArray = dic[@"data"];
-        for (NSDictionary *dic in sourceArray) {
+        for (NSDictionary *dic in sourceArray)
+        {
             self.model = [[PublishModel alloc]init];
             [self.model setValuesForKeysWithDictionary:dic];
             [self.sourceArray addObject:self.model];
@@ -1349,8 +1348,6 @@ self.navigationItem.title = @"首页";
         [self.HUD removeFromSuperViewOnHide];
         [self.HUD hideAnimated:YES];
         [self.tableView.mj_header endRefreshing];
-        
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败");
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求失败，请检查您的网络状态" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];

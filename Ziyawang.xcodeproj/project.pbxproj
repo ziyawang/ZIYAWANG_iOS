@@ -4620,6 +4620,7 @@
 					78CFFA201D3DAD0C002A22C8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = Z5VHFC6G9L;
+						ProvisioningStyle = Automatic;
 					};
 					78CFFA391D3DAD0C002A22C8 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -5944,6 +5945,7 @@
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z5VHFC6G9L;
 				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5983,6 +5985,7 @@
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z5VHFC6G9L;
 				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = (

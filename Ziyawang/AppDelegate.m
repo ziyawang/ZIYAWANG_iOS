@@ -99,7 +99,6 @@
      *  设置当前版本
      */
     [[NSUserDefaults standardUserDefaults]setObject:@"2.0" forKey:@"Version"];
-    
     /**
      *  检查是否需要版本更新
      */
@@ -185,7 +184,6 @@
      */
     NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     NSLog(@">>>>>>>>>>>>>>>>>%@",remoteNotificationUserInfo);
-    
      return YES;
 }
 

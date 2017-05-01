@@ -583,9 +583,8 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getComments)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreContentData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
-    [self getComments];
+//    [self getComments];
         [self.tableView setTableHeaderView:self.HeadView];
-
 }
 
 
@@ -655,15 +654,9 @@
         WebVC.request = request;
 //        [self.navigationController pushViewController:WebVC animated:YES];
         [[UIApplication sharedApplication] openURL:request.URL];
-
         return NO;
-        
     }
-    
-    
     return YES;
-    
-
 }
 
 #pragma mark----评论三个按钮的监听事件

@@ -103,9 +103,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.videoDes];
 
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25 , self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+//    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kZXVideoPlayerOriginalHeight + videoLabelHight + 102+25 , self.view.bounds.size.width, self.view.bounds.size.height - (kZXVideoPlayerOriginalHeight + 210)) style:(UITableViewStylePlain)];
+    self.tableView = [UITableView new];
     
-    self.tableView.contentInset = UIEdgeInsetsMake(10, 0, 30, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
     self.sourceArray = [[NSMutableArray alloc]init];
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -115,11 +116,10 @@
 //    [self.tableView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellReuseIdentifier:@"CommentCell"];
         [self.tableView registerClass:[CommentsCell class] forCellReuseIdentifier:@"CommentsCell"];
     [self.view addSubview:self.tableView];
-    
-    
     [self registerForKeyboardNotifications];
-    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getContentData)];
+//    [self.tableView scrollRectToVisible:CGRectMake(0, MJRefreshHeaderHeight, 1, 1) animated:YES];
+
   self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreContentData)];
     [self.tableView.mj_footer setAutomaticallyHidden:YES];
     
@@ -172,7 +172,9 @@
         [model setValuesForKeysWithDictionary:dic];
         self.model = model;
         NSLog(@"~~~~~~~~~~~~~~~~~~~%@",self.model);
-        [self layoutView];
+//        [self layoutView];
+        [self layOutViews];
+        
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取信息失败，请检查您的网络设置" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
@@ -181,7 +183,319 @@
     }];
 }
 
+- (void)layOutViews
+{
+    self.contentView = [UIView new];
+    UILabel *titleLabel = [UILabel new];
+    UILabel *viewCountLabel = [UILabel new];
+    UILabel *timeLabel = [UILabel new];
+    UILabel *jianjieLabel = [UILabel new];
+    UILabel *allLabel = [UILabel new];
+    
+    self.commentCountView = [UIView new];
+    UILabel *quanbuLabel = [UILabel new];
+    
+    titleLabel.font = [UIFont systemFontOfSize:14];
+    viewCountLabel.font = [UIFont systemFontOfSize:11];
+    timeLabel.font = [UIFont systemFontOfSize:12];
+    jianjieLabel.font = [UIFont systemFontOfSize:13];
+    quanbuLabel.font = [UIFont systemFontOfSize:20];
+    
+    titleLabel.numberOfLines = 0;
+    jianjieLabel.numberOfLines = 0;
+    
+    viewCountLabel.textColor = [UIColor grayColor];
+    timeLabel.textColor = [UIColor grayColor];
+    jianjieLabel.textColor = [UIColor grayColor];
+    quanbuLabel.textColor = [UIColor colorWithHexString:@"#ef8200"];
+    quanbuLabel.text = @"全部评论";
+    
+    [self.view addSubview:self.contentView];
+    [self.contentView addSubview:titleLabel];
+    [self.contentView addSubview:viewCountLabel];
+    [self.contentView addSubview:timeLabel];
+    [self.contentView addSubview:jianjieLabel];
+    [self.contentView addSubview:allLabel];
+    [self.view addSubview:self.commentCountView];
+    [self.commentCountView addSubview:quanbuLabel];
+    self.commentCountView.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
+    
+    
+    self.contentView.sd_layout.topSpaceToView(self.view,kZXVideoPlayerOriginalHeight)
+    .leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0);
+    
+    titleLabel.sd_layout.topSpaceToView(self.contentView,15)
+    .leftSpaceToView(self.contentView,15)
+    .rightSpaceToView(self.contentView,15)
+    .autoHeightRatio(0);
+    
+    viewCountLabel.sd_layout.topSpaceToView(titleLabel,20)
+    .leftEqualToView(titleLabel)
+    .rightSpaceToView(self.contentView,15)
+    .heightIs(15);
+    
+    timeLabel.sd_layout.topSpaceToView(viewCountLabel,5)
+    .leftEqualToView(titleLabel)
+    .rightEqualToView(titleLabel)
+    .heightIs(15);
+    
+    jianjieLabel.sd_layout.topSpaceToView(timeLabel,20)
+    .leftEqualToView(titleLabel)
+    .rightEqualToView(titleLabel)
+    .autoHeightRatio(0);
+    
+    [self.contentView setupAutoHeightWithBottomView:jianjieLabel bottomMargin:20];
+    self.commentCountView.sd_layout.leftEqualToView(self.contentView)
+    .rightEqualToView(self.contentView)
+    .heightIs(30)
+    .topSpaceToView(self.contentView,0);
+    
+    self.tableView.sd_layout.leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0)
+    .topSpaceToView(self.commentCountView,-15)
+    .bottomSpaceToView(self.view,0);
+    
+    
+    quanbuLabel.sd_layout.leftSpaceToView(self.commentCountView,15)
+    .rightSpaceToView(self.commentCountView,15)
+    .centerYEqualToView(self.commentCountView)
+    .heightIs(20);
+    
+    titleLabel.text = self.model.VideoTitle;
+    viewCountLabel.text =[[@"已播放"stringByAppendingString:self.model.ViewCount]stringByAppendingString:@"次"];
+    timeLabel.text = self.model.PublishTime;
+    jianjieLabel.text = [@"简介："stringByAppendingString:self.model.VideoDes];
+    
+    
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 27, 25)];
+    [button setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
+    UILabel *shoucang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 97, 40, 30, 14)];
+    
+    shoucang.centerX = button.centerX;
+    
+    shoucang.text = @"收藏";
+    shoucang.textAlignment = NSTextAlignmentCenter;
+    
+    
+    shoucang.font = [UIFont systemFontOfSize:10];
+    shoucang.textColor = [UIColor darkGrayColor];
+    
+    
+    
+    //    self.collectButton = button;
+    
+    
+    UIButton *button2 = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    [button2 setBackgroundImage:[UIImage imageNamed:@"fenxiang"] forState:(UIControlStateNormal)];
+    [button2 setFrame:CGRectMake(self.view.bounds.size.width - 50, 10, 25, 25)];
+    [button2 addTarget:self action:@selector(didClickShareButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    UILabel *fenxiang = [[UILabel alloc]initWithFrame:CGRectMake(self.view.bounds.size.width - 47, 40, 30, 14)];
+    fenxiang.textAlignment = NSTextAlignmentCenter;
+    fenxiang.centerX = button2.centerX;
+    fenxiang.text = @"分享";
+    fenxiang.font = [UIFont systemFontOfSize:10];
+    fenxiang.textColor = [UIColor darkGrayColor];
+    
+    self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
+    if ([self.model.CollectFlag isEqualToString:@"0"]) {
+        NSLog(@"没收藏过");
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucang-hui"] forState:(UIControlStateNormal)];
+    }
+    else if([self.model.CollectFlag isEqualToString:@"1"])
+    {
+        NSLog(@"收藏过");
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucang"] forState:(UIControlStateNormal)];
+    }
+    [self.collectButton addTarget:self action:@selector(didClickCollectbutton:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.mengban = [UIView new];
+    [self.view addSubview:self.mengban];
+    UITapGestureRecognizer *mengbanGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(menbanViewAction:)];
+    [self.mengban addGestureRecognizer:mengbanGesture];
+    self.mengban.backgroundColor = [UIColor blackColor];
+    self.mengban.alpha = 0.5;
+    [self.mengban setHidden:YES];
+    
+    self.mengban.sd_layout.leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0)
+    .topSpaceToView(self.view,0)
+    .heightIs(700);
+    
+    self.commentBackView = [UIView new];
+    self.commentBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    
+    
+    UIView *touchView = [UIView new];
+    UIButton *commCountButton = [UIButton new];
+    self.collectButton = [UIButton new];
+    UIButton *sharebutton = [UIButton new];
+    UILabel *xiepinglun = [UILabel new];
+    self.fabiaoButton = [UIButton new];
+    
+    xiepinglun.text = @"写评论...";
+    xiepinglun.textColor = [UIColor lightGrayColor];
+    
+    
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchViewTouchAction:)];
+    [touchView addGestureRecognizer:gesture];
+    
+    
+    
+    [commCountButton setBackgroundImage:[UIImage imageNamed:@"commentCount"] forState:(UIControlStateNormal)];
+    //    sharebutton.backgroundColor = [UIColor redColor];
+    //    self.collectButton.backgroundColor = [UIColor redColor];
+    [self.collectButton addTarget:self action:@selector(didClickCollectbutton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //    [commCountButton addTarget:self action:@selector(commCountButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    self.model.CollectFlag = [NSString stringWithFormat:@"%@",self.model.CollectFlag];
+    
+    if ([self.model.CollectFlag isEqualToString:@"0"]) {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shoucangxin"] forState:(UIControlStateNormal)];
+        
+    }
+    else
+    {
+        [self.collectButton setBackgroundImage:[UIImage imageNamed:@"shouc"] forState:(UIControlStateNormal)];
+        
+        
+    }
+    [sharebutton setBackgroundImage:[UIImage imageNamed:@"fenxiang2"] forState:(UIControlStateNormal)];
+    
+    [sharebutton addTarget:self action:@selector(didClickShareButton:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    [self.commentBackView addSubview:touchView];
+    [self.commentBackView addSubview:commCountButton];
+    [self.commentBackView addSubview:sharebutton];
+    [self.commentBackView addSubview:self.collectButton];
+    [touchView addSubview:xiepinglun];
+    
+    
+    
+    self.textBackView = [UIView new];
+    
+    self.textView = [[CSTextView alloc]init];
+    self.textView.delegate = self;
+    self.textView.placeholder = @"请输入评论内容";
+    self.textBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 1000, self.view.bounds.size.width, 150)];
+    
+    [self.view addSubview:self.textBackView];
+    [self.textBackView addSubview:self.textView];
+    [self.textBackView addSubview:self.fabiaoButton];
+    self.fabiaoButton.layer.cornerRadius = 5;
+    self.fabiaoButton.layer.masksToBounds = YES;
+    
+    [self.fabiaoButton addTarget:self action:@selector(sendButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    
+    self.textBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
+    self.textView.layer.cornerRadius = 10;
+    self.textView.layer.masksToBounds = YES;
+    
+    //    self.textBackView.sd_layout.leftSpaceToView(self.view,0)
+    //    .rightSpaceToView(self.view,0)
+    //    .heightIs(150)
+    //    .topSpaceToView(self.commentBackView,0);
+    
+    self.textView.sd_layout.leftSpaceToView(self.textBackView,15)
+    .rightSpaceToView(self.textBackView,15)
+    .heightIs(80)
+    .topSpaceToView(self.textBackView,15);
+    
+    
+    self.fabiaoButton.sd_layout.rightEqualToView(self.textView)
+    .topSpaceToView(self.textView,15)
+    .heightIs(20)
+    .widthIs(40);
+    
+    [self.fabiaoButton setTitle:@"发表" forState:(UIControlStateNormal)];
+    [self.fabiaoButton setBackgroundColor:[UIColor grayColor]];
+    
+    
+    //self.textView.layer.borderColor = [UIColor grayColor];
+    
+    
+    
+    
+    
+    
+    UIButton *sendButton = [UIButton new];
+    [sendButton setTitle:@"发送" forState:(UIControlStateNormal)];
+    [sendButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+    
+    [sendButton addTarget:self action:@selector(sendButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    //    [self.commentBackView addSubview:sendButton];
+    //    [self.commentBackView addSubview:self.textView];
+    [self.view addSubview:self.commentBackView];
+    
+    touchView.sd_layout.leftSpaceToView(self.commentBackView,20)
+    .widthIs(200)
+    .centerYEqualToView(self.commentBackView)
+    .heightIs(30);
+    
+    
+    
+    xiepinglun.sd_layout.leftSpaceToView(touchView,5)
+    .centerYEqualToView(touchView)
+    .heightIs(20);
+    [xiepinglun setSingleLineAutoResizeWithMaxWidth:200];
+    
+    
+    sharebutton.sd_layout.centerYEqualToView(touchView)
+    .rightSpaceToView(self.commentBackView,20)
+    .heightIs(20)
+    .widthIs(15);
+    
+    self.collectButton.sd_layout.centerYEqualToView(touchView)
+    .rightSpaceToView(sharebutton,30)
+    .heightIs(20)
+    .widthIs(25);
+ 
+    
+    
+    touchView.layer.borderWidth = 1;
+    touchView.layer.masksToBounds = YES;
+    touchView.layer.cornerRadius = 15;
+    touchView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    
+    UIButton *commentButton = [UIButton new];
+    UIView *pinglun = [UIView new];
+    UIImageView *image = [UIImageView new];
+    UILabel *label = [UILabel new];
+    
+    
+    label.text = @"评论";
+    label.font = [UIFont systemFontOfSize:14];
+    image.image = [UIImage imageNamed:@"pen"];
+    pinglun.userInteractionEnabled = NO;
+    
+    [commentButton addTarget:self action:@selector(commentButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [pinglun addSubview:image];
+    [pinglun addSubview:label];
+    
+    
+    commentButton.backgroundColor = [UIColor whiteColor];
+    commentButton.layer.borderColor = [UIColor colorWithHexString:@"f4f4f4"].CGColor;
+    
+    [commentButton addSubview:pinglun];
+    self.commentBackView.sd_layout.leftSpaceToView(self.view,0)
+    .rightSpaceToView(self.view,0)
+    .bottomSpaceToView(self.view,0)
+    .heightIs(50);
+    
+     self.textView.textColor = [UIColor darkGrayColor];
+    //    self.textView.text = @"请输入评论内容";
+    self.textView.font = [UIFont systemFontOfSize:17];
 
+
+}
 - (void)layoutView
 {
     CGFloat videoLabelHight = [VideoPlayViewController heightForTextLabel:self.model.VideoDes];
@@ -215,6 +529,12 @@
     videoDes.textColor = [UIColor darkGrayColor];
     videoDes.font = [UIFont FontForVideoDesLabel];
     videoDes.numberOfLines = 0;
+    
+    
+    
+    
+    
+    
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [button setFrame:CGRectMake(self.view.bounds.size.width - 100, 10, 27, 25)];
@@ -287,20 +607,7 @@
     [self.commentCountView addSubview:self.contentCountLabel];
     [self.view addSubview:self.commentCountView];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    UIView *commentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 60, self.view.bounds.size.width, 60)];
+   //    UIView *commentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 60, self.view.bounds.size.width, 60)];
 //    
 //    commentView.backgroundColor = [UIColor colorWithHexString:@"f0f0f0"];
 //    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width - 60, 40)];
@@ -336,15 +643,6 @@
     .rightSpaceToView(self.view,0)
     .topSpaceToView(self.view,0)
     .heightIs(700);
-    
-//    self.tableView.sd_layout.leftSpaceToView(self.view,0)
-//    .rightSpaceToView(self.view,0)
-//    .topSpaceToView(self.view,0)
-//    .bottomSpaceToView(self.view,0);
-//    
-    
-    
-    
     
     self.commentBackView = [UIView new];
     self.commentBackView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
