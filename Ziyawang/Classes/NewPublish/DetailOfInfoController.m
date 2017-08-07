@@ -358,7 +358,6 @@
         URL = [[[[url stringByAppendingString:[NSString stringWithFormat:@"%@",self.ProjectID]]stringByAppendingString:@"?access_token=token"]stringByAppendingString:@"&token="]stringByAppendingString:token];
     }
     NSString *getURL = URL;
-    //    NSString *gfetURL = @"https://apis.ziyawang.com/zll/project/list/5?&access_token=token";
     NSMutableDictionary *getdic = [NSMutableDictionary dictionary];
     NSString *access_token = @"token";
     [getdic setObject:access_token forKey:@"access_token"];
@@ -467,7 +466,7 @@
     .rightSpaceToView(self.scrollBackView,0);
     
     
-    //    [self.scrollView setupAutoContentSizeWithRightView:self.imageBackView rightMargin:10];
+//        [self.scrollView setupAutoContentSizeWithRightView:self.imageBackView rightMargin:10];
     
     
     UIView *titleView = [UIView new];
@@ -826,6 +825,7 @@
     self.ziyaIma.image = [UIImage imageNamed:@"ziyasmall"];
     
     self.tapLabel = [UILabel new];
+    
     [self.tapImageView addSubview:self.tapLabel];
     self.tapLabel.sd_layout.centerXEqualToView(self.tapImageView)
     .bottomSpaceToView(self.tapImageView,25)
@@ -847,7 +847,6 @@
     UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageViewAction:)];
     self.tapImageView.tag = 0;
     self.tapImageView.userInteractionEnabled = YES;
-
     self.tapImageView.contentMode = UIViewContentModeScaleAspectFit;
     
     [self.tapImageView addGestureRecognizer:tapG];
@@ -2804,13 +2803,10 @@
         button4.text = proArr[3];
         
     }
-    
     [self setliangdianLabel:button1];
     [self setliangdianLabel:button2];
     [self setliangdianLabel:button3];
     [self setliangdianLabel:button4];
-    
-    
 }
 - (void)landProductionView
 {
@@ -2832,7 +2828,6 @@
         [self.tapLabel setHidden:NO];
         [self.ziyaIma setHidden:NO];
 //        [self.tapImageView sd_setImageWithURL:[NSURL URLWithString:[getImageURL stringByAppendingString:self.model.PictureDet]]];
-
     }
 
     UILabel *label1 = [UILabel new];

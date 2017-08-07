@@ -2184,8 +2184,6 @@ self.navigationItem.title = @"首页";
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(20, 30, self.view.bounds.size.width - 40, 70)];
     view.backgroundColor = [UIColor whiteColor];
     
-    
-    
     UIView *blackBackview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [blackBackview setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
     UITapGestureRecognizer *blackBackViewTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(blackBackTapAction1:)];
@@ -2237,9 +2235,6 @@ self.navigationItem.title = @"首页";
     label1.font = [UIFont systemFontOfSize:20];
     label1.textColor = [UIColor colorWithHexString:@"#ff9000"];
     
-    
-    
-    
     UILabel *yabiLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize1.width + labelSize2.width, Height + 20*kHeightScale, 40, 20)];
     yabiLabel1.text = @"芽币";
     
@@ -2256,7 +2251,6 @@ self.navigationItem.title = @"首页";
     label2.numberOfLines = 0;
     label2.text = self.account;
     label2.font = [UIFont systemFontOfSize:20];
-    
     label2.textColor = [UIColor colorWithHexString:@"#ff9000"];
     
     //   self.AccountLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width,Height + 20*kHeightScale + 32* kHeightScale,labelSize22.width,20)];//这个frame是初设的，没关系，后面还会重新设置其size。
@@ -2268,7 +2262,6 @@ self.navigationItem.title = @"首页";
     
     
     UILabel *yabiLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(30*kWidthScale + 36*kWidthScale + labelSize11.width + labelSize22.width, Height + 20*kHeightScale+32* kHeightScale, 40, 20)];
-    
     
     yabiLabel2.text = @"芽币";
     
@@ -2640,7 +2633,6 @@ self.navigationItem.title = @"首页";
                         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
                         [dic setObject:@"token" forKey:@"access_token"];
                         [dic setObject:self.pubModel.ProjectID forKey:@"ProjectID"];
-                        
                     [self.manager POST:URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
                         
                     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

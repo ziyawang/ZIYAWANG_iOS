@@ -312,6 +312,8 @@
     [self.collectButton addTarget:self action:@selector(didClickCollectbutton:) forControlEvents:(UIControlEventTouchUpInside)];
     self.mengban = [UIView new];
     [self.view addSubview:self.mengban];
+    
+    
     UITapGestureRecognizer *mengbanGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(menbanViewAction:)];
     [self.mengban addGestureRecognizer:mengbanGesture];
     self.mengban.backgroundColor = [UIColor blackColor];
@@ -336,7 +338,6 @@
     
     xiepinglun.text = @"写评论...";
     xiepinglun.textColor = [UIColor lightGrayColor];
-    
     
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchViewTouchAction:)];
@@ -415,7 +416,8 @@
     [self.fabiaoButton setTitle:@"发表" forState:(UIControlStateNormal)];
     [self.fabiaoButton setBackgroundColor:[UIColor grayColor]];
     
-    
+    self.fabiaoButton.titleLabel.font = [UIFont systemFontOfSize:14];
+
     //self.textView.layer.borderColor = [UIColor grayColor];
     
     

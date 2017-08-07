@@ -423,7 +423,7 @@
     [self.buttonSix addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.buttonSeven addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.buttonEight addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.buttonNine addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [self.buttonNine addTarget:self action:@selector(buttonsAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
 }
 - (void)addViewToButtonsWithButton:(UIButton *)button labelText:(NSString *)text longLabelText:(NSString *)longText defaultFlag:(NSString *)defaultFlag add:(NSString *)add
@@ -453,15 +453,17 @@
     
     if (button.tag != 0 && button.tag != 1) {
 
-        label.sd_layout.bottomSpaceToView(middleLabel,3)
-        .centerXEqualToView(button)
-        .heightIs(15);
-        [label setSingleLineAutoResizeWithMaxWidth:200];
+       
         
         middleLabel.sd_layout.centerYEqualToView(button)
         .centerXEqualToView(button)
         .heightIs(11);
         [middleLabel setSingleLineAutoResizeWithMaxWidth:300];
+        
+        label.sd_layout.bottomSpaceToView(middleLabel,3)
+        .centerXEqualToView(button)
+        .heightIs(15);
+        [label setSingleLineAutoResizeWithMaxWidth:200];
         
         longLabel.sd_layout.topSpaceToView(middleLabel,3)
         .centerXEqualToView(button)
@@ -471,16 +473,17 @@
     }
     else
     {
-        label.sd_layout.bottomSpaceToView(middleLabel,3)
-        .centerXEqualToView(button)
-        .heightIs(15);
-        [label setSingleLineAutoResizeWithMaxWidth:200];
+       
         
         middleLabel.sd_layout.centerYEqualToView(button)
         .centerXEqualToView(button)
         .heightIs(1);
         [middleLabel setSingleLineAutoResizeWithMaxWidth:300];
 
+        label.sd_layout.bottomSpaceToView(middleLabel,3)
+        .centerXEqualToView(button)
+        .heightIs(15);
+        [label setSingleLineAutoResizeWithMaxWidth:200];
         
         longLabel.sd_layout.topSpaceToView(middleLabel,3)
         .centerXEqualToView(button)

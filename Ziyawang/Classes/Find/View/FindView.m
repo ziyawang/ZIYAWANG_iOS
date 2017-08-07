@@ -599,7 +599,6 @@
     else if(indexPath.section == 1)
     {
         cell.textLabel.text = self.sourArrayThree[1][@"data"][indexPath.row];
-        
     }
     return cell;
     
@@ -696,7 +695,6 @@
     
     {
         
-       
             NSLog(@"%li",section);
             hf = [[UITableViewHeaderFooterView alloc]initWithReuseIdentifier:identy];
             UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0,0, self.frame.size.width,30)];

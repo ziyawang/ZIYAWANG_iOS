@@ -145,7 +145,6 @@
     [super viewDidLoad];
 
 //    [RCIM sharedRCIM].receiveMessageDelegate=self;
-
     [self setUpAllChildVc];
 
     //创建自己的tabbar，然后用kvc将自己的tabbar和系统的tabBar替换下

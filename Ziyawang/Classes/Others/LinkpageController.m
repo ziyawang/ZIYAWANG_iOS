@@ -79,10 +79,11 @@
     
     //设置self.pageControl的选中点
     [self.pageControl setCurrentPage:currentPage];
-    
-    
 }
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
 
+}
 
 -(void)layoutPageControl
 {
@@ -123,7 +124,6 @@
     [self.scrollView setContentOffset:CGPointMake(self.view.bounds.size.width * pageControl.currentPage, 0) animated:YES];
     self.contentoffSet = self.scrollView.contentOffset;
     
-    
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)tapGesture
@@ -139,7 +139,6 @@
     NSLog(@"出碰了");
    
     if (self.contentoffSet.x == self.view.bounds.size.width*3) {
-        
         
         [self presentViewController:self.controller animated:YES completion:nil];
         

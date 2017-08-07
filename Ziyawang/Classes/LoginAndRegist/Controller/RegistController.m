@@ -450,7 +450,6 @@ self.title = @"aaa";
         }
     });
     dispatch_resume(_timer);
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

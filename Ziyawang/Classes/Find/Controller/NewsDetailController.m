@@ -183,10 +183,12 @@
     zhaiyao.textColor = [UIColor redColor];
     
     NSString *htmlString = self.model.NewsContent;
+//    NSString *htmlString = @"<p>日前，国家发改委印发《关于加快运用PPP模式盘活基础设施存量资产有关工作的通知》，指导地方加快运用PPP模式、规范有序盘活基础设施存量资产，形成投资良性循环。</p>\r\n\r\n<p style=\"text-align: center;\"><img alt=\"\" src=\"http://images.ziyawang.com/news/N_201707113986.jpg\" style=\"height:180px; width:300px\" /></p\r\n\r\n<p>经过长期投资建设，我国在能源、交通运输、水利、环境保护、农业、林业、重大市政工程等基础设施领域形成了大量优质存量资产。</p>\r\n\r\n<p>发改委提出积极推广PPP模式，加大存量基础设施盘活力度、形成良性投资循环，这有利于拓宽基础设施建设资金来源，减轻地方政府债务负担；有利于更好地吸引民间资本进入基础设施领域，丰富民营企业投资渠道；有利于吸引具有较强运营能力的社会资本，提高基础设施项目运营效率，降低运营成本；有利于推进国有企业混合所有制改革，促进各种所有制经济共同发展；有利于加快补齐基础设施短板，推进供给侧结构性改革。</p>\r\n\r\n<p>《通知》从分类实施、规范管理、加强协同合作等方面，提出了具体工作要求，PPP模式正是实现各方利益共赢目标的合适载体，故要求各地推荐本地区3个至5个运用PPP模式盘活基础设施存量资产效果好的项目，国家发改委将组织专家评审，并遴选若干示范项目加以推广，供各地方学习借鉴。（来源：中华网）</p>\r\n";
+    
+    NSLog(@"%@",htmlString);
 
     NSString *html = [[[@"<head><style>img{max-width:375px !important;height:auto!important;margin:0 auto;width:100%!important;display:block;}</style></head>" stringByAppendingString:@"<body>"]stringByAppendingString:htmlString]stringByAppendingString:@"</body>"];
 
-    
     
 //    webView.dataDetectorTypes = UIDataDetectorTypeAddress;
     
@@ -435,7 +437,8 @@
     
     [self.fabiaoButton setTitle:@"发表" forState:(UIControlStateNormal)];
     [self.fabiaoButton setBackgroundColor:[UIColor grayColor]];
-    
+    self.fabiaoButton.titleLabel.font = [UIFont systemFontOfSize:14];
+
     
     //self.textView.layer.borderColor = [UIColor grayColor];
     
@@ -566,7 +569,6 @@
  
     
     
-    
     self.webView.sd_layout.topSpaceToView(lineView,20)
     .leftSpaceToView(self.HeadView,15)
     .rightSpaceToView(self.HeadView,15);
@@ -574,8 +576,7 @@
     self.webView.delegate = self;
     self.webView.scalesPageToFit = NO;
     self.webView.scrollView.scrollEnabled = NO;
-    
-       [self.webView loadHTMLString:html baseURL:nil];
+    [self.webView loadHTMLString:html baseURL:nil];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -638,13 +639,7 @@
 //    
 //    NSLog(@"%f",frame.size.height);
    
-    
-    
-    
-  
  
-
-
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -664,7 +659,6 @@
 - (void)touchViewTouchAction:(UITapGestureRecognizer *)geture
 {
     [self.textView becomeFirstResponder];
-
     
 }
 - (void)collectButtonAction:(UIButton *)button
@@ -837,6 +831,7 @@
     [self.textView becomeFirstResponder];
 
 }
+
 - (void)sendButtonAction:(UIButton *)sendButton
 {
     if ([self.textView.text isEqualToString:@""]||[self.textView.text isEqualToString:@"请输入评论内容"]) {
@@ -1128,7 +1123,6 @@
     NSLog(@"!!!!!!!!!%@",self.sourceArray);
 
     [self.tableView reloadData];
-    
     [self.tableView setTableHeaderView:self.HeadView];
 
        [self.tableView.mj_header endRefreshing];
